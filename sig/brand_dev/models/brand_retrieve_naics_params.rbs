@@ -1,0 +1,23 @@
+module BrandDev
+  module Models
+    type brand_retrieve_naics_params =
+      { input: String } & BrandDev::Internal::Type::request_parameters
+
+    class BrandRetrieveNaicsParams < BrandDev::Internal::Type::BaseModel
+      extend BrandDev::Internal::Type::RequestParameters::Converter
+      include BrandDev::Internal::Type::RequestParameters
+
+      attr_accessor input: String
+
+      def initialize: (
+        input: String,
+        ?request_options: BrandDev::request_opts
+      ) -> void
+
+      def to_hash: -> {
+        input: String,
+        request_options: BrandDev::RequestOptions
+      }
+    end
+  end
+end

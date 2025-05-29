@@ -1,0 +1,23 @@
+module BrandDev
+  module Models
+    type brand_retrieve_by_ticker_params =
+      { ticker: String } & BrandDev::Internal::Type::request_parameters
+
+    class BrandRetrieveByTickerParams < BrandDev::Internal::Type::BaseModel
+      extend BrandDev::Internal::Type::RequestParameters::Converter
+      include BrandDev::Internal::Type::RequestParameters
+
+      attr_accessor ticker: String
+
+      def initialize: (
+        ticker: String,
+        ?request_options: BrandDev::request_opts
+      ) -> void
+
+      def to_hash: -> {
+        ticker: String,
+        request_options: BrandDev::RequestOptions
+      }
+    end
+  end
+end

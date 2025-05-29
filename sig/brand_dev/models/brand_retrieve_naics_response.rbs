@@ -1,0 +1,61 @@
+module BrandDev
+  module Models
+    type brand_retrieve_naics_response =
+      {
+        codes: ::Array[BrandDev::Models::BrandRetrieveNaicsResponse::Code],
+        domain: String,
+        status: String,
+        type: String
+      }
+
+    class BrandRetrieveNaicsResponse < BrandDev::Internal::Type::BaseModel
+      attr_reader codes: ::Array[BrandDev::Models::BrandRetrieveNaicsResponse::Code]?
+
+      def codes=: (
+        ::Array[BrandDev::Models::BrandRetrieveNaicsResponse::Code]
+      ) -> ::Array[BrandDev::Models::BrandRetrieveNaicsResponse::Code]
+
+      attr_reader domain: String?
+
+      def domain=: (String) -> String
+
+      attr_reader status: String?
+
+      def status=: (String) -> String
+
+      attr_reader type: String?
+
+      def type=: (String) -> String
+
+      def initialize: (
+        ?codes: ::Array[BrandDev::Models::BrandRetrieveNaicsResponse::Code],
+        ?domain: String,
+        ?status: String,
+        ?type: String
+      ) -> void
+
+      def to_hash: -> {
+        codes: ::Array[BrandDev::Models::BrandRetrieveNaicsResponse::Code],
+        domain: String,
+        status: String,
+        type: String
+      }
+
+      type code = { code: String, title: String }
+
+      class Code < BrandDev::Internal::Type::BaseModel
+        attr_reader code: String?
+
+        def code=: (String) -> String
+
+        attr_reader title: String?
+
+        def title=: (String) -> String
+
+        def initialize: (?code: String, ?title: String) -> void
+
+        def to_hash: -> { code: String, title: String }
+      end
+    end
+  end
+end

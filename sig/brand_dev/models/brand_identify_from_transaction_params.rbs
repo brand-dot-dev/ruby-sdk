@@ -1,0 +1,24 @@
+module BrandDev
+  module Models
+    type brand_identify_from_transaction_params =
+      { transaction_info: String }
+      & BrandDev::Internal::Type::request_parameters
+
+    class BrandIdentifyFromTransactionParams < BrandDev::Internal::Type::BaseModel
+      extend BrandDev::Internal::Type::RequestParameters::Converter
+      include BrandDev::Internal::Type::RequestParameters
+
+      attr_accessor transaction_info: String
+
+      def initialize: (
+        transaction_info: String,
+        ?request_options: BrandDev::request_opts
+      ) -> void
+
+      def to_hash: -> {
+        transaction_info: String,
+        request_options: BrandDev::RequestOptions
+      }
+    end
+  end
+end
