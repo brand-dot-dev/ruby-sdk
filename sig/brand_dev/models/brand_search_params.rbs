@@ -1,0 +1,23 @@
+module BrandDev
+  module Models
+    type brand_search_params =
+      { query: String } & BrandDev::Internal::Type::request_parameters
+
+    class BrandSearchParams < BrandDev::Internal::Type::BaseModel
+      extend BrandDev::Internal::Type::RequestParameters::Converter
+      include BrandDev::Internal::Type::RequestParameters
+
+      attr_accessor query: String
+
+      def initialize: (
+        query: String,
+        ?request_options: BrandDev::request_opts
+      ) -> void
+
+      def to_hash: -> {
+        query: String,
+        request_options: BrandDev::RequestOptions
+      }
+    end
+  end
+end

@@ -1,0 +1,29 @@
+module BrandDev
+  module Models
+    type brand_search_response_item =
+      { domain: String, logo: String, title: String }
+
+    class BrandSearchResponseItem < BrandDev::Internal::Type::BaseModel
+      attr_reader domain: String?
+
+      def domain=: (String) -> String
+
+      attr_reader logo: String?
+
+      def logo=: (String) -> String
+
+      attr_reader title: String?
+
+      def title=: (String) -> String
+
+      def initialize: (?domain: String, ?logo: String, ?title: String) -> void
+
+      def to_hash: -> { domain: String, logo: String, title: String }
+    end
+
+    type brand_search_response =
+      ::Array[BrandDev::Models::BrandSearchResponseItem]
+
+    BrandSearchResponse: BrandDev::Internal::Type::Converter
+  end
+end

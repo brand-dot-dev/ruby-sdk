@@ -1,0 +1,56 @@
+module BrandDev
+  module Internal
+    module Type
+      module Converter
+        extend BrandDev::Internal::Util::SorbetRuntimeSupport
+
+        type input = BrandDev::Internal::Type::Converter | Class
+
+        type coerce_state =
+          {
+            strictness: bool | :strong,
+            exactness: { yes: Integer, no: Integer, maybe: Integer },
+            branched: Integer
+          }
+
+        type dump_state = { can_retry: bool }
+
+        def coerce: (
+          top value,
+          state: BrandDev::Internal::Type::Converter::coerce_state
+        ) -> top
+
+        def dump: (
+          top value,
+          state: BrandDev::Internal::Type::Converter::dump_state
+        ) -> top
+
+        def inspect: (?depth: Integer) -> String
+
+        def self.type_info: (
+          {
+            const: (nil | bool | Integer | Float | Symbol)?,
+            enum: ^-> BrandDev::Internal::Type::Converter::input?,
+            union: ^-> BrandDev::Internal::Type::Converter::input?
+          }
+          | ^-> BrandDev::Internal::Type::Converter::input
+          | BrandDev::Internal::Type::Converter::input spec
+        ) -> (^-> top)
+
+        def self.coerce: (
+          BrandDev::Internal::Type::Converter::input target,
+          top value,
+          ?state: BrandDev::Internal::Type::Converter::coerce_state
+        ) -> top
+
+        def self.dump: (
+          BrandDev::Internal::Type::Converter::input target,
+          top value,
+          ?state: BrandDev::Internal::Type::Converter::dump_state
+        ) -> top
+
+        def self.inspect: (top target, depth: Integer) -> String
+      end
+    end
+  end
+end

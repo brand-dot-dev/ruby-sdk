@@ -1,0 +1,11 @@
+module BrandDev
+  class BrandIdentifyFromTransactionParams = BrandDev::Models::BrandIdentifyFromTransactionParams
+
+  class BrandRetrieveByTickerParams = BrandDev::Models::BrandRetrieveByTickerParams
+
+  class BrandRetrieveNaicsParams = BrandDev::Models::BrandRetrieveNaicsParams
+
+  class BrandRetrieveParams = BrandDev::Models::BrandRetrieveParams
+
+  class BrandSearchParams = BrandDev::Models::BrandSearchParams
+end

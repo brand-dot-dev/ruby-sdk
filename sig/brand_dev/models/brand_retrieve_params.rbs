@@ -1,0 +1,148 @@
+module BrandDev
+  module Models
+    type brand_retrieve_params =
+      {
+        domain: String,
+        force_language: BrandDev::Models::BrandRetrieveParams::force_language
+      }
+      & BrandDev::Internal::Type::request_parameters
+
+    class BrandRetrieveParams < BrandDev::Internal::Type::BaseModel
+      extend BrandDev::Internal::Type::RequestParameters::Converter
+      include BrandDev::Internal::Type::RequestParameters
+
+      attr_accessor domain: String
+
+      attr_reader force_language: BrandDev::Models::BrandRetrieveParams::force_language?
+
+      def force_language=: (
+        BrandDev::Models::BrandRetrieveParams::force_language
+      ) -> BrandDev::Models::BrandRetrieveParams::force_language
+
+      def initialize: (
+        domain: String,
+        ?force_language: BrandDev::Models::BrandRetrieveParams::force_language,
+        ?request_options: BrandDev::request_opts
+      ) -> void
+
+      def to_hash: -> {
+        domain: String,
+        force_language: BrandDev::Models::BrandRetrieveParams::force_language,
+        request_options: BrandDev::RequestOptions
+      }
+
+      type force_language =
+        :albanian
+        | :arabic
+        | :azeri
+        | :bengali
+        | :bulgarian
+        | :cebuano
+        | :croatian
+        | :czech
+        | :danish
+        | :dutch
+        | :english
+        | :estonian
+        | :farsi
+        | :finnish
+        | :french
+        | :german
+        | :hausa
+        | :hawaiian
+        | :hindi
+        | :hungarian
+        | :icelandic
+        | :indonesian
+        | :italian
+        | :kazakh
+        | :kyrgyz
+        | :latin
+        | :latvian
+        | :lithuanian
+        | :macedonian
+        | :mongolian
+        | :nepali
+        | :norwegian
+        | :pashto
+        | :pidgin
+        | :polish
+        | :portuguese
+        | :romanian
+        | :russian
+        | :serbian
+        | :slovak
+        | :slovene
+        | :somali
+        | :spanish
+        | :swahili
+        | :swedish
+        | :tagalog
+        | :turkish
+        | :ukrainian
+        | :urdu
+        | :uzbek
+        | :vietnamese
+        | :welsh
+
+      module ForceLanguage
+        extend BrandDev::Internal::Type::Enum
+
+        ALBANIAN: :albanian
+        ARABIC: :arabic
+        AZERI: :azeri
+        BENGALI: :bengali
+        BULGARIAN: :bulgarian
+        CEBUANO: :cebuano
+        CROATIAN: :croatian
+        CZECH: :czech
+        DANISH: :danish
+        DUTCH: :dutch
+        ENGLISH: :english
+        ESTONIAN: :estonian
+        FARSI: :farsi
+        FINNISH: :finnish
+        FRENCH: :french
+        GERMAN: :german
+        HAUSA: :hausa
+        HAWAIIAN: :hawaiian
+        HINDI: :hindi
+        HUNGARIAN: :hungarian
+        ICELANDIC: :icelandic
+        INDONESIAN: :indonesian
+        ITALIAN: :italian
+        KAZAKH: :kazakh
+        KYRGYZ: :kyrgyz
+        LATIN: :latin
+        LATVIAN: :latvian
+        LITHUANIAN: :lithuanian
+        MACEDONIAN: :macedonian
+        MONGOLIAN: :mongolian
+        NEPALI: :nepali
+        NORWEGIAN: :norwegian
+        PASHTO: :pashto
+        PIDGIN: :pidgin
+        POLISH: :polish
+        PORTUGUESE: :portuguese
+        ROMANIAN: :romanian
+        RUSSIAN: :russian
+        SERBIAN: :serbian
+        SLOVAK: :slovak
+        SLOVENE: :slovene
+        SOMALI: :somali
+        SPANISH: :spanish
+        SWAHILI: :swahili
+        SWEDISH: :swedish
+        TAGALOG: :tagalog
+        TURKISH: :turkish
+        UKRAINIAN: :ukrainian
+        URDU: :urdu
+        UZBEK: :uzbek
+        VIETNAMESE: :vietnamese
+        WELSH: :welsh
+
+        def self?.values: -> ::Array[BrandDev::Models::BrandRetrieveParams::force_language]
+      end
+    end
+  end
+end

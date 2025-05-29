@@ -1,0 +1,33 @@
+module BrandDev
+  module Resources
+    class Brand
+      def retrieve: (
+        domain: String,
+        ?force_language: BrandDev::Models::BrandRetrieveParams::force_language,
+        ?request_options: BrandDev::request_opts
+      ) -> BrandDev::Models::BrandRetrieveResponse
+
+      def identify_from_transaction: (
+        transaction_info: String,
+        ?request_options: BrandDev::request_opts
+      ) -> BrandDev::Models::BrandIdentifyFromTransactionResponse
+
+      def retrieve_by_ticker: (
+        ticker: String,
+        ?request_options: BrandDev::request_opts
+      ) -> BrandDev::Models::BrandRetrieveByTickerResponse
+
+      def retrieve_naics: (
+        input: String,
+        ?request_options: BrandDev::request_opts
+      ) -> BrandDev::Models::BrandRetrieveNaicsResponse
+
+      def search: (
+        query: String,
+        ?request_options: BrandDev::request_opts
+      ) -> BrandDev::Models::brand_search_response
+
+      def initialize: (client: BrandDev::Client) -> void
+    end
+  end
+end
