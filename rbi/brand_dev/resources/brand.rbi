@@ -21,6 +21,29 @@ module BrandDev
       )
       end
 
+      # Beta feature: Use AI to extract specific data points from a brand's website. The
+      # AI will crawl the website and extract the requested information based on the
+      # provided data points.
+      sig do
+        params(
+          data_to_extract:
+            T::Array[BrandDev::BrandAIQueryParams::DataToExtract::OrHash],
+          domain: String,
+          specific_pages: T::Array[String],
+          request_options: BrandDev::RequestOptions::OrHash
+        ).returns(BrandDev::Models::BrandAIQueryResponse)
+      end
+      def ai_query(
+        # Array of data points to extract from the website
+        data_to_extract:,
+        # The domain name to analyze
+        domain:,
+        # Optional array of specific pages to analyze
+        specific_pages: nil,
+        request_options: {}
+      )
+      end
+
       # Endpoint specially designed for platforms that want to identify transaction data
       # by the transaction title.
       sig do

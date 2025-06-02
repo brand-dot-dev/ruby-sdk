@@ -2,11 +2,11 @@ name: CI
 on:
   push:
     branches-ignore:
-      - "generated"
-      - "codegen/**"
-      - "integrated/**"
-      - "stl-preview-head/**"
-      - "stl-preview-base/**"
+      - 'generated'
+      - 'codegen/**'
+      - 'integrated/**'
+      - 'stl-preview-head/**'
+      - 'stl-preview-base/**'
 
 jobs:
   lint:

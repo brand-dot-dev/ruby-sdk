@@ -1,6 +1,8 @@
 # typed: strong
 
 module BrandDev
+  BrandAIQueryParams = BrandDev::Models::BrandAIQueryParams
+
   BrandIdentifyFromTransactionParams =
     BrandDev::Models::BrandIdentifyFromTransactionParams
 
