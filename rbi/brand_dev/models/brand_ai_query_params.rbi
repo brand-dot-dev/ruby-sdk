@@ -19,11 +19,15 @@ module BrandDev
       sig { returns(String) }
       attr_accessor :domain
 
-      # Optional array of specific pages to analyze
-      sig { returns(T.nilable(T::Array[String])) }
+      # Optional object specifying which pages to analyze
+      sig { returns(T.nilable(BrandDev::BrandAIQueryParams::SpecificPages)) }
       attr_reader :specific_pages
 
-      sig { params(specific_pages: T::Array[String]).void }
+      sig do
+        params(
+          specific_pages: BrandDev::BrandAIQueryParams::SpecificPages::OrHash
+        ).void
+      end
       attr_writer :specific_pages
 
       sig do
@@ -31,7 +35,7 @@ module BrandDev
           data_to_extract:
             T::Array[BrandDev::BrandAIQueryParams::DataToExtract::OrHash],
           domain: String,
-          specific_pages: T::Array[String],
+          specific_pages: BrandDev::BrandAIQueryParams::SpecificPages::OrHash,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(T.attached_class)
       end
@@ -40,7 +44,7 @@ module BrandDev
         data_to_extract:,
         # The domain name to analyze
         domain:,
-        # Optional array of specific pages to analyze
+        # Optional object specifying which pages to analyze
         specific_pages: nil,
         request_options: {}
       )
@@ -52,7 +56,7 @@ module BrandDev
             data_to_extract:
               T::Array[BrandDev::BrandAIQueryParams::DataToExtract],
             domain: String,
-            specific_pages: T::Array[String],
+            specific_pages: BrandDev::BrandAIQueryParams::SpecificPages,
             request_options: BrandDev::RequestOptions
           }
         )
@@ -177,6 +181,122 @@ module BrandDev
           end
           def self.values
           end
+        end
+      end
+
+      class SpecificPages < BrandDev::Internal::Type::BaseModel
+        OrHash =
+          T.type_alias do
+            T.any(
+              BrandDev::BrandAIQueryParams::SpecificPages,
+              BrandDev::Internal::AnyHash
+            )
+          end
+
+        # Whether to analyze the about us page
+        sig { returns(T.nilable(T::Boolean)) }
+        attr_reader :about_us
+
+        sig { params(about_us: T::Boolean).void }
+        attr_writer :about_us
+
+        # Whether to analyze the blog
+        sig { returns(T.nilable(T::Boolean)) }
+        attr_reader :blog
+
+        sig { params(blog: T::Boolean).void }
+        attr_writer :blog
+
+        # Whether to analyze the careers page
+        sig { returns(T.nilable(T::Boolean)) }
+        attr_reader :careers
+
+        sig { params(careers: T::Boolean).void }
+        attr_writer :careers
+
+        # Whether to analyze the contact us page
+        sig { returns(T.nilable(T::Boolean)) }
+        attr_reader :contact_us
+
+        sig { params(contact_us: T::Boolean).void }
+        attr_writer :contact_us
+
+        # Whether to analyze the FAQ page
+        sig { returns(T.nilable(T::Boolean)) }
+        attr_reader :faq
+
+        sig { params(faq: T::Boolean).void }
+        attr_writer :faq
+
+        # Whether to analyze the home page
+        sig { returns(T.nilable(T::Boolean)) }
+        attr_reader :home_page
+
+        sig { params(home_page: T::Boolean).void }
+        attr_writer :home_page
+
+        # Whether to analyze the privacy policy page
+        sig { returns(T.nilable(T::Boolean)) }
+        attr_reader :privacy_policy
+
+        sig { params(privacy_policy: T::Boolean).void }
+        attr_writer :privacy_policy
+
+        # Whether to analyze the terms and conditions page
+        sig { returns(T.nilable(T::Boolean)) }
+        attr_reader :terms_and_conditions
+
+        sig { params(terms_and_conditions: T::Boolean).void }
+        attr_writer :terms_and_conditions
+
+        # Optional object specifying which pages to analyze
+        sig do
+          params(
+            about_us: T::Boolean,
+            blog: T::Boolean,
+            careers: T::Boolean,
+            contact_us: T::Boolean,
+            faq: T::Boolean,
+            home_page: T::Boolean,
+            privacy_policy: T::Boolean,
+            terms_and_conditions: T::Boolean
+          ).returns(T.attached_class)
+        end
+        def self.new(
+          # Whether to analyze the about us page
+          about_us: nil,
+          # Whether to analyze the blog
+          blog: nil,
+          # Whether to analyze the careers page
+          careers: nil,
+          # Whether to analyze the contact us page
+          contact_us: nil,
+          # Whether to analyze the FAQ page
+          faq: nil,
+          # Whether to analyze the home page
+          home_page: nil,
+          # Whether to analyze the privacy policy page
+          privacy_policy: nil,
+          # Whether to analyze the terms and conditions page
+          terms_and_conditions: nil
+        )
+        end
+
+        sig do
+          override.returns(
+            {
+              about_us: T::Boolean,
+              blog: T::Boolean,
+              careers: T::Boolean,
+              contact_us: T::Boolean,
+              faq: T::Boolean,
+              home_page: T::Boolean,
+              privacy_policy: T::Boolean,
+              terms_and_conditions: T::Boolean
+            }
+          )
+        end
+        def to_hash
         end
       end
     end
