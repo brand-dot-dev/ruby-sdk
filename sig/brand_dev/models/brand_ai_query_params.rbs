@@ -1,0 +1,85 @@
+module BrandDev
+  module Models
+    type brand_ai_query_params =
+      {
+        data_to_extract: ::Array[BrandDev::BrandAIQueryParams::DataToExtract],
+        domain: String,
+        specific_pages: ::Array[String]
+      }
+      & BrandDev::Internal::Type::request_parameters
+
+    class BrandAIQueryParams < BrandDev::Internal::Type::BaseModel
+      extend BrandDev::Internal::Type::RequestParameters::Converter
+      include BrandDev::Internal::Type::RequestParameters
+
+      attr_accessor data_to_extract: ::Array[BrandDev::BrandAIQueryParams::DataToExtract]
+
+      attr_accessor domain: String
+
+      attr_reader specific_pages: ::Array[String]?
+
+      def specific_pages=: (::Array[String]) -> ::Array[String]
+
+      def initialize: (
+        data_to_extract: ::Array[BrandDev::BrandAIQueryParams::DataToExtract],
+        domain: String,
+        ?specific_pages: ::Array[String],
+        ?request_options: BrandDev::request_opts
+      ) -> void
+
+      def to_hash: -> {
+        data_to_extract: ::Array[BrandDev::BrandAIQueryParams::DataToExtract],
+        domain: String,
+        specific_pages: ::Array[String],
+        request_options: BrandDev::RequestOptions
+      }
+
+      type data_to_extract =
+        {
+          datapoint_description: String,
+          datapoint_example: String,
+          datapoint_name: String,
+          datapoint_type: BrandDev::Models::BrandAIQueryParams::DataToExtract::datapoint_type
+        }
+
+      class DataToExtract < BrandDev::Internal::Type::BaseModel
+        attr_accessor datapoint_description: String
+
+        attr_accessor datapoint_example: String
+
+        attr_accessor datapoint_name: String
+
+        attr_accessor datapoint_type: BrandDev::Models::BrandAIQueryParams::DataToExtract::datapoint_type
+
+        def initialize: (
+          datapoint_description: String,
+          datapoint_example: String,
+          datapoint_name: String,
+          datapoint_type: BrandDev::Models::BrandAIQueryParams::DataToExtract::datapoint_type
+        ) -> void
+
+        def to_hash: -> {
+          datapoint_description: String,
+          datapoint_example: String,
+          datapoint_name: String,
+          datapoint_type: BrandDev::Models::BrandAIQueryParams::DataToExtract::datapoint_type
+        }
+
+        type datapoint_type = :text | :number | :date | :boolean | :list | :url
+
+        module DatapointType
+          extend BrandDev::Internal::Type::Enum
+
+          TEXT: :text
+          NUMBER: :number
+          DATE: :date
+          BOOLEAN: :boolean
+          LIST: :list
+          URL: :url
+
+          def self?.values: -> ::Array[BrandDev::Models::BrandAIQueryParams::DataToExtract::datapoint_type]
+        end
+      end
+    end
+  end
+end

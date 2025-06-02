@@ -7,6 +7,13 @@ module BrandDev
         ?request_options: BrandDev::request_opts
       ) -> BrandDev::Models::BrandRetrieveResponse
 
+      def ai_query: (
+        data_to_extract: ::Array[BrandDev::BrandAIQueryParams::DataToExtract],
+        domain: String,
+        ?specific_pages: ::Array[String],
+        ?request_options: BrandDev::request_opts
+      ) -> BrandDev::Models::BrandAIQueryResponse
+
       def identify_from_transaction: (
         transaction_info: String,
         ?request_options: BrandDev::request_opts

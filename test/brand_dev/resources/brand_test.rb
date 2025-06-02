@@ -21,6 +21,35 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
     end
   end
 
+  def test_ai_query_required_params
+    skip("skipped: tests are disabled for the time being")
+
+    response =
+      @brand_dev.brand.ai_query(
+        data_to_extract: [
+          {
+            datapoint_description: "datapoint_description",
+            datapoint_example: "datapoint_example",
+            datapoint_name: "datapoint_name",
+            datapoint_type: :text
+          }
+        ],
+        domain: "domain"
+      )
+
+    assert_pattern do
+      response => BrandDev::Models::BrandAIQueryResponse
+    end
+
+    assert_pattern do
+      response => {
+        data_extracted: ^(BrandDev::Internal::Type::ArrayOf[BrandDev::Models::BrandAIQueryResponse::DataExtracted]) | nil,
+        domain: String | nil,
+        urls_analyzed: ^(BrandDev::Internal::Type::ArrayOf[String]) | nil
+      }
+    end
+  end
+
   def test_identify_from_transaction_required_params
     skip("skipped: tests are disabled for the time being")
 

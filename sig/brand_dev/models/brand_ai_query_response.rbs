@@ -1,0 +1,79 @@
+module BrandDev
+  module Models
+    type brand_ai_query_response =
+      {
+        data_extracted: ::Array[BrandDev::Models::BrandAIQueryResponse::DataExtracted],
+        domain: String,
+        urls_analyzed: ::Array[String]
+      }
+
+    class BrandAIQueryResponse < BrandDev::Internal::Type::BaseModel
+      attr_reader data_extracted: ::Array[BrandDev::Models::BrandAIQueryResponse::DataExtracted]?
+
+      def data_extracted=: (
+        ::Array[BrandDev::Models::BrandAIQueryResponse::DataExtracted]
+      ) -> ::Array[BrandDev::Models::BrandAIQueryResponse::DataExtracted]
+
+      attr_reader domain: String?
+
+      def domain=: (String) -> String
+
+      attr_reader urls_analyzed: ::Array[String]?
+
+      def urls_analyzed=: (::Array[String]) -> ::Array[String]
+
+      def initialize: (
+        ?data_extracted: ::Array[BrandDev::Models::BrandAIQueryResponse::DataExtracted],
+        ?domain: String,
+        ?urls_analyzed: ::Array[String]
+      ) -> void
+
+      def to_hash: -> {
+        data_extracted: ::Array[BrandDev::Models::BrandAIQueryResponse::DataExtracted],
+        domain: String,
+        urls_analyzed: ::Array[String]
+      }
+
+      type data_extracted =
+        {
+          datapoint_name: String,
+          datapoint_value: BrandDev::Models::BrandAIQueryResponse::DataExtracted::datapoint_value
+        }
+
+      class DataExtracted < BrandDev::Internal::Type::BaseModel
+        attr_reader datapoint_name: String?
+
+        def datapoint_name=: (String) -> String
+
+        attr_reader datapoint_value: BrandDev::Models::BrandAIQueryResponse::DataExtracted::datapoint_value?
+
+        def datapoint_value=: (
+          BrandDev::Models::BrandAIQueryResponse::DataExtracted::datapoint_value
+        ) -> BrandDev::Models::BrandAIQueryResponse::DataExtracted::datapoint_value
+
+        def initialize: (
+          ?datapoint_name: String,
+          ?datapoint_value: BrandDev::Models::BrandAIQueryResponse::DataExtracted::datapoint_value
+        ) -> void
+
+        def to_hash: -> {
+          datapoint_name: String,
+          datapoint_value: BrandDev::Models::BrandAIQueryResponse::DataExtracted::datapoint_value
+        }
+
+        type datapoint_value =
+          String | Float | bool | ::Array[String] | ::Array[Float]
+
+        module DatapointValue
+          extend BrandDev::Internal::Type::Union
+
+          def self?.variants: -> ::Array[BrandDev::Models::BrandAIQueryResponse::DataExtracted::datapoint_value]
+
+          StringArray: BrandDev::Internal::Type::Converter
+
+          FloatArray: BrandDev::Internal::Type::Converter
+        end
+      end
+    end
+  end
+end

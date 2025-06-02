@@ -1,4 +1,6 @@
 module BrandDev
+  class BrandAIQueryParams = BrandDev::Models::BrandAIQueryParams
+
   class BrandIdentifyFromTransactionParams = BrandDev::Models::BrandIdentifyFromTransactionParams
 
   class BrandRetrieveByTickerParams = BrandDev::Models::BrandRetrieveByTickerParams

@@ -39,6 +39,8 @@ module BrandDev
     mod.define_sorbet_constant!(const) { T.type_alias { mod.to_sorbet_type } }
   end
 
+  BrandAIQueryParams = BrandDev::Models::BrandAIQueryParams
+
   BrandIdentifyFromTransactionParams = BrandDev::Models::BrandIdentifyFromTransactionParams
 
   BrandRetrieveByTickerParams = BrandDev::Models::BrandRetrieveByTickerParams
