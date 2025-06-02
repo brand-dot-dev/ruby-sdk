@@ -40,3 +40,31 @@ jobs:
 
       - name: Run tests
         run: ./scripts/test
+
+  publish:
+    timeout-minutes: 10
+    name: publish gem
+    runs-on: ${{ github.repository == 'stainless-sdks/brand.dev-ruby' && 'depot-ubuntu-24.04' || 'ubuntu-latest' }}
+    needs: [lint]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: false
+      - run: |-
+          bundle install
+
+      - name: Build gem
+        run: gem build brand_dev.gemspec
+
+      - name: Publish gem to RubyGems
+        env:
+          GEM_HOST_API_KEY: ${{ secrets.PUSH_GEM_API_KEY }}
+        run: |
+          mkdir -p ~/.gem
+          echo ":rubygems_api_key: $GEM_HOST_API_KEY" > ~/.gem/credentials
+          chmod 0600 ~/.gem/credentials
+          gem push brand.dev-*.gem
