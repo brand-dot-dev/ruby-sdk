@@ -10,7 +10,7 @@ module BrandDev
       def ai_query: (
         data_to_extract: ::Array[BrandDev::BrandAIQueryParams::DataToExtract],
         domain: String,
-        ?specific_pages: ::Array[String],
+        ?specific_pages: BrandDev::BrandAIQueryParams::SpecificPages,
         ?request_options: BrandDev::request_opts
       ) -> BrandDev::Models::BrandAIQueryResponse
 

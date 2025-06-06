@@ -4,7 +4,7 @@ module BrandDev
       {
         data_to_extract: ::Array[BrandDev::BrandAIQueryParams::DataToExtract],
         domain: String,
-        specific_pages: ::Array[String]
+        specific_pages: BrandDev::BrandAIQueryParams::SpecificPages
       }
       & BrandDev::Internal::Type::request_parameters
 
@@ -16,21 +16,23 @@ module BrandDev
 
       attr_accessor domain: String
 
-      attr_reader specific_pages: ::Array[String]?
+      attr_reader specific_pages: BrandDev::BrandAIQueryParams::SpecificPages?
 
-      def specific_pages=: (::Array[String]) -> ::Array[String]
+      def specific_pages=: (
+        BrandDev::BrandAIQueryParams::SpecificPages
+      ) -> BrandDev::BrandAIQueryParams::SpecificPages
 
       def initialize: (
         data_to_extract: ::Array[BrandDev::BrandAIQueryParams::DataToExtract],
         domain: String,
-        ?specific_pages: ::Array[String],
+        ?specific_pages: BrandDev::BrandAIQueryParams::SpecificPages,
         ?request_options: BrandDev::request_opts
       ) -> void
 
       def to_hash: -> {
         data_to_extract: ::Array[BrandDev::BrandAIQueryParams::DataToExtract],
         domain: String,
-        specific_pages: ::Array[String],
+        specific_pages: BrandDev::BrandAIQueryParams::SpecificPages,
         request_options: BrandDev::RequestOptions
       }
 
@@ -79,6 +81,74 @@ module BrandDev
 
           def self?.values: -> ::Array[BrandDev::Models::BrandAIQueryParams::DataToExtract::datapoint_type]
         end
+      end
+
+      type specific_pages =
+        {
+          about_us: bool,
+          blog: bool,
+          careers: bool,
+          contact_us: bool,
+          faq: bool,
+          home_page: bool,
+          privacy_policy: bool,
+          terms_and_conditions: bool
+        }
+
+      class SpecificPages < BrandDev::Internal::Type::BaseModel
+        attr_reader about_us: bool?
+
+        def about_us=: (bool) -> bool
+
+        attr_reader blog: bool?
+
+        def blog=: (bool) -> bool
+
+        attr_reader careers: bool?
+
+        def careers=: (bool) -> bool
+
+        attr_reader contact_us: bool?
+
+        def contact_us=: (bool) -> bool
+
+        attr_reader faq: bool?
+
+        def faq=: (bool) -> bool
+
+        attr_reader home_page: bool?
+
+        def home_page=: (bool) -> bool
+
+        attr_reader privacy_policy: bool?
+
+        def privacy_policy=: (bool) -> bool
+
+        attr_reader terms_and_conditions: bool?
+
+        def terms_and_conditions=: (bool) -> bool
+
+        def initialize: (
+          ?about_us: bool,
+          ?blog: bool,
+          ?careers: bool,
+          ?contact_us: bool,
+          ?faq: bool,
+          ?home_page: bool,
+          ?privacy_policy: bool,
+          ?terms_and_conditions: bool
+        ) -> void
+
+        def to_hash: -> {
+          about_us: bool,
+          blog: bool,
+          careers: bool,
+          contact_us: bool,
+          faq: bool,
+          home_page: bool,
+          privacy_policy: bool,
+          terms_and_conditions: bool
+        }
       end
     end
   end

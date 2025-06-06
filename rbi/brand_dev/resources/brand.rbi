@@ -29,7 +29,7 @@ module BrandDev
           data_to_extract:
             T::Array[BrandDev::BrandAIQueryParams::DataToExtract::OrHash],
           domain: String,
-          specific_pages: T::Array[String],
+          specific_pages: BrandDev::BrandAIQueryParams::SpecificPages::OrHash,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(BrandDev::Models::BrandAIQueryResponse)
       end
@@ -38,7 +38,7 @@ module BrandDev
         data_to_extract:,
         # The domain name to analyze
         domain:,
-        # Optional array of specific pages to analyze
+        # Optional object specifying which pages to analyze
         specific_pages: nil,
         request_options: {}
       )

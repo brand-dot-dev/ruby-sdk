@@ -37,7 +37,7 @@ module BrandDev
       #
       # @param domain [String] The domain name to analyze
       #
-      # @param specific_pages [Array<String>] Optional array of specific pages to analyze
+      # @param specific_pages [BrandDev::Models::BrandAIQueryParams::SpecificPages] Optional object specifying which pages to analyze
       #
       # @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}, nil]
       #
