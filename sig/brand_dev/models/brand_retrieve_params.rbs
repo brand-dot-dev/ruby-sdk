@@ -3,7 +3,8 @@ module BrandDev
     type brand_retrieve_params =
       {
         domain: String,
-        force_language: BrandDev::Models::BrandRetrieveParams::force_language
+        force_language: BrandDev::Models::BrandRetrieveParams::force_language,
+        max_speed: bool
       }
       & BrandDev::Internal::Type::request_parameters
 
@@ -19,15 +20,21 @@ module BrandDev
         BrandDev::Models::BrandRetrieveParams::force_language
       ) -> BrandDev::Models::BrandRetrieveParams::force_language
 
+      attr_reader max_speed: bool?
+
+      def max_speed=: (bool) -> bool
+
       def initialize: (
         domain: String,
         ?force_language: BrandDev::Models::BrandRetrieveParams::force_language,
+        ?max_speed: bool,
         ?request_options: BrandDev::request_opts
       ) -> void
 
       def to_hash: -> {
         domain: String,
         force_language: BrandDev::Models::BrandRetrieveParams::force_language,
+        max_speed: bool,
         request_options: BrandDev::RequestOptions
       }
 
