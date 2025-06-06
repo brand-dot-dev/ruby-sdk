@@ -78,6 +78,31 @@ module BrandDev
         )
       end
 
+      # Signal that you may fetch brand data for a particular domain soon to improve
+      # latency. This endpoint does not charge credits and is available for paid
+      # customers to optimize future requests. [You must be on a paid plan to use this
+      # endpoint]
+      #
+      # @overload prefetch(domain:, request_options: {})
+      #
+      # @param domain [String] Domain name to prefetch brand data for
+      #
+      # @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}, nil]
+      #
+      # @return [BrandDev::Models::BrandPrefetchResponse]
+      #
+      # @see BrandDev::Models::BrandPrefetchParams
+      def prefetch(params)
+        parsed, options = BrandDev::BrandPrefetchParams.dump_request(params)
+        @client.request(
+          method: :post,
+          path: "brand/prefetch",
+          body: parsed,
+          model: BrandDev::Models::BrandPrefetchResponse,
+          options: options
+        )
+      end
+
       # Retrieve brand data by stock ticker (e.g. AAPL, TSLA, etc.)
       #
       # @overload retrieve_by_ticker(ticker:, request_options: {})
