@@ -19,6 +19,11 @@ module BrandDev
         ?request_options: BrandDev::request_opts
       ) -> BrandDev::Models::BrandIdentifyFromTransactionResponse
 
+      def prefetch: (
+        domain: String,
+        ?request_options: BrandDev::request_opts
+      ) -> BrandDev::Models::BrandPrefetchResponse
+
       def retrieve_by_ticker: (
         ticker: String,
         ?request_options: BrandDev::request_opts

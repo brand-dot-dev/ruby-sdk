@@ -59,6 +59,23 @@ module BrandDev
       )
       end
 
+      # Signal that you may fetch brand data for a particular domain soon to improve
+      # latency. This endpoint does not charge credits and is available for paid
+      # customers to optimize future requests. [You must be on a paid plan to use this
+      # endpoint]
+      sig do
+        params(
+          domain: String,
+          request_options: BrandDev::RequestOptions::OrHash
+        ).returns(BrandDev::Models::BrandPrefetchResponse)
+      end
+      def prefetch(
+        # Domain name to prefetch brand data for
+        domain:,
+        request_options: {}
+      )
+      end
+
       # Retrieve brand data by stock ticker (e.g. AAPL, TSLA, etc.)
       sig do
         params(
