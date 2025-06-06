@@ -1,0 +1,23 @@
+module BrandDev
+  module Models
+    type brand_prefetch_params =
+      { domain: String } & BrandDev::Internal::Type::request_parameters
+
+    class BrandPrefetchParams < BrandDev::Internal::Type::BaseModel
+      extend BrandDev::Internal::Type::RequestParameters::Converter
+      include BrandDev::Internal::Type::RequestParameters
+
+      attr_accessor domain: String
+
+      def initialize: (
+        domain: String,
+        ?request_options: BrandDev::request_opts
+      ) -> void
+
+      def to_hash: -> {
+        domain: String,
+        request_options: BrandDev::RequestOptions
+      }
+    end
+  end
+end

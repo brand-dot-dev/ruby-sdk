@@ -6,6 +6,8 @@ module BrandDev
   BrandIdentifyFromTransactionParams =
     BrandDev::Models::BrandIdentifyFromTransactionParams
 
+  BrandPrefetchParams = BrandDev::Models::BrandPrefetchParams
+
   BrandRetrieveByTickerParams = BrandDev::Models::BrandRetrieveByTickerParams
 
   BrandRetrieveNaicsParams = BrandDev::Models::BrandRetrieveNaicsParams

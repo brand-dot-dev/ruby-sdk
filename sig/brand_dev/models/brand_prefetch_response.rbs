@@ -1,0 +1,28 @@
+module BrandDev
+  module Models
+    type brand_prefetch_response =
+      { domain: String, message: String, status: String }
+
+    class BrandPrefetchResponse < BrandDev::Internal::Type::BaseModel
+      attr_reader domain: String?
+
+      def domain=: (String) -> String
+
+      attr_reader message: String?
+
+      def message=: (String) -> String
+
+      attr_reader status: String?
+
+      def status=: (String) -> String
+
+      def initialize: (
+        ?domain: String,
+        ?message: String,
+        ?status: String
+      ) -> void
+
+      def to_hash: -> { domain: String, message: String, status: String }
+    end
+  end
+end
