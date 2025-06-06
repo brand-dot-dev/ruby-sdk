@@ -21,8 +21,8 @@ module BrandDev
 
       # @!attribute max_speed
       #   Optional parameter to optimize the API call for maximum speed. When set to true,
-      #   the API will skip social media data extraction and external service calls (like
-      #   Crunchbase) to return results faster with basic brand information only.
+      #   the API will skip time-consuming operations for faster response at the cost of
+      #   less comprehensive data.
       #
       #   @return [Boolean, nil]
       optional :max_speed, BrandDev::Internal::Type::Boolean
