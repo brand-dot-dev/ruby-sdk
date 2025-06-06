@@ -3,13 +3,18 @@
 module BrandDev
   module Resources
     class Brand
+      # Some parameter documentations has been truncated, see
+      # {BrandDev::Models::BrandRetrieveParams} for more details.
+      #
       # Retrieve brand data by domain
       #
-      # @overload retrieve(domain:, force_language: nil, request_options: {})
+      # @overload retrieve(domain:, force_language: nil, max_speed: nil, request_options: {})
       #
       # @param domain [String] Domain name to retrieve brand data for
       #
       # @param force_language [Symbol, BrandDev::Models::BrandRetrieveParams::ForceLanguage] Optional parameter to force the language of the retrieved brand data
+      #
+      # @param max_speed [Boolean] Optional parameter to optimize the API call for maximum speed. When set to true,
       #
       # @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}, nil]
       #
@@ -21,7 +26,7 @@ module BrandDev
         @client.request(
           method: :get,
           path: "brand/retrieve",
-          query: parsed,
+          query: parsed.transform_keys(max_speed: "maxSpeed"),
           model: BrandDev::Models::BrandRetrieveResponse,
           options: options
         )

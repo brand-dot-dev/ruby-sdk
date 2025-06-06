@@ -4,6 +4,7 @@ module BrandDev
       def retrieve: (
         domain: String,
         ?force_language: BrandDev::Models::BrandRetrieveParams::force_language,
+        ?max_speed: bool,
         ?request_options: BrandDev::request_opts
       ) -> BrandDev::Models::BrandRetrieveResponse
 
