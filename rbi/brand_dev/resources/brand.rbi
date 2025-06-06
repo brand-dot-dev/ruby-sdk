@@ -9,6 +9,7 @@ module BrandDev
           domain: String,
           force_language:
             BrandDev::BrandRetrieveParams::ForceLanguage::OrSymbol,
+          max_speed: T::Boolean,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(BrandDev::Models::BrandRetrieveResponse)
       end
@@ -17,6 +18,10 @@ module BrandDev
         domain:,
         # Optional parameter to force the language of the retrieved brand data
         force_language: nil,
+        # Optional parameter to optimize the API call for maximum speed. When set to true,
+        # the API will skip social media data extraction and external service calls (like
+        # Crunchbase) to return results faster with basic brand information only.
+        max_speed: nil,
         request_options: {}
       )
       end
