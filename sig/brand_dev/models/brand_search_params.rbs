@@ -1,7 +1,8 @@
 module BrandDev
   module Models
     type brand_search_params =
-      { query: String } & BrandDev::Internal::Type::request_parameters
+      { query: String, timeout_ms: Integer }
+      & BrandDev::Internal::Type::request_parameters
 
     class BrandSearchParams < BrandDev::Internal::Type::BaseModel
       extend BrandDev::Internal::Type::RequestParameters::Converter
@@ -9,13 +10,19 @@ module BrandDev
 
       attr_accessor query: String
 
+      attr_reader timeout_ms: Integer?
+
+      def timeout_ms=: (Integer) -> Integer
+
       def initialize: (
         query: String,
+        ?timeout_ms: Integer,
         ?request_options: BrandDev::request_opts
       ) -> void
 
       def to_hash: -> {
         query: String,
+        timeout_ms: Integer,
         request_options: BrandDev::RequestOptions
       }
     end

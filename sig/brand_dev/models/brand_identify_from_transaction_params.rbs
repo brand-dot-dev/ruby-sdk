@@ -1,7 +1,7 @@
 module BrandDev
   module Models
     type brand_identify_from_transaction_params =
-      { transaction_info: String }
+      { transaction_info: String, timeout_ms: Integer }
       & BrandDev::Internal::Type::request_parameters
 
     class BrandIdentifyFromTransactionParams < BrandDev::Internal::Type::BaseModel
@@ -10,13 +10,19 @@ module BrandDev
 
       attr_accessor transaction_info: String
 
+      attr_reader timeout_ms: Integer?
+
+      def timeout_ms=: (Integer) -> Integer
+
       def initialize: (
         transaction_info: String,
+        ?timeout_ms: Integer,
         ?request_options: BrandDev::request_opts
       ) -> void
 
       def to_hash: -> {
         transaction_info: String,
+        timeout_ms: Integer,
         request_options: BrandDev::RequestOptions
       }
     end

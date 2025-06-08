@@ -1,7 +1,8 @@
 module BrandDev
   module Models
     type brand_retrieve_naics_params =
-      { input: String } & BrandDev::Internal::Type::request_parameters
+      { input: String, timeout_ms: Integer }
+      & BrandDev::Internal::Type::request_parameters
 
     class BrandRetrieveNaicsParams < BrandDev::Internal::Type::BaseModel
       extend BrandDev::Internal::Type::RequestParameters::Converter
@@ -9,13 +10,19 @@ module BrandDev
 
       attr_accessor input: String
 
+      attr_reader timeout_ms: Integer?
+
+      def timeout_ms=: (Integer) -> Integer
+
       def initialize: (
         input: String,
+        ?timeout_ms: Integer,
         ?request_options: BrandDev::request_opts
       ) -> void
 
       def to_hash: -> {
         input: String,
+        timeout_ms: Integer,
         request_options: BrandDev::RequestOptions
       }
     end
