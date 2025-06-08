@@ -27,7 +27,15 @@ module BrandDev
       #   @return [Boolean, nil]
       optional :max_speed, BrandDev::Internal::Type::Boolean
 
-      # @!method initialize(domain:, force_language: nil, max_speed: nil, request_options: {})
+      # @!attribute timeout_ms
+      #   Optional timeout in milliseconds for the request. If the request takes longer
+      #   than this value, it will be aborted with a 408 status code. Maximum allowed
+      #   value is 300000ms (5 minutes).
+      #
+      #   @return [Integer, nil]
+      optional :timeout_ms, Integer
+
+      # @!method initialize(domain:, force_language: nil, max_speed: nil, timeout_ms: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
       #   {BrandDev::Models::BrandRetrieveParams} for more details.
       #
@@ -36,6 +44,8 @@ module BrandDev
       #   @param force_language [Symbol, BrandDev::Models::BrandRetrieveParams::ForceLanguage] Optional parameter to force the language of the retrieved brand data
       #
       #   @param max_speed [Boolean] Optional parameter to optimize the API call for maximum speed. When set to true,
+      #
+      #   @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #
       #   @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}]
 

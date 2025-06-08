@@ -8,13 +8,15 @@ module BrandDev
       #
       # Retrieve brand data by domain
       #
-      # @overload retrieve(domain:, force_language: nil, max_speed: nil, request_options: {})
+      # @overload retrieve(domain:, force_language: nil, max_speed: nil, timeout_ms: nil, request_options: {})
       #
       # @param domain [String] Domain name to retrieve brand data for
       #
       # @param force_language [Symbol, BrandDev::Models::BrandRetrieveParams::ForceLanguage] Optional parameter to force the language of the retrieved brand data
       #
       # @param max_speed [Boolean] Optional parameter to optimize the API call for maximum speed. When set to true,
+      #
+      # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #
       # @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}, nil]
       #
@@ -26,23 +28,28 @@ module BrandDev
         @client.request(
           method: :get,
           path: "brand/retrieve",
-          query: parsed.transform_keys(max_speed: "maxSpeed"),
+          query: parsed.transform_keys(max_speed: "maxSpeed", timeout_ms: "timeoutMS"),
           model: BrandDev::Models::BrandRetrieveResponse,
           options: options
         )
       end
 
+      # Some parameter documentations has been truncated, see
+      # {BrandDev::Models::BrandAIQueryParams} for more details.
+      #
       # Beta feature: Use AI to extract specific data points from a brand's website. The
       # AI will crawl the website and extract the requested information based on the
       # provided data points.
       #
-      # @overload ai_query(data_to_extract:, domain:, specific_pages: nil, request_options: {})
+      # @overload ai_query(data_to_extract:, domain:, specific_pages: nil, timeout_ms: nil, request_options: {})
       #
       # @param data_to_extract [Array<BrandDev::Models::BrandAIQueryParams::DataToExtract>] Array of data points to extract from the website
       #
       # @param domain [String] The domain name to analyze
       #
       # @param specific_pages [BrandDev::Models::BrandAIQueryParams::SpecificPages] Optional object specifying which pages to analyze
+      #
+      # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #
       # @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}, nil]
       #
@@ -60,12 +67,17 @@ module BrandDev
         )
       end
 
+      # Some parameter documentations has been truncated, see
+      # {BrandDev::Models::BrandIdentifyFromTransactionParams} for more details.
+      #
       # Endpoint specially designed for platforms that want to identify transaction data
       # by the transaction title.
       #
-      # @overload identify_from_transaction(transaction_info:, request_options: {})
+      # @overload identify_from_transaction(transaction_info:, timeout_ms: nil, request_options: {})
       #
       # @param transaction_info [String] Transaction information to identify the brand
+      #
+      # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #
       # @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}, nil]
       #
@@ -77,20 +89,25 @@ module BrandDev
         @client.request(
           method: :get,
           path: "brand/transaction_identifier",
-          query: parsed,
+          query: parsed.transform_keys(timeout_ms: "timeoutMS"),
           model: BrandDev::Models::BrandIdentifyFromTransactionResponse,
           options: options
         )
       end
 
+      # Some parameter documentations has been truncated, see
+      # {BrandDev::Models::BrandPrefetchParams} for more details.
+      #
       # Signal that you may fetch brand data for a particular domain soon to improve
       # latency. This endpoint does not charge credits and is available for paid
       # customers to optimize future requests. [You must be on a paid plan to use this
       # endpoint]
       #
-      # @overload prefetch(domain:, request_options: {})
+      # @overload prefetch(domain:, timeout_ms: nil, request_options: {})
       #
       # @param domain [String] Domain name to prefetch brand data for
+      #
+      # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #
       # @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}, nil]
       #
@@ -108,11 +125,16 @@ module BrandDev
         )
       end
 
+      # Some parameter documentations has been truncated, see
+      # {BrandDev::Models::BrandRetrieveByTickerParams} for more details.
+      #
       # Retrieve brand data by stock ticker (e.g. AAPL, TSLA, etc.)
       #
-      # @overload retrieve_by_ticker(ticker:, request_options: {})
+      # @overload retrieve_by_ticker(ticker:, timeout_ms: nil, request_options: {})
       #
       # @param ticker [String] Stock ticker symbol to retrieve brand data for (e.g. AAPL, TSLA, etc.)
+      #
+      # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #
       # @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}, nil]
       #
@@ -124,7 +146,7 @@ module BrandDev
         @client.request(
           method: :get,
           path: "brand/retrieve-by-ticker",
-          query: parsed,
+          query: parsed.transform_keys(timeout_ms: "timeoutMS"),
           model: BrandDev::Models::BrandRetrieveByTickerResponse,
           options: options
         )
@@ -135,9 +157,11 @@ module BrandDev
       #
       # Endpoint to classify any brand into a 2022 NAICS code.
       #
-      # @overload retrieve_naics(input:, request_options: {})
+      # @overload retrieve_naics(input:, timeout_ms: nil, request_options: {})
       #
       # @param input [String] Brand domain or title to retrieve NAICS code for. If a valid domain is provided
+      #
+      # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #
       # @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}, nil]
       #
@@ -149,17 +173,22 @@ module BrandDev
         @client.request(
           method: :get,
           path: "brand/naics",
-          query: parsed,
+          query: parsed.transform_keys(timeout_ms: "timeoutMS"),
           model: BrandDev::Models::BrandRetrieveNaicsResponse,
           options: options
         )
       end
 
+      # Some parameter documentations has been truncated, see
+      # {BrandDev::Models::BrandSearchParams} for more details.
+      #
       # Search brands by query
       #
-      # @overload search(query:, request_options: {})
+      # @overload search(query:, timeout_ms: nil, request_options: {})
       #
       # @param query [String] Query string to search brands
+      #
+      # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #
       # @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}, nil]
       #
@@ -171,7 +200,7 @@ module BrandDev
         @client.request(
           method: :get,
           path: "brand/search",
-          query: parsed,
+          query: parsed.transform_keys(timeout_ms: "timeoutMS"),
           model: BrandDev::Internal::Type::ArrayOf[BrandDev::Models::BrandSearchResponseItem],
           options: options
         )

@@ -18,15 +18,29 @@ module BrandDev
       sig { returns(String) }
       attr_accessor :transaction_info
 
+      # Optional timeout in milliseconds for the request. If the request takes longer
+      # than this value, it will be aborted with a 408 status code. Maximum allowed
+      # value is 300000ms (5 minutes).
+      sig { returns(T.nilable(Integer)) }
+      attr_reader :timeout_ms
+
+      sig { params(timeout_ms: Integer).void }
+      attr_writer :timeout_ms
+
       sig do
         params(
           transaction_info: String,
+          timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(T.attached_class)
       end
       def self.new(
         # Transaction information to identify the brand
         transaction_info:,
+        # Optional timeout in milliseconds for the request. If the request takes longer
+        # than this value, it will be aborted with a 408 status code. Maximum allowed
+        # value is 300000ms (5 minutes).
+        timeout_ms: nil,
         request_options: {}
       )
       end
@@ -35,6 +49,7 @@ module BrandDev
         override.returns(
           {
             transaction_info: String,
+            timeout_ms: Integer,
             request_options: BrandDev::RequestOptions
           }
         )

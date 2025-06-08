@@ -26,12 +26,25 @@ module BrandDev
       #   @return [BrandDev::Models::BrandAIQueryParams::SpecificPages, nil]
       optional :specific_pages, -> { BrandDev::BrandAIQueryParams::SpecificPages }
 
-      # @!method initialize(data_to_extract:, domain:, specific_pages: nil, request_options: {})
+      # @!attribute timeout_ms
+      #   Optional timeout in milliseconds for the request. If the request takes longer
+      #   than this value, it will be aborted with a 408 status code. Maximum allowed
+      #   value is 300000ms (5 minutes).
+      #
+      #   @return [Integer, nil]
+      optional :timeout_ms, Integer, api_name: :timeoutMS
+
+      # @!method initialize(data_to_extract:, domain:, specific_pages: nil, timeout_ms: nil, request_options: {})
+      #   Some parameter documentations has been truncated, see
+      #   {BrandDev::Models::BrandAIQueryParams} for more details.
+      #
       #   @param data_to_extract [Array<BrandDev::Models::BrandAIQueryParams::DataToExtract>] Array of data points to extract from the website
       #
       #   @param domain [String] The domain name to analyze
       #
       #   @param specific_pages [BrandDev::Models::BrandAIQueryParams::SpecificPages] Optional object specifying which pages to analyze
+      #
+      #   @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #
       #   @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}]
 
