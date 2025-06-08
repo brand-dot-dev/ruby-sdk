@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.0-alpha.7 (2025-06-08)
+
+Full Changelog: [v0.1.0-alpha.6...v0.1.0-alpha.7](https://github.com/brand-dot-dev/ruby-sdk/compare/v0.1.0-alpha.6...v0.1.0-alpha.7)
+
+### Chores
+
+* **internal:** version bump ([d704a75](https://github.com/brand-dot-dev/ruby-sdk/commit/d704a75754d47d3ffa7797e96ae02cc4145b7b59))
+
 ## 0.1.0-alpha.6 (2025-06-08)
 
 Full Changelog: [v0.1.0-alpha.5...v0.1.0-alpha.6](https://github.com/brand-dot-dev/ruby-sdk/compare/v0.1.0-alpha.5...v0.1.0-alpha.6)
