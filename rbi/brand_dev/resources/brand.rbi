@@ -10,6 +10,7 @@ module BrandDev
           force_language:
             BrandDev::BrandRetrieveParams::ForceLanguage::OrSymbol,
           max_speed: T::Boolean,
+          timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(BrandDev::Models::BrandRetrieveResponse)
       end
@@ -22,6 +23,10 @@ module BrandDev
         # the API will skip time-consuming operations for faster response at the cost of
         # less comprehensive data.
         max_speed: nil,
+        # Optional timeout in milliseconds for the request. If the request takes longer
+        # than this value, it will be aborted with a 408 status code. Maximum allowed
+        # value is 300000ms (5 minutes).
+        timeout_ms: nil,
         request_options: {}
       )
       end
@@ -35,6 +40,7 @@ module BrandDev
             T::Array[BrandDev::BrandAIQueryParams::DataToExtract::OrHash],
           domain: String,
           specific_pages: BrandDev::BrandAIQueryParams::SpecificPages::OrHash,
+          timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(BrandDev::Models::BrandAIQueryResponse)
       end
@@ -45,6 +51,10 @@ module BrandDev
         domain:,
         # Optional object specifying which pages to analyze
         specific_pages: nil,
+        # Optional timeout in milliseconds for the request. If the request takes longer
+        # than this value, it will be aborted with a 408 status code. Maximum allowed
+        # value is 300000ms (5 minutes).
+        timeout_ms: nil,
         request_options: {}
       )
       end
@@ -54,12 +64,17 @@ module BrandDev
       sig do
         params(
           transaction_info: String,
+          timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(BrandDev::Models::BrandIdentifyFromTransactionResponse)
       end
       def identify_from_transaction(
         # Transaction information to identify the brand
         transaction_info:,
+        # Optional timeout in milliseconds for the request. If the request takes longer
+        # than this value, it will be aborted with a 408 status code. Maximum allowed
+        # value is 300000ms (5 minutes).
+        timeout_ms: nil,
         request_options: {}
       )
       end
@@ -71,12 +86,17 @@ module BrandDev
       sig do
         params(
           domain: String,
+          timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(BrandDev::Models::BrandPrefetchResponse)
       end
       def prefetch(
         # Domain name to prefetch brand data for
         domain:,
+        # Optional timeout in milliseconds for the request. If the request takes longer
+        # than this value, it will be aborted with a 408 status code. Maximum allowed
+        # value is 300000ms (5 minutes).
+        timeout_ms: nil,
         request_options: {}
       )
       end
@@ -85,12 +105,17 @@ module BrandDev
       sig do
         params(
           ticker: String,
+          timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(BrandDev::Models::BrandRetrieveByTickerResponse)
       end
       def retrieve_by_ticker(
         # Stock ticker symbol to retrieve brand data for (e.g. AAPL, TSLA, etc.)
         ticker:,
+        # Optional timeout in milliseconds for the request. If the request takes longer
+        # than this value, it will be aborted with a 408 status code. Maximum allowed
+        # value is 300000ms (5 minutes).
+        timeout_ms: nil,
         request_options: {}
       )
       end
@@ -99,6 +124,7 @@ module BrandDev
       sig do
         params(
           input: String,
+          timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(BrandDev::Models::BrandRetrieveNaicsResponse)
       end
@@ -107,6 +133,10 @@ module BrandDev
         # in `input`, it will be used for classification, otherwise, we will search for
         # the brand using the provided title.
         input:,
+        # Optional timeout in milliseconds for the request. If the request takes longer
+        # than this value, it will be aborted with a 408 status code. Maximum allowed
+        # value is 300000ms (5 minutes).
+        timeout_ms: nil,
         request_options: {}
       )
       end
@@ -115,12 +145,17 @@ module BrandDev
       sig do
         params(
           query: String,
+          timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(T::Array[BrandDev::Models::BrandSearchResponseItem])
       end
       def search(
         # Query string to search brands
         query:,
+        # Optional timeout in milliseconds for the request. If the request takes longer
+        # than this value, it will be aborted with a 408 status code. Maximum allowed
+        # value is 300000ms (5 minutes).
+        timeout_ms: nil,
         request_options: {}
       )
       end

@@ -39,12 +39,22 @@ module BrandDev
       sig { params(max_speed: T::Boolean).void }
       attr_writer :max_speed
 
+      # Optional timeout in milliseconds for the request. If the request takes longer
+      # than this value, it will be aborted with a 408 status code. Maximum allowed
+      # value is 300000ms (5 minutes).
+      sig { returns(T.nilable(Integer)) }
+      attr_reader :timeout_ms
+
+      sig { params(timeout_ms: Integer).void }
+      attr_writer :timeout_ms
+
       sig do
         params(
           domain: String,
           force_language:
             BrandDev::BrandRetrieveParams::ForceLanguage::OrSymbol,
           max_speed: T::Boolean,
+          timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(T.attached_class)
       end
@@ -57,6 +67,10 @@ module BrandDev
         # the API will skip time-consuming operations for faster response at the cost of
         # less comprehensive data.
         max_speed: nil,
+        # Optional timeout in milliseconds for the request. If the request takes longer
+        # than this value, it will be aborted with a 408 status code. Maximum allowed
+        # value is 300000ms (5 minutes).
+        timeout_ms: nil,
         request_options: {}
       )
       end
@@ -68,6 +82,7 @@ module BrandDev
             force_language:
               BrandDev::BrandRetrieveParams::ForceLanguage::OrSymbol,
             max_speed: T::Boolean,
+            timeout_ms: Integer,
             request_options: BrandDev::RequestOptions
           }
         )

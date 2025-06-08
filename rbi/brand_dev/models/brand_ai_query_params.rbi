@@ -30,12 +30,22 @@ module BrandDev
       end
       attr_writer :specific_pages
 
+      # Optional timeout in milliseconds for the request. If the request takes longer
+      # than this value, it will be aborted with a 408 status code. Maximum allowed
+      # value is 300000ms (5 minutes).
+      sig { returns(T.nilable(Integer)) }
+      attr_reader :timeout_ms
+
+      sig { params(timeout_ms: Integer).void }
+      attr_writer :timeout_ms
+
       sig do
         params(
           data_to_extract:
             T::Array[BrandDev::BrandAIQueryParams::DataToExtract::OrHash],
           domain: String,
           specific_pages: BrandDev::BrandAIQueryParams::SpecificPages::OrHash,
+          timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(T.attached_class)
       end
@@ -46,6 +56,10 @@ module BrandDev
         domain:,
         # Optional object specifying which pages to analyze
         specific_pages: nil,
+        # Optional timeout in milliseconds for the request. If the request takes longer
+        # than this value, it will be aborted with a 408 status code. Maximum allowed
+        # value is 300000ms (5 minutes).
+        timeout_ms: nil,
         request_options: {}
       )
       end
@@ -57,6 +71,7 @@ module BrandDev
               T::Array[BrandDev::BrandAIQueryParams::DataToExtract],
             domain: String,
             specific_pages: BrandDev::BrandAIQueryParams::SpecificPages,
+            timeout_ms: Integer,
             request_options: BrandDev::RequestOptions
           }
         )
