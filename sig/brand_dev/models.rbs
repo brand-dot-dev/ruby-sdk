@@ -11,5 +11,9 @@ module BrandDev
 
   class BrandRetrieveParams = BrandDev::Models::BrandRetrieveParams
 
+  class BrandScreenshotParams = BrandDev::Models::BrandScreenshotParams
+
   class BrandSearchParams = BrandDev::Models::BrandSearchParams
+
+  class BrandStyleguideParams = BrandDev::Models::BrandStyleguideParams
 end
