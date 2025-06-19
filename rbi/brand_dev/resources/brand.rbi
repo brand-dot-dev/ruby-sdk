@@ -141,6 +141,27 @@ module BrandDev
       )
       end
 
+      # Returns a simplified version of brand data containing only essential
+      # information: domain, title, colors, logos, and backdrops. This endpoint is
+      # optimized for faster responses and reduced data transfer.
+      sig do
+        params(
+          domain: String,
+          timeout_ms: Integer,
+          request_options: BrandDev::RequestOptions::OrHash
+        ).returns(BrandDev::Models::BrandRetrieveSimplifiedResponse)
+      end
+      def retrieve_simplified(
+        # Domain name to retrieve simplified brand data for
+        domain:,
+        # Optional timeout in milliseconds for the request. If the request takes longer
+        # than this value, it will be aborted with a 408 status code. Maximum allowed
+        # value is 300000ms (5 minutes).
+        timeout_ms: nil,
+        request_options: {}
+      )
+      end
+
       # Beta feature: Capture a screenshot of a website. Supports both viewport
       # (standard browser view) and full-page screenshots. Returns a URL to the uploaded
       # screenshot image hosted on our CDN.

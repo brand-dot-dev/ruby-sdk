@@ -41,6 +41,12 @@ module BrandDev
         ?request_options: BrandDev::request_opts
       ) -> BrandDev::Models::BrandRetrieveNaicsResponse
 
+      def retrieve_simplified: (
+        domain: String,
+        ?timeout_ms: Integer,
+        ?request_options: BrandDev::request_opts
+      ) -> BrandDev::Models::BrandRetrieveSimplifiedResponse
+
       def screenshot: (
         domain: String,
         ?full_screenshot: BrandDev::Models::BrandScreenshotParams::full_screenshot,
