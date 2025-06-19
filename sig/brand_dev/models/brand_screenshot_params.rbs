@@ -1,0 +1,46 @@
+module BrandDev
+  module Models
+    type brand_screenshot_params =
+      {
+        domain: String,
+        full_screenshot: BrandDev::Models::BrandScreenshotParams::full_screenshot
+      }
+      & BrandDev::Internal::Type::request_parameters
+
+    class BrandScreenshotParams < BrandDev::Internal::Type::BaseModel
+      extend BrandDev::Internal::Type::RequestParameters::Converter
+      include BrandDev::Internal::Type::RequestParameters
+
+      attr_accessor domain: String
+
+      attr_reader full_screenshot: BrandDev::Models::BrandScreenshotParams::full_screenshot?
+
+      def full_screenshot=: (
+        BrandDev::Models::BrandScreenshotParams::full_screenshot
+      ) -> BrandDev::Models::BrandScreenshotParams::full_screenshot
+
+      def initialize: (
+        domain: String,
+        ?full_screenshot: BrandDev::Models::BrandScreenshotParams::full_screenshot,
+        ?request_options: BrandDev::request_opts
+      ) -> void
+
+      def to_hash: -> {
+        domain: String,
+        full_screenshot: BrandDev::Models::BrandScreenshotParams::full_screenshot,
+        request_options: BrandDev::RequestOptions
+      }
+
+      type full_screenshot = :true | :false
+
+      module FullScreenshot
+        extend BrandDev::Internal::Type::Enum
+
+        TRUE: :true
+        FALSE: :false
+
+        def self?.values: -> ::Array[BrandDev::Models::BrandScreenshotParams::full_screenshot]
+      end
+    end
+  end
+end

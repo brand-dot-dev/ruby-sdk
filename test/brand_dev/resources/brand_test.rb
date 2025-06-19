@@ -123,6 +123,26 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
     end
   end
 
+  def test_screenshot_required_params
+    skip("skipped: tests are disabled for the time being")
+
+    response = @brand_dev.brand.screenshot(domain: "domain")
+
+    assert_pattern do
+      response => BrandDev::Models::BrandScreenshotResponse
+    end
+
+    assert_pattern do
+      response => {
+        code: Integer | nil,
+        domain: String | nil,
+        screenshot: String | nil,
+        screenshot_type: BrandDev::Models::BrandScreenshotResponse::ScreenshotType | nil,
+        status: String | nil
+      }
+    end
+  end
+
   def test_search_required_params
     skip("skipped: tests are disabled for the time being")
 
@@ -130,6 +150,25 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
 
     assert_pattern do
       response => ^(BrandDev::Internal::Type::ArrayOf[BrandDev::Models::BrandSearchResponseItem])
+    end
+  end
+
+  def test_styleguide_required_params
+    skip("skipped: tests are disabled for the time being")
+
+    response = @brand_dev.brand.styleguide(domain: "domain")
+
+    assert_pattern do
+      response => BrandDev::Models::BrandStyleguideResponse
+    end
+
+    assert_pattern do
+      response => {
+        code: Integer | nil,
+        domain: String | nil,
+        status: String | nil,
+        styleguide: BrandDev::Models::BrandStyleguideResponse::Styleguide | nil
+      }
     end
   end
 end
