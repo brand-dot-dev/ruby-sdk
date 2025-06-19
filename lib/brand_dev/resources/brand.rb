@@ -180,6 +180,35 @@ module BrandDev
       end
 
       # Some parameter documentations has been truncated, see
+      # {BrandDev::Models::BrandRetrieveSimplifiedParams} for more details.
+      #
+      # Returns a simplified version of brand data containing only essential
+      # information: domain, title, colors, logos, and backdrops. This endpoint is
+      # optimized for faster responses and reduced data transfer.
+      #
+      # @overload retrieve_simplified(domain:, timeout_ms: nil, request_options: {})
+      #
+      # @param domain [String] Domain name to retrieve simplified brand data for
+      #
+      # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
+      #
+      # @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}, nil]
+      #
+      # @return [BrandDev::Models::BrandRetrieveSimplifiedResponse]
+      #
+      # @see BrandDev::Models::BrandRetrieveSimplifiedParams
+      def retrieve_simplified(params)
+        parsed, options = BrandDev::BrandRetrieveSimplifiedParams.dump_request(params)
+        @client.request(
+          method: :get,
+          path: "brand/retrieve-simplified",
+          query: parsed.transform_keys(timeout_ms: "timeoutMS"),
+          model: BrandDev::Models::BrandRetrieveSimplifiedResponse,
+          options: options
+        )
+      end
+
+      # Some parameter documentations has been truncated, see
       # {BrandDev::Models::BrandScreenshotParams} for more details.
       #
       # Beta feature: Capture a screenshot of a website. Supports both viewport

@@ -123,6 +123,24 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
     end
   end
 
+  def test_retrieve_simplified_required_params
+    skip("skipped: tests are disabled for the time being")
+
+    response = @brand_dev.brand.retrieve_simplified(domain: "domain")
+
+    assert_pattern do
+      response => BrandDev::Models::BrandRetrieveSimplifiedResponse
+    end
+
+    assert_pattern do
+      response => {
+        brand: BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand | nil,
+        code: Integer | nil,
+        status: String | nil
+      }
+    end
+  end
+
   def test_screenshot_required_params
     skip("skipped: tests are disabled for the time being")
 
