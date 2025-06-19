@@ -5,6 +5,15 @@ module BrandDev
     end
 
     class ConversionError < BrandDev::Errors::Error
+      def cause: -> StandardError?
+
+      def initialize: (
+        on: Class,
+        method: Symbol,
+        target: top,
+        value: top,
+        ?cause: StandardError?
+      ) -> void
     end
 
     class APIError < BrandDev::Errors::Error

@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.1.0-alpha.9 (2025-06-19)
+
+Full Changelog: [v0.1.0-alpha.8...v0.1.0-alpha.9](https://github.com/brand-dot-dev/ruby-sdk/compare/v0.1.0-alpha.8...v0.1.0-alpha.9)
+
+### Features
+
+* **api:** manual updates ([169c21b](https://github.com/brand-dot-dev/ruby-sdk/commit/169c21b016f153befa54e0d2a68fbe0a8fe6df7e))
+* **api:** manual updates ([e3f5264](https://github.com/brand-dot-dev/ruby-sdk/commit/e3f5264df830ac3cc62db19ba13050d7822f0259))
+
+
+### Bug Fixes
+
+* issue where we cannot mutate arrays on base model derivatives ([ebaaa42](https://github.com/brand-dot-dev/ruby-sdk/commit/ebaaa42de2ed5b3f20120dcba81a42e85cba778a))
+
+
+### Chores
+
+* **ci:** enable for pull requests ([1e06613](https://github.com/brand-dot-dev/ruby-sdk/commit/1e066138d45a47d25eaf469e9a472279252ada3a))
+* **internal:** version bump ([90fada6](https://github.com/brand-dot-dev/ruby-sdk/commit/90fada6f55ae8d314784042718e7de258694575b))
+
 ## 0.1.0-alpha.8 (2025-06-12)
 
 Full Changelog: [v0.1.0-alpha.7...v0.1.0-alpha.8](https://github.com/brand-dot-dev/ruby-sdk/compare/v0.1.0-alpha.7...v0.1.0-alpha.8)

@@ -41,11 +41,29 @@ module BrandDev
         ?request_options: BrandDev::request_opts
       ) -> BrandDev::Models::BrandRetrieveNaicsResponse
 
+      def retrieve_simplified: (
+        domain: String,
+        ?timeout_ms: Integer,
+        ?request_options: BrandDev::request_opts
+      ) -> BrandDev::Models::BrandRetrieveSimplifiedResponse
+
+      def screenshot: (
+        domain: String,
+        ?full_screenshot: BrandDev::Models::BrandScreenshotParams::full_screenshot,
+        ?request_options: BrandDev::request_opts
+      ) -> BrandDev::Models::BrandScreenshotResponse
+
       def search: (
         query: String,
         ?timeout_ms: Integer,
         ?request_options: BrandDev::request_opts
       ) -> BrandDev::Models::brand_search_response
+
+      def styleguide: (
+        domain: String,
+        ?timeout_ms: Integer,
+        ?request_options: BrandDev::request_opts
+      ) -> BrandDev::Models::BrandStyleguideResponse
 
       def initialize: (client: BrandDev::Client) -> void
     end

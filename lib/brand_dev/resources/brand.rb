@@ -180,6 +180,64 @@ module BrandDev
       end
 
       # Some parameter documentations has been truncated, see
+      # {BrandDev::Models::BrandRetrieveSimplifiedParams} for more details.
+      #
+      # Returns a simplified version of brand data containing only essential
+      # information: domain, title, colors, logos, and backdrops. This endpoint is
+      # optimized for faster responses and reduced data transfer.
+      #
+      # @overload retrieve_simplified(domain:, timeout_ms: nil, request_options: {})
+      #
+      # @param domain [String] Domain name to retrieve simplified brand data for
+      #
+      # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
+      #
+      # @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}, nil]
+      #
+      # @return [BrandDev::Models::BrandRetrieveSimplifiedResponse]
+      #
+      # @see BrandDev::Models::BrandRetrieveSimplifiedParams
+      def retrieve_simplified(params)
+        parsed, options = BrandDev::BrandRetrieveSimplifiedParams.dump_request(params)
+        @client.request(
+          method: :get,
+          path: "brand/retrieve-simplified",
+          query: parsed.transform_keys(timeout_ms: "timeoutMS"),
+          model: BrandDev::Models::BrandRetrieveSimplifiedResponse,
+          options: options
+        )
+      end
+
+      # Some parameter documentations has been truncated, see
+      # {BrandDev::Models::BrandScreenshotParams} for more details.
+      #
+      # Beta feature: Capture a screenshot of a website. Supports both viewport
+      # (standard browser view) and full-page screenshots. Returns a URL to the uploaded
+      # screenshot image hosted on our CDN.
+      #
+      # @overload screenshot(domain:, full_screenshot: nil, request_options: {})
+      #
+      # @param domain [String] Domain name to take screenshot of (e.g., 'example.com', 'google.com'). The domai
+      #
+      # @param full_screenshot [Symbol, BrandDev::Models::BrandScreenshotParams::FullScreenshot] Optional parameter to determine screenshot type. If 'true', takes a full page sc
+      #
+      # @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}, nil]
+      #
+      # @return [BrandDev::Models::BrandScreenshotResponse]
+      #
+      # @see BrandDev::Models::BrandScreenshotParams
+      def screenshot(params)
+        parsed, options = BrandDev::BrandScreenshotParams.dump_request(params)
+        @client.request(
+          method: :get,
+          path: "brand/screenshot",
+          query: parsed.transform_keys(full_screenshot: "fullScreenshot"),
+          model: BrandDev::Models::BrandScreenshotResponse,
+          options: options
+        )
+      end
+
+      # Some parameter documentations has been truncated, see
       # {BrandDev::Models::BrandSearchParams} for more details.
       #
       # Search brands by query
@@ -202,6 +260,36 @@ module BrandDev
           path: "brand/search",
           query: parsed.transform_keys(timeout_ms: "timeoutMS"),
           model: BrandDev::Internal::Type::ArrayOf[BrandDev::Models::BrandSearchResponseItem],
+          options: options
+        )
+      end
+
+      # Some parameter documentations has been truncated, see
+      # {BrandDev::Models::BrandStyleguideParams} for more details.
+      #
+      # Beta feature: Automatically extract comprehensive design system information from
+      # a brand's website including colors, typography, spacing, shadows, and UI
+      # components. Uses AI-powered analysis of website screenshots to identify design
+      # patterns and create a reusable styleguide.
+      #
+      # @overload styleguide(domain:, timeout_ms: nil, request_options: {})
+      #
+      # @param domain [String] Domain name to extract styleguide from (e.g., 'example.com', 'google.com'). The
+      #
+      # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
+      #
+      # @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}, nil]
+      #
+      # @return [BrandDev::Models::BrandStyleguideResponse]
+      #
+      # @see BrandDev::Models::BrandStyleguideParams
+      def styleguide(params)
+        parsed, options = BrandDev::BrandStyleguideParams.dump_request(params)
+        @client.request(
+          method: :get,
+          path: "brand/styleguide",
+          query: parsed.transform_keys(timeout_ms: "timeoutMS"),
+          model: BrandDev::Models::BrandStyleguideResponse,
           options: options
         )
       end

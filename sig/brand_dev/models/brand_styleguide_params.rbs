@@ -1,0 +1,30 @@
+module BrandDev
+  module Models
+    type brand_styleguide_params =
+      { domain: String, timeout_ms: Integer }
+      & BrandDev::Internal::Type::request_parameters
+
+    class BrandStyleguideParams < BrandDev::Internal::Type::BaseModel
+      extend BrandDev::Internal::Type::RequestParameters::Converter
+      include BrandDev::Internal::Type::RequestParameters
+
+      attr_accessor domain: String
+
+      attr_reader timeout_ms: Integer?
+
+      def timeout_ms=: (Integer) -> Integer
+
+      def initialize: (
+        domain: String,
+        ?timeout_ms: Integer,
+        ?request_options: BrandDev::request_opts
+      ) -> void
+
+      def to_hash: -> {
+        domain: String,
+        timeout_ms: Integer,
+        request_options: BrandDev::RequestOptions
+      }
+    end
+  end
+end

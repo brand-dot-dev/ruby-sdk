@@ -1,0 +1,292 @@
+module BrandDev
+  module Models
+    type brand_retrieve_simplified_response =
+      {
+        brand: BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand,
+        code: Integer,
+        status: String
+      }
+
+    class BrandRetrieveSimplifiedResponse < BrandDev::Internal::Type::BaseModel
+      attr_reader brand: BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand?
+
+      def brand=: (
+        BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand
+      ) -> BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand
+
+      attr_reader code: Integer?
+
+      def code=: (Integer) -> Integer
+
+      attr_reader status: String?
+
+      def status=: (String) -> String
+
+      def initialize: (
+        ?brand: BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand,
+        ?code: Integer,
+        ?status: String
+      ) -> void
+
+      def to_hash: -> {
+        brand: BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand,
+        code: Integer,
+        status: String
+      }
+
+      type brand =
+        {
+          backdrops: ::Array[BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Backdrop],
+          colors: ::Array[BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Color],
+          domain: String,
+          logos: ::Array[BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo],
+          title: String
+        }
+
+      class Brand < BrandDev::Internal::Type::BaseModel
+        attr_reader backdrops: ::Array[BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Backdrop]?
+
+        def backdrops=: (
+          ::Array[BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Backdrop]
+        ) -> ::Array[BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Backdrop]
+
+        attr_reader colors: ::Array[BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Color]?
+
+        def colors=: (
+          ::Array[BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Color]
+        ) -> ::Array[BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Color]
+
+        attr_reader domain: String?
+
+        def domain=: (String) -> String
+
+        attr_reader logos: ::Array[BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo]?
+
+        def logos=: (
+          ::Array[BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo]
+        ) -> ::Array[BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo]
+
+        attr_reader title: String?
+
+        def title=: (String) -> String
+
+        def initialize: (
+          ?backdrops: ::Array[BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Backdrop],
+          ?colors: ::Array[BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Color],
+          ?domain: String,
+          ?logos: ::Array[BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo],
+          ?title: String
+        ) -> void
+
+        def to_hash: -> {
+          backdrops: ::Array[BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Backdrop],
+          colors: ::Array[BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Color],
+          domain: String,
+          logos: ::Array[BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo],
+          title: String
+        }
+
+        type backdrop =
+          {
+            colors: ::Array[BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Backdrop::Color],
+            resolution: BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Backdrop::Resolution,
+            url: String
+          }
+
+        class Backdrop < BrandDev::Internal::Type::BaseModel
+          attr_reader colors: ::Array[BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Backdrop::Color]?
+
+          def colors=: (
+            ::Array[BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Backdrop::Color]
+          ) -> ::Array[BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Backdrop::Color]
+
+          attr_reader resolution: BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Backdrop::Resolution?
+
+          def resolution=: (
+            BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Backdrop::Resolution
+          ) -> BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Backdrop::Resolution
+
+          attr_reader url: String?
+
+          def url=: (String) -> String
+
+          def initialize: (
+            ?colors: ::Array[BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Backdrop::Color],
+            ?resolution: BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Backdrop::Resolution,
+            ?url: String
+          ) -> void
+
+          def to_hash: -> {
+            colors: ::Array[BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Backdrop::Color],
+            resolution: BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Backdrop::Resolution,
+            url: String
+          }
+
+          type color = { hex: String, name: String }
+
+          class Color < BrandDev::Internal::Type::BaseModel
+            attr_reader hex: String?
+
+            def hex=: (String) -> String
+
+            attr_reader name: String?
+
+            def name=: (String) -> String
+
+            def initialize: (?hex: String, ?name: String) -> void
+
+            def to_hash: -> { hex: String, name: String }
+          end
+
+          type resolution =
+            { aspect_ratio: Float, height: Integer, width: Integer }
+
+          class Resolution < BrandDev::Internal::Type::BaseModel
+            attr_reader aspect_ratio: Float?
+
+            def aspect_ratio=: (Float) -> Float
+
+            attr_reader height: Integer?
+
+            def height=: (Integer) -> Integer
+
+            attr_reader width: Integer?
+
+            def width=: (Integer) -> Integer
+
+            def initialize: (
+              ?aspect_ratio: Float,
+              ?height: Integer,
+              ?width: Integer
+            ) -> void
+
+            def to_hash: -> {
+              aspect_ratio: Float,
+              height: Integer,
+              width: Integer
+            }
+          end
+        end
+
+        type color = { hex: String, name: String }
+
+        class Color < BrandDev::Internal::Type::BaseModel
+          attr_reader hex: String?
+
+          def hex=: (String) -> String
+
+          attr_reader name: String?
+
+          def name=: (String) -> String
+
+          def initialize: (?hex: String, ?name: String) -> void
+
+          def to_hash: -> { hex: String, name: String }
+        end
+
+        type logo =
+          {
+            colors: ::Array[BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo::Color],
+            group: Integer,
+            mode: String,
+            resolution: BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo::Resolution,
+            type: String,
+            url: String
+          }
+
+        class Logo < BrandDev::Internal::Type::BaseModel
+          attr_reader colors: ::Array[BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo::Color]?
+
+          def colors=: (
+            ::Array[BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo::Color]
+          ) -> ::Array[BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo::Color]
+
+          attr_reader group: Integer?
+
+          def group=: (Integer) -> Integer
+
+          attr_reader mode: String?
+
+          def mode=: (String) -> String
+
+          attr_reader resolution: BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo::Resolution?
+
+          def resolution=: (
+            BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo::Resolution
+          ) -> BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo::Resolution
+
+          attr_reader type: String?
+
+          def type=: (String) -> String
+
+          attr_reader url: String?
+
+          def url=: (String) -> String
+
+          def initialize: (
+            ?colors: ::Array[BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo::Color],
+            ?group: Integer,
+            ?mode: String,
+            ?resolution: BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo::Resolution,
+            ?type: String,
+            ?url: String
+          ) -> void
+
+          def to_hash: -> {
+            colors: ::Array[BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo::Color],
+            group: Integer,
+            mode: String,
+            resolution: BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo::Resolution,
+            type: String,
+            url: String
+          }
+
+          type color = { hex: String, name: String }
+
+          class Color < BrandDev::Internal::Type::BaseModel
+            attr_reader hex: String?
+
+            def hex=: (String) -> String
+
+            attr_reader name: String?
+
+            def name=: (String) -> String
+
+            def initialize: (?hex: String, ?name: String) -> void
+
+            def to_hash: -> { hex: String, name: String }
+          end
+
+          type resolution =
+            { aspect_ratio: Float, height: Integer, width: Integer }
+
+          class Resolution < BrandDev::Internal::Type::BaseModel
+            attr_reader aspect_ratio: Float?
+
+            def aspect_ratio=: (Float) -> Float
+
+            attr_reader height: Integer?
+
+            def height=: (Integer) -> Integer
+
+            attr_reader width: Integer?
+
+            def width=: (Integer) -> Integer
+
+            def initialize: (
+              ?aspect_ratio: Float,
+              ?height: Integer,
+              ?width: Integer
+            ) -> void
+
+            def to_hash: -> {
+              aspect_ratio: Float,
+              height: Integer,
+              width: Integer
+            }
+          end
+        end
+      end
+    end
+  end
+end

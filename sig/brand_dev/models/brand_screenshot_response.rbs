@@ -1,0 +1,63 @@
+module BrandDev
+  module Models
+    type brand_screenshot_response =
+      {
+        code: Integer,
+        domain: String,
+        screenshot: String,
+        screenshot_type: BrandDev::Models::BrandScreenshotResponse::screenshot_type,
+        status: String
+      }
+
+    class BrandScreenshotResponse < BrandDev::Internal::Type::BaseModel
+      attr_reader code: Integer?
+
+      def code=: (Integer) -> Integer
+
+      attr_reader domain: String?
+
+      def domain=: (String) -> String
+
+      attr_reader screenshot: String?
+
+      def screenshot=: (String) -> String
+
+      attr_reader screenshot_type: BrandDev::Models::BrandScreenshotResponse::screenshot_type?
+
+      def screenshot_type=: (
+        BrandDev::Models::BrandScreenshotResponse::screenshot_type
+      ) -> BrandDev::Models::BrandScreenshotResponse::screenshot_type
+
+      attr_reader status: String?
+
+      def status=: (String) -> String
+
+      def initialize: (
+        ?code: Integer,
+        ?domain: String,
+        ?screenshot: String,
+        ?screenshot_type: BrandDev::Models::BrandScreenshotResponse::screenshot_type,
+        ?status: String
+      ) -> void
+
+      def to_hash: -> {
+        code: Integer,
+        domain: String,
+        screenshot: String,
+        screenshot_type: BrandDev::Models::BrandScreenshotResponse::screenshot_type,
+        status: String
+      }
+
+      type screenshot_type = :viewport | :fullPage
+
+      module ScreenshotType
+        extend BrandDev::Internal::Type::Enum
+
+        VIEWPORT: :viewport
+        FULL_PAGE: :fullPage
+
+        def self?.values: -> ::Array[BrandDev::Models::BrandScreenshotResponse::screenshot_type]
+      end
+    end
+  end
+end

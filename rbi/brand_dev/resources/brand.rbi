@@ -141,6 +141,50 @@ module BrandDev
       )
       end
 
+      # Returns a simplified version of brand data containing only essential
+      # information: domain, title, colors, logos, and backdrops. This endpoint is
+      # optimized for faster responses and reduced data transfer.
+      sig do
+        params(
+          domain: String,
+          timeout_ms: Integer,
+          request_options: BrandDev::RequestOptions::OrHash
+        ).returns(BrandDev::Models::BrandRetrieveSimplifiedResponse)
+      end
+      def retrieve_simplified(
+        # Domain name to retrieve simplified brand data for
+        domain:,
+        # Optional timeout in milliseconds for the request. If the request takes longer
+        # than this value, it will be aborted with a 408 status code. Maximum allowed
+        # value is 300000ms (5 minutes).
+        timeout_ms: nil,
+        request_options: {}
+      )
+      end
+
+      # Beta feature: Capture a screenshot of a website. Supports both viewport
+      # (standard browser view) and full-page screenshots. Returns a URL to the uploaded
+      # screenshot image hosted on our CDN.
+      sig do
+        params(
+          domain: String,
+          full_screenshot:
+            BrandDev::BrandScreenshotParams::FullScreenshot::OrSymbol,
+          request_options: BrandDev::RequestOptions::OrHash
+        ).returns(BrandDev::Models::BrandScreenshotResponse)
+      end
+      def screenshot(
+        # Domain name to take screenshot of (e.g., 'example.com', 'google.com'). The
+        # domain will be automatically normalized and validated.
+        domain:,
+        # Optional parameter to determine screenshot type. If 'true', takes a full page
+        # screenshot capturing all content. If 'false' or not provided, takes a viewport
+        # screenshot (standard browser view).
+        full_screenshot: nil,
+        request_options: {}
+      )
+      end
+
       # Search brands by query
       sig do
         params(
@@ -152,6 +196,29 @@ module BrandDev
       def search(
         # Query string to search brands
         query:,
+        # Optional timeout in milliseconds for the request. If the request takes longer
+        # than this value, it will be aborted with a 408 status code. Maximum allowed
+        # value is 300000ms (5 minutes).
+        timeout_ms: nil,
+        request_options: {}
+      )
+      end
+
+      # Beta feature: Automatically extract comprehensive design system information from
+      # a brand's website including colors, typography, spacing, shadows, and UI
+      # components. Uses AI-powered analysis of website screenshots to identify design
+      # patterns and create a reusable styleguide.
+      sig do
+        params(
+          domain: String,
+          timeout_ms: Integer,
+          request_options: BrandDev::RequestOptions::OrHash
+        ).returns(BrandDev::Models::BrandStyleguideResponse)
+      end
+      def styleguide(
+        # Domain name to extract styleguide from (e.g., 'example.com', 'google.com'). The
+        # domain will be automatically normalized and validated.
+        domain:,
         # Optional timeout in milliseconds for the request. If the request takes longer
         # than this value, it will be aborted with a 408 status code. Maximum allowed
         # value is 300000ms (5 minutes).
