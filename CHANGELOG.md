@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.1.0-alpha.11 (2025-06-27)
+
+Full Changelog: [v0.1.0-alpha.10...v0.1.0-alpha.11](https://github.com/brand-dot-dev/ruby-sdk/compare/v0.1.0-alpha.10...v0.1.0-alpha.11)
+
+### Bug Fixes
+
+* **ci:** release-doctor — report correct token name ([d8ea78e](https://github.com/brand-dot-dev/ruby-sdk/commit/d8ea78ebf0d975cac2720b3441e4cc98e49e348c))
+
+
+### Chores
+
+* **internal:** version bump ([41f18be](https://github.com/brand-dot-dev/ruby-sdk/commit/41f18bedff6bd714f0679df48e7b23e0995916ce))
+
 ## 0.1.0-alpha.10 (2025-06-19)
 
 Full Changelog: [v0.1.0-alpha.9...v0.1.0-alpha.10](https://github.com/brand-dot-dev/ruby-sdk/compare/v0.1.0-alpha.9...v0.1.0-alpha.10)
