@@ -144,7 +144,8 @@ module BrandDev
         sig { params(domain: String).void }
         attr_writer :domain
 
-        # An array of fonts used by the brand's website
+        # An array of fonts used by the brand's website. NOTE: This is deprecated and will
+        # be removed in the future. Please migrate to the styleguide API.
         sig do
           returns(
             T.nilable(
@@ -278,7 +279,8 @@ module BrandDev
           description: nil,
           # The domain name of the brand
           domain: nil,
-          # An array of fonts used by the brand's website
+          # An array of fonts used by the brand's website. NOTE: This is deprecated and will
+          # be removed in the future. Please migrate to the styleguide API.
           fonts: nil,
           # An array of logos associated with the brand
           logos: nil,
