@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.1.0-alpha.12 (2025-06-29)
+
+Full Changelog: [v0.1.0-alpha.11...v0.1.0-alpha.12](https://github.com/brand-dot-dev/ruby-sdk/compare/v0.1.0-alpha.11...v0.1.0-alpha.12)
+
+### Features
+
+* **api:** manual updates ([ed09624](https://github.com/brand-dot-dev/ruby-sdk/commit/ed09624d1e608e9a6f1294f385341483d4973a3e))
+
+
+### Chores
+
+* **ci:** only run for pushes and fork pull requests ([4356075](https://github.com/brand-dot-dev/ruby-sdk/commit/4356075a3db29b2d44ea84ad3abfc37491ec7301))
+* **internal:** version bump ([d186e95](https://github.com/brand-dot-dev/ruby-sdk/commit/d186e95c03f25e3f0c07a43e0dab6c40970769e4))
+
 ## 0.1.0-alpha.11 (2025-06-27)
 
 Full Changelog: [v0.1.0-alpha.10...v0.1.0-alpha.11](https://github.com/brand-dot-dev/ruby-sdk/compare/v0.1.0-alpha.10...v0.1.0-alpha.11)
