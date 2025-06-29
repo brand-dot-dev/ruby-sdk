@@ -64,7 +64,8 @@ module BrandDev
         optional :domain, String
 
         # @!attribute fonts
-        #   An array of fonts used by the brand's website
+        #   An array of fonts used by the brand's website. NOTE: This is deprecated and will
+        #   be removed in the future. Please migrate to the styleguide API.
         #
         #   @return [Array<BrandDev::Models::BrandRetrieveResponse::Brand::Font>, nil]
         optional :fonts,
@@ -119,7 +120,7 @@ module BrandDev
         #
         #   @param domain [String] The domain name of the brand
         #
-        #   @param fonts [Array<BrandDev::Models::BrandRetrieveResponse::Brand::Font>] An array of fonts used by the brand's website
+        #   @param fonts [Array<BrandDev::Models::BrandRetrieveResponse::Brand::Font>] An array of fonts used by the brand's website. NOTE: This is deprecated and will
         #
         #   @param logos [Array<BrandDev::Models::BrandRetrieveResponse::Brand::Logo>] An array of logos associated with the brand
         #
