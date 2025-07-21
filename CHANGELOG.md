@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.0.1 (2025-07-21)
+
+Full Changelog: [v0.1.0-alpha.13...v0.0.1](https://github.com/brand-dot-dev/ruby-sdk/compare/v0.1.0-alpha.13...v0.0.1)
+
+### Features
+
+* **api:** manual updates ([cfaabba](https://github.com/brand-dot-dev/ruby-sdk/commit/cfaabbab93b68ba4926f78560d759d788e4b4b98))
+
+
+### Chores
+
+* **internal:** allow streams to also be unwrapped on a per-row basis ([99d7893](https://github.com/brand-dot-dev/ruby-sdk/commit/99d7893d01a3e111d49fb7c39e53bc9dd524f6b6))
+* **internal:** version bump ([d51ca58](https://github.com/brand-dot-dev/ruby-sdk/commit/d51ca5841eb432576fb2e251d4ebdab02cfb1ad7))
+
 ## 0.1.0-alpha.13 (2025-06-29)
 
 Full Changelog: [v0.1.0-alpha.12...v0.1.0-alpha.13](https://github.com/brand-dot-dev/ruby-sdk/compare/v0.1.0-alpha.12...v0.1.0-alpha.13)
