@@ -19,7 +19,5 @@ module BrandDev
 
   BrandScreenshotParams = BrandDev::Models::BrandScreenshotParams
 
-  BrandSearchParams = BrandDev::Models::BrandSearchParams
-
   BrandStyleguideParams = BrandDev::Models::BrandStyleguideParams
 end

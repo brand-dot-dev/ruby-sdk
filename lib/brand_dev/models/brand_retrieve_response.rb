@@ -63,14 +63,6 @@ module BrandDev
         #   @return [String, nil]
         optional :domain, String
 
-        # @!attribute fonts
-        #   An array of fonts used by the brand's website. NOTE: This is deprecated and will
-        #   be removed in the future. Please migrate to the styleguide API.
-        #
-        #   @return [Array<BrandDev::Models::BrandRetrieveResponse::Brand::Font>, nil]
-        optional :fonts,
-                 -> { BrandDev::Internal::Type::ArrayOf[BrandDev::Models::BrandRetrieveResponse::Brand::Font] }
-
         # @!attribute logos
         #   An array of logos associated with the brand
         #
@@ -104,7 +96,7 @@ module BrandDev
         #   @return [String, nil]
         optional :title, String
 
-        # @!method initialize(address: nil, backdrops: nil, colors: nil, description: nil, domain: nil, fonts: nil, logos: nil, slogan: nil, socials: nil, stock: nil, title: nil)
+        # @!method initialize(address: nil, backdrops: nil, colors: nil, description: nil, domain: nil, logos: nil, slogan: nil, socials: nil, stock: nil, title: nil)
         #   Some parameter documentations has been truncated, see
         #   {BrandDev::Models::BrandRetrieveResponse::Brand} for more details.
         #
@@ -119,8 +111,6 @@ module BrandDev
         #   @param description [String] A brief description of the brand
         #
         #   @param domain [String] The domain name of the brand
-        #
-        #   @param fonts [Array<BrandDev::Models::BrandRetrieveResponse::Brand::Font>] An array of fonts used by the brand's website. NOTE: This is deprecated and will
         #
         #   @param logos [Array<BrandDev::Models::BrandRetrieveResponse::Brand::Logo>] An array of logos associated with the brand
         #
@@ -280,25 +270,6 @@ module BrandDev
           #   @param hex [String] Color in hexadecimal format
           #
           #   @param name [String] Name of the color
-        end
-
-        class Font < BrandDev::Internal::Type::BaseModel
-          # @!attribute name
-          #   Name of the font
-          #
-          #   @return [String, nil]
-          optional :name, String
-
-          # @!attribute usage
-          #   Usage of the font, e.g., 'title', 'body', 'button'
-          #
-          #   @return [String, nil]
-          optional :usage, String
-
-          # @!method initialize(name: nil, usage: nil)
-          #   @param name [String] Name of the font
-          #
-          #   @param usage [String] Usage of the font, e.g., 'title', 'body', 'button'
         end
 
         class Logo < BrandDev::Internal::Type::BaseModel
