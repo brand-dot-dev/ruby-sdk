@@ -53,12 +53,6 @@ module BrandDev
         ?request_options: BrandDev::request_opts
       ) -> BrandDev::Models::BrandScreenshotResponse
 
-      def search: (
-        query: String,
-        ?timeout_ms: Integer,
-        ?request_options: BrandDev::request_opts
-      ) -> BrandDev::Models::brand_search_response
-
       def styleguide: (
         domain: String,
         ?timeout_ms: Integer,

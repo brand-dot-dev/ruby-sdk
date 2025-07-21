@@ -154,28 +154,6 @@ module BrandDev
         sig { params(domain: String).void }
         attr_writer :domain
 
-        # An array of fonts used by the brand's website
-        sig do
-          returns(
-            T.nilable(
-              T::Array[
-                BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Font
-              ]
-            )
-          )
-        end
-        attr_reader :fonts
-
-        sig do
-          params(
-            fonts:
-              T::Array[
-                BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Font::OrHash
-              ]
-          ).void
-        end
-        attr_writer :fonts
-
         # An array of logos associated with the brand
         sig do
           returns(
@@ -268,10 +246,6 @@ module BrandDev
               ],
             description: String,
             domain: String,
-            fonts:
-              T::Array[
-                BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Font::OrHash
-              ],
             logos:
               T::Array[
                 BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Logo::OrHash
@@ -297,8 +271,6 @@ module BrandDev
           description: nil,
           # The domain name of the brand
           domain: nil,
-          # An array of fonts used by the brand's website
-          fonts: nil,
           # An array of logos associated with the brand
           logos: nil,
           # The brand's slogan
@@ -328,10 +300,6 @@ module BrandDev
                 ],
               description: String,
               domain: String,
-              fonts:
-                T::Array[
-                  BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Font
-                ],
               logos:
                 T::Array[
                   BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Logo
@@ -659,43 +627,6 @@ module BrandDev
           end
 
           sig { override.returns({ hex: String, name: String }) }
-          def to_hash
-          end
-        end
-
-        class Font < BrandDev::Internal::Type::BaseModel
-          OrHash =
-            T.type_alias do
-              T.any(
-                BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Font,
-                BrandDev::Internal::AnyHash
-              )
-            end
-
-          # Name of the font
-          sig { returns(T.nilable(String)) }
-          attr_reader :name
-
-          sig { params(name: String).void }
-          attr_writer :name
-
-          # Usage of the font, e.g., 'title', 'body', 'button'
-          sig { returns(T.nilable(String)) }
-          attr_reader :usage
-
-          sig { params(usage: String).void }
-          attr_writer :usage
-
-          sig { params(name: String, usage: String).returns(T.attached_class) }
-          def self.new(
-            # Name of the font
-            name: nil,
-            # Usage of the font, e.g., 'title', 'body', 'button'
-            usage: nil
-          )
-          end
-
-          sig { override.returns({ name: String, usage: String }) }
           def to_hash
           end
         end
