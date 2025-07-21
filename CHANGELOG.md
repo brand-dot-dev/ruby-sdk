@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.0.2 (2025-07-21)
+
+Full Changelog: [v0.0.1...v0.0.2](https://github.com/brand-dot-dev/ruby-sdk/compare/v0.0.1...v0.0.2)
+
+### Chores
+
+* **internal:** version bump ([c8553b7](https://github.com/brand-dot-dev/ruby-sdk/commit/c8553b728303284cda46b2a980743c5533932fdd))
+
 ## 0.0.1 (2025-07-21)
 
 Full Changelog: [v0.1.0-alpha.13...v0.0.1](https://github.com/brand-dot-dev/ruby-sdk/compare/v0.1.0-alpha.13...v0.0.1)
