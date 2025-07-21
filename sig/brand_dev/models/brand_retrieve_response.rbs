@@ -41,7 +41,6 @@ module BrandDev
           colors: ::Array[BrandDev::Models::BrandRetrieveResponse::Brand::Color],
           description: String,
           domain: String,
-          fonts: ::Array[BrandDev::Models::BrandRetrieveResponse::Brand::Font],
           logos: ::Array[BrandDev::Models::BrandRetrieveResponse::Brand::Logo],
           slogan: String,
           socials: ::Array[BrandDev::Models::BrandRetrieveResponse::Brand::Social],
@@ -76,12 +75,6 @@ module BrandDev
 
         def domain=: (String) -> String
 
-        attr_reader fonts: ::Array[BrandDev::Models::BrandRetrieveResponse::Brand::Font]?
-
-        def fonts=: (
-          ::Array[BrandDev::Models::BrandRetrieveResponse::Brand::Font]
-        ) -> ::Array[BrandDev::Models::BrandRetrieveResponse::Brand::Font]
-
         attr_reader logos: ::Array[BrandDev::Models::BrandRetrieveResponse::Brand::Logo]?
 
         def logos=: (
@@ -114,7 +107,6 @@ module BrandDev
           ?colors: ::Array[BrandDev::Models::BrandRetrieveResponse::Brand::Color],
           ?description: String,
           ?domain: String,
-          ?fonts: ::Array[BrandDev::Models::BrandRetrieveResponse::Brand::Font],
           ?logos: ::Array[BrandDev::Models::BrandRetrieveResponse::Brand::Logo],
           ?slogan: String,
           ?socials: ::Array[BrandDev::Models::BrandRetrieveResponse::Brand::Social],
@@ -128,7 +120,6 @@ module BrandDev
           colors: ::Array[BrandDev::Models::BrandRetrieveResponse::Brand::Color],
           description: String,
           domain: String,
-          fonts: ::Array[BrandDev::Models::BrandRetrieveResponse::Brand::Font],
           logos: ::Array[BrandDev::Models::BrandRetrieveResponse::Brand::Logo],
           slogan: String,
           socials: ::Array[BrandDev::Models::BrandRetrieveResponse::Brand::Social],
@@ -280,22 +271,6 @@ module BrandDev
           def initialize: (?hex: String, ?name: String) -> void
 
           def to_hash: -> { hex: String, name: String }
-        end
-
-        type font = { name: String, usage: String }
-
-        class Font < BrandDev::Internal::Type::BaseModel
-          attr_reader name: String?
-
-          def name=: (String) -> String
-
-          attr_reader usage: String?
-
-          def usage=: (String) -> String
-
-          def initialize: (?name: String, ?usage: String) -> void
-
-          def to_hash: -> { name: String, usage: String }
         end
 
         type logo =

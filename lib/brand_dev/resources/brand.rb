@@ -238,33 +238,6 @@ module BrandDev
       end
 
       # Some parameter documentations has been truncated, see
-      # {BrandDev::Models::BrandSearchParams} for more details.
-      #
-      # Search brands by query
-      #
-      # @overload search(query:, timeout_ms: nil, request_options: {})
-      #
-      # @param query [String] Query string to search brands
-      #
-      # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
-      #
-      # @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}, nil]
-      #
-      # @return [Array<BrandDev::Models::BrandSearchResponseItem>]
-      #
-      # @see BrandDev::Models::BrandSearchParams
-      def search(params)
-        parsed, options = BrandDev::BrandSearchParams.dump_request(params)
-        @client.request(
-          method: :get,
-          path: "brand/search",
-          query: parsed.transform_keys(timeout_ms: "timeoutMS"),
-          model: BrandDev::Internal::Type::ArrayOf[BrandDev::Models::BrandSearchResponseItem],
-          options: options
-        )
-      end
-
-      # Some parameter documentations has been truncated, see
       # {BrandDev::Models::BrandStyleguideParams} for more details.
       #
       # Beta feature: Automatically extract comprehensive design system information from

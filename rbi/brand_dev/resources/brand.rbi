@@ -185,25 +185,6 @@ module BrandDev
       )
       end
 
-      # Search brands by query
-      sig do
-        params(
-          query: String,
-          timeout_ms: Integer,
-          request_options: BrandDev::RequestOptions::OrHash
-        ).returns(T::Array[BrandDev::Models::BrandSearchResponseItem])
-      end
-      def search(
-        # Query string to search brands
-        query:,
-        # Optional timeout in milliseconds for the request. If the request takes longer
-        # than this value, it will be aborted with a 408 status code. Maximum allowed
-        # value is 300000ms (5 minutes).
-        timeout_ms: nil,
-        request_options: {}
-      )
-      end
-
       # Beta feature: Automatically extract comprehensive design system information from
       # a brand's website including colors, typography, spacing, shadows, and UI
       # components.
