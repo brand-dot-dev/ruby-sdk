@@ -159,6 +159,13 @@ module BrandDev
         sig { params(domain: String).void }
         attr_writer :domain
 
+        # Indicates whether the brand content is not safe for work (NSFW)
+        sig { returns(T.nilable(T::Boolean)) }
+        attr_reader :is_nsfw
+
+        sig { params(is_nsfw: T::Boolean).void }
+        attr_writer :is_nsfw
+
         # An array of logos associated with the brand
         sig do
           returns(
@@ -251,6 +258,7 @@ module BrandDev
               ],
             description: String,
             domain: String,
+            is_nsfw: T::Boolean,
             logos:
               T::Array[
                 BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Logo::OrHash
@@ -276,6 +284,8 @@ module BrandDev
           description: nil,
           # The domain name of the brand
           domain: nil,
+          # Indicates whether the brand content is not safe for work (NSFW)
+          is_nsfw: nil,
           # An array of logos associated with the brand
           logos: nil,
           # The brand's slogan
@@ -305,6 +315,7 @@ module BrandDev
                 ],
               description: String,
               domain: String,
+              is_nsfw: T::Boolean,
               logos:
                 T::Array[
                   BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Logo

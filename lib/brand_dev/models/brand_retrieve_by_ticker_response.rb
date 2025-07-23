@@ -63,6 +63,12 @@ module BrandDev
         #   @return [String, nil]
         optional :domain, String
 
+        # @!attribute is_nsfw
+        #   Indicates whether the brand content is not safe for work (NSFW)
+        #
+        #   @return [Boolean, nil]
+        optional :is_nsfw, BrandDev::Internal::Type::Boolean
+
         # @!attribute logos
         #   An array of logos associated with the brand
         #
@@ -96,7 +102,7 @@ module BrandDev
         #   @return [String, nil]
         optional :title, String
 
-        # @!method initialize(address: nil, backdrops: nil, colors: nil, description: nil, domain: nil, logos: nil, slogan: nil, socials: nil, stock: nil, title: nil)
+        # @!method initialize(address: nil, backdrops: nil, colors: nil, description: nil, domain: nil, is_nsfw: nil, logos: nil, slogan: nil, socials: nil, stock: nil, title: nil)
         #   Some parameter documentations has been truncated, see
         #   {BrandDev::Models::BrandRetrieveByTickerResponse::Brand} for more details.
         #
@@ -111,6 +117,8 @@ module BrandDev
         #   @param description [String] A brief description of the brand
         #
         #   @param domain [String] The domain name of the brand
+        #
+        #   @param is_nsfw [Boolean] Indicates whether the brand content is not safe for work (NSFW)
         #
         #   @param logos [Array<BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Logo>] An array of logos associated with the brand
         #

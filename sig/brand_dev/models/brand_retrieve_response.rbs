@@ -41,6 +41,7 @@ module BrandDev
           colors: ::Array[BrandDev::Models::BrandRetrieveResponse::Brand::Color],
           description: String,
           domain: String,
+          is_nsfw: bool,
           logos: ::Array[BrandDev::Models::BrandRetrieveResponse::Brand::Logo],
           slogan: String,
           socials: ::Array[BrandDev::Models::BrandRetrieveResponse::Brand::Social],
@@ -75,6 +76,10 @@ module BrandDev
 
         def domain=: (String) -> String
 
+        attr_reader is_nsfw: bool?
+
+        def is_nsfw=: (bool) -> bool
+
         attr_reader logos: ::Array[BrandDev::Models::BrandRetrieveResponse::Brand::Logo]?
 
         def logos=: (
@@ -107,6 +112,7 @@ module BrandDev
           ?colors: ::Array[BrandDev::Models::BrandRetrieveResponse::Brand::Color],
           ?description: String,
           ?domain: String,
+          ?is_nsfw: bool,
           ?logos: ::Array[BrandDev::Models::BrandRetrieveResponse::Brand::Logo],
           ?slogan: String,
           ?socials: ::Array[BrandDev::Models::BrandRetrieveResponse::Brand::Social],
@@ -120,6 +126,7 @@ module BrandDev
           colors: ::Array[BrandDev::Models::BrandRetrieveResponse::Brand::Color],
           description: String,
           domain: String,
+          is_nsfw: bool,
           logos: ::Array[BrandDev::Models::BrandRetrieveResponse::Brand::Logo],
           slogan: String,
           socials: ::Array[BrandDev::Models::BrandRetrieveResponse::Brand::Social],
