@@ -43,8 +43,10 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
 
     assert_pattern do
       response => {
+        code: Integer | nil,
         data_extracted: ^(BrandDev::Internal::Type::ArrayOf[BrandDev::Models::BrandAIQueryResponse::DataExtracted]) | nil,
         domain: String | nil,
+        status: String | nil,
         urls_analyzed: ^(BrandDev::Internal::Type::ArrayOf[String]) | nil
       }
     end

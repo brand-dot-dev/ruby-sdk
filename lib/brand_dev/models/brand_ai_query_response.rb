@@ -4,6 +4,12 @@ module BrandDev
   module Models
     # @see BrandDev::Resources::Brand#ai_query
     class BrandAIQueryResponse < BrandDev::Internal::Type::BaseModel
+      # @!attribute code
+      #   HTTP status code
+      #
+      #   @return [Integer, nil]
+      optional :code, Integer
+
       # @!attribute data_extracted
       #   Array of extracted data points
       #
@@ -17,16 +23,26 @@ module BrandDev
       #   @return [String, nil]
       optional :domain, String
 
+      # @!attribute status
+      #   Status of the response, e.g., 'ok'
+      #
+      #   @return [String, nil]
+      optional :status, String
+
       # @!attribute urls_analyzed
       #   List of URLs that were analyzed
       #
       #   @return [Array<String>, nil]
       optional :urls_analyzed, BrandDev::Internal::Type::ArrayOf[String]
 
-      # @!method initialize(data_extracted: nil, domain: nil, urls_analyzed: nil)
+      # @!method initialize(code: nil, data_extracted: nil, domain: nil, status: nil, urls_analyzed: nil)
+      #   @param code [Integer] HTTP status code
+      #
       #   @param data_extracted [Array<BrandDev::Models::BrandAIQueryResponse::DataExtracted>] Array of extracted data points
       #
       #   @param domain [String] The domain that was analyzed
+      #
+      #   @param status [String] Status of the response, e.g., 'ok'
       #
       #   @param urls_analyzed [Array<String>] List of URLs that were analyzed
 

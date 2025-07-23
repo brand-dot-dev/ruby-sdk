@@ -11,6 +11,13 @@ module BrandDev
           )
         end
 
+      # HTTP status code
+      sig { returns(T.nilable(Integer)) }
+      attr_reader :code
+
+      sig { params(code: Integer).void }
+      attr_writer :code
+
       # Array of extracted data points
       sig do
         returns(
@@ -38,6 +45,13 @@ module BrandDev
       sig { params(domain: String).void }
       attr_writer :domain
 
+      # Status of the response, e.g., 'ok'
+      sig { returns(T.nilable(String)) }
+      attr_reader :status
+
+      sig { params(status: String).void }
+      attr_writer :status
+
       # List of URLs that were analyzed
       sig { returns(T.nilable(T::Array[String])) }
       attr_reader :urls_analyzed
@@ -47,19 +61,25 @@ module BrandDev
 
       sig do
         params(
+          code: Integer,
           data_extracted:
             T::Array[
               BrandDev::Models::BrandAIQueryResponse::DataExtracted::OrHash
             ],
           domain: String,
+          status: String,
           urls_analyzed: T::Array[String]
         ).returns(T.attached_class)
       end
       def self.new(
+        # HTTP status code
+        code: nil,
         # Array of extracted data points
         data_extracted: nil,
         # The domain that was analyzed
         domain: nil,
+        # Status of the response, e.g., 'ok'
+        status: nil,
         # List of URLs that were analyzed
         urls_analyzed: nil
       )
@@ -68,9 +88,11 @@ module BrandDev
       sig do
         override.returns(
           {
+            code: Integer,
             data_extracted:
               T::Array[BrandDev::Models::BrandAIQueryResponse::DataExtracted],
             domain: String,
+            status: String,
             urls_analyzed: T::Array[String]
           }
         )
