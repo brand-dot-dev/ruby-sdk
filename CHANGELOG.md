@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.1.0 (2025-07-29)
+
+Full Changelog: [v0.0.2...v0.1.0](https://github.com/brand-dot-dev/ruby-sdk/compare/v0.0.2...v0.1.0)
+
+### Features
+
+* **api:** manual updates ([16b9bdc](https://github.com/brand-dot-dev/ruby-sdk/commit/16b9bdcdbcbac819a1120c93399195b102db34ed))
+
+
+### Bug Fixes
+
+* **internal:** ensure sorbet test always runs serially ([b780fe6](https://github.com/brand-dot-dev/ruby-sdk/commit/b780fe622148d3af2db69a59c16470ebf82b3702))
+
+
+### Chores
+
+* **internal:** version bump ([d7516ea](https://github.com/brand-dot-dev/ruby-sdk/commit/d7516ea2cf7f6c5b21236d90fca254a91476d5ad))
+* update contribute.md ([05a6bc4](https://github.com/brand-dot-dev/ruby-sdk/commit/05a6bc4264abb72f63d72ee43a0ba2fac7fd0511))
+
 ## 0.0.2 (2025-07-21)
 
 Full Changelog: [v0.0.1...v0.0.2](https://github.com/brand-dot-dev/ruby-sdk/compare/v0.0.1...v0.0.2)
