@@ -154,6 +154,13 @@ module BrandDev
         sig { params(domain: String).void }
         attr_writer :domain
 
+        # Company email address
+        sig { returns(T.nilable(String)) }
+        attr_reader :email
+
+        sig { params(email: String).void }
+        attr_writer :email
+
         # Indicates whether the brand content is not safe for work (NSFW)
         sig { returns(T.nilable(T::Boolean)) }
         attr_reader :is_nsfw
@@ -182,6 +189,13 @@ module BrandDev
           ).void
         end
         attr_writer :logos
+
+        # Company phone number
+        sig { returns(T.nilable(String)) }
+        attr_reader :phone
+
+        sig { params(phone: String).void }
+        attr_writer :phone
 
         # The brand's slogan
         sig { returns(T.nilable(String)) }
@@ -253,11 +267,13 @@ module BrandDev
               ],
             description: String,
             domain: String,
+            email: String,
             is_nsfw: T::Boolean,
             logos:
               T::Array[
                 BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Logo::OrHash
               ],
+            phone: String,
             slogan: String,
             socials:
               T::Array[
@@ -279,10 +295,14 @@ module BrandDev
           description: nil,
           # The domain name of the brand
           domain: nil,
+          # Company email address
+          email: nil,
           # Indicates whether the brand content is not safe for work (NSFW)
           is_nsfw: nil,
           # An array of logos associated with the brand
           logos: nil,
+          # Company phone number
+          phone: nil,
           # The brand's slogan
           slogan: nil,
           # An array of social media links for the brand
@@ -310,11 +330,13 @@ module BrandDev
                 ],
               description: String,
               domain: String,
+              email: String,
               is_nsfw: T::Boolean,
               logos:
                 T::Array[
                   BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Logo
                 ],
+              phone: String,
               slogan: String,
               socials:
                 T::Array[
@@ -573,6 +595,13 @@ module BrandDev
                 )
               end
 
+            # Aspect ratio of the image (width/height)
+            sig { returns(T.nilable(Float)) }
+            attr_reader :aspect_ratio
+
+            sig { params(aspect_ratio: Float).void }
+            attr_writer :aspect_ratio
+
             # Height of the image in pixels
             sig { returns(T.nilable(Integer)) }
             attr_reader :height
@@ -589,9 +618,15 @@ module BrandDev
 
             # Resolution of the backdrop image
             sig do
-              params(height: Integer, width: Integer).returns(T.attached_class)
+              params(
+                aspect_ratio: Float,
+                height: Integer,
+                width: Integer
+              ).returns(T.attached_class)
             end
             def self.new(
+              # Aspect ratio of the image (width/height)
+              aspect_ratio: nil,
               # Height of the image in pixels
               height: nil,
               # Width of the image in pixels
@@ -599,7 +634,11 @@ module BrandDev
             )
             end
 
-            sig { override.returns({ height: Integer, width: Integer }) }
+            sig do
+              override.returns(
+                { aspect_ratio: Float, height: Integer, width: Integer }
+              )
+            end
             def to_hash
             end
           end
@@ -673,18 +712,24 @@ module BrandDev
           end
           attr_writer :colors
 
-          # Group identifier for logos
-          sig { returns(T.nilable(Integer)) }
-          attr_reader :group
-
-          sig { params(group: Integer).void }
-          attr_writer :group
-
-          # Mode of the logo, e.g., 'dark', 'light'
-          sig { returns(T.nilable(String)) }
+          # Indicates when this logo is best used: 'light' = best for light mode, 'dark' =
+          # best for dark mode, 'has_opaque_background' = can be used for either as image
+          # has its own background
+          sig do
+            returns(
+              T.nilable(
+                BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Logo::Mode::TaggedSymbol
+              )
+            )
+          end
           attr_reader :mode
 
-          sig { params(mode: String).void }
+          sig do
+            params(
+              mode:
+                BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Logo::Mode::OrSymbol
+            ).void
+          end
           attr_writer :mode
 
           # Resolution of the logo image
@@ -705,7 +750,25 @@ module BrandDev
           end
           attr_writer :resolution
 
-          # URL of the logo image
+          # Type of the logo based on resolution (e.g., 'icon', 'logo')
+          sig do
+            returns(
+              T.nilable(
+                BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Logo::Type::TaggedSymbol
+              )
+            )
+          end
+          attr_reader :type
+
+          sig do
+            params(
+              type:
+                BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Logo::Type::OrSymbol
+            ).void
+          end
+          attr_writer :type
+
+          # CDN hosted url of the logo (ready for display)
           sig { returns(T.nilable(String)) }
           attr_reader :url
 
@@ -718,23 +781,27 @@ module BrandDev
                 T::Array[
                   BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Logo::Color::OrHash
                 ],
-              group: Integer,
-              mode: String,
+              mode:
+                BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Logo::Mode::OrSymbol,
               resolution:
                 BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Logo::Resolution::OrHash,
+              type:
+                BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Logo::Type::OrSymbol,
               url: String
             ).returns(T.attached_class)
           end
           def self.new(
             # Array of colors in the logo
             colors: nil,
-            # Group identifier for logos
-            group: nil,
-            # Mode of the logo, e.g., 'dark', 'light'
+            # Indicates when this logo is best used: 'light' = best for light mode, 'dark' =
+            # best for dark mode, 'has_opaque_background' = can be used for either as image
+            # has its own background
             mode: nil,
             # Resolution of the logo image
             resolution: nil,
-            # URL of the logo image
+            # Type of the logo based on resolution (e.g., 'icon', 'logo')
+            type: nil,
+            # CDN hosted url of the logo (ready for display)
             url: nil
           )
           end
@@ -746,10 +813,12 @@ module BrandDev
                   T::Array[
                     BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Logo::Color
                   ],
-                group: Integer,
-                mode: String,
+                mode:
+                  BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Logo::Mode::TaggedSymbol,
                 resolution:
                   BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Logo::Resolution,
+                type:
+                  BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Logo::Type::TaggedSymbol,
                 url: String
               }
             )
@@ -794,6 +863,48 @@ module BrandDev
             end
           end
 
+          # Indicates when this logo is best used: 'light' = best for light mode, 'dark' =
+          # best for dark mode, 'has_opaque_background' = can be used for either as image
+          # has its own background
+          module Mode
+            extend BrandDev::Internal::Type::Enum
+
+            TaggedSymbol =
+              T.type_alias do
+                T.all(
+                  Symbol,
+                  BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Logo::Mode
+                )
+              end
+            OrSymbol = T.type_alias { T.any(Symbol, String) }
+
+            LIGHT =
+              T.let(
+                :light,
+                BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Logo::Mode::TaggedSymbol
+              )
+            DARK =
+              T.let(
+                :dark,
+                BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Logo::Mode::TaggedSymbol
+              )
+            HAS_OPAQUE_BACKGROUND =
+              T.let(
+                :has_opaque_background,
+                BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Logo::Mode::TaggedSymbol
+              )
+
+            sig do
+              override.returns(
+                T::Array[
+                  BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Logo::Mode::TaggedSymbol
+                ]
+              )
+            end
+            def self.values
+            end
+          end
+
           class Resolution < BrandDev::Internal::Type::BaseModel
             OrHash =
               T.type_alias do
@@ -802,6 +913,13 @@ module BrandDev
                   BrandDev::Internal::AnyHash
                 )
               end
+
+            # Aspect ratio of the image (width/height)
+            sig { returns(T.nilable(Float)) }
+            attr_reader :aspect_ratio
+
+            sig { params(aspect_ratio: Float).void }
+            attr_writer :aspect_ratio
 
             # Height of the image in pixels
             sig { returns(T.nilable(Integer)) }
@@ -819,9 +937,15 @@ module BrandDev
 
             # Resolution of the logo image
             sig do
-              params(height: Integer, width: Integer).returns(T.attached_class)
+              params(
+                aspect_ratio: Float,
+                height: Integer,
+                width: Integer
+              ).returns(T.attached_class)
             end
             def self.new(
+              # Aspect ratio of the image (width/height)
+              aspect_ratio: nil,
               # Height of the image in pixels
               height: nil,
               # Width of the image in pixels
@@ -829,8 +953,47 @@ module BrandDev
             )
             end
 
-            sig { override.returns({ height: Integer, width: Integer }) }
+            sig do
+              override.returns(
+                { aspect_ratio: Float, height: Integer, width: Integer }
+              )
+            end
             def to_hash
+            end
+          end
+
+          # Type of the logo based on resolution (e.g., 'icon', 'logo')
+          module Type
+            extend BrandDev::Internal::Type::Enum
+
+            TaggedSymbol =
+              T.type_alias do
+                T.all(
+                  Symbol,
+                  BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Logo::Type
+                )
+              end
+            OrSymbol = T.type_alias { T.any(Symbol, String) }
+
+            ICON =
+              T.let(
+                :icon,
+                BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Logo::Type::TaggedSymbol
+              )
+            LOGO =
+              T.let(
+                :logo,
+                BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Logo::Type::TaggedSymbol
+              )
+
+            sig do
+              override.returns(
+                T::Array[
+                  BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Logo::Type::TaggedSymbol
+                ]
+              )
+            end
+            def self.values
             end
           end
         end

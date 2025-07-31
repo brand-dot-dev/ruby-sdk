@@ -187,10 +187,9 @@ module BrandDev
         type logo =
           {
             colors: ::Array[BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo::Color],
-            group: Integer,
-            mode: String,
+            mode: BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo::mode,
             resolution: BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo::Resolution,
-            type: String,
+            type: BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo::type_,
             url: String
           }
 
@@ -201,13 +200,11 @@ module BrandDev
             ::Array[BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo::Color]
           ) -> ::Array[BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo::Color]
 
-          attr_reader group: Integer?
+          attr_reader mode: BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo::mode?
 
-          def group=: (Integer) -> Integer
-
-          attr_reader mode: String?
-
-          def mode=: (String) -> String
+          def mode=: (
+            BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo::mode
+          ) -> BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo::mode
 
           attr_reader resolution: BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo::Resolution?
 
@@ -215,9 +212,11 @@ module BrandDev
             BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo::Resolution
           ) -> BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo::Resolution
 
-          attr_reader type: String?
+          attr_reader type: BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo::type_?
 
-          def type=: (String) -> String
+          def type=: (
+            BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo::type_
+          ) -> BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo::type_
 
           attr_reader url: String?
 
@@ -225,19 +224,17 @@ module BrandDev
 
           def initialize: (
             ?colors: ::Array[BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo::Color],
-            ?group: Integer,
-            ?mode: String,
+            ?mode: BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo::mode,
             ?resolution: BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo::Resolution,
-            ?type: String,
+            ?type: BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo::type_,
             ?url: String
           ) -> void
 
           def to_hash: -> {
             colors: ::Array[BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo::Color],
-            group: Integer,
-            mode: String,
+            mode: BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo::mode,
             resolution: BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo::Resolution,
-            type: String,
+            type: BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo::type_,
             url: String
           }
 
@@ -255,6 +252,18 @@ module BrandDev
             def initialize: (?hex: String, ?name: String) -> void
 
             def to_hash: -> { hex: String, name: String }
+          end
+
+          type mode = :light | :dark | :has_opaque_background
+
+          module Mode
+            extend BrandDev::Internal::Type::Enum
+
+            LIGHT: :light
+            DARK: :dark
+            HAS_OPAQUE_BACKGROUND: :has_opaque_background
+
+            def self?.values: -> ::Array[BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo::mode]
           end
 
           type resolution =
@@ -284,6 +293,17 @@ module BrandDev
               height: Integer,
               width: Integer
             }
+          end
+
+          type type_ = :icon | :logo
+
+          module Type
+            extend BrandDev::Internal::Type::Enum
+
+            ICON: :icon
+            LOGO: :logo
+
+            def self?.values: -> ::Array[BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo::type_]
           end
         end
       end
