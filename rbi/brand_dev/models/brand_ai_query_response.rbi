@@ -11,13 +11,6 @@ module BrandDev
           )
         end
 
-      # HTTP status code
-      sig { returns(T.nilable(Integer)) }
-      attr_reader :code
-
-      sig { params(code: Integer).void }
-      attr_writer :code
-
       # Array of extracted data points
       sig do
         returns(
@@ -61,7 +54,6 @@ module BrandDev
 
       sig do
         params(
-          code: Integer,
           data_extracted:
             T::Array[
               BrandDev::Models::BrandAIQueryResponse::DataExtracted::OrHash
@@ -72,8 +64,6 @@ module BrandDev
         ).returns(T.attached_class)
       end
       def self.new(
-        # HTTP status code
-        code: nil,
         # Array of extracted data points
         data_extracted: nil,
         # The domain that was analyzed
@@ -88,7 +78,6 @@ module BrandDev
       sig do
         override.returns(
           {
-            code: Integer,
             data_extracted:
               T::Array[BrandDev::Models::BrandAIQueryResponse::DataExtracted],
             domain: String,

@@ -63,6 +63,12 @@ module BrandDev
         #   @return [String, nil]
         optional :domain, String
 
+        # @!attribute email
+        #   Company email address
+        #
+        #   @return [String, nil]
+        optional :email, String
+
         # @!attribute is_nsfw
         #   Indicates whether the brand content is not safe for work (NSFW)
         #
@@ -75,6 +81,12 @@ module BrandDev
         #   @return [Array<BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Logo>, nil]
         optional :logos,
                  -> { BrandDev::Internal::Type::ArrayOf[BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Logo] }
+
+        # @!attribute phone
+        #   Company phone number
+        #
+        #   @return [String, nil]
+        optional :phone, String
 
         # @!attribute slogan
         #   The brand's slogan
@@ -102,7 +114,7 @@ module BrandDev
         #   @return [String, nil]
         optional :title, String
 
-        # @!method initialize(address: nil, backdrops: nil, colors: nil, description: nil, domain: nil, is_nsfw: nil, logos: nil, slogan: nil, socials: nil, stock: nil, title: nil)
+        # @!method initialize(address: nil, backdrops: nil, colors: nil, description: nil, domain: nil, email: nil, is_nsfw: nil, logos: nil, phone: nil, slogan: nil, socials: nil, stock: nil, title: nil)
         #   Some parameter documentations has been truncated, see
         #   {BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand} for more
         #   details.
@@ -119,9 +131,13 @@ module BrandDev
         #
         #   @param domain [String] The domain name of the brand
         #
+        #   @param email [String] Company email address
+        #
         #   @param is_nsfw [Boolean] Indicates whether the brand content is not safe for work (NSFW)
         #
         #   @param logos [Array<BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Logo>] An array of logos associated with the brand
+        #
+        #   @param phone [String] Company phone number
         #
         #   @param slogan [String] The brand's slogan
         #
@@ -242,6 +258,12 @@ module BrandDev
 
           # @see BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Backdrop#resolution
           class Resolution < BrandDev::Internal::Type::BaseModel
+            # @!attribute aspect_ratio
+            #   Aspect ratio of the image (width/height)
+            #
+            #   @return [Float, nil]
+            optional :aspect_ratio, Float
+
             # @!attribute height
             #   Height of the image in pixels
             #
@@ -254,8 +276,10 @@ module BrandDev
             #   @return [Integer, nil]
             optional :width, Integer
 
-            # @!method initialize(height: nil, width: nil)
+            # @!method initialize(aspect_ratio: nil, height: nil, width: nil)
             #   Resolution of the backdrop image
+            #
+            #   @param aspect_ratio [Float] Aspect ratio of the image (width/height)
             #
             #   @param height [Integer] Height of the image in pixels
             #
@@ -290,17 +314,13 @@ module BrandDev
           optional :colors,
                    -> { BrandDev::Internal::Type::ArrayOf[BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Logo::Color] }
 
-          # @!attribute group
-          #   Group identifier for logos
-          #
-          #   @return [Integer, nil]
-          optional :group, Integer
-
           # @!attribute mode
-          #   Mode of the logo, e.g., 'dark', 'light'
+          #   Indicates when this logo is best used: 'light' = best for light mode, 'dark' =
+          #   best for dark mode, 'has_opaque_background' = can be used for either as image
+          #   has its own background
           #
-          #   @return [String, nil]
-          optional :mode, String
+          #   @return [Symbol, BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Logo::Mode, nil]
+          optional :mode, enum: -> { BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Logo::Mode }
 
           # @!attribute resolution
           #   Resolution of the logo image
@@ -309,22 +329,32 @@ module BrandDev
           optional :resolution,
                    -> { BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Logo::Resolution }
 
+          # @!attribute type
+          #   Type of the logo based on resolution (e.g., 'icon', 'logo')
+          #
+          #   @return [Symbol, BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Logo::Type, nil]
+          optional :type, enum: -> { BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Logo::Type }
+
           # @!attribute url
-          #   URL of the logo image
+          #   CDN hosted url of the logo (ready for display)
           #
           #   @return [String, nil]
           optional :url, String
 
-          # @!method initialize(colors: nil, group: nil, mode: nil, resolution: nil, url: nil)
+          # @!method initialize(colors: nil, mode: nil, resolution: nil, type: nil, url: nil)
+          #   Some parameter documentations has been truncated, see
+          #   {BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Logo} for more
+          #   details.
+          #
           #   @param colors [Array<BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Logo::Color>] Array of colors in the logo
           #
-          #   @param group [Integer] Group identifier for logos
-          #
-          #   @param mode [String] Mode of the logo, e.g., 'dark', 'light'
+          #   @param mode [Symbol, BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Logo::Mode] Indicates when this logo is best used: 'light' = best for light mode, 'dark' = b
           #
           #   @param resolution [BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Logo::Resolution] Resolution of the logo image
           #
-          #   @param url [String] URL of the logo image
+          #   @param type [Symbol, BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Logo::Type] Type of the logo based on resolution (e.g., 'icon', 'logo')
+          #
+          #   @param url [String] CDN hosted url of the logo (ready for display)
 
           class Color < BrandDev::Internal::Type::BaseModel
             # @!attribute hex
@@ -345,8 +375,30 @@ module BrandDev
             #   @param name [String] Name of the color
           end
 
+          # Indicates when this logo is best used: 'light' = best for light mode, 'dark' =
+          # best for dark mode, 'has_opaque_background' = can be used for either as image
+          # has its own background
+          #
+          # @see BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Logo#mode
+          module Mode
+            extend BrandDev::Internal::Type::Enum
+
+            LIGHT = :light
+            DARK = :dark
+            HAS_OPAQUE_BACKGROUND = :has_opaque_background
+
+            # @!method self.values
+            #   @return [Array<Symbol>]
+          end
+
           # @see BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Logo#resolution
           class Resolution < BrandDev::Internal::Type::BaseModel
+            # @!attribute aspect_ratio
+            #   Aspect ratio of the image (width/height)
+            #
+            #   @return [Float, nil]
+            optional :aspect_ratio, Float
+
             # @!attribute height
             #   Height of the image in pixels
             #
@@ -359,12 +411,27 @@ module BrandDev
             #   @return [Integer, nil]
             optional :width, Integer
 
-            # @!method initialize(height: nil, width: nil)
+            # @!method initialize(aspect_ratio: nil, height: nil, width: nil)
             #   Resolution of the logo image
+            #
+            #   @param aspect_ratio [Float] Aspect ratio of the image (width/height)
             #
             #   @param height [Integer] Height of the image in pixels
             #
             #   @param width [Integer] Width of the image in pixels
+          end
+
+          # Type of the logo based on resolution (e.g., 'icon', 'logo')
+          #
+          # @see BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Logo#type
+          module Type
+            extend BrandDev::Internal::Type::Enum
+
+            ICON = :icon
+            LOGO = :logo
+
+            # @!method self.values
+            #   @return [Array<Symbol>]
           end
         end
 
