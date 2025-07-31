@@ -2,7 +2,6 @@ module BrandDev
   module Models
     type brand_ai_query_response =
       {
-        code: Integer,
         data_extracted: ::Array[BrandDev::Models::BrandAIQueryResponse::DataExtracted],
         domain: String,
         status: String,
@@ -10,10 +9,6 @@ module BrandDev
       }
 
     class BrandAIQueryResponse < BrandDev::Internal::Type::BaseModel
-      attr_reader code: Integer?
-
-      def code=: (Integer) -> Integer
-
       attr_reader data_extracted: ::Array[BrandDev::Models::BrandAIQueryResponse::DataExtracted]?
 
       def data_extracted=: (
@@ -33,7 +28,6 @@ module BrandDev
       def urls_analyzed=: (::Array[String]) -> ::Array[String]
 
       def initialize: (
-        ?code: Integer,
         ?data_extracted: ::Array[BrandDev::Models::BrandAIQueryResponse::DataExtracted],
         ?domain: String,
         ?status: String,
@@ -41,7 +35,6 @@ module BrandDev
       ) -> void
 
       def to_hash: -> {
-        code: Integer,
         data_extracted: ::Array[BrandDev::Models::BrandAIQueryResponse::DataExtracted],
         domain: String,
         status: String,

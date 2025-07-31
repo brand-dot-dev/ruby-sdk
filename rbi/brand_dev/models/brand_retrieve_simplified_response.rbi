@@ -472,18 +472,24 @@ module BrandDev
           end
           attr_writer :colors
 
-          # Group identifier for logos
-          sig { returns(T.nilable(Integer)) }
-          attr_reader :group
-
-          sig { params(group: Integer).void }
-          attr_writer :group
-
-          # Mode of the logo, e.g., 'dark', 'light'
-          sig { returns(T.nilable(String)) }
+          # Indicates when this logo is best used: 'light' = best for light mode, 'dark' =
+          # best for dark mode, 'has_opaque_background' = can be used for either as image
+          # has its own background
+          sig do
+            returns(
+              T.nilable(
+                BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo::Mode::TaggedSymbol
+              )
+            )
+          end
           attr_reader :mode
 
-          sig { params(mode: String).void }
+          sig do
+            params(
+              mode:
+                BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo::Mode::OrSymbol
+            ).void
+          end
           attr_writer :mode
 
           # Resolution of the logo image
@@ -504,14 +510,25 @@ module BrandDev
           end
           attr_writer :resolution
 
-          # Type of the logo based on resolution (e.g., 'icon', 'logo', 'banner')
-          sig { returns(T.nilable(String)) }
+          # Type of the logo based on resolution (e.g., 'icon', 'logo')
+          sig do
+            returns(
+              T.nilable(
+                BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo::Type::TaggedSymbol
+              )
+            )
+          end
           attr_reader :type
 
-          sig { params(type: String).void }
+          sig do
+            params(
+              type:
+                BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo::Type::OrSymbol
+            ).void
+          end
           attr_writer :type
 
-          # URL of the logo image
+          # CDN hosted url of the logo (ready for display)
           sig { returns(T.nilable(String)) }
           attr_reader :url
 
@@ -524,26 +541,27 @@ module BrandDev
                 T::Array[
                   BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo::Color::OrHash
                 ],
-              group: Integer,
-              mode: String,
+              mode:
+                BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo::Mode::OrSymbol,
               resolution:
                 BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo::Resolution::OrHash,
-              type: String,
+              type:
+                BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo::Type::OrSymbol,
               url: String
             ).returns(T.attached_class)
           end
           def self.new(
             # Array of colors in the logo
             colors: nil,
-            # Group identifier for logos
-            group: nil,
-            # Mode of the logo, e.g., 'dark', 'light'
+            # Indicates when this logo is best used: 'light' = best for light mode, 'dark' =
+            # best for dark mode, 'has_opaque_background' = can be used for either as image
+            # has its own background
             mode: nil,
             # Resolution of the logo image
             resolution: nil,
-            # Type of the logo based on resolution (e.g., 'icon', 'logo', 'banner')
+            # Type of the logo based on resolution (e.g., 'icon', 'logo')
             type: nil,
-            # URL of the logo image
+            # CDN hosted url of the logo (ready for display)
             url: nil
           )
           end
@@ -555,11 +573,12 @@ module BrandDev
                   T::Array[
                     BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo::Color
                   ],
-                group: Integer,
-                mode: String,
+                mode:
+                  BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo::Mode::TaggedSymbol,
                 resolution:
                   BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo::Resolution,
-                type: String,
+                type:
+                  BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo::Type::TaggedSymbol,
                 url: String
               }
             )
@@ -601,6 +620,48 @@ module BrandDev
 
             sig { override.returns({ hex: String, name: String }) }
             def to_hash
+            end
+          end
+
+          # Indicates when this logo is best used: 'light' = best for light mode, 'dark' =
+          # best for dark mode, 'has_opaque_background' = can be used for either as image
+          # has its own background
+          module Mode
+            extend BrandDev::Internal::Type::Enum
+
+            TaggedSymbol =
+              T.type_alias do
+                T.all(
+                  Symbol,
+                  BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo::Mode
+                )
+              end
+            OrSymbol = T.type_alias { T.any(Symbol, String) }
+
+            LIGHT =
+              T.let(
+                :light,
+                BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo::Mode::TaggedSymbol
+              )
+            DARK =
+              T.let(
+                :dark,
+                BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo::Mode::TaggedSymbol
+              )
+            HAS_OPAQUE_BACKGROUND =
+              T.let(
+                :has_opaque_background,
+                BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo::Mode::TaggedSymbol
+              )
+
+            sig do
+              override.returns(
+                T::Array[
+                  BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo::Mode::TaggedSymbol
+                ]
+              )
+            end
+            def self.values
             end
           end
 
@@ -658,6 +719,41 @@ module BrandDev
               )
             end
             def to_hash
+            end
+          end
+
+          # Type of the logo based on resolution (e.g., 'icon', 'logo')
+          module Type
+            extend BrandDev::Internal::Type::Enum
+
+            TaggedSymbol =
+              T.type_alias do
+                T.all(
+                  Symbol,
+                  BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo::Type
+                )
+              end
+            OrSymbol = T.type_alias { T.any(Symbol, String) }
+
+            ICON =
+              T.let(
+                :icon,
+                BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo::Type::TaggedSymbol
+              )
+            LOGO =
+              T.let(
+                :logo,
+                BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo::Type::TaggedSymbol
+              )
+
+            sig do
+              override.returns(
+                T::Array[
+                  BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo::Type::TaggedSymbol
+                ]
+              )
+            end
+            def self.values
             end
           end
         end

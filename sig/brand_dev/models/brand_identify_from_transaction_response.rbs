@@ -41,8 +41,10 @@ module BrandDev
           colors: ::Array[BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Color],
           description: String,
           domain: String,
+          email: String,
           is_nsfw: bool,
           logos: ::Array[BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Logo],
+          phone: String,
           slogan: String,
           socials: ::Array[BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Social],
           stock: BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Stock,
@@ -76,6 +78,10 @@ module BrandDev
 
         def domain=: (String) -> String
 
+        attr_reader email: String?
+
+        def email=: (String) -> String
+
         attr_reader is_nsfw: bool?
 
         def is_nsfw=: (bool) -> bool
@@ -85,6 +91,10 @@ module BrandDev
         def logos=: (
           ::Array[BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Logo]
         ) -> ::Array[BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Logo]
+
+        attr_reader phone: String?
+
+        def phone=: (String) -> String
 
         attr_reader slogan: String?
 
@@ -112,8 +122,10 @@ module BrandDev
           ?colors: ::Array[BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Color],
           ?description: String,
           ?domain: String,
+          ?email: String,
           ?is_nsfw: bool,
           ?logos: ::Array[BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Logo],
+          ?phone: String,
           ?slogan: String,
           ?socials: ::Array[BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Social],
           ?stock: BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Stock,
@@ -126,8 +138,10 @@ module BrandDev
           colors: ::Array[BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Color],
           description: String,
           domain: String,
+          email: String,
           is_nsfw: bool,
           logos: ::Array[BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Logo],
+          phone: String,
           slogan: String,
           socials: ::Array[BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Social],
           stock: BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Stock,
@@ -247,9 +261,14 @@ module BrandDev
             def to_hash: -> { hex: String, name: String }
           end
 
-          type resolution = { height: Integer, width: Integer }
+          type resolution =
+            { aspect_ratio: Float, height: Integer, width: Integer }
 
           class Resolution < BrandDev::Internal::Type::BaseModel
+            attr_reader aspect_ratio: Float?
+
+            def aspect_ratio=: (Float) -> Float
+
             attr_reader height: Integer?
 
             def height=: (Integer) -> Integer
@@ -258,9 +277,17 @@ module BrandDev
 
             def width=: (Integer) -> Integer
 
-            def initialize: (?height: Integer, ?width: Integer) -> void
+            def initialize: (
+              ?aspect_ratio: Float,
+              ?height: Integer,
+              ?width: Integer
+            ) -> void
 
-            def to_hash: -> { height: Integer, width: Integer }
+            def to_hash: -> {
+              aspect_ratio: Float,
+              height: Integer,
+              width: Integer
+            }
           end
         end
 
@@ -283,9 +310,9 @@ module BrandDev
         type logo =
           {
             colors: ::Array[BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Logo::Color],
-            group: Integer,
-            mode: String,
+            mode: BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Logo::mode,
             resolution: BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Logo::Resolution,
+            type: BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Logo::type_,
             url: String
           }
 
@@ -296,13 +323,11 @@ module BrandDev
             ::Array[BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Logo::Color]
           ) -> ::Array[BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Logo::Color]
 
-          attr_reader group: Integer?
+          attr_reader mode: BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Logo::mode?
 
-          def group=: (Integer) -> Integer
-
-          attr_reader mode: String?
-
-          def mode=: (String) -> String
+          def mode=: (
+            BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Logo::mode
+          ) -> BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Logo::mode
 
           attr_reader resolution: BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Logo::Resolution?
 
@@ -310,23 +335,29 @@ module BrandDev
             BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Logo::Resolution
           ) -> BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Logo::Resolution
 
+          attr_reader type: BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Logo::type_?
+
+          def type=: (
+            BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Logo::type_
+          ) -> BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Logo::type_
+
           attr_reader url: String?
 
           def url=: (String) -> String
 
           def initialize: (
             ?colors: ::Array[BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Logo::Color],
-            ?group: Integer,
-            ?mode: String,
+            ?mode: BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Logo::mode,
             ?resolution: BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Logo::Resolution,
+            ?type: BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Logo::type_,
             ?url: String
           ) -> void
 
           def to_hash: -> {
             colors: ::Array[BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Logo::Color],
-            group: Integer,
-            mode: String,
+            mode: BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Logo::mode,
             resolution: BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Logo::Resolution,
+            type: BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Logo::type_,
             url: String
           }
 
@@ -346,9 +377,26 @@ module BrandDev
             def to_hash: -> { hex: String, name: String }
           end
 
-          type resolution = { height: Integer, width: Integer }
+          type mode = :light | :dark | :has_opaque_background
+
+          module Mode
+            extend BrandDev::Internal::Type::Enum
+
+            LIGHT: :light
+            DARK: :dark
+            HAS_OPAQUE_BACKGROUND: :has_opaque_background
+
+            def self?.values: -> ::Array[BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Logo::mode]
+          end
+
+          type resolution =
+            { aspect_ratio: Float, height: Integer, width: Integer }
 
           class Resolution < BrandDev::Internal::Type::BaseModel
+            attr_reader aspect_ratio: Float?
+
+            def aspect_ratio=: (Float) -> Float
+
             attr_reader height: Integer?
 
             def height=: (Integer) -> Integer
@@ -357,9 +405,28 @@ module BrandDev
 
             def width=: (Integer) -> Integer
 
-            def initialize: (?height: Integer, ?width: Integer) -> void
+            def initialize: (
+              ?aspect_ratio: Float,
+              ?height: Integer,
+              ?width: Integer
+            ) -> void
 
-            def to_hash: -> { height: Integer, width: Integer }
+            def to_hash: -> {
+              aspect_ratio: Float,
+              height: Integer,
+              width: Integer
+            }
+          end
+
+          type type_ = :icon | :logo
+
+          module Type
+            extend BrandDev::Internal::Type::Enum
+
+            ICON: :icon
+            LOGO: :logo
+
+            def self?.values: -> ::Array[BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Logo::type_]
           end
         end
 
