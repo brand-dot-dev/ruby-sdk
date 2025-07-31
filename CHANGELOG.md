@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.0 (2025-07-31)
+
+Full Changelog: [v0.1.0...v0.2.0](https://github.com/brand-dot-dev/ruby-sdk/compare/v0.1.0...v0.2.0)
+
+### Features
+
+* **api:** manual updates ([9e2f31d](https://github.com/brand-dot-dev/ruby-sdk/commit/9e2f31dc4082586468781ae4d25c58155eb2d119))
+
 ## 0.1.0 (2025-07-29)
 
 Full Changelog: [v0.0.2...v0.1.0](https://github.com/brand-dot-dev/ruby-sdk/compare/v0.0.2...v0.1.0)
