@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.1 (2025-08-01)
+
+Full Changelog: [v0.2.0...v0.2.1](https://github.com/brand-dot-dev/ruby-sdk/compare/v0.2.0...v0.2.1)
+
+### Chores
+
+* **internal:** increase visibility of internal helper method ([cfabb97](https://github.com/brand-dot-dev/ruby-sdk/commit/cfabb971de6365cbc73952eb438d4d9ecfb5407c))
+
 ## 0.2.0 (2025-07-31)
 
 Full Changelog: [v0.1.0...v0.2.0](https://github.com/brand-dot-dev/ruby-sdk/compare/v0.1.0...v0.2.0)
