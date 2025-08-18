@@ -114,25 +114,6 @@ module BrandDev
       )
       end
 
-      # Retrieve brand data by stock ticker (e.g. AAPL, TSLA, etc.)
-      sig do
-        params(
-          ticker: String,
-          timeout_ms: Integer,
-          request_options: BrandDev::RequestOptions::OrHash
-        ).returns(BrandDev::Models::BrandRetrieveByTickerResponse)
-      end
-      def retrieve_by_ticker(
-        # Stock ticker symbol to retrieve brand data for (e.g. AAPL, TSLA, etc.)
-        ticker:,
-        # Optional timeout in milliseconds for the request. If the request takes longer
-        # than this value, it will be aborted with a 408 status code. Maximum allowed
-        # value is 300000ms (5 minutes).
-        timeout_ms: nil,
-        request_options: {}
-      )
-      end
-
       # Endpoint to classify any brand into a 2022 NAICS code.
       sig do
         params(
