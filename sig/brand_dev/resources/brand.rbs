@@ -31,12 +31,6 @@ module BrandDev
         ?request_options: BrandDev::request_opts
       ) -> BrandDev::Models::BrandPrefetchResponse
 
-      def retrieve_by_ticker: (
-        ticker: String,
-        ?timeout_ms: Integer,
-        ?request_options: BrandDev::request_opts
-      ) -> BrandDev::Models::BrandRetrieveByTickerResponse
-
       def retrieve_naics: (
         input: String,
         ?timeout_ms: Integer,

@@ -131,33 +131,6 @@ module BrandDev
       end
 
       # Some parameter documentations has been truncated, see
-      # {BrandDev::Models::BrandRetrieveByTickerParams} for more details.
-      #
-      # Retrieve brand data by stock ticker (e.g. AAPL, TSLA, etc.)
-      #
-      # @overload retrieve_by_ticker(ticker:, timeout_ms: nil, request_options: {})
-      #
-      # @param ticker [String] Stock ticker symbol to retrieve brand data for (e.g. AAPL, TSLA, etc.)
-      #
-      # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
-      #
-      # @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}, nil]
-      #
-      # @return [BrandDev::Models::BrandRetrieveByTickerResponse]
-      #
-      # @see BrandDev::Models::BrandRetrieveByTickerParams
-      def retrieve_by_ticker(params)
-        parsed, options = BrandDev::BrandRetrieveByTickerParams.dump_request(params)
-        @client.request(
-          method: :get,
-          path: "brand/retrieve-by-ticker",
-          query: parsed.transform_keys(timeout_ms: "timeoutMS"),
-          model: BrandDev::Models::BrandRetrieveByTickerResponse,
-          options: options
-        )
-      end
-
-      # Some parameter documentations has been truncated, see
       # {BrandDev::Models::BrandRetrieveNaicsParams} for more details.
       #
       # Endpoint to classify any brand into a 2022 NAICS code.
