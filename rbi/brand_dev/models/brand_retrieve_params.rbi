@@ -11,11 +11,16 @@ module BrandDev
           T.any(BrandDev::BrandRetrieveParams, BrandDev::Internal::AnyHash)
         end
 
-      # Domain name to retrieve brand data for
-      sig { returns(String) }
-      attr_accessor :domain
+      # Domain name to retrieve brand data for (e.g., 'example.com', 'google.com').
+      # Cannot be used with name or ticker parameters.
+      sig { returns(T.nilable(String)) }
+      attr_reader :domain
 
-      # Optional parameter to force the language of the retrieved brand data
+      sig { params(domain: String).void }
+      attr_writer :domain
+
+      # Optional parameter to force the language of the retrieved brand data. Works with
+      # all three lookup methods.
       sig do
         returns(
           T.nilable(BrandDev::BrandRetrieveParams::ForceLanguage::OrSymbol)
@@ -32,12 +37,30 @@ module BrandDev
 
       # Optional parameter to optimize the API call for maximum speed. When set to true,
       # the API will skip time-consuming operations for faster response at the cost of
-      # less comprehensive data.
+      # less comprehensive data. Works with all three lookup methods.
       sig { returns(T.nilable(T::Boolean)) }
       attr_reader :max_speed
 
       sig { params(max_speed: T::Boolean).void }
       attr_writer :max_speed
+
+      # Company name to retrieve brand data for (e.g., 'Apple Inc', 'Microsoft
+      # Corporation'). Must be 3-30 characters. Cannot be used with domain or ticker
+      # parameters.
+      sig { returns(T.nilable(String)) }
+      attr_reader :name
+
+      sig { params(name: String).void }
+      attr_writer :name
+
+      # Stock ticker symbol to retrieve brand data for (e.g., 'AAPL', 'GOOGL', 'BRK.A').
+      # Must be 1-6 characters, letters/numbers/dots only. Cannot be used with domain or
+      # name parameters.
+      sig { returns(T.nilable(String)) }
+      attr_reader :ticker
+
+      sig { params(ticker: String).void }
+      attr_writer :ticker
 
       # Optional timeout in milliseconds for the request. If the request takes longer
       # than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -54,19 +77,31 @@ module BrandDev
           force_language:
             BrandDev::BrandRetrieveParams::ForceLanguage::OrSymbol,
           max_speed: T::Boolean,
+          name: String,
+          ticker: String,
           timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(T.attached_class)
       end
       def self.new(
-        # Domain name to retrieve brand data for
-        domain:,
-        # Optional parameter to force the language of the retrieved brand data
+        # Domain name to retrieve brand data for (e.g., 'example.com', 'google.com').
+        # Cannot be used with name or ticker parameters.
+        domain: nil,
+        # Optional parameter to force the language of the retrieved brand data. Works with
+        # all three lookup methods.
         force_language: nil,
         # Optional parameter to optimize the API call for maximum speed. When set to true,
         # the API will skip time-consuming operations for faster response at the cost of
-        # less comprehensive data.
+        # less comprehensive data. Works with all three lookup methods.
         max_speed: nil,
+        # Company name to retrieve brand data for (e.g., 'Apple Inc', 'Microsoft
+        # Corporation'). Must be 3-30 characters. Cannot be used with domain or ticker
+        # parameters.
+        name: nil,
+        # Stock ticker symbol to retrieve brand data for (e.g., 'AAPL', 'GOOGL', 'BRK.A').
+        # Must be 1-6 characters, letters/numbers/dots only. Cannot be used with domain or
+        # name parameters.
+        ticker: nil,
         # Optional timeout in milliseconds for the request. If the request takes longer
         # than this value, it will be aborted with a 408 status code. Maximum allowed
         # value is 300000ms (5 minutes).
@@ -82,6 +117,8 @@ module BrandDev
             force_language:
               BrandDev::BrandRetrieveParams::ForceLanguage::OrSymbol,
             max_speed: T::Boolean,
+            name: String,
+            ticker: String,
             timeout_ms: Integer,
             request_options: BrandDev::RequestOptions
           }
@@ -90,7 +127,8 @@ module BrandDev
       def to_hash
       end
 
-      # Optional parameter to force the language of the retrieved brand data
+      # Optional parameter to force the language of the retrieved brand data. Works with
+      # all three lookup methods.
       module ForceLanguage
         extend BrandDev::Internal::Type::Enum
 

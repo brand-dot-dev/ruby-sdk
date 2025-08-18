@@ -6,15 +6,20 @@ module BrandDev
       # Some parameter documentations has been truncated, see
       # {BrandDev::Models::BrandRetrieveParams} for more details.
       #
-      # Retrieve brand data by domain
+      # Retrieve brand information using one of three methods: domain name, company
+      # name, or stock ticker symbol. Exactly one of these parameters must be provided.
       #
-      # @overload retrieve(domain:, force_language: nil, max_speed: nil, timeout_ms: nil, request_options: {})
+      # @overload retrieve(domain: nil, force_language: nil, max_speed: nil, name: nil, ticker: nil, timeout_ms: nil, request_options: {})
       #
-      # @param domain [String] Domain name to retrieve brand data for
+      # @param domain [String] Domain name to retrieve brand data for (e.g., 'example.com', 'google.com'). Cann
       #
-      # @param force_language [Symbol, BrandDev::Models::BrandRetrieveParams::ForceLanguage] Optional parameter to force the language of the retrieved brand data
+      # @param force_language [Symbol, BrandDev::Models::BrandRetrieveParams::ForceLanguage] Optional parameter to force the language of the retrieved brand data. Works with
       #
       # @param max_speed [Boolean] Optional parameter to optimize the API call for maximum speed. When set to true,
+      #
+      # @param name [String] Company name to retrieve brand data for (e.g., 'Apple Inc', 'Microsoft Corporati
+      #
+      # @param ticker [String] Stock ticker symbol to retrieve brand data for (e.g., 'AAPL', 'GOOGL', 'BRK.A').
       #
       # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #
@@ -23,7 +28,7 @@ module BrandDev
       # @return [BrandDev::Models::BrandRetrieveResponse]
       #
       # @see BrandDev::Models::BrandRetrieveParams
-      def retrieve(params)
+      def retrieve(params = {})
         parsed, options = BrandDev::BrandRetrieveParams.dump_request(params)
         @client.request(
           method: :get,

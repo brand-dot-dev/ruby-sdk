@@ -3,10 +3,10 @@
 require_relative "../test_helper"
 
 class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
-  def test_retrieve_required_params
+  def test_retrieve
     skip("Prism tests are disabled")
 
-    response = @brand_dev.brand.retrieve(domain: "domain")
+    response = @brand_dev.brand.retrieve
 
     assert_pattern do
       response => BrandDev::Models::BrandRetrieveResponse
