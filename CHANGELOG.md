@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.3.0 (2025-08-19)
+
+Full Changelog: [v0.2.1...v0.3.0](https://github.com/brand-dot-dev/ruby-sdk/compare/v0.2.1...v0.3.0)
+
+### Features
+
+* **api:** api update ([300cd20](https://github.com/brand-dot-dev/ruby-sdk/commit/300cd20109a1cfb9a20d6f084fd663a4f460b9a1))
+* **api:** api update ([63abe64](https://github.com/brand-dot-dev/ruby-sdk/commit/63abe64a9fb4f188a7667e25a135c7cd16867c10))
+* **api:** api update ([221ec47](https://github.com/brand-dot-dev/ruby-sdk/commit/221ec47349dc4c937bd32e92e8ecd1d7d8bd9321))
+
+
+### Chores
+
+* collect metadata from type DSL ([1c0ddc6](https://github.com/brand-dot-dev/ruby-sdk/commit/1c0ddc66bcacc3fedc7044759dc99bb6d374d71e))
+* **internal:** codegen related update ([f544144](https://github.com/brand-dot-dev/ruby-sdk/commit/f544144eee9d1c3bc1e879a80a9913f51c83f010))
+* **internal:** update comment in script ([1c17fb4](https://github.com/brand-dot-dev/ruby-sdk/commit/1c17fb44ee56f6f8b797f68806cd5dfbeaf66b17))
+* update @stainless-api/prism-cli to v5.15.0 ([42f525c](https://github.com/brand-dot-dev/ruby-sdk/commit/42f525cbd0b0d4418d8cd553b05688a03c06a3ec))
+
 ## 0.2.1 (2025-08-01)
 
 Full Changelog: [v0.2.0...v0.2.1](https://github.com/brand-dot-dev/ruby-sdk/compare/v0.2.0...v0.2.1)

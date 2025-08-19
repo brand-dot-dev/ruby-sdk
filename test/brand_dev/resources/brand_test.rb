@@ -3,10 +3,10 @@
 require_relative "../test_helper"
 
 class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
-  def test_retrieve_required_params
-    skip("skipped: tests are disabled for the time being")
+  def test_retrieve
+    skip("Prism tests are disabled")
 
-    response = @brand_dev.brand.retrieve(domain: "domain")
+    response = @brand_dev.brand.retrieve
 
     assert_pattern do
       response => BrandDev::Models::BrandRetrieveResponse
@@ -22,7 +22,7 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
   end
 
   def test_ai_query_required_params
-    skip("skipped: tests are disabled for the time being")
+    skip("Prism tests are disabled")
 
     response =
       @brand_dev.brand.ai_query(
@@ -52,7 +52,7 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
   end
 
   def test_identify_from_transaction_required_params
-    skip("skipped: tests are disabled for the time being")
+    skip("Prism tests are disabled")
 
     response = @brand_dev.brand.identify_from_transaction(transaction_info: "transaction_info")
 
@@ -70,7 +70,7 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
   end
 
   def test_prefetch_required_params
-    skip("skipped: tests are disabled for the time being")
+    skip("Prism tests are disabled")
 
     response = @brand_dev.brand.prefetch(domain: "domain")
 
@@ -87,26 +87,8 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
     end
   end
 
-  def test_retrieve_by_ticker_required_params
-    skip("skipped: tests are disabled for the time being")
-
-    response = @brand_dev.brand.retrieve_by_ticker(ticker: "ticker")
-
-    assert_pattern do
-      response => BrandDev::Models::BrandRetrieveByTickerResponse
-    end
-
-    assert_pattern do
-      response => {
-        brand: BrandDev::Models::BrandRetrieveByTickerResponse::Brand | nil,
-        code: Integer | nil,
-        status: String | nil
-      }
-    end
-  end
-
   def test_retrieve_naics_required_params
-    skip("skipped: tests are disabled for the time being")
+    skip("Prism tests are disabled")
 
     response = @brand_dev.brand.retrieve_naics(input: "input")
 
@@ -125,7 +107,7 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
   end
 
   def test_retrieve_simplified_required_params
-    skip("skipped: tests are disabled for the time being")
+    skip("Prism tests are disabled")
 
     response = @brand_dev.brand.retrieve_simplified(domain: "domain")
 
@@ -143,7 +125,7 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
   end
 
   def test_screenshot_required_params
-    skip("skipped: tests are disabled for the time being")
+    skip("Prism tests are disabled")
 
     response = @brand_dev.brand.screenshot(domain: "domain")
 
@@ -163,7 +145,7 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
   end
 
   def test_styleguide_required_params
-    skip("skipped: tests are disabled for the time being")
+    skip("Prism tests are disabled")
 
     response = @brand_dev.brand.styleguide(domain: "domain")
 

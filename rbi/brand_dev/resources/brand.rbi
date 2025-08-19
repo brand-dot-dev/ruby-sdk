@@ -3,26 +3,39 @@
 module BrandDev
   module Resources
     class Brand
-      # Retrieve brand data by domain
+      # Retrieve brand information using one of three methods: domain name, company
+      # name, or stock ticker symbol. Exactly one of these parameters must be provided.
       sig do
         params(
           domain: String,
           force_language:
             BrandDev::BrandRetrieveParams::ForceLanguage::OrSymbol,
           max_speed: T::Boolean,
+          name: String,
+          ticker: String,
           timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(BrandDev::Models::BrandRetrieveResponse)
       end
       def retrieve(
-        # Domain name to retrieve brand data for
-        domain:,
-        # Optional parameter to force the language of the retrieved brand data
+        # Domain name to retrieve brand data for (e.g., 'example.com', 'google.com').
+        # Cannot be used with name or ticker parameters.
+        domain: nil,
+        # Optional parameter to force the language of the retrieved brand data. Works with
+        # all three lookup methods.
         force_language: nil,
         # Optional parameter to optimize the API call for maximum speed. When set to true,
         # the API will skip time-consuming operations for faster response at the cost of
-        # less comprehensive data.
+        # less comprehensive data. Works with all three lookup methods.
         max_speed: nil,
+        # Company name to retrieve brand data for (e.g., 'Apple Inc', 'Microsoft
+        # Corporation'). Must be 3-30 characters. Cannot be used with domain or ticker
+        # parameters.
+        name: nil,
+        # Stock ticker symbol to retrieve brand data for (e.g., 'AAPL', 'GOOGL', 'BRK.A').
+        # Must be 1-6 characters, letters/numbers/dots only. Cannot be used with domain or
+        # name parameters.
+        ticker: nil,
         # Optional timeout in milliseconds for the request. If the request takes longer
         # than this value, it will be aborted with a 408 status code. Maximum allowed
         # value is 300000ms (5 minutes).
@@ -93,25 +106,6 @@ module BrandDev
       def prefetch(
         # Domain name to prefetch brand data for
         domain:,
-        # Optional timeout in milliseconds for the request. If the request takes longer
-        # than this value, it will be aborted with a 408 status code. Maximum allowed
-        # value is 300000ms (5 minutes).
-        timeout_ms: nil,
-        request_options: {}
-      )
-      end
-
-      # Retrieve brand data by stock ticker (e.g. AAPL, TSLA, etc.)
-      sig do
-        params(
-          ticker: String,
-          timeout_ms: Integer,
-          request_options: BrandDev::RequestOptions::OrHash
-        ).returns(BrandDev::Models::BrandRetrieveByTickerResponse)
-      end
-      def retrieve_by_ticker(
-        # Stock ticker symbol to retrieve brand data for (e.g. AAPL, TSLA, etc.)
-        ticker:,
         # Optional timeout in milliseconds for the request. If the request takes longer
         # than this value, it will be aborted with a 408 status code. Maximum allowed
         # value is 300000ms (5 minutes).
