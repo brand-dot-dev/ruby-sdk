@@ -242,11 +242,7 @@ class BrandDev::Test::UtilFormDataEncodingTest < Minitest::Test
       {strio: StringIO.new("a")} => {"strio" => "a"},
       {strio: BrandDev::FilePart.new("a")} => {"strio" => "a"},
       {pathname: Pathname(__FILE__)} => {"pathname" => -> { _1.read in /^class BrandDev/ }},
-      {pathname: BrandDev::FilePart.new(Pathname(__FILE__))} => {
-        "pathname" => -> {
-          _1.read in /^class BrandDev/
-        }
-      }
+      {pathname: BrandDev::FilePart.new(Pathname(__FILE__))} => {"pathname" => -> { _1.read in /^class BrandDev/ }}
     }
     cases.each do |body, testcase|
       encoded = BrandDev::Internal::Util.encode_content(headers, body)
@@ -324,9 +320,9 @@ class BrandDev::Test::UtilFusedEnumTest < Minitest::Test
   end
 
   def test_external_iteration
-    it = [1, 2, 3].to_enum
-    first = it.next
-    fused = BrandDev::Internal::Util.fused_enum(it, external: true)
+    iter = [1, 2, 3].to_enum
+    first = iter.next
+    fused = BrandDev::Internal::Util.fused_enum(iter, external: true)
 
     assert_equal(1, first)
     assert_equal([2, 3], fused.to_a)
