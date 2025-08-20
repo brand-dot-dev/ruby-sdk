@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.3.1 (2025-08-20)
+
+Full Changelog: [v0.3.0...v0.3.1](https://github.com/brand-dot-dev/ruby-sdk/compare/v0.3.0...v0.3.1)
+
+### Bug Fixes
+
+* bump sorbet version and fix new type errors from the breaking change ([11b69b1](https://github.com/brand-dot-dev/ruby-sdk/commit/11b69b1415dbd9d3abd7ca82420a9c8f25e178ac))
+
 ## 0.3.0 (2025-08-19)
 
 Full Changelog: [v0.2.1...v0.3.0](https://github.com/brand-dot-dev/ruby-sdk/compare/v0.2.1...v0.3.0)
