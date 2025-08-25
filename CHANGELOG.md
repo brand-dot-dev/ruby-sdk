@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.3.2 (2025-08-25)
+
+Full Changelog: [v0.3.1...v0.3.2](https://github.com/brand-dot-dev/ruby-sdk/compare/v0.3.1...v0.3.2)
+
+### Chores
+
+* add json schema comment for rubocop.yml ([5262bda](https://github.com/brand-dot-dev/ruby-sdk/commit/5262bdacb001ad4ad901f7bd79c782a04783afdc))
+
 ## 0.3.1 (2025-08-20)
 
 Full Changelog: [v0.3.0...v0.3.1](https://github.com/brand-dot-dev/ruby-sdk/compare/v0.3.0...v0.3.1)
