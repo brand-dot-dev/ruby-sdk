@@ -44,6 +44,7 @@ module BrandDev
           email: String,
           industries: BrandDev::Models::BrandRetrieveResponse::Brand::Industries,
           is_nsfw: bool,
+          links: BrandDev::Models::BrandRetrieveResponse::Brand::Links,
           logos: ::Array[BrandDev::Models::BrandRetrieveResponse::Brand::Logo],
           phone: String,
           slogan: String,
@@ -93,6 +94,12 @@ module BrandDev
 
         def is_nsfw=: (bool) -> bool
 
+        attr_reader links: BrandDev::Models::BrandRetrieveResponse::Brand::Links?
+
+        def links=: (
+          BrandDev::Models::BrandRetrieveResponse::Brand::Links
+        ) -> BrandDev::Models::BrandRetrieveResponse::Brand::Links
+
         attr_reader logos: ::Array[BrandDev::Models::BrandRetrieveResponse::Brand::Logo]?
 
         def logos=: (
@@ -132,6 +139,7 @@ module BrandDev
           ?email: String,
           ?industries: BrandDev::Models::BrandRetrieveResponse::Brand::Industries,
           ?is_nsfw: bool,
+          ?links: BrandDev::Models::BrandRetrieveResponse::Brand::Links,
           ?logos: ::Array[BrandDev::Models::BrandRetrieveResponse::Brand::Logo],
           ?phone: String,
           ?slogan: String,
@@ -149,6 +157,7 @@ module BrandDev
           email: String,
           industries: BrandDev::Models::BrandRetrieveResponse::Brand::Industries,
           is_nsfw: bool,
+          links: BrandDev::Models::BrandRetrieveResponse::Brand::Links,
           logos: ::Array[BrandDev::Models::BrandRetrieveResponse::Brand::Logo],
           phone: String,
           slogan: String,
@@ -863,6 +872,48 @@ module BrandDev
               def self?.values: -> ::Array[BrandDev::Models::BrandRetrieveResponse::Brand::Industries::Eic::subindustry]
             end
           end
+        end
+
+        type links =
+          {
+            blog: String?,
+            careers: String?,
+            contact: String?,
+            pricing: String?,
+            privacy: String?,
+            terms: String?
+          }
+
+        class Links < BrandDev::Internal::Type::BaseModel
+          attr_accessor blog: String?
+
+          attr_accessor careers: String?
+
+          attr_accessor contact: String?
+
+          attr_accessor pricing: String?
+
+          attr_accessor privacy: String?
+
+          attr_accessor terms: String?
+
+          def initialize: (
+            ?blog: String?,
+            ?careers: String?,
+            ?contact: String?,
+            ?pricing: String?,
+            ?privacy: String?,
+            ?terms: String?
+          ) -> void
+
+          def to_hash: -> {
+            blog: String?,
+            careers: String?,
+            contact: String?,
+            pricing: String?,
+            privacy: String?,
+            terms: String?
+          }
         end
 
         type logo =

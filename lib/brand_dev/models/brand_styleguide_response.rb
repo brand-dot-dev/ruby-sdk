@@ -59,6 +59,12 @@ module BrandDev
                  -> { BrandDev::Models::BrandStyleguideResponse::Styleguide::ElementSpacing },
                  api_name: :elementSpacing
 
+        # @!attribute mode
+        #   The primary color mode of the website design
+        #
+        #   @return [Symbol, BrandDev::Models::BrandStyleguideResponse::Styleguide::Mode, nil]
+        optional :mode, enum: -> { BrandDev::Models::BrandStyleguideResponse::Styleguide::Mode }
+
         # @!attribute shadows
         #   Shadow styles used on the website
         #
@@ -71,7 +77,7 @@ module BrandDev
         #   @return [BrandDev::Models::BrandStyleguideResponse::Styleguide::Typography, nil]
         optional :typography, -> { BrandDev::Models::BrandStyleguideResponse::Styleguide::Typography }
 
-        # @!method initialize(colors: nil, components: nil, element_spacing: nil, shadows: nil, typography: nil)
+        # @!method initialize(colors: nil, components: nil, element_spacing: nil, mode: nil, shadows: nil, typography: nil)
         #   Comprehensive styleguide data extracted from the website
         #
         #   @param colors [BrandDev::Models::BrandStyleguideResponse::Styleguide::Colors] Primary colors used on the website
@@ -79,6 +85,8 @@ module BrandDev
         #   @param components [BrandDev::Models::BrandStyleguideResponse::Styleguide::Components] UI component styles
         #
         #   @param element_spacing [BrandDev::Models::BrandStyleguideResponse::Styleguide::ElementSpacing] Spacing system used on the website
+        #
+        #   @param mode [Symbol, BrandDev::Models::BrandStyleguideResponse::Styleguide::Mode] The primary color mode of the website design
         #
         #   @param shadows [BrandDev::Models::BrandStyleguideResponse::Styleguide::Shadows] Shadow styles used on the website
         #
@@ -486,6 +494,19 @@ module BrandDev
           #   @param xl [String] Extra large spacing value
           #
           #   @param xs [String] Extra small spacing value
+        end
+
+        # The primary color mode of the website design
+        #
+        # @see BrandDev::Models::BrandStyleguideResponse::Styleguide#mode
+        module Mode
+          extend BrandDev::Internal::Type::Enum
+
+          LIGHT = :light
+          DARK = :dark
+
+          # @!method self.values
+          #   @return [Array<Symbol>]
         end
 
         # @see BrandDev::Models::BrandStyleguideResponse::Styleguide#shadows
