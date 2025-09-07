@@ -145,6 +145,24 @@ module BrandDev
         end
         attr_writer :element_spacing
 
+        # The primary color mode of the website design
+        sig do
+          returns(
+            T.nilable(
+              BrandDev::Models::BrandStyleguideResponse::Styleguide::Mode::TaggedSymbol
+            )
+          )
+        end
+        attr_reader :mode
+
+        sig do
+          params(
+            mode:
+              BrandDev::Models::BrandStyleguideResponse::Styleguide::Mode::OrSymbol
+          ).void
+        end
+        attr_writer :mode
+
         # Shadow styles used on the website
         sig do
           returns(
@@ -190,6 +208,8 @@ module BrandDev
               BrandDev::Models::BrandStyleguideResponse::Styleguide::Components::OrHash,
             element_spacing:
               BrandDev::Models::BrandStyleguideResponse::Styleguide::ElementSpacing::OrHash,
+            mode:
+              BrandDev::Models::BrandStyleguideResponse::Styleguide::Mode::OrSymbol,
             shadows:
               BrandDev::Models::BrandStyleguideResponse::Styleguide::Shadows::OrHash,
             typography:
@@ -203,6 +223,8 @@ module BrandDev
           components: nil,
           # Spacing system used on the website
           element_spacing: nil,
+          # The primary color mode of the website design
+          mode: nil,
           # Shadow styles used on the website
           shadows: nil,
           # Typography styles used on the website
@@ -219,6 +241,8 @@ module BrandDev
                 BrandDev::Models::BrandStyleguideResponse::Styleguide::Components,
               element_spacing:
                 BrandDev::Models::BrandStyleguideResponse::Styleguide::ElementSpacing,
+              mode:
+                BrandDev::Models::BrandStyleguideResponse::Styleguide::Mode::TaggedSymbol,
               shadows:
                 BrandDev::Models::BrandStyleguideResponse::Styleguide::Shadows,
               typography:
@@ -1015,6 +1039,41 @@ module BrandDev
             )
           end
           def to_hash
+          end
+        end
+
+        # The primary color mode of the website design
+        module Mode
+          extend BrandDev::Internal::Type::Enum
+
+          TaggedSymbol =
+            T.type_alias do
+              T.all(
+                Symbol,
+                BrandDev::Models::BrandStyleguideResponse::Styleguide::Mode
+              )
+            end
+          OrSymbol = T.type_alias { T.any(Symbol, String) }
+
+          LIGHT =
+            T.let(
+              :light,
+              BrandDev::Models::BrandStyleguideResponse::Styleguide::Mode::TaggedSymbol
+            )
+          DARK =
+            T.let(
+              :dark,
+              BrandDev::Models::BrandStyleguideResponse::Styleguide::Mode::TaggedSymbol
+            )
+
+          sig do
+            override.returns(
+              T::Array[
+                BrandDev::Models::BrandStyleguideResponse::Styleguide::Mode::TaggedSymbol
+              ]
+            )
+          end
+          def self.values
           end
         end
 

@@ -81,6 +81,12 @@ module BrandDev
         #   @return [Boolean, nil]
         optional :is_nsfw, BrandDev::Internal::Type::Boolean
 
+        # @!attribute links
+        #   Important website links for the brand
+        #
+        #   @return [BrandDev::Models::BrandRetrieveResponse::Brand::Links, nil]
+        optional :links, -> { BrandDev::Models::BrandRetrieveResponse::Brand::Links }
+
         # @!attribute logos
         #   An array of logos associated with the brand
         #
@@ -120,7 +126,7 @@ module BrandDev
         #   @return [String, nil]
         optional :title, String
 
-        # @!method initialize(address: nil, backdrops: nil, colors: nil, description: nil, domain: nil, email: nil, industries: nil, is_nsfw: nil, logos: nil, phone: nil, slogan: nil, socials: nil, stock: nil, title: nil)
+        # @!method initialize(address: nil, backdrops: nil, colors: nil, description: nil, domain: nil, email: nil, industries: nil, is_nsfw: nil, links: nil, logos: nil, phone: nil, slogan: nil, socials: nil, stock: nil, title: nil)
         #   Some parameter documentations has been truncated, see
         #   {BrandDev::Models::BrandRetrieveResponse::Brand} for more details.
         #
@@ -141,6 +147,8 @@ module BrandDev
         #   @param industries [BrandDev::Models::BrandRetrieveResponse::Brand::Industries] Industry classification information for the brand
         #
         #   @param is_nsfw [Boolean] Indicates whether the brand content is not safe for work (NSFW)
+        #
+        #   @param links [BrandDev::Models::BrandRetrieveResponse::Brand::Links] Important website links for the brand
         #
         #   @param logos [Array<BrandDev::Models::BrandRetrieveResponse::Brand::Logo>] An array of logos associated with the brand
         #
@@ -611,6 +619,60 @@ module BrandDev
               #   @return [Array<Symbol>]
             end
           end
+        end
+
+        # @see BrandDev::Models::BrandRetrieveResponse::Brand#links
+        class Links < BrandDev::Internal::Type::BaseModel
+          # @!attribute blog
+          #   URL to the brand's blog or news page
+          #
+          #   @return [String, nil]
+          optional :blog, String, nil?: true
+
+          # @!attribute careers
+          #   URL to the brand's careers or job opportunities page
+          #
+          #   @return [String, nil]
+          optional :careers, String, nil?: true
+
+          # @!attribute contact
+          #   URL to the brand's contact or contact us page
+          #
+          #   @return [String, nil]
+          optional :contact, String, nil?: true
+
+          # @!attribute pricing
+          #   URL to the brand's pricing or plans page
+          #
+          #   @return [String, nil]
+          optional :pricing, String, nil?: true
+
+          # @!attribute privacy
+          #   URL to the brand's privacy policy page
+          #
+          #   @return [String, nil]
+          optional :privacy, String, nil?: true
+
+          # @!attribute terms
+          #   URL to the brand's terms of service or terms and conditions page
+          #
+          #   @return [String, nil]
+          optional :terms, String, nil?: true
+
+          # @!method initialize(blog: nil, careers: nil, contact: nil, pricing: nil, privacy: nil, terms: nil)
+          #   Important website links for the brand
+          #
+          #   @param blog [String, nil] URL to the brand's blog or news page
+          #
+          #   @param careers [String, nil] URL to the brand's careers or job opportunities page
+          #
+          #   @param contact [String, nil] URL to the brand's contact or contact us page
+          #
+          #   @param pricing [String, nil] URL to the brand's pricing or plans page
+          #
+          #   @param privacy [String, nil] URL to the brand's privacy policy page
+          #
+          #   @param terms [String, nil] URL to the brand's terms of service or terms and conditions page
         end
 
         class Logo < BrandDev::Internal::Type::BaseModel
