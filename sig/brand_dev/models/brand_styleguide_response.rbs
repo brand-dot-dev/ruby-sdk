@@ -46,6 +46,7 @@ module BrandDev
           colors: BrandDev::Models::BrandStyleguideResponse::Styleguide::Colors,
           components: BrandDev::Models::BrandStyleguideResponse::Styleguide::Components,
           element_spacing: BrandDev::Models::BrandStyleguideResponse::Styleguide::ElementSpacing,
+          mode: BrandDev::Models::BrandStyleguideResponse::Styleguide::mode,
           shadows: BrandDev::Models::BrandStyleguideResponse::Styleguide::Shadows,
           typography: BrandDev::Models::BrandStyleguideResponse::Styleguide::Typography
         }
@@ -69,6 +70,12 @@ module BrandDev
           BrandDev::Models::BrandStyleguideResponse::Styleguide::ElementSpacing
         ) -> BrandDev::Models::BrandStyleguideResponse::Styleguide::ElementSpacing
 
+        attr_reader mode: BrandDev::Models::BrandStyleguideResponse::Styleguide::mode?
+
+        def mode=: (
+          BrandDev::Models::BrandStyleguideResponse::Styleguide::mode
+        ) -> BrandDev::Models::BrandStyleguideResponse::Styleguide::mode
+
         attr_reader shadows: BrandDev::Models::BrandStyleguideResponse::Styleguide::Shadows?
 
         def shadows=: (
@@ -85,6 +92,7 @@ module BrandDev
           ?colors: BrandDev::Models::BrandStyleguideResponse::Styleguide::Colors,
           ?components: BrandDev::Models::BrandStyleguideResponse::Styleguide::Components,
           ?element_spacing: BrandDev::Models::BrandStyleguideResponse::Styleguide::ElementSpacing,
+          ?mode: BrandDev::Models::BrandStyleguideResponse::Styleguide::mode,
           ?shadows: BrandDev::Models::BrandStyleguideResponse::Styleguide::Shadows,
           ?typography: BrandDev::Models::BrandStyleguideResponse::Styleguide::Typography
         ) -> void
@@ -93,6 +101,7 @@ module BrandDev
           colors: BrandDev::Models::BrandStyleguideResponse::Styleguide::Colors,
           components: BrandDev::Models::BrandStyleguideResponse::Styleguide::Components,
           element_spacing: BrandDev::Models::BrandStyleguideResponse::Styleguide::ElementSpacing,
+          mode: BrandDev::Models::BrandStyleguideResponse::Styleguide::mode,
           shadows: BrandDev::Models::BrandStyleguideResponse::Styleguide::Shadows,
           typography: BrandDev::Models::BrandStyleguideResponse::Styleguide::Typography
         }
@@ -564,6 +573,17 @@ module BrandDev
             xl: String,
             xs: String
           }
+        end
+
+        type mode = :light | :dark
+
+        module Mode
+          extend BrandDev::Internal::Type::Enum
+
+          LIGHT: :light
+          DARK: :dark
+
+          def self?.values: -> ::Array[BrandDev::Models::BrandStyleguideResponse::Styleguide::mode]
         end
 
         type shadows =

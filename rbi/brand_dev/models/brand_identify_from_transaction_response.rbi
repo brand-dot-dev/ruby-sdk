@@ -191,6 +191,24 @@ module BrandDev
         sig { params(is_nsfw: T::Boolean).void }
         attr_writer :is_nsfw
 
+        # Important website links for the brand
+        sig do
+          returns(
+            T.nilable(
+              BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Links
+            )
+          )
+        end
+        attr_reader :links
+
+        sig do
+          params(
+            links:
+              BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Links::OrHash
+          ).void
+        end
+        attr_writer :links
+
         # An array of logos associated with the brand
         sig do
           returns(
@@ -294,6 +312,8 @@ module BrandDev
             industries:
               BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Industries::OrHash,
             is_nsfw: T::Boolean,
+            links:
+              BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Links::OrHash,
             logos:
               T::Array[
                 BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Logo::OrHash
@@ -326,6 +346,8 @@ module BrandDev
           industries: nil,
           # Indicates whether the brand content is not safe for work (NSFW)
           is_nsfw: nil,
+          # Important website links for the brand
+          links: nil,
           # An array of logos associated with the brand
           logos: nil,
           # Company phone number
@@ -361,6 +383,8 @@ module BrandDev
               industries:
                 BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Industries,
               is_nsfw: T::Boolean,
+              links:
+                BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Links,
               logos:
                 T::Array[
                   BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Logo
@@ -2092,6 +2116,82 @@ module BrandDev
               def self.values
               end
             end
+          end
+        end
+
+        class Links < BrandDev::Internal::Type::BaseModel
+          OrHash =
+            T.type_alias do
+              T.any(
+                BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Links,
+                BrandDev::Internal::AnyHash
+              )
+            end
+
+          # URL to the brand's blog or news page
+          sig { returns(T.nilable(String)) }
+          attr_accessor :blog
+
+          # URL to the brand's careers or job opportunities page
+          sig { returns(T.nilable(String)) }
+          attr_accessor :careers
+
+          # URL to the brand's contact or contact us page
+          sig { returns(T.nilable(String)) }
+          attr_accessor :contact
+
+          # URL to the brand's pricing or plans page
+          sig { returns(T.nilable(String)) }
+          attr_accessor :pricing
+
+          # URL to the brand's privacy policy page
+          sig { returns(T.nilable(String)) }
+          attr_accessor :privacy
+
+          # URL to the brand's terms of service or terms and conditions page
+          sig { returns(T.nilable(String)) }
+          attr_accessor :terms
+
+          # Important website links for the brand
+          sig do
+            params(
+              blog: T.nilable(String),
+              careers: T.nilable(String),
+              contact: T.nilable(String),
+              pricing: T.nilable(String),
+              privacy: T.nilable(String),
+              terms: T.nilable(String)
+            ).returns(T.attached_class)
+          end
+          def self.new(
+            # URL to the brand's blog or news page
+            blog: nil,
+            # URL to the brand's careers or job opportunities page
+            careers: nil,
+            # URL to the brand's contact or contact us page
+            contact: nil,
+            # URL to the brand's pricing or plans page
+            pricing: nil,
+            # URL to the brand's privacy policy page
+            privacy: nil,
+            # URL to the brand's terms of service or terms and conditions page
+            terms: nil
+          )
+          end
+
+          sig do
+            override.returns(
+              {
+                blog: T.nilable(String),
+                careers: T.nilable(String),
+                contact: T.nilable(String),
+                pricing: T.nilable(String),
+                privacy: T.nilable(String),
+                terms: T.nilable(String)
+              }
+            )
+          end
+          def to_hash
           end
         end
 
