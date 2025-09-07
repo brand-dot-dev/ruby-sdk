@@ -8,6 +8,8 @@ It is generated with [Stainless](https://www.stainless.com/).
 
 Documentation for releases of this gem can be found [on RubyDoc](https://gemdocs.org/gems/brand.dev).
 
+The REST API documentation can be found on [docs.brand.dev](https://docs.brand.dev/).
+
 ## Installation
 
 To use this gem, install via Bundler by adding the following to your application's `Gemfile`:
@@ -15,7 +17,7 @@ To use this gem, install via Bundler by adding the following to your application
 <!-- x-release-please-start-version -->
 
 ```ruby
-gem "brand.dev", "~> 0.4.0"
+gem "brand.dev", "~> 0.5.0"
 ```
 
 <!-- x-release-please-end -->
