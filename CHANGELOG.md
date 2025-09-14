@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.6.0 (2025-09-14)
+
+Full Changelog: [v0.5.0...v0.6.0](https://github.com/brand-dot-dev/ruby-sdk/compare/v0.5.0...v0.6.0)
+
+### Features
+
+* **api:** api update ([f3a2056](https://github.com/brand-dot-dev/ruby-sdk/commit/f3a205642cd53962780b1789830c1d99665bb1b0))
+
 ## 0.5.0 (2025-09-07)
 
 Full Changelog: [v0.4.0...v0.5.0](https://github.com/brand-dot-dev/ruby-sdk/compare/v0.4.0...v0.5.0)

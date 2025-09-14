@@ -34,11 +34,42 @@ module BrandDev
       end
       attr_writer :full_screenshot
 
+      # Optional parameter to specify which page type to screenshot. If provided, the
+      # system will scrape the domain's links and use heuristics to find the most
+      # appropriate URL for the specified page type (30 supported languages). If not
+      # provided, screenshots the main domain landing page.
+      sig do
+        returns(T.nilable(BrandDev::BrandScreenshotParams::Page::OrSymbol))
+      end
+      attr_reader :page
+
+      sig { params(page: BrandDev::BrandScreenshotParams::Page::OrSymbol).void }
+      attr_writer :page
+
+      # Optional parameter to prioritize screenshot capture. If 'speed', optimizes for
+      # faster capture with basic quality. If 'quality', optimizes for higher quality
+      # with longer wait times. Defaults to 'quality' if not provided.
+      sig do
+        returns(
+          T.nilable(BrandDev::BrandScreenshotParams::Prioritize::OrSymbol)
+        )
+      end
+      attr_reader :prioritize
+
+      sig do
+        params(
+          prioritize: BrandDev::BrandScreenshotParams::Prioritize::OrSymbol
+        ).void
+      end
+      attr_writer :prioritize
+
       sig do
         params(
           domain: String,
           full_screenshot:
             BrandDev::BrandScreenshotParams::FullScreenshot::OrSymbol,
+          page: BrandDev::BrandScreenshotParams::Page::OrSymbol,
+          prioritize: BrandDev::BrandScreenshotParams::Prioritize::OrSymbol,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(T.attached_class)
       end
@@ -50,6 +81,15 @@ module BrandDev
         # screenshot capturing all content. If 'false' or not provided, takes a viewport
         # screenshot (standard browser view).
         full_screenshot: nil,
+        # Optional parameter to specify which page type to screenshot. If provided, the
+        # system will scrape the domain's links and use heuristics to find the most
+        # appropriate URL for the specified page type (30 supported languages). If not
+        # provided, screenshots the main domain landing page.
+        page: nil,
+        # Optional parameter to prioritize screenshot capture. If 'speed', optimizes for
+        # faster capture with basic quality. If 'quality', optimizes for higher quality
+        # with longer wait times. Defaults to 'quality' if not provided.
+        prioritize: nil,
         request_options: {}
       )
       end
@@ -60,6 +100,8 @@ module BrandDev
             domain: String,
             full_screenshot:
               BrandDev::BrandScreenshotParams::FullScreenshot::OrSymbol,
+            page: BrandDev::BrandScreenshotParams::Page::OrSymbol,
+            prioritize: BrandDev::BrandScreenshotParams::Prioritize::OrSymbol,
             request_options: BrandDev::RequestOptions
           }
         )
@@ -95,6 +137,74 @@ module BrandDev
             T::Array[
               BrandDev::BrandScreenshotParams::FullScreenshot::TaggedSymbol
             ]
+          )
+        end
+        def self.values
+        end
+      end
+
+      # Optional parameter to specify which page type to screenshot. If provided, the
+      # system will scrape the domain's links and use heuristics to find the most
+      # appropriate URL for the specified page type (30 supported languages). If not
+      # provided, screenshots the main domain landing page.
+      module Page
+        extend BrandDev::Internal::Type::Enum
+
+        TaggedSymbol =
+          T.type_alias { T.all(Symbol, BrandDev::BrandScreenshotParams::Page) }
+        OrSymbol = T.type_alias { T.any(Symbol, String) }
+
+        LOGIN =
+          T.let(:login, BrandDev::BrandScreenshotParams::Page::TaggedSymbol)
+        SIGNUP =
+          T.let(:signup, BrandDev::BrandScreenshotParams::Page::TaggedSymbol)
+        BLOG = T.let(:blog, BrandDev::BrandScreenshotParams::Page::TaggedSymbol)
+        CAREERS =
+          T.let(:careers, BrandDev::BrandScreenshotParams::Page::TaggedSymbol)
+        PRICING =
+          T.let(:pricing, BrandDev::BrandScreenshotParams::Page::TaggedSymbol)
+        TERMS =
+          T.let(:terms, BrandDev::BrandScreenshotParams::Page::TaggedSymbol)
+        PRIVACY =
+          T.let(:privacy, BrandDev::BrandScreenshotParams::Page::TaggedSymbol)
+        CONTACT =
+          T.let(:contact, BrandDev::BrandScreenshotParams::Page::TaggedSymbol)
+
+        sig do
+          override.returns(
+            T::Array[BrandDev::BrandScreenshotParams::Page::TaggedSymbol]
+          )
+        end
+        def self.values
+        end
+      end
+
+      # Optional parameter to prioritize screenshot capture. If 'speed', optimizes for
+      # faster capture with basic quality. If 'quality', optimizes for higher quality
+      # with longer wait times. Defaults to 'quality' if not provided.
+      module Prioritize
+        extend BrandDev::Internal::Type::Enum
+
+        TaggedSymbol =
+          T.type_alias do
+            T.all(Symbol, BrandDev::BrandScreenshotParams::Prioritize)
+          end
+        OrSymbol = T.type_alias { T.any(Symbol, String) }
+
+        SPEED =
+          T.let(
+            :speed,
+            BrandDev::BrandScreenshotParams::Prioritize::TaggedSymbol
+          )
+        QUALITY =
+          T.let(
+            :quality,
+            BrandDev::BrandScreenshotParams::Prioritize::TaggedSymbol
+          )
+
+        sig do
+          override.returns(
+            T::Array[BrandDev::BrandScreenshotParams::Prioritize::TaggedSymbol]
           )
         end
         def self.values

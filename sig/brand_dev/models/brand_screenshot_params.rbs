@@ -3,7 +3,9 @@ module BrandDev
     type brand_screenshot_params =
       {
         domain: String,
-        full_screenshot: BrandDev::Models::BrandScreenshotParams::full_screenshot
+        full_screenshot: BrandDev::Models::BrandScreenshotParams::full_screenshot,
+        page: BrandDev::Models::BrandScreenshotParams::page,
+        prioritize: BrandDev::Models::BrandScreenshotParams::prioritize
       }
       & BrandDev::Internal::Type::request_parameters
 
@@ -19,15 +21,31 @@ module BrandDev
         BrandDev::Models::BrandScreenshotParams::full_screenshot
       ) -> BrandDev::Models::BrandScreenshotParams::full_screenshot
 
+      attr_reader page: BrandDev::Models::BrandScreenshotParams::page?
+
+      def page=: (
+        BrandDev::Models::BrandScreenshotParams::page
+      ) -> BrandDev::Models::BrandScreenshotParams::page
+
+      attr_reader prioritize: BrandDev::Models::BrandScreenshotParams::prioritize?
+
+      def prioritize=: (
+        BrandDev::Models::BrandScreenshotParams::prioritize
+      ) -> BrandDev::Models::BrandScreenshotParams::prioritize
+
       def initialize: (
         domain: String,
         ?full_screenshot: BrandDev::Models::BrandScreenshotParams::full_screenshot,
+        ?page: BrandDev::Models::BrandScreenshotParams::page,
+        ?prioritize: BrandDev::Models::BrandScreenshotParams::prioritize,
         ?request_options: BrandDev::request_opts
       ) -> void
 
       def to_hash: -> {
         domain: String,
         full_screenshot: BrandDev::Models::BrandScreenshotParams::full_screenshot,
+        page: BrandDev::Models::BrandScreenshotParams::page,
+        prioritize: BrandDev::Models::BrandScreenshotParams::prioritize,
         request_options: BrandDev::RequestOptions
       }
 
@@ -40,6 +58,42 @@ module BrandDev
         FALSE: :false
 
         def self?.values: -> ::Array[BrandDev::Models::BrandScreenshotParams::full_screenshot]
+      end
+
+      type page =
+        :login
+        | :signup
+        | :blog
+        | :careers
+        | :pricing
+        | :terms
+        | :privacy
+        | :contact
+
+      module Page
+        extend BrandDev::Internal::Type::Enum
+
+        LOGIN: :login
+        SIGNUP: :signup
+        BLOG: :blog
+        CAREERS: :careers
+        PRICING: :pricing
+        TERMS: :terms
+        PRIVACY: :privacy
+        CONTACT: :contact
+
+        def self?.values: -> ::Array[BrandDev::Models::BrandScreenshotParams::page]
+      end
+
+      type prioritize = :speed | :quality
+
+      module Prioritize
+        extend BrandDev::Internal::Type::Enum
+
+        SPEED: :speed
+        QUALITY: :quality
+
+        def self?.values: -> ::Array[BrandDev::Models::BrandScreenshotParams::prioritize]
       end
     end
   end

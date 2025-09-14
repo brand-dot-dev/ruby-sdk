@@ -1,7 +1,11 @@
 module BrandDev
   module Models
     type brand_styleguide_params =
-      { domain: String, timeout_ms: Integer }
+      {
+        domain: String,
+        prioritize: BrandDev::Models::BrandStyleguideParams::prioritize,
+        timeout_ms: Integer
+      }
       & BrandDev::Internal::Type::request_parameters
 
     class BrandStyleguideParams < BrandDev::Internal::Type::BaseModel
@@ -10,21 +14,40 @@ module BrandDev
 
       attr_accessor domain: String
 
+      attr_reader prioritize: BrandDev::Models::BrandStyleguideParams::prioritize?
+
+      def prioritize=: (
+        BrandDev::Models::BrandStyleguideParams::prioritize
+      ) -> BrandDev::Models::BrandStyleguideParams::prioritize
+
       attr_reader timeout_ms: Integer?
 
       def timeout_ms=: (Integer) -> Integer
 
       def initialize: (
         domain: String,
+        ?prioritize: BrandDev::Models::BrandStyleguideParams::prioritize,
         ?timeout_ms: Integer,
         ?request_options: BrandDev::request_opts
       ) -> void
 
       def to_hash: -> {
         domain: String,
+        prioritize: BrandDev::Models::BrandStyleguideParams::prioritize,
         timeout_ms: Integer,
         request_options: BrandDev::RequestOptions
       }
+
+      type prioritize = :speed | :quality
+
+      module Prioritize
+        extend BrandDev::Internal::Type::Enum
+
+        SPEED: :speed
+        QUALITY: :quality
+
+        def self?.values: -> ::Array[BrandDev::Models::BrandStyleguideParams::prioritize]
+      end
     end
   end
 end
