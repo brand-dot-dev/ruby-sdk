@@ -190,14 +190,19 @@ module BrandDev
       # {BrandDev::Models::BrandScreenshotParams} for more details.
       #
       # Beta feature: Capture a screenshot of a website. Supports both viewport
-      # (standard browser view) and full-page screenshots. Returns a URL to the uploaded
-      # screenshot image hosted on our CDN.
+      # (standard browser view) and full-page screenshots. Can also screenshot specific
+      # page types (login, pricing, etc.) by using heuristics to find the appropriate
+      # URL. Returns a URL to the uploaded screenshot image hosted on our CDN.
       #
-      # @overload screenshot(domain:, full_screenshot: nil, request_options: {})
+      # @overload screenshot(domain:, full_screenshot: nil, page: nil, prioritize: nil, request_options: {})
       #
       # @param domain [String] Domain name to take screenshot of (e.g., 'example.com', 'google.com'). The domai
       #
       # @param full_screenshot [Symbol, BrandDev::Models::BrandScreenshotParams::FullScreenshot] Optional parameter to determine screenshot type. If 'true', takes a full page sc
+      #
+      # @param page [Symbol, BrandDev::Models::BrandScreenshotParams::Page] Optional parameter to specify which page type to screenshot. If provided, the sy
+      #
+      # @param prioritize [Symbol, BrandDev::Models::BrandScreenshotParams::Prioritize] Optional parameter to prioritize screenshot capture. If 'speed', optimizes for f
       #
       # @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}, nil]
       #
@@ -222,9 +227,11 @@ module BrandDev
       # a brand's website including colors, typography, spacing, shadows, and UI
       # components.
       #
-      # @overload styleguide(domain:, timeout_ms: nil, request_options: {})
+      # @overload styleguide(domain:, prioritize: nil, timeout_ms: nil, request_options: {})
       #
       # @param domain [String] Domain name to extract styleguide from (e.g., 'example.com', 'google.com'). The
+      #
+      # @param prioritize [Symbol, BrandDev::Models::BrandStyleguideParams::Prioritize] Optional parameter to prioritize screenshot capture for styleguide extraction. I
       #
       # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #
