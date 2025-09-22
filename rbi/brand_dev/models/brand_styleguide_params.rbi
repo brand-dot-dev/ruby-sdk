@@ -18,8 +18,8 @@ module BrandDev
 
       # Optional parameter to prioritize screenshot capture for styleguide extraction.
       # If 'speed', optimizes for faster capture with basic quality. If 'quality',
-      # optimizes for higher quality with longer wait times. Defaults to 'speed' if not
-      # provided.
+      # optimizes for higher quality with longer wait times. Defaults to 'quality' if
+      # not provided.
       sig do
         returns(
           T.nilable(BrandDev::BrandStyleguideParams::Prioritize::OrSymbol)
@@ -57,8 +57,8 @@ module BrandDev
         domain:,
         # Optional parameter to prioritize screenshot capture for styleguide extraction.
         # If 'speed', optimizes for faster capture with basic quality. If 'quality',
-        # optimizes for higher quality with longer wait times. Defaults to 'speed' if not
-        # provided.
+        # optimizes for higher quality with longer wait times. Defaults to 'quality' if
+        # not provided.
         prioritize: nil,
         # Optional timeout in milliseconds for the request. If the request takes longer
         # than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -83,8 +83,8 @@ module BrandDev
 
       # Optional parameter to prioritize screenshot capture for styleguide extraction.
       # If 'speed', optimizes for faster capture with basic quality. If 'quality',
-      # optimizes for higher quality with longer wait times. Defaults to 'speed' if not
-      # provided.
+      # optimizes for higher quality with longer wait times. Defaults to 'quality' if
+      # not provided.
       module Prioritize
         extend BrandDev::Internal::Type::Enum
 
