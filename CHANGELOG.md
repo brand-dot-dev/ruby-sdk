@@ -1,5 +1,31 @@
 # Changelog
 
+## 0.7.0 (2025-09-27)
+
+Full Changelog: [v0.6.0...v0.7.0](https://github.com/brand-dot-dev/ruby-sdk/compare/v0.6.0...v0.7.0)
+
+### Features
+
+* **api:** api update ([1e777a7](https://github.com/brand-dot-dev/ruby-sdk/commit/1e777a71af3ff2e5f0cad6223d05bfcc183fc2fd))
+* expose response headers for both streams and errors ([569c645](https://github.com/brand-dot-dev/ruby-sdk/commit/569c645d77a1432570f2d47ac33c4b30197be2ef))
+
+
+### Bug Fixes
+
+* shorten multipart boundary sep to less than RFC specificed max length ([a2e1171](https://github.com/brand-dot-dev/ruby-sdk/commit/a2e11713038013930d3b5b44d4665326e7bafece))
+
+
+### Performance Improvements
+
+* faster code formatting ([d65a43b](https://github.com/brand-dot-dev/ruby-sdk/commit/d65a43b02c1ebe517f7119c984a540e435fc2a03))
+
+
+### Chores
+
+* allow fast-format to use bsd sed as well ([88e0856](https://github.com/brand-dot-dev/ruby-sdk/commit/88e0856c917a0bb60e062fafe6a04753c8fb8059))
+* do not install brew dependencies in ./scripts/bootstrap by default ([d067d3a](https://github.com/brand-dot-dev/ruby-sdk/commit/d067d3a622289a081516f2565b3bbd420586e8ac))
+* **internal:** codegen related update ([2629fa5](https://github.com/brand-dot-dev/ruby-sdk/commit/2629fa5004386cd943bbba2da8635b10593fcdca))
+
 ## 0.6.0 (2025-09-14)
 
 Full Changelog: [v0.5.0...v0.6.0](https://github.com/brand-dot-dev/ruby-sdk/compare/v0.5.0...v0.6.0)
