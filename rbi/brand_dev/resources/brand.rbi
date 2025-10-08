@@ -33,7 +33,7 @@ module BrandDev
         # parameters.
         name: nil,
         # Stock ticker symbol to retrieve brand data for (e.g., 'AAPL', 'GOOGL', 'BRK.A').
-        # Must be 1-10 characters, letters/numbers/dots only. Cannot be used with domain
+        # Must be 1-15 characters, letters/numbers/dots only. Cannot be used with domain
         # or name parameters.
         ticker: nil,
         # Optional timeout in milliseconds for the request. If the request takes longer
