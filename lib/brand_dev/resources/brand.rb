@@ -9,7 +9,7 @@ module BrandDev
       # Retrieve brand information using one of three methods: domain name, company
       # name, or stock ticker symbol. Exactly one of these parameters must be provided.
       #
-      # @overload retrieve(domain: nil, force_language: nil, max_speed: nil, name: nil, ticker: nil, timeout_ms: nil, request_options: {})
+      # @overload retrieve(domain: nil, force_language: nil, max_speed: nil, name: nil, ticker: nil, ticker_exchange: nil, timeout_ms: nil, request_options: {})
       #
       # @param domain [String] Domain name to retrieve brand data for (e.g., 'example.com', 'google.com'). Cann
       #
@@ -20,6 +20,8 @@ module BrandDev
       # @param name [String] Company name to retrieve brand data for (e.g., 'Apple Inc', 'Microsoft Corporati
       #
       # @param ticker [String] Stock ticker symbol to retrieve brand data for (e.g., 'AAPL', 'GOOGL', 'BRK.A').
+      #
+      # @param ticker_exchange [Symbol, BrandDev::Models::BrandRetrieveParams::TickerExchange] Optional stock exchange for the ticker. Only used when ticker parameter is provi
       #
       # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #

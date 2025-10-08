@@ -7,6 +7,7 @@ module BrandDev
         ?max_speed: bool,
         ?name: String,
         ?ticker: String,
+        ?ticker_exchange: BrandDev::Models::BrandRetrieveParams::ticker_exchange,
         ?timeout_ms: Integer,
         ?request_options: BrandDev::request_opts
       ) -> BrandDev::Models::BrandRetrieveResponse
