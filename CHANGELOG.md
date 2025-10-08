@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.8.0 (2025-10-08)
+
+Full Changelog: [v0.7.0...v0.8.0](https://github.com/brand-dot-dev/ruby-sdk/compare/v0.7.0...v0.8.0)
+
+### Features
+
+* **api:** api update ([fa5a65e](https://github.com/brand-dot-dev/ruby-sdk/commit/fa5a65e269ef946b97bf9fe7f0e9f8dd1239b4e3))
+* **api:** api update ([3c4ec01](https://github.com/brand-dot-dev/ruby-sdk/commit/3c4ec013b262955a26bc2a86100a07b0a28c8e9e))
+* **api:** api update ([e4977c6](https://github.com/brand-dot-dev/ruby-sdk/commit/e4977c64436d23aee0fee29e2a72d912c09e626f))
+
+
+### Bug Fixes
+
+* always send `filename=...` for multipart requests where a file is expected ([7135624](https://github.com/brand-dot-dev/ruby-sdk/commit/713562474e8ec92fde52cde5329f45c88ba0c594))
+* coroutine leaks from connection pool ([a6e3480](https://github.com/brand-dot-dev/ruby-sdk/commit/a6e348070e779b39f9b80b0ec2fbc9f05910b4b4))
+
 ## 0.7.0 (2025-09-27)
 
 Full Changelog: [v0.6.0...v0.7.0](https://github.com/brand-dot-dev/ruby-sdk/compare/v0.6.0...v0.7.0)
