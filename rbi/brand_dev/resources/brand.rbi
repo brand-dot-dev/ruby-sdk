@@ -3,18 +3,13 @@
 module BrandDev
   module Resources
     class Brand
-      # Retrieve brand information using one of three methods: domain name, company
-      # name, or stock ticker symbol. Exactly one of these parameters must be provided.
+      # Retrieve brand information from a domain name
       sig do
         params(
           domain: String,
           force_language:
             BrandDev::BrandRetrieveParams::ForceLanguage::OrSymbol,
           max_speed: T::Boolean,
-          name: String,
-          ticker: String,
-          ticker_exchange:
-            BrandDev::BrandRetrieveParams::TickerExchange::OrSymbol,
           timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(BrandDev::Models::BrandRetrieveResponse)
@@ -30,17 +25,6 @@ module BrandDev
         # the API will skip time-consuming operations for faster response at the cost of
         # less comprehensive data. Works with all three lookup methods.
         max_speed: nil,
-        # Company name to retrieve brand data for (e.g., 'Apple Inc', 'Microsoft
-        # Corporation'). Must be 3-30 characters. Cannot be used with domain or ticker
-        # parameters.
-        name: nil,
-        # Stock ticker symbol to retrieve brand data for (e.g., 'AAPL', 'GOOGL', 'BRK.A').
-        # Must be 1-15 characters, letters/numbers/dots only. Cannot be used with domain
-        # or name parameters.
-        ticker: nil,
-        # Optional stock exchange for the ticker. Only used when ticker parameter is
-        # provided. Defaults to assume ticker is American if not specified.
-        ticker_exchange: nil,
         # Optional timeout in milliseconds for the request. If the request takes longer
         # than this value, it will be aborted with a 408 status code. Maximum allowed
         # value is 300000ms (5 minutes).

@@ -5,9 +5,6 @@ module BrandDev
         domain: String,
         force_language: BrandDev::Models::BrandRetrieveParams::force_language,
         max_speed: bool,
-        name: String,
-        ticker: String,
-        ticker_exchange: BrandDev::Models::BrandRetrieveParams::ticker_exchange,
         timeout_ms: Integer
       }
       & BrandDev::Internal::Type::request_parameters
@@ -30,20 +27,6 @@ module BrandDev
 
       def max_speed=: (bool) -> bool
 
-      attr_reader name: String?
-
-      def name=: (String) -> String
-
-      attr_reader ticker: String?
-
-      def ticker=: (String) -> String
-
-      attr_reader ticker_exchange: BrandDev::Models::BrandRetrieveParams::ticker_exchange?
-
-      def ticker_exchange=: (
-        BrandDev::Models::BrandRetrieveParams::ticker_exchange
-      ) -> BrandDev::Models::BrandRetrieveParams::ticker_exchange
-
       attr_reader timeout_ms: Integer?
 
       def timeout_ms=: (Integer) -> Integer
@@ -52,9 +35,6 @@ module BrandDev
         ?domain: String,
         ?force_language: BrandDev::Models::BrandRetrieveParams::force_language,
         ?max_speed: bool,
-        ?name: String,
-        ?ticker: String,
-        ?ticker_exchange: BrandDev::Models::BrandRetrieveParams::ticker_exchange,
         ?timeout_ms: Integer,
         ?request_options: BrandDev::request_opts
       ) -> void
@@ -63,9 +43,6 @@ module BrandDev
         domain: String,
         force_language: BrandDev::Models::BrandRetrieveParams::force_language,
         max_speed: bool,
-        name: String,
-        ticker: String,
-        ticker_exchange: BrandDev::Models::BrandRetrieveParams::ticker_exchange,
         timeout_ms: Integer,
         request_options: BrandDev::RequestOptions
       }
@@ -181,159 +158,6 @@ module BrandDev
         WELSH: :welsh
 
         def self?.values: -> ::Array[BrandDev::Models::BrandRetrieveParams::force_language]
-      end
-
-      type ticker_exchange =
-        :AMEX
-        | :AMS
-        | :AQS
-        | :ASX
-        | :ATH
-        | :BER
-        | :BME
-        | :BRU
-        | :BSE
-        | :BUD
-        | :BUE
-        | :BVC
-        | :CBOE
-        | :CNQ
-        | :CPH
-        | :DFM
-        | :DOH
-        | :DUB
-        | :DUS
-        | :DXE
-        | :EGX
-        | :FSX
-        | :HAM
-        | :HEL
-        | :HKSE
-        | :HOSE
-        | :ICE
-        | :IOB
-        | :IST
-        | :JKT
-        | :JNB
-        | :JPX
-        | :KLS
-        | :KOE
-        | :KSC
-        | :KUW
-        | :LIS
-        | :LSE
-        | :MCX
-        | :MEX
-        | :MIL
-        | :MUN
-        | :NASDAQ
-        | :NEO
-        | :NSE
-        | :NYSE
-        | :NZE
-        | :OSL
-        | :OTC
-        | :PAR
-        | :PNK
-        | :PRA
-        | :RIS
-        | :SAO
-        | :SAU
-        | :SES
-        | :SET
-        | :SGO
-        | :SHH
-        | :SHZ
-        | :SIX
-        | :STO
-        | :STU
-        | :TAI
-        | :TAL
-        | :TLV
-        | :TSX
-        | :TSXV
-        | :TWO
-        | :VIE
-        | :WSE
-        | :XETRA
-
-      module TickerExchange
-        extend BrandDev::Internal::Type::Enum
-
-        AMEX: :AMEX
-        AMS: :AMS
-        AQS: :AQS
-        ASX: :ASX
-        ATH: :ATH
-        BER: :BER
-        BME: :BME
-        BRU: :BRU
-        BSE: :BSE
-        BUD: :BUD
-        BUE: :BUE
-        BVC: :BVC
-        CBOE: :CBOE
-        CNQ: :CNQ
-        CPH: :CPH
-        DFM: :DFM
-        DOH: :DOH
-        DUB: :DUB
-        DUS: :DUS
-        DXE: :DXE
-        EGX: :EGX
-        FSX: :FSX
-        HAM: :HAM
-        HEL: :HEL
-        HKSE: :HKSE
-        HOSE: :HOSE
-        ICE: :ICE
-        IOB: :IOB
-        IST: :IST
-        JKT: :JKT
-        JNB: :JNB
-        JPX: :JPX
-        KLS: :KLS
-        KOE: :KOE
-        KSC: :KSC
-        KUW: :KUW
-        LIS: :LIS
-        LSE: :LSE
-        MCX: :MCX
-        MEX: :MEX
-        MIL: :MIL
-        MUN: :MUN
-        NASDAQ: :NASDAQ
-        NEO: :NEO
-        NSE: :NSE
-        NYSE: :NYSE
-        NZE: :NZE
-        OSL: :OSL
-        OTC: :OTC
-        PAR: :PAR
-        PNK: :PNK
-        PRA: :PRA
-        RIS: :RIS
-        SAO: :SAO
-        SAU: :SAU
-        SES: :SES
-        SET: :SET
-        SGO: :SGO
-        SHH: :SHH
-        SHZ: :SHZ
-        SIX: :SIX
-        STO: :STO
-        STU: :STU
-        TAI: :TAI
-        TAL: :TAL
-        TLV: :TLV
-        TSX: :TSX
-        TSXV: :TSXV
-        TWO: :TWO
-        VIE: :VIE
-        WSE: :WSE
-        XETRA: :XETRA
-
-        def self?.values: -> ::Array[BrandDev::Models::BrandRetrieveParams::ticker_exchange]
       end
     end
   end
