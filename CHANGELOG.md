@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.9.0 (2025-10-24)
+
+Full Changelog: [v0.8.0...v0.9.0](https://github.com/brand-dot-dev/ruby-sdk/compare/v0.8.0...v0.9.0)
+
+### Features
+
+* handle thread interrupts in the core HTTP client ([1148b44](https://github.com/brand-dot-dev/ruby-sdk/commit/1148b44345308fa59a566bc0257a330a5a90bf2e))
+
+
+### Bug Fixes
+
+* absolutely qualified uris should always override the default ([c5d7b82](https://github.com/brand-dot-dev/ruby-sdk/commit/c5d7b820e8b615d3dc838680253491a505012103))
+* should not reuse buffers for `IO.copy_stream` interop ([bd29b0a](https://github.com/brand-dot-dev/ruby-sdk/commit/bd29b0a85f00ce0cc2c95caba81f5b5e53dd1d9e))
+
+
+### Chores
+
+* ignore linter error for tests having large collections ([3e192fb](https://github.com/brand-dot-dev/ruby-sdk/commit/3e192fb1c4ed321949bc73076da40577daae1279))
+
 ## 0.8.0 (2025-10-08)
 
 Full Changelog: [v0.7.0...v0.8.0](https://github.com/brand-dot-dev/ruby-sdk/compare/v0.7.0...v0.8.0)
