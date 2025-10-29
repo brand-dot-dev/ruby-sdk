@@ -5,6 +5,10 @@ module BrandDev
 
   class BrandPrefetchParams = BrandDev::Models::BrandPrefetchParams
 
+  class BrandRetrieveByNameParams = BrandDev::Models::BrandRetrieveByNameParams
+
+  class BrandRetrieveByTickerParams = BrandDev::Models::BrandRetrieveByTickerParams
+
   class BrandRetrieveNaicsParams = BrandDev::Models::BrandRetrieveNaicsParams
 
   class BrandRetrieveParams = BrandDev::Models::BrandRetrieveParams

@@ -87,6 +87,42 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
     end
   end
 
+  def test_retrieve_by_name_required_params
+    skip("Prism tests are disabled")
+
+    response = @brand_dev.brand.retrieve_by_name(name: "xxx")
+
+    assert_pattern do
+      response => BrandDev::Models::BrandRetrieveByNameResponse
+    end
+
+    assert_pattern do
+      response => {
+        brand: BrandDev::Models::BrandRetrieveByNameResponse::Brand | nil,
+        code: Integer | nil,
+        status: String | nil
+      }
+    end
+  end
+
+  def test_retrieve_by_ticker_required_params
+    skip("Prism tests are disabled")
+
+    response = @brand_dev.brand.retrieve_by_ticker(ticker: "ticker")
+
+    assert_pattern do
+      response => BrandDev::Models::BrandRetrieveByTickerResponse
+    end
+
+    assert_pattern do
+      response => {
+        brand: BrandDev::Models::BrandRetrieveByTickerResponse::Brand | nil,
+        code: Integer | nil,
+        status: String | nil
+      }
+    end
+  end
+
   def test_retrieve_naics_required_params
     skip("Prism tests are disabled")
 

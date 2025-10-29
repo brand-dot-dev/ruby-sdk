@@ -32,6 +32,23 @@ module BrandDev
         ?request_options: BrandDev::request_opts
       ) -> BrandDev::Models::BrandPrefetchResponse
 
+      def retrieve_by_name: (
+        name: String,
+        ?force_language: BrandDev::Models::BrandRetrieveByNameParams::force_language,
+        ?max_speed: bool,
+        ?timeout_ms: Integer,
+        ?request_options: BrandDev::request_opts
+      ) -> BrandDev::Models::BrandRetrieveByNameResponse
+
+      def retrieve_by_ticker: (
+        ticker: String,
+        ?force_language: BrandDev::Models::BrandRetrieveByTickerParams::force_language,
+        ?max_speed: bool,
+        ?ticker_exchange: BrandDev::Models::BrandRetrieveByTickerParams::ticker_exchange,
+        ?timeout_ms: Integer,
+        ?request_options: BrandDev::request_opts
+      ) -> BrandDev::Models::BrandRetrieveByTickerResponse
+
       def retrieve_naics: (
         input: String,
         ?timeout_ms: Integer,

@@ -119,6 +119,70 @@ module BrandDev
       )
       end
 
+      # Retrieve brand information using a company name. This endpoint searches for the
+      # company by name and returns its brand data.
+      sig do
+        params(
+          name: String,
+          force_language:
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::OrSymbol,
+          max_speed: T::Boolean,
+          timeout_ms: Integer,
+          request_options: BrandDev::RequestOptions::OrHash
+        ).returns(BrandDev::Models::BrandRetrieveByNameResponse)
+      end
+      def retrieve_by_name(
+        # Company name to retrieve brand data for (e.g., 'Apple Inc', 'Microsoft
+        # Corporation'). Must be 3-30 characters.
+        name:,
+        # Optional parameter to force the language of the retrieved brand data.
+        force_language: nil,
+        # Optional parameter to optimize the API call for maximum speed. When set to true,
+        # the API will skip time-consuming operations for faster response at the cost of
+        # less comprehensive data.
+        max_speed: nil,
+        # Optional timeout in milliseconds for the request. If the request takes longer
+        # than this value, it will be aborted with a 408 status code. Maximum allowed
+        # value is 300000ms (5 minutes).
+        timeout_ms: nil,
+        request_options: {}
+      )
+      end
+
+      # Retrieve brand information using a stock ticker symbol. This endpoint looks up
+      # the company associated with the ticker and returns its brand data.
+      sig do
+        params(
+          ticker: String,
+          force_language:
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::OrSymbol,
+          max_speed: T::Boolean,
+          ticker_exchange:
+            BrandDev::BrandRetrieveByTickerParams::TickerExchange::OrSymbol,
+          timeout_ms: Integer,
+          request_options: BrandDev::RequestOptions::OrHash
+        ).returns(BrandDev::Models::BrandRetrieveByTickerResponse)
+      end
+      def retrieve_by_ticker(
+        # Stock ticker symbol to retrieve brand data for (e.g., 'AAPL', 'GOOGL', 'BRK.A').
+        # Must be 1-15 characters, letters/numbers/dots only.
+        ticker:,
+        # Optional parameter to force the language of the retrieved brand data.
+        force_language: nil,
+        # Optional parameter to optimize the API call for maximum speed. When set to true,
+        # the API will skip time-consuming operations for faster response at the cost of
+        # less comprehensive data.
+        max_speed: nil,
+        # Optional stock exchange for the ticker. Defaults to NASDAQ if not specified.
+        ticker_exchange: nil,
+        # Optional timeout in milliseconds for the request. If the request takes longer
+        # than this value, it will be aborted with a 408 status code. Maximum allowed
+        # value is 300000ms (5 minutes).
+        timeout_ms: nil,
+        request_options: {}
+      )
+      end
+
       # Endpoint to classify any brand into a 2022 NAICS code.
       sig do
         params(
