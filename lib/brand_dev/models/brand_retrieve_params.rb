@@ -29,29 +29,6 @@ module BrandDev
       #   @return [Boolean, nil]
       optional :max_speed, BrandDev::Internal::Type::Boolean
 
-      # @!attribute name
-      #   Company name to retrieve brand data for (e.g., 'Apple Inc', 'Microsoft
-      #   Corporation'). Must be 3-30 characters. Cannot be used with domain or ticker
-      #   parameters.
-      #
-      #   @return [String, nil]
-      optional :name, String
-
-      # @!attribute ticker
-      #   Stock ticker symbol to retrieve brand data for (e.g., 'AAPL', 'GOOGL', 'BRK.A').
-      #   Must be 1-15 characters, letters/numbers/dots only. Cannot be used with domain
-      #   or name parameters.
-      #
-      #   @return [String, nil]
-      optional :ticker, String
-
-      # @!attribute ticker_exchange
-      #   Optional stock exchange for the ticker. Only used when ticker parameter is
-      #   provided. Defaults to assume ticker is American if not specified.
-      #
-      #   @return [Symbol, BrandDev::Models::BrandRetrieveParams::TickerExchange, nil]
-      optional :ticker_exchange, enum: -> { BrandDev::BrandRetrieveParams::TickerExchange }
-
       # @!attribute timeout_ms
       #   Optional timeout in milliseconds for the request. If the request takes longer
       #   than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -60,7 +37,7 @@ module BrandDev
       #   @return [Integer, nil]
       optional :timeout_ms, Integer
 
-      # @!method initialize(domain: nil, force_language: nil, max_speed: nil, name: nil, ticker: nil, ticker_exchange: nil, timeout_ms: nil, request_options: {})
+      # @!method initialize(domain: nil, force_language: nil, max_speed: nil, timeout_ms: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
       #   {BrandDev::Models::BrandRetrieveParams} for more details.
       #
@@ -69,12 +46,6 @@ module BrandDev
       #   @param force_language [Symbol, BrandDev::Models::BrandRetrieveParams::ForceLanguage] Optional parameter to force the language of the retrieved brand data. Works with
       #
       #   @param max_speed [Boolean] Optional parameter to optimize the API call for maximum speed. When set to true,
-      #
-      #   @param name [String] Company name to retrieve brand data for (e.g., 'Apple Inc', 'Microsoft Corporati
-      #
-      #   @param ticker [String] Stock ticker symbol to retrieve brand data for (e.g., 'AAPL', 'GOOGL', 'BRK.A').
-      #
-      #   @param ticker_exchange [Symbol, BrandDev::Models::BrandRetrieveParams::TickerExchange] Optional stock exchange for the ticker. Only used when ticker parameter is provi
       #
       #   @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #
@@ -137,88 +108,6 @@ module BrandDev
         UZBEK = :uzbek
         VIETNAMESE = :vietnamese
         WELSH = :welsh
-
-        # @!method self.values
-        #   @return [Array<Symbol>]
-      end
-
-      # Optional stock exchange for the ticker. Only used when ticker parameter is
-      # provided. Defaults to assume ticker is American if not specified.
-      module TickerExchange
-        extend BrandDev::Internal::Type::Enum
-
-        AMEX = :AMEX
-        AMS = :AMS
-        AQS = :AQS
-        ASX = :ASX
-        ATH = :ATH
-        BER = :BER
-        BME = :BME
-        BRU = :BRU
-        BSE = :BSE
-        BUD = :BUD
-        BUE = :BUE
-        BVC = :BVC
-        CBOE = :CBOE
-        CNQ = :CNQ
-        CPH = :CPH
-        DFM = :DFM
-        DOH = :DOH
-        DUB = :DUB
-        DUS = :DUS
-        DXE = :DXE
-        EGX = :EGX
-        FSX = :FSX
-        HAM = :HAM
-        HEL = :HEL
-        HKSE = :HKSE
-        HOSE = :HOSE
-        ICE = :ICE
-        IOB = :IOB
-        IST = :IST
-        JKT = :JKT
-        JNB = :JNB
-        JPX = :JPX
-        KLS = :KLS
-        KOE = :KOE
-        KSC = :KSC
-        KUW = :KUW
-        LIS = :LIS
-        LSE = :LSE
-        MCX = :MCX
-        MEX = :MEX
-        MIL = :MIL
-        MUN = :MUN
-        NASDAQ = :NASDAQ
-        NEO = :NEO
-        NSE = :NSE
-        NYSE = :NYSE
-        NZE = :NZE
-        OSL = :OSL
-        OTC = :OTC
-        PAR = :PAR
-        PNK = :PNK
-        PRA = :PRA
-        RIS = :RIS
-        SAO = :SAO
-        SAU = :SAU
-        SES = :SES
-        SET = :SET
-        SGO = :SGO
-        SHH = :SHH
-        SHZ = :SHZ
-        SIX = :SIX
-        STO = :STO
-        STU = :STU
-        TAI = :TAI
-        TAL = :TAL
-        TLV = :TLV
-        TSX = :TSX
-        TSXV = :TSXV
-        TWO = :TWO
-        VIE = :VIE
-        WSE = :WSE
-        XETRA = :XETRA
 
         # @!method self.values
         #   @return [Array<Symbol>]
