@@ -6,22 +6,16 @@ module BrandDev
       # Some parameter documentations has been truncated, see
       # {BrandDev::Models::BrandRetrieveParams} for more details.
       #
-      # Retrieve brand information using one of three methods: domain name, company
-      # name, or stock ticker symbol. Exactly one of these parameters must be provided.
+      # Retrieve logos, backdrops, colors, industry, description, and more from any
+      # domain
       #
-      # @overload retrieve(domain: nil, force_language: nil, max_speed: nil, name: nil, ticker: nil, ticker_exchange: nil, timeout_ms: nil, request_options: {})
+      # @overload retrieve(domain: nil, force_language: nil, max_speed: nil, timeout_ms: nil, request_options: {})
       #
       # @param domain [String] Domain name to retrieve brand data for (e.g., 'example.com', 'google.com'). Cann
       #
       # @param force_language [Symbol, BrandDev::Models::BrandRetrieveParams::ForceLanguage] Optional parameter to force the language of the retrieved brand data. Works with
       #
       # @param max_speed [Boolean] Optional parameter to optimize the API call for maximum speed. When set to true,
-      #
-      # @param name [String] Company name to retrieve brand data for (e.g., 'Apple Inc', 'Microsoft Corporati
-      #
-      # @param ticker [String] Stock ticker symbol to retrieve brand data for (e.g., 'AAPL', 'GOOGL', 'BRK.A').
-      #
-      # @param ticker_exchange [Symbol, BrandDev::Models::BrandRetrieveParams::TickerExchange] Optional stock exchange for the ticker. Only used when ticker parameter is provi
       #
       # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #
@@ -80,9 +74,13 @@ module BrandDev
       # Endpoint specially designed for platforms that want to identify transaction data
       # by the transaction title.
       #
-      # @overload identify_from_transaction(transaction_info:, timeout_ms: nil, request_options: {})
+      # @overload identify_from_transaction(transaction_info:, force_language: nil, max_speed: nil, timeout_ms: nil, request_options: {})
       #
       # @param transaction_info [String] Transaction information to identify the brand
+      #
+      # @param force_language [Symbol, BrandDev::Models::BrandIdentifyFromTransactionParams::ForceLanguage] Optional parameter to force the language of the retrieved brand data.
+      #
+      # @param max_speed [Boolean] Optional parameter to optimize the API call for maximum speed. When set to true,
       #
       # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #
@@ -96,7 +94,7 @@ module BrandDev
         @client.request(
           method: :get,
           path: "brand/transaction_identifier",
-          query: parsed.transform_keys(timeout_ms: "timeoutMS"),
+          query: parsed.transform_keys(max_speed: "maxSpeed", timeout_ms: "timeoutMS"),
           model: BrandDev::Models::BrandIdentifyFromTransactionResponse,
           options: options
         )
@@ -128,6 +126,72 @@ module BrandDev
           path: "brand/prefetch",
           body: parsed,
           model: BrandDev::Models::BrandPrefetchResponse,
+          options: options
+        )
+      end
+
+      # Some parameter documentations has been truncated, see
+      # {BrandDev::Models::BrandRetrieveByNameParams} for more details.
+      #
+      # Retrieve brand information using a company name. This endpoint searches for the
+      # company by name and returns its brand data.
+      #
+      # @overload retrieve_by_name(name:, force_language: nil, max_speed: nil, timeout_ms: nil, request_options: {})
+      #
+      # @param name [String] Company name to retrieve brand data for (e.g., 'Apple Inc', 'Microsoft Corporati
+      #
+      # @param force_language [Symbol, BrandDev::Models::BrandRetrieveByNameParams::ForceLanguage] Optional parameter to force the language of the retrieved brand data.
+      #
+      # @param max_speed [Boolean] Optional parameter to optimize the API call for maximum speed. When set to true,
+      #
+      # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
+      #
+      # @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}, nil]
+      #
+      # @return [BrandDev::Models::BrandRetrieveByNameResponse]
+      #
+      # @see BrandDev::Models::BrandRetrieveByNameParams
+      def retrieve_by_name(params)
+        parsed, options = BrandDev::BrandRetrieveByNameParams.dump_request(params)
+        @client.request(
+          method: :get,
+          path: "brand/retrieve-by-name",
+          query: parsed.transform_keys(max_speed: "maxSpeed", timeout_ms: "timeoutMS"),
+          model: BrandDev::Models::BrandRetrieveByNameResponse,
+          options: options
+        )
+      end
+
+      # Some parameter documentations has been truncated, see
+      # {BrandDev::Models::BrandRetrieveByTickerParams} for more details.
+      #
+      # Retrieve brand information using a stock ticker symbol. This endpoint looks up
+      # the company associated with the ticker and returns its brand data.
+      #
+      # @overload retrieve_by_ticker(ticker:, force_language: nil, max_speed: nil, ticker_exchange: nil, timeout_ms: nil, request_options: {})
+      #
+      # @param ticker [String] Stock ticker symbol to retrieve brand data for (e.g., 'AAPL', 'GOOGL', 'BRK.A').
+      #
+      # @param force_language [Symbol, BrandDev::Models::BrandRetrieveByTickerParams::ForceLanguage] Optional parameter to force the language of the retrieved brand data.
+      #
+      # @param max_speed [Boolean] Optional parameter to optimize the API call for maximum speed. When set to true,
+      #
+      # @param ticker_exchange [Symbol, BrandDev::Models::BrandRetrieveByTickerParams::TickerExchange] Optional stock exchange for the ticker. Defaults to NASDAQ if not specified.
+      #
+      # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
+      #
+      # @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}, nil]
+      #
+      # @return [BrandDev::Models::BrandRetrieveByTickerResponse]
+      #
+      # @see BrandDev::Models::BrandRetrieveByTickerParams
+      def retrieve_by_ticker(params)
+        parsed, options = BrandDev::BrandRetrieveByTickerParams.dump_request(params)
+        @client.request(
+          method: :get,
+          path: "brand/retrieve-by-ticker",
+          query: parsed.transform_keys(max_speed: "maxSpeed", timeout_ms: "timeoutMS"),
+          model: BrandDev::Models::BrandRetrieveByTickerResponse,
           options: options
         )
       end

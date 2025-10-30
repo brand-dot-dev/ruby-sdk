@@ -2,29 +2,28 @@
 
 module BrandDev
   module Models
-    # @see BrandDev::Resources::Brand#retrieve
-    class BrandRetrieveParams < BrandDev::Internal::Type::BaseModel
+    # @see BrandDev::Resources::Brand#retrieve_by_name
+    class BrandRetrieveByNameParams < BrandDev::Internal::Type::BaseModel
       extend BrandDev::Internal::Type::RequestParameters::Converter
       include BrandDev::Internal::Type::RequestParameters
 
-      # @!attribute domain
-      #   Domain name to retrieve brand data for (e.g., 'example.com', 'google.com').
-      #   Cannot be used with name or ticker parameters.
+      # @!attribute name
+      #   Company name to retrieve brand data for (e.g., 'Apple Inc', 'Microsoft
+      #   Corporation'). Must be 3-30 characters.
       #
-      #   @return [String, nil]
-      optional :domain, String
+      #   @return [String]
+      required :name, String
 
       # @!attribute force_language
-      #   Optional parameter to force the language of the retrieved brand data. Works with
-      #   all three lookup methods.
+      #   Optional parameter to force the language of the retrieved brand data.
       #
-      #   @return [Symbol, BrandDev::Models::BrandRetrieveParams::ForceLanguage, nil]
-      optional :force_language, enum: -> { BrandDev::BrandRetrieveParams::ForceLanguage }
+      #   @return [Symbol, BrandDev::Models::BrandRetrieveByNameParams::ForceLanguage, nil]
+      optional :force_language, enum: -> { BrandDev::BrandRetrieveByNameParams::ForceLanguage }
 
       # @!attribute max_speed
       #   Optional parameter to optimize the API call for maximum speed. When set to true,
       #   the API will skip time-consuming operations for faster response at the cost of
-      #   less comprehensive data. Works with all three lookup methods.
+      #   less comprehensive data.
       #
       #   @return [Boolean, nil]
       optional :max_speed, BrandDev::Internal::Type::Boolean
@@ -37,13 +36,13 @@ module BrandDev
       #   @return [Integer, nil]
       optional :timeout_ms, Integer
 
-      # @!method initialize(domain: nil, force_language: nil, max_speed: nil, timeout_ms: nil, request_options: {})
+      # @!method initialize(name:, force_language: nil, max_speed: nil, timeout_ms: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
-      #   {BrandDev::Models::BrandRetrieveParams} for more details.
+      #   {BrandDev::Models::BrandRetrieveByNameParams} for more details.
       #
-      #   @param domain [String] Domain name to retrieve brand data for (e.g., 'example.com', 'google.com'). Cann
+      #   @param name [String] Company name to retrieve brand data for (e.g., 'Apple Inc', 'Microsoft Corporati
       #
-      #   @param force_language [Symbol, BrandDev::Models::BrandRetrieveParams::ForceLanguage] Optional parameter to force the language of the retrieved brand data. Works with
+      #   @param force_language [Symbol, BrandDev::Models::BrandRetrieveByNameParams::ForceLanguage] Optional parameter to force the language of the retrieved brand data.
       #
       #   @param max_speed [Boolean] Optional parameter to optimize the API call for maximum speed. When set to true,
       #
@@ -51,8 +50,7 @@ module BrandDev
       #
       #   @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}]
 
-      # Optional parameter to force the language of the retrieved brand data. Works with
-      # all three lookup methods.
+      # Optional parameter to force the language of the retrieved brand data.
       module ForceLanguage
         extend BrandDev::Internal::Type::Enum
 

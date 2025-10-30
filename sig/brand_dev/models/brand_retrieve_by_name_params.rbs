@@ -1,27 +1,25 @@
 module BrandDev
   module Models
-    type brand_retrieve_params =
+    type brand_retrieve_by_name_params =
       {
-        domain: String,
-        force_language: BrandDev::Models::BrandRetrieveParams::force_language,
+        name: String,
+        force_language: BrandDev::Models::BrandRetrieveByNameParams::force_language,
         max_speed: bool,
         timeout_ms: Integer
       }
       & BrandDev::Internal::Type::request_parameters
 
-    class BrandRetrieveParams < BrandDev::Internal::Type::BaseModel
+    class BrandRetrieveByNameParams < BrandDev::Internal::Type::BaseModel
       extend BrandDev::Internal::Type::RequestParameters::Converter
       include BrandDev::Internal::Type::RequestParameters
 
-      attr_reader domain: String?
+      attr_accessor name: String
 
-      def domain=: (String) -> String
-
-      attr_reader force_language: BrandDev::Models::BrandRetrieveParams::force_language?
+      attr_reader force_language: BrandDev::Models::BrandRetrieveByNameParams::force_language?
 
       def force_language=: (
-        BrandDev::Models::BrandRetrieveParams::force_language
-      ) -> BrandDev::Models::BrandRetrieveParams::force_language
+        BrandDev::Models::BrandRetrieveByNameParams::force_language
+      ) -> BrandDev::Models::BrandRetrieveByNameParams::force_language
 
       attr_reader max_speed: bool?
 
@@ -32,16 +30,16 @@ module BrandDev
       def timeout_ms=: (Integer) -> Integer
 
       def initialize: (
-        ?domain: String,
-        ?force_language: BrandDev::Models::BrandRetrieveParams::force_language,
+        name: String,
+        ?force_language: BrandDev::Models::BrandRetrieveByNameParams::force_language,
         ?max_speed: bool,
         ?timeout_ms: Integer,
         ?request_options: BrandDev::request_opts
       ) -> void
 
       def to_hash: -> {
-        domain: String,
-        force_language: BrandDev::Models::BrandRetrieveParams::force_language,
+        name: String,
+        force_language: BrandDev::Models::BrandRetrieveByNameParams::force_language,
         max_speed: bool,
         timeout_ms: Integer,
         request_options: BrandDev::RequestOptions
@@ -157,7 +155,7 @@ module BrandDev
         VIETNAMESE: :vietnamese
         WELSH: :welsh
 
-        def self?.values: -> ::Array[BrandDev::Models::BrandRetrieveParams::force_language]
+        def self?.values: -> ::Array[BrandDev::Models::BrandRetrieveByNameParams::force_language]
       end
     end
   end

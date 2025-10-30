@@ -1,0 +1,324 @@
+module BrandDev
+  module Models
+    type brand_retrieve_by_ticker_params =
+      {
+        ticker: String,
+        force_language: BrandDev::Models::BrandRetrieveByTickerParams::force_language,
+        max_speed: bool,
+        ticker_exchange: BrandDev::Models::BrandRetrieveByTickerParams::ticker_exchange,
+        timeout_ms: Integer
+      }
+      & BrandDev::Internal::Type::request_parameters
+
+    class BrandRetrieveByTickerParams < BrandDev::Internal::Type::BaseModel
+      extend BrandDev::Internal::Type::RequestParameters::Converter
+      include BrandDev::Internal::Type::RequestParameters
+
+      attr_accessor ticker: String
+
+      attr_reader force_language: BrandDev::Models::BrandRetrieveByTickerParams::force_language?
+
+      def force_language=: (
+        BrandDev::Models::BrandRetrieveByTickerParams::force_language
+      ) -> BrandDev::Models::BrandRetrieveByTickerParams::force_language
+
+      attr_reader max_speed: bool?
+
+      def max_speed=: (bool) -> bool
+
+      attr_reader ticker_exchange: BrandDev::Models::BrandRetrieveByTickerParams::ticker_exchange?
+
+      def ticker_exchange=: (
+        BrandDev::Models::BrandRetrieveByTickerParams::ticker_exchange
+      ) -> BrandDev::Models::BrandRetrieveByTickerParams::ticker_exchange
+
+      attr_reader timeout_ms: Integer?
+
+      def timeout_ms=: (Integer) -> Integer
+
+      def initialize: (
+        ticker: String,
+        ?force_language: BrandDev::Models::BrandRetrieveByTickerParams::force_language,
+        ?max_speed: bool,
+        ?ticker_exchange: BrandDev::Models::BrandRetrieveByTickerParams::ticker_exchange,
+        ?timeout_ms: Integer,
+        ?request_options: BrandDev::request_opts
+      ) -> void
+
+      def to_hash: -> {
+        ticker: String,
+        force_language: BrandDev::Models::BrandRetrieveByTickerParams::force_language,
+        max_speed: bool,
+        ticker_exchange: BrandDev::Models::BrandRetrieveByTickerParams::ticker_exchange,
+        timeout_ms: Integer,
+        request_options: BrandDev::RequestOptions
+      }
+
+      type force_language =
+        :albanian
+        | :arabic
+        | :azeri
+        | :bengali
+        | :bulgarian
+        | :cebuano
+        | :croatian
+        | :czech
+        | :danish
+        | :dutch
+        | :english
+        | :estonian
+        | :farsi
+        | :finnish
+        | :french
+        | :german
+        | :hausa
+        | :hawaiian
+        | :hindi
+        | :hungarian
+        | :icelandic
+        | :indonesian
+        | :italian
+        | :kazakh
+        | :kyrgyz
+        | :latin
+        | :latvian
+        | :lithuanian
+        | :macedonian
+        | :mongolian
+        | :nepali
+        | :norwegian
+        | :pashto
+        | :pidgin
+        | :polish
+        | :portuguese
+        | :romanian
+        | :russian
+        | :serbian
+        | :slovak
+        | :slovene
+        | :somali
+        | :spanish
+        | :swahili
+        | :swedish
+        | :tagalog
+        | :turkish
+        | :ukrainian
+        | :urdu
+        | :uzbek
+        | :vietnamese
+        | :welsh
+
+      module ForceLanguage
+        extend BrandDev::Internal::Type::Enum
+
+        ALBANIAN: :albanian
+        ARABIC: :arabic
+        AZERI: :azeri
+        BENGALI: :bengali
+        BULGARIAN: :bulgarian
+        CEBUANO: :cebuano
+        CROATIAN: :croatian
+        CZECH: :czech
+        DANISH: :danish
+        DUTCH: :dutch
+        ENGLISH: :english
+        ESTONIAN: :estonian
+        FARSI: :farsi
+        FINNISH: :finnish
+        FRENCH: :french
+        GERMAN: :german
+        HAUSA: :hausa
+        HAWAIIAN: :hawaiian
+        HINDI: :hindi
+        HUNGARIAN: :hungarian
+        ICELANDIC: :icelandic
+        INDONESIAN: :indonesian
+        ITALIAN: :italian
+        KAZAKH: :kazakh
+        KYRGYZ: :kyrgyz
+        LATIN: :latin
+        LATVIAN: :latvian
+        LITHUANIAN: :lithuanian
+        MACEDONIAN: :macedonian
+        MONGOLIAN: :mongolian
+        NEPALI: :nepali
+        NORWEGIAN: :norwegian
+        PASHTO: :pashto
+        PIDGIN: :pidgin
+        POLISH: :polish
+        PORTUGUESE: :portuguese
+        ROMANIAN: :romanian
+        RUSSIAN: :russian
+        SERBIAN: :serbian
+        SLOVAK: :slovak
+        SLOVENE: :slovene
+        SOMALI: :somali
+        SPANISH: :spanish
+        SWAHILI: :swahili
+        SWEDISH: :swedish
+        TAGALOG: :tagalog
+        TURKISH: :turkish
+        UKRAINIAN: :ukrainian
+        URDU: :urdu
+        UZBEK: :uzbek
+        VIETNAMESE: :vietnamese
+        WELSH: :welsh
+
+        def self?.values: -> ::Array[BrandDev::Models::BrandRetrieveByTickerParams::force_language]
+      end
+
+      type ticker_exchange =
+        :AMEX
+        | :AMS
+        | :AQS
+        | :ASX
+        | :ATH
+        | :BER
+        | :BME
+        | :BRU
+        | :BSE
+        | :BUD
+        | :BUE
+        | :BVC
+        | :CBOE
+        | :CNQ
+        | :CPH
+        | :DFM
+        | :DOH
+        | :DUB
+        | :DUS
+        | :DXE
+        | :EGX
+        | :FSX
+        | :HAM
+        | :HEL
+        | :HKSE
+        | :HOSE
+        | :ICE
+        | :IOB
+        | :IST
+        | :JKT
+        | :JNB
+        | :JPX
+        | :KLS
+        | :KOE
+        | :KSC
+        | :KUW
+        | :LIS
+        | :LSE
+        | :MCX
+        | :MEX
+        | :MIL
+        | :MUN
+        | :NASDAQ
+        | :NEO
+        | :NSE
+        | :NYSE
+        | :NZE
+        | :OSL
+        | :OTC
+        | :PAR
+        | :PNK
+        | :PRA
+        | :RIS
+        | :SAO
+        | :SAU
+        | :SES
+        | :SET
+        | :SGO
+        | :SHH
+        | :SHZ
+        | :SIX
+        | :STO
+        | :STU
+        | :TAI
+        | :TAL
+        | :TLV
+        | :TSX
+        | :TSXV
+        | :TWO
+        | :VIE
+        | :WSE
+        | :XETRA
+
+      module TickerExchange
+        extend BrandDev::Internal::Type::Enum
+
+        AMEX: :AMEX
+        AMS: :AMS
+        AQS: :AQS
+        ASX: :ASX
+        ATH: :ATH
+        BER: :BER
+        BME: :BME
+        BRU: :BRU
+        BSE: :BSE
+        BUD: :BUD
+        BUE: :BUE
+        BVC: :BVC
+        CBOE: :CBOE
+        CNQ: :CNQ
+        CPH: :CPH
+        DFM: :DFM
+        DOH: :DOH
+        DUB: :DUB
+        DUS: :DUS
+        DXE: :DXE
+        EGX: :EGX
+        FSX: :FSX
+        HAM: :HAM
+        HEL: :HEL
+        HKSE: :HKSE
+        HOSE: :HOSE
+        ICE: :ICE
+        IOB: :IOB
+        IST: :IST
+        JKT: :JKT
+        JNB: :JNB
+        JPX: :JPX
+        KLS: :KLS
+        KOE: :KOE
+        KSC: :KSC
+        KUW: :KUW
+        LIS: :LIS
+        LSE: :LSE
+        MCX: :MCX
+        MEX: :MEX
+        MIL: :MIL
+        MUN: :MUN
+        NASDAQ: :NASDAQ
+        NEO: :NEO
+        NSE: :NSE
+        NYSE: :NYSE
+        NZE: :NZE
+        OSL: :OSL
+        OTC: :OTC
+        PAR: :PAR
+        PNK: :PNK
+        PRA: :PRA
+        RIS: :RIS
+        SAO: :SAO
+        SAU: :SAU
+        SES: :SES
+        SET: :SET
+        SGO: :SGO
+        SHH: :SHH
+        SHZ: :SHZ
+        SIX: :SIX
+        STO: :STO
+        STU: :STU
+        TAI: :TAI
+        TAL: :TAL
+        TLV: :TLV
+        TSX: :TSX
+        TSXV: :TSXV
+        TWO: :TWO
+        VIE: :VIE
+        WSE: :WSE
+        XETRA: :XETRA
+
+        def self?.values: -> ::Array[BrandDev::Models::BrandRetrieveByTickerParams::ticker_exchange]
+      end
+    end
+  end
+end
