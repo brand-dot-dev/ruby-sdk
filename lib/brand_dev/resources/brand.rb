@@ -6,7 +6,8 @@ module BrandDev
       # Some parameter documentations has been truncated, see
       # {BrandDev::Models::BrandRetrieveParams} for more details.
       #
-      # Retrieve brand information from a domain name
+      # Retrieve logos, backdrops, colors, industry, description, and more from any
+      # domain
       #
       # @overload retrieve(domain: nil, force_language: nil, max_speed: nil, timeout_ms: nil, request_options: {})
       #
@@ -73,9 +74,13 @@ module BrandDev
       # Endpoint specially designed for platforms that want to identify transaction data
       # by the transaction title.
       #
-      # @overload identify_from_transaction(transaction_info:, timeout_ms: nil, request_options: {})
+      # @overload identify_from_transaction(transaction_info:, force_language: nil, max_speed: nil, timeout_ms: nil, request_options: {})
       #
       # @param transaction_info [String] Transaction information to identify the brand
+      #
+      # @param force_language [Symbol, BrandDev::Models::BrandIdentifyFromTransactionParams::ForceLanguage] Optional parameter to force the language of the retrieved brand data.
+      #
+      # @param max_speed [Boolean] Optional parameter to optimize the API call for maximum speed. When set to true,
       #
       # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #
@@ -89,7 +94,7 @@ module BrandDev
         @client.request(
           method: :get,
           path: "brand/transaction_identifier",
-          query: parsed.transform_keys(timeout_ms: "timeoutMS"),
+          query: parsed.transform_keys(max_speed: "maxSpeed", timeout_ms: "timeoutMS"),
           model: BrandDev::Models::BrandIdentifyFromTransactionResponse,
           options: options
         )

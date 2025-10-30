@@ -3,7 +3,8 @@
 module BrandDev
   module Resources
     class Brand
-      # Retrieve brand information from a domain name
+      # Retrieve logos, backdrops, colors, industry, description, and more from any
+      # domain
       sig do
         params(
           domain: String,
@@ -66,6 +67,9 @@ module BrandDev
       sig do
         params(
           transaction_info: String,
+          force_language:
+            BrandDev::BrandIdentifyFromTransactionParams::ForceLanguage::OrSymbol,
+          max_speed: T::Boolean,
           timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(BrandDev::Models::BrandIdentifyFromTransactionResponse)
@@ -73,6 +77,12 @@ module BrandDev
       def identify_from_transaction(
         # Transaction information to identify the brand
         transaction_info:,
+        # Optional parameter to force the language of the retrieved brand data.
+        force_language: nil,
+        # Optional parameter to optimize the API call for maximum speed. When set to true,
+        # the API will skip time-consuming operations for faster response at the cost of
+        # less comprehensive data.
+        max_speed: nil,
         # Optional timeout in milliseconds for the request. If the request takes longer
         # than this value, it will be aborted with a 408 status code. Maximum allowed
         # value is 300000ms (5 minutes).
