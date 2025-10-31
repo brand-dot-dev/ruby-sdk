@@ -113,6 +113,39 @@ module BrandDev
       )
       end
 
+      # Retrieve brand information using an email address while detecting disposable and
+      # free email addresses. This endpoint extracts the domain from the email address
+      # and returns brand data for that domain. Disposable and free email addresses
+      # (like gmail.com, yahoo.com) will throw a 422 error.
+      sig do
+        params(
+          email: String,
+          force_language:
+            BrandDev::BrandRetrieveByEmailParams::ForceLanguage::OrSymbol,
+          max_speed: T::Boolean,
+          timeout_ms: Integer,
+          request_options: BrandDev::RequestOptions::OrHash
+        ).returns(BrandDev::Models::BrandRetrieveByEmailResponse)
+      end
+      def retrieve_by_email(
+        # Email address to retrieve brand data for (e.g., 'contact@example.com'). The
+        # domain will be extracted from the email. Free email providers (gmail.com,
+        # yahoo.com, etc.) and disposable email addresses are not allowed.
+        email:,
+        # Optional parameter to force the language of the retrieved brand data.
+        force_language: nil,
+        # Optional parameter to optimize the API call for maximum speed. When set to true,
+        # the API will skip time-consuming operations for faster response at the cost of
+        # less comprehensive data.
+        max_speed: nil,
+        # Optional timeout in milliseconds for the request. If the request takes longer
+        # than this value, it will be aborted with a 408 status code. Maximum allowed
+        # value is 300000ms (5 minutes).
+        timeout_ms: nil,
+        request_options: {}
+      )
+      end
+
       # Retrieve brand information using a company name. This endpoint searches for the
       # company by name and returns its brand data.
       sig do

@@ -8,6 +8,8 @@ module BrandDev
 
   BrandPrefetchParams = BrandDev::Models::BrandPrefetchParams
 
+  BrandRetrieveByEmailParams = BrandDev::Models::BrandRetrieveByEmailParams
+
   BrandRetrieveByNameParams = BrandDev::Models::BrandRetrieveByNameParams
 
   BrandRetrieveByTickerParams = BrandDev::Models::BrandRetrieveByTickerParams
