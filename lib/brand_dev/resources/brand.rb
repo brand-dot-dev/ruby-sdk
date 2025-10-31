@@ -131,6 +131,40 @@ module BrandDev
       end
 
       # Some parameter documentations has been truncated, see
+      # {BrandDev::Models::BrandRetrieveByEmailParams} for more details.
+      #
+      # Retrieve brand information using an email address while detecting disposable and
+      # free email addresses. This endpoint extracts the domain from the email address
+      # and returns brand data for that domain. Disposable and free email addresses
+      # (like gmail.com, yahoo.com) will throw a 422 error.
+      #
+      # @overload retrieve_by_email(email:, force_language: nil, max_speed: nil, timeout_ms: nil, request_options: {})
+      #
+      # @param email [String] Email address to retrieve brand data for (e.g., 'contact@example.com'). The doma
+      #
+      # @param force_language [Symbol, BrandDev::Models::BrandRetrieveByEmailParams::ForceLanguage] Optional parameter to force the language of the retrieved brand data.
+      #
+      # @param max_speed [Boolean] Optional parameter to optimize the API call for maximum speed. When set to true,
+      #
+      # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
+      #
+      # @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}, nil]
+      #
+      # @return [BrandDev::Models::BrandRetrieveByEmailResponse]
+      #
+      # @see BrandDev::Models::BrandRetrieveByEmailParams
+      def retrieve_by_email(params)
+        parsed, options = BrandDev::BrandRetrieveByEmailParams.dump_request(params)
+        @client.request(
+          method: :get,
+          path: "brand/retrieve-by-email",
+          query: parsed.transform_keys(max_speed: "maxSpeed", timeout_ms: "timeoutMS"),
+          model: BrandDev::Models::BrandRetrieveByEmailResponse,
+          options: options
+        )
+      end
+
+      # Some parameter documentations has been truncated, see
       # {BrandDev::Models::BrandRetrieveByNameParams} for more details.
       #
       # Retrieve brand information using a company name. This endpoint searches for the
