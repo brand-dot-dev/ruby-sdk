@@ -87,6 +87,24 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
     end
   end
 
+  def test_retrieve_by_email_required_params
+    skip("Prism tests are disabled")
+
+    response = @brand_dev.brand.retrieve_by_email(email: "dev@stainless.com")
+
+    assert_pattern do
+      response => BrandDev::Models::BrandRetrieveByEmailResponse
+    end
+
+    assert_pattern do
+      response => {
+        brand: BrandDev::Models::BrandRetrieveByEmailResponse::Brand | nil,
+        code: Integer | nil,
+        status: String | nil
+      }
+    end
+  end
+
   def test_retrieve_by_name_required_params
     skip("Prism tests are disabled")
 
