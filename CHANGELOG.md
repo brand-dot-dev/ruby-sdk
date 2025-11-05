@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.11.1 (2025-11-05)
+
+Full Changelog: [v0.11.0...v0.11.1](https://github.com/brand-dot-dev/ruby-sdk/compare/v0.11.0...v0.11.1)
+
+### Bug Fixes
+
+* better thread safety via early initializing SSL store during HTTP client creation ([4d074e6](https://github.com/brand-dot-dev/ruby-sdk/commit/4d074e601b62e52f7a429814a79b5d8d0441e739))
+
+
+### Chores
+
+* bump dependency version and update sorbet types ([2d84b58](https://github.com/brand-dot-dev/ruby-sdk/commit/2d84b5889d2314fb948ca765364195f584f87dc7))
+
 ## 0.11.0 (2025-10-31)
 
 Full Changelog: [v0.10.0...v0.11.0](https://github.com/brand-dot-dev/ruby-sdk/compare/v0.10.0...v0.11.0)
