@@ -165,6 +165,39 @@ module BrandDev
       end
 
       # Some parameter documentations has been truncated, see
+      # {BrandDev::Models::BrandRetrieveByIsinParams} for more details.
+      #
+      # Retrieve brand information using an ISIN (International Securities
+      # Identification Number). This endpoint looks up the company associated with the
+      # ISIN and returns its brand data.
+      #
+      # @overload retrieve_by_isin(isin:, force_language: nil, max_speed: nil, timeout_ms: nil, request_options: {})
+      #
+      # @param isin [String] ISIN (International Securities Identification Number) to retrieve brand data for
+      #
+      # @param force_language [Symbol, BrandDev::Models::BrandRetrieveByIsinParams::ForceLanguage] Optional parameter to force the language of the retrieved brand data.
+      #
+      # @param max_speed [Boolean] Optional parameter to optimize the API call for maximum speed. When set to true,
+      #
+      # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
+      #
+      # @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}, nil]
+      #
+      # @return [BrandDev::Models::BrandRetrieveByIsinResponse]
+      #
+      # @see BrandDev::Models::BrandRetrieveByIsinParams
+      def retrieve_by_isin(params)
+        parsed, options = BrandDev::BrandRetrieveByIsinParams.dump_request(params)
+        @client.request(
+          method: :get,
+          path: "brand/retrieve-by-isin",
+          query: parsed.transform_keys(max_speed: "maxSpeed", timeout_ms: "timeoutMS"),
+          model: BrandDev::Models::BrandRetrieveByIsinResponse,
+          options: options
+        )
+      end
+
+      # Some parameter documentations has been truncated, see
       # {BrandDev::Models::BrandRetrieveByNameParams} for more details.
       #
       # Retrieve brand information using a company name. This endpoint searches for the

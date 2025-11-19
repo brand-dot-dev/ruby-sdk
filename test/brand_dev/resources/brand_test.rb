@@ -105,6 +105,24 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
     end
   end
 
+  def test_retrieve_by_isin_required_params
+    skip("Prism tests are disabled")
+
+    response = @brand_dev.brand.retrieve_by_isin(isin: "SE60513A9993")
+
+    assert_pattern do
+      response => BrandDev::Models::BrandRetrieveByIsinResponse
+    end
+
+    assert_pattern do
+      response => {
+        brand: BrandDev::Models::BrandRetrieveByIsinResponse::Brand | nil,
+        code: Integer | nil,
+        status: String | nil
+      }
+    end
+  end
+
   def test_retrieve_by_name_required_params
     skip("Prism tests are disabled")
 
