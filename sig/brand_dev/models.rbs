@@ -7,6 +7,8 @@ module BrandDev
 
   class BrandRetrieveByEmailParams = BrandDev::Models::BrandRetrieveByEmailParams
 
+  class BrandRetrieveByIsinParams = BrandDev::Models::BrandRetrieveByIsinParams
+
   class BrandRetrieveByNameParams = BrandDev::Models::BrandRetrieveByNameParams
 
   class BrandRetrieveByTickerParams = BrandDev::Models::BrandRetrieveByTickerParams
