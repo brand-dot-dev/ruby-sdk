@@ -39,6 +39,14 @@ module BrandDev
         ?request_options: BrandDev::request_opts
       ) -> BrandDev::Models::BrandRetrieveByEmailResponse
 
+      def retrieve_by_isin: (
+        isin: String,
+        ?force_language: BrandDev::Models::BrandRetrieveByIsinParams::force_language,
+        ?max_speed: bool,
+        ?timeout_ms: Integer,
+        ?request_options: BrandDev::request_opts
+      ) -> BrandDev::Models::BrandRetrieveByIsinResponse
+
       def retrieve_by_name: (
         name: String,
         ?force_language: BrandDev::Models::BrandRetrieveByNameParams::force_language,
