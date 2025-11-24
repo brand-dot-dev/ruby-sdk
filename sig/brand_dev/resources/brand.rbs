@@ -19,8 +19,11 @@ module BrandDev
 
       def identify_from_transaction: (
         transaction_info: String,
+        ?city: String,
+        ?country_gl: BrandDev::Models::BrandIdentifyFromTransactionParams::country_gl,
         ?force_language: BrandDev::Models::BrandIdentifyFromTransactionParams::force_language,
         ?max_speed: bool,
+        ?mcc: String,
         ?timeout_ms: Integer,
         ?request_options: BrandDev::request_opts
       ) -> BrandDev::Models::BrandIdentifyFromTransactionResponse
