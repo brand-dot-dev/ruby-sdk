@@ -74,13 +74,19 @@ module BrandDev
       # Endpoint specially designed for platforms that want to identify transaction data
       # by the transaction title.
       #
-      # @overload identify_from_transaction(transaction_info:, force_language: nil, max_speed: nil, timeout_ms: nil, request_options: {})
+      # @overload identify_from_transaction(transaction_info:, city: nil, country_gl: nil, force_language: nil, max_speed: nil, mcc: nil, timeout_ms: nil, request_options: {})
       #
       # @param transaction_info [String] Transaction information to identify the brand
+      #
+      # @param city [String] Optional city name to prioritize when searching for the brand.
+      #
+      # @param country_gl [Symbol, BrandDev::Models::BrandIdentifyFromTransactionParams::CountryGl] Optional country code (GL parameter) to specify the country for Google search re
       #
       # @param force_language [Symbol, BrandDev::Models::BrandIdentifyFromTransactionParams::ForceLanguage] Optional parameter to force the language of the retrieved brand data.
       #
       # @param max_speed [Boolean] Optional parameter to optimize the API call for maximum speed. When set to true,
+      #
+      # @param mcc [String] Optional Merchant Category Code (MCC) to help identify the business category/ind
       #
       # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #

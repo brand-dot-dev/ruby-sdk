@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.13.0 (2025-11-24)
+
+Full Changelog: [v0.12.0...v0.13.0](https://github.com/brand-dot-dev/ruby-sdk/compare/v0.12.0...v0.13.0)
+
+### Features
+
+* **api:** api update ([4480dc7](https://github.com/brand-dot-dev/ruby-sdk/commit/4480dc7ecf1583cf54713fb7bec96455d17ff80d))
+
+
+### Chores
+
+* explicitly require "base64" gem ([90da5d4](https://github.com/brand-dot-dev/ruby-sdk/commit/90da5d4c95586955a55b3295778830b51f81f937))
+
 ## 0.12.0 (2025-11-19)
 
 Full Changelog: [v0.11.1...v0.12.0](https://github.com/brand-dot-dev/ruby-sdk/compare/v0.11.1...v0.12.0)
