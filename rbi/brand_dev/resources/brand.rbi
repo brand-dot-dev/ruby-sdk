@@ -83,8 +83,8 @@ module BrandDev
         transaction_info:,
         # Optional city name to prioritize when searching for the brand.
         city: nil,
-        # Optional country code (GL parameter) to specify the country for Google search
-        # results. This affects the geographic location used for search queries.
+        # Optional country code (GL parameter) to specify the country. This affects the
+        # geographic location used for search queries.
         country_gl: nil,
         # Optional parameter to force the language of the retrieved brand data.
         force_language: nil,
