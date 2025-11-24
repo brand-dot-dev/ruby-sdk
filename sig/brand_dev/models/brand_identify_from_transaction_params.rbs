@@ -3,8 +3,11 @@ module BrandDev
     type brand_identify_from_transaction_params =
       {
         transaction_info: String,
+        city: String,
+        country_gl: BrandDev::Models::BrandIdentifyFromTransactionParams::country_gl,
         force_language: BrandDev::Models::BrandIdentifyFromTransactionParams::force_language,
         max_speed: bool,
+        mcc: String,
         timeout_ms: Integer
       }
       & BrandDev::Internal::Type::request_parameters
@@ -14,6 +17,16 @@ module BrandDev
       include BrandDev::Internal::Type::RequestParameters
 
       attr_accessor transaction_info: String
+
+      attr_reader city: String?
+
+      def city=: (String) -> String
+
+      attr_reader country_gl: BrandDev::Models::BrandIdentifyFromTransactionParams::country_gl?
+
+      def country_gl=: (
+        BrandDev::Models::BrandIdentifyFromTransactionParams::country_gl
+      ) -> BrandDev::Models::BrandIdentifyFromTransactionParams::country_gl
 
       attr_reader force_language: BrandDev::Models::BrandIdentifyFromTransactionParams::force_language?
 
@@ -25,25 +38,522 @@ module BrandDev
 
       def max_speed=: (bool) -> bool
 
+      attr_reader mcc: String?
+
+      def mcc=: (String) -> String
+
       attr_reader timeout_ms: Integer?
 
       def timeout_ms=: (Integer) -> Integer
 
       def initialize: (
         transaction_info: String,
+        ?city: String,
+        ?country_gl: BrandDev::Models::BrandIdentifyFromTransactionParams::country_gl,
         ?force_language: BrandDev::Models::BrandIdentifyFromTransactionParams::force_language,
         ?max_speed: bool,
+        ?mcc: String,
         ?timeout_ms: Integer,
         ?request_options: BrandDev::request_opts
       ) -> void
 
       def to_hash: -> {
         transaction_info: String,
+        city: String,
+        country_gl: BrandDev::Models::BrandIdentifyFromTransactionParams::country_gl,
         force_language: BrandDev::Models::BrandIdentifyFromTransactionParams::force_language,
         max_speed: bool,
+        mcc: String,
         timeout_ms: Integer,
         request_options: BrandDev::RequestOptions
       }
+
+      type country_gl =
+        :ad
+        | :ae
+        | :af
+        | :ag
+        | :ai
+        | :al
+        | :am
+        | :an
+        | :ao
+        | :aq
+        | :ar
+        | :as
+        | :at
+        | :au
+        | :aw
+        | :az
+        | :ba
+        | :bb
+        | :bd
+        | :be
+        | :bf
+        | :bg
+        | :bh
+        | :bi
+        | :bj
+        | :bm
+        | :bn
+        | :bo
+        | :br
+        | :bs
+        | :bt
+        | :bv
+        | :bw
+        | :by
+        | :bz
+        | :ca
+        | :cc
+        | :cd
+        | :cf
+        | :cg
+        | :ch
+        | :ci
+        | :ck
+        | :cl
+        | :cm
+        | :cn
+        | :co
+        | :cr
+        | :cu
+        | :cv
+        | :cx
+        | :cy
+        | :cz
+        | :de
+        | :dj
+        | :dk
+        | :dm
+        | :do
+        | :dz
+        | :ec
+        | :ee
+        | :eg
+        | :eh
+        | :er
+        | :es
+        | :et
+        | :fi
+        | :fj
+        | :fk
+        | :fm
+        | :fo
+        | :fr
+        | :ga
+        | :gb
+        | :gd
+        | :ge
+        | :gf
+        | :gh
+        | :gi
+        | :gl
+        | :gm
+        | :gn
+        | :gp
+        | :gq
+        | :gr
+        | :gs
+        | :gt
+        | :gu
+        | :gw
+        | :gy
+        | :hk
+        | :hm
+        | :hn
+        | :hr
+        | :ht
+        | :hu
+        | :id
+        | :ie
+        | :il
+        | :in
+        | :io
+        | :iq
+        | :ir
+        | :is
+        | :it
+        | :jm
+        | :jo
+        | :jp
+        | :ke
+        | :kg
+        | :kh
+        | :ki
+        | :km
+        | :kn
+        | :kp
+        | :kr
+        | :kw
+        | :ky
+        | :kz
+        | :la
+        | :lb
+        | :lc
+        | :li
+        | :lk
+        | :lr
+        | :ls
+        | :lt
+        | :lu
+        | :lv
+        | :ly
+        | :ma
+        | :mc
+        | :md
+        | :mg
+        | :mh
+        | :mk
+        | :ml
+        | :mm
+        | :mn
+        | :mo
+        | :mp
+        | :mq
+        | :mr
+        | :ms
+        | :mt
+        | :mu
+        | :mv
+        | :mw
+        | :mx
+        | :my
+        | :mz
+        | :na
+        | :nc
+        | :ne
+        | :nf
+        | :ng
+        | :ni
+        | :nl
+        | :no
+        | :np
+        | :nr
+        | :nu
+        | :nz
+        | :om
+        | :pa
+        | :pe
+        | :pf
+        | :pg
+        | :ph
+        | :pk
+        | :pl
+        | :pm
+        | :pn
+        | :pr
+        | :ps
+        | :pt
+        | :pw
+        | :py
+        | :qa
+        | :re
+        | :ro
+        | :rs
+        | :ru
+        | :rw
+        | :sa
+        | :sb
+        | :sc
+        | :sd
+        | :se
+        | :sg
+        | :sh
+        | :si
+        | :sj
+        | :sk
+        | :sl
+        | :sm
+        | :sn
+        | :so
+        | :sr
+        | :st
+        | :sv
+        | :sy
+        | :sz
+        | :tc
+        | :td
+        | :tf
+        | :tg
+        | :th
+        | :tj
+        | :tk
+        | :tl
+        | :tm
+        | :tn
+        | :to
+        | :tr
+        | :tt
+        | :tv
+        | :tw
+        | :tz
+        | :ua
+        | :ug
+        | :um
+        | :us
+        | :uy
+        | :uz
+        | :va
+        | :vc
+        | :ve
+        | :vg
+        | :vi
+        | :vn
+        | :vu
+        | :wf
+        | :ws
+        | :ye
+        | :yt
+        | :za
+        | :zm
+        | :zw
+
+      module CountryGl
+        extend BrandDev::Internal::Type::Enum
+
+        AD: :ad
+        AE: :ae
+        AF: :af
+        AG: :ag
+        AI: :ai
+        AL: :al
+        AM: :am
+        AN: :an
+        AO: :ao
+        AQ: :aq
+        AR: :ar
+        AS: :as
+        AT: :at
+        AU: :au
+        AW: :aw
+        AZ: :az
+        BA: :ba
+        BB: :bb
+        BD: :bd
+        BE: :be
+        BF: :bf
+        BG: :bg
+        BH: :bh
+        BI: :bi
+        BJ: :bj
+        BM: :bm
+        BN: :bn
+        BO: :bo
+        BR: :br
+        BS: :bs
+        BT: :bt
+        BV: :bv
+        BW: :bw
+        BY: :by
+        BZ: :bz
+        CA: :ca
+        CC: :cc
+        CD: :cd
+        CF: :cf
+        CG: :cg
+        CH: :ch
+        CI: :ci
+        CK: :ck
+        CL: :cl
+        CM: :cm
+        CN: :cn
+        CO: :co
+        CR: :cr
+        CU: :cu
+        CV: :cv
+        CX: :cx
+        CY: :cy
+        CZ: :cz
+        DE: :de
+        DJ: :dj
+        DK: :dk
+        DM: :dm
+        DO: :do
+        DZ: :dz
+        EC: :ec
+        EE: :ee
+        EG: :eg
+        EH: :eh
+        ER: :er
+        ES: :es
+        ET: :et
+        FI: :fi
+        FJ: :fj
+        FK: :fk
+        FM: :fm
+        FO: :fo
+        FR: :fr
+        GA: :ga
+        GB: :gb
+        GD: :gd
+        GE: :ge
+        GF: :gf
+        GH: :gh
+        GI: :gi
+        GL: :gl
+        GM: :gm
+        GN: :gn
+        GP: :gp
+        GQ: :gq
+        GR: :gr
+        GS: :gs
+        GT: :gt
+        GU: :gu
+        GW: :gw
+        GY: :gy
+        HK: :hk
+        HM: :hm
+        HN: :hn
+        HR: :hr
+        HT: :ht
+        HU: :hu
+        ID: :id
+        IE: :ie
+        IL: :il
+        IN: :in
+        IO: :io
+        IQ: :iq
+        IR: :ir
+        IS: :is
+        IT: :it
+        JM: :jm
+        JO: :jo
+        JP: :jp
+        KE: :ke
+        KG: :kg
+        KH: :kh
+        KI: :ki
+        KM: :km
+        KN: :kn
+        KP: :kp
+        KR: :kr
+        KW: :kw
+        KY: :ky
+        KZ: :kz
+        LA: :la
+        LB: :lb
+        LC: :lc
+        LI: :li
+        LK: :lk
+        LR: :lr
+        LS: :ls
+        LT: :lt
+        LU: :lu
+        LV: :lv
+        LY: :ly
+        MA: :ma
+        MC: :mc
+        MD: :md
+        MG: :mg
+        MH: :mh
+        MK: :mk
+        ML: :ml
+        MM: :mm
+        MN: :mn
+        MO: :mo
+        MP: :mp
+        MQ: :mq
+        MR: :mr
+        MS: :ms
+        MT: :mt
+        MU: :mu
+        MV: :mv
+        MW: :mw
+        MX: :mx
+        MY: :my
+        MZ: :mz
+        NA: :na
+        NC: :nc
+        NE: :ne
+        NF: :nf
+        NG: :ng
+        NI: :ni
+        NL: :nl
+        NO: :no
+        NP: :np
+        NR: :nr
+        NU: :nu
+        NZ: :nz
+        OM: :om
+        PA: :pa
+        PE: :pe
+        PF: :pf
+        PG: :pg
+        PH: :ph
+        PK: :pk
+        PL: :pl
+        PM: :pm
+        PN: :pn
+        PR: :pr
+        PS: :ps
+        PT: :pt
+        PW: :pw
+        PY: :py
+        QA: :qa
+        RE: :re
+        RO: :ro
+        RS: :rs
+        RU: :ru
+        RW: :rw
+        SA: :sa
+        SB: :sb
+        SC: :sc
+        SD: :sd
+        SE: :se
+        SG: :sg
+        SH: :sh
+        SI: :si
+        SJ: :sj
+        SK: :sk
+        SL: :sl
+        SM: :sm
+        SN: :sn
+        SO: :so
+        SR: :sr
+        ST: :st
+        SV: :sv
+        SY: :sy
+        SZ: :sz
+        TC: :tc
+        TD: :td
+        TF: :tf
+        TG: :tg
+        TH: :th
+        TJ: :tj
+        TK: :tk
+        TL: :tl
+        TM: :tm
+        TN: :tn
+        TO: :to
+        TR: :tr
+        TT: :tt
+        TV: :tv
+        TW: :tw
+        TZ: :tz
+        UA: :ua
+        UG: :ug
+        UM: :um
+        US: :us
+        UY: :uy
+        UZ: :uz
+        VA: :va
+        VC: :vc
+        VE: :ve
+        VG: :vg
+        VI: :vi
+        VN: :vn
+        VU: :vu
+        WF: :wf
+        WS: :ws
+        YE: :ye
+        YT: :yt
+        ZA: :za
+        ZM: :zm
+        ZW: :zw
+
+        def self?.values: -> ::Array[BrandDev::Models::BrandIdentifyFromTransactionParams::country_gl]
+      end
 
       type force_language =
         :albanian

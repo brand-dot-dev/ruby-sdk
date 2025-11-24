@@ -67,9 +67,13 @@ module BrandDev
       sig do
         params(
           transaction_info: String,
+          city: String,
+          country_gl:
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::OrSymbol,
           force_language:
             BrandDev::BrandIdentifyFromTransactionParams::ForceLanguage::OrSymbol,
           max_speed: T::Boolean,
+          mcc: String,
           timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(BrandDev::Models::BrandIdentifyFromTransactionResponse)
@@ -77,12 +81,20 @@ module BrandDev
       def identify_from_transaction(
         # Transaction information to identify the brand
         transaction_info:,
+        # Optional city name to prioritize when searching for the brand.
+        city: nil,
+        # Optional country code (GL parameter) to specify the country for Google search
+        # results. This affects the geographic location used for search queries.
+        country_gl: nil,
         # Optional parameter to force the language of the retrieved brand data.
         force_language: nil,
         # Optional parameter to optimize the API call for maximum speed. When set to true,
         # the API will skip time-consuming operations for faster response at the cost of
         # less comprehensive data.
         max_speed: nil,
+        # Optional Merchant Category Code (MCC) to help identify the business
+        # category/industry.
+        mcc: nil,
         # Optional timeout in milliseconds for the request. If the request takes longer
         # than this value, it will be aborted with a 408 status code. Maximum allowed
         # value is 300000ms (5 minutes).
