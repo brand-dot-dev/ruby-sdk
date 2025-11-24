@@ -11,7 +11,7 @@ GIT
 PATH
   remote: .
   specs:
-    brand.dev (0.13.0)
+    brand.dev (0.14.0)
       connection_pool
 
 GEM

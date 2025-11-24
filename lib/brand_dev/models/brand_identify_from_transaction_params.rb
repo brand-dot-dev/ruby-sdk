@@ -20,8 +20,8 @@ module BrandDev
       optional :city, String
 
       # @!attribute country_gl
-      #   Optional country code (GL parameter) to specify the country for Google search
-      #   results. This affects the geographic location used for search queries.
+      #   Optional country code (GL parameter) to specify the country. This affects the
+      #   geographic location used for search queries.
       #
       #   @return [Symbol, BrandDev::Models::BrandIdentifyFromTransactionParams::CountryGl, nil]
       optional :country_gl, enum: -> { BrandDev::BrandIdentifyFromTransactionParams::CountryGl }
@@ -63,7 +63,7 @@ module BrandDev
       #
       #   @param city [String] Optional city name to prioritize when searching for the brand.
       #
-      #   @param country_gl [Symbol, BrandDev::Models::BrandIdentifyFromTransactionParams::CountryGl] Optional country code (GL parameter) to specify the country for Google search re
+      #   @param country_gl [Symbol, BrandDev::Models::BrandIdentifyFromTransactionParams::CountryGl] Optional country code (GL parameter) to specify the country. This affects the ge
       #
       #   @param force_language [Symbol, BrandDev::Models::BrandIdentifyFromTransactionParams::ForceLanguage] Optional parameter to force the language of the retrieved brand data.
       #
@@ -75,8 +75,8 @@ module BrandDev
       #
       #   @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}]
 
-      # Optional country code (GL parameter) to specify the country for Google search
-      # results. This affects the geographic location used for search queries.
+      # Optional country code (GL parameter) to specify the country. This affects the
+      # geographic location used for search queries.
       module CountryGl
         extend BrandDev::Internal::Type::Enum
 
