@@ -51,6 +51,25 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
     end
   end
 
+  def test_fonts_required_params
+    skip("Prism tests are disabled")
+
+    response = @brand_dev.brand.fonts(domain: "domain")
+
+    assert_pattern do
+      response => BrandDev::Models::BrandFontsResponse
+    end
+
+    assert_pattern do
+      response => {
+        code: Integer,
+        domain: String,
+        fonts: ^(BrandDev::Internal::Type::ArrayOf[BrandDev::Models::BrandFontsResponse::Font]),
+        status: String
+      }
+    end
+  end
+
   def test_identify_from_transaction_required_params
     skip("Prism tests are disabled")
 
