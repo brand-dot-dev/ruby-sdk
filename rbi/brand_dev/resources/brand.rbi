@@ -62,6 +62,27 @@ module BrandDev
       )
       end
 
+      # Beta feature: Extract font information from a brand's website including font
+      # families, usage statistics, fallbacks, and element/word counts.
+      sig do
+        params(
+          domain: String,
+          timeout_ms: Integer,
+          request_options: BrandDev::RequestOptions::OrHash
+        ).returns(BrandDev::Models::BrandFontsResponse)
+      end
+      def fonts(
+        # Domain name to extract fonts from (e.g., 'example.com', 'google.com'). The
+        # domain will be automatically normalized and validated.
+        domain:,
+        # Optional timeout in milliseconds for the request. If the request takes longer
+        # than this value, it will be aborted with a 408 status code. Maximum allowed
+        # value is 300000ms (5 minutes).
+        timeout_ms: nil,
+        request_options: {}
+      )
+      end
+
       # Endpoint specially designed for platforms that want to identify transaction data
       # by the transaction title.
       sig do

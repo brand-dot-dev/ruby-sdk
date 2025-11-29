@@ -1,0 +1,82 @@
+module BrandDev
+  module Models
+    type brand_fonts_response =
+      {
+        code: Integer,
+        domain: String,
+        fonts: ::Array[BrandDev::Models::BrandFontsResponse::Font],
+        status: String
+      }
+
+    class BrandFontsResponse < BrandDev::Internal::Type::BaseModel
+      attr_accessor code: Integer
+
+      attr_accessor domain: String
+
+      attr_accessor fonts: ::Array[BrandDev::Models::BrandFontsResponse::Font]
+
+      attr_accessor status: String
+
+      def initialize: (
+        code: Integer,
+        domain: String,
+        fonts: ::Array[BrandDev::Models::BrandFontsResponse::Font],
+        status: String
+      ) -> void
+
+      def to_hash: -> {
+        code: Integer,
+        domain: String,
+        fonts: ::Array[BrandDev::Models::BrandFontsResponse::Font],
+        status: String
+      }
+
+      type font =
+        {
+          fallbacks: ::Array[String],
+          font: String,
+          num_elements: Float,
+          num_words: Float,
+          percent_elements: Float,
+          percent_words: Float,
+          uses: ::Array[String]
+        }
+
+      class Font < BrandDev::Internal::Type::BaseModel
+        attr_accessor fallbacks: ::Array[String]
+
+        attr_accessor font: String
+
+        attr_accessor num_elements: Float
+
+        attr_accessor num_words: Float
+
+        attr_accessor percent_elements: Float
+
+        attr_accessor percent_words: Float
+
+        attr_accessor uses: ::Array[String]
+
+        def initialize: (
+          fallbacks: ::Array[String],
+          font: String,
+          num_elements: Float,
+          num_words: Float,
+          percent_elements: Float,
+          percent_words: Float,
+          uses: ::Array[String]
+        ) -> void
+
+        def to_hash: -> {
+          fallbacks: ::Array[String],
+          font: String,
+          num_elements: Float,
+          num_words: Float,
+          percent_elements: Float,
+          percent_words: Float,
+          uses: ::Array[String]
+        }
+      end
+    end
+  end
+end
