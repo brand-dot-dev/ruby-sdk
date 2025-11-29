@@ -1,6 +1,8 @@
 module BrandDev
   class BrandAIQueryParams = BrandDev::Models::BrandAIQueryParams
 
+  class BrandFontsParams = BrandDev::Models::BrandFontsParams
+
   class BrandIdentifyFromTransactionParams = BrandDev::Models::BrandIdentifyFromTransactionParams
 
   class BrandPrefetchParams = BrandDev::Models::BrandPrefetchParams
