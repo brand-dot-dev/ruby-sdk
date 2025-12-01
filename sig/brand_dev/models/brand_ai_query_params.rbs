@@ -48,7 +48,9 @@ module BrandDev
           datapoint_description: String,
           datapoint_example: String,
           datapoint_name: String,
-          datapoint_type: BrandDev::Models::BrandAIQueryParams::DataToExtract::datapoint_type
+          datapoint_type: BrandDev::Models::BrandAIQueryParams::DataToExtract::datapoint_type,
+          datapoint_list_type: BrandDev::Models::BrandAIQueryParams::DataToExtract::datapoint_list_type,
+          datapoint_object_schema: ::Hash[Symbol, BrandDev::Models::BrandAIQueryParams::DataToExtract::datapoint_object_schema]
         }
 
       class DataToExtract < BrandDev::Internal::Type::BaseModel
@@ -60,18 +62,34 @@ module BrandDev
 
         attr_accessor datapoint_type: BrandDev::Models::BrandAIQueryParams::DataToExtract::datapoint_type
 
+        attr_reader datapoint_list_type: BrandDev::Models::BrandAIQueryParams::DataToExtract::datapoint_list_type?
+
+        def datapoint_list_type=: (
+          BrandDev::Models::BrandAIQueryParams::DataToExtract::datapoint_list_type
+        ) -> BrandDev::Models::BrandAIQueryParams::DataToExtract::datapoint_list_type
+
+        attr_reader datapoint_object_schema: ::Hash[Symbol, BrandDev::Models::BrandAIQueryParams::DataToExtract::datapoint_object_schema]?
+
+        def datapoint_object_schema=: (
+          ::Hash[Symbol, BrandDev::Models::BrandAIQueryParams::DataToExtract::datapoint_object_schema]
+        ) -> ::Hash[Symbol, BrandDev::Models::BrandAIQueryParams::DataToExtract::datapoint_object_schema]
+
         def initialize: (
           datapoint_description: String,
           datapoint_example: String,
           datapoint_name: String,
-          datapoint_type: BrandDev::Models::BrandAIQueryParams::DataToExtract::datapoint_type
+          datapoint_type: BrandDev::Models::BrandAIQueryParams::DataToExtract::datapoint_type,
+          ?datapoint_list_type: BrandDev::Models::BrandAIQueryParams::DataToExtract::datapoint_list_type,
+          ?datapoint_object_schema: ::Hash[Symbol, BrandDev::Models::BrandAIQueryParams::DataToExtract::datapoint_object_schema]
         ) -> void
 
         def to_hash: -> {
           datapoint_description: String,
           datapoint_example: String,
           datapoint_name: String,
-          datapoint_type: BrandDev::Models::BrandAIQueryParams::DataToExtract::datapoint_type
+          datapoint_type: BrandDev::Models::BrandAIQueryParams::DataToExtract::datapoint_type,
+          datapoint_list_type: BrandDev::Models::BrandAIQueryParams::DataToExtract::datapoint_list_type,
+          datapoint_object_schema: ::Hash[Symbol, BrandDev::Models::BrandAIQueryParams::DataToExtract::datapoint_object_schema]
         }
 
         type datapoint_type = :text | :number | :date | :boolean | :list | :url
@@ -88,6 +106,37 @@ module BrandDev
 
           def self?.values: -> ::Array[BrandDev::Models::BrandAIQueryParams::DataToExtract::datapoint_type]
         end
+
+        type datapoint_list_type =
+          :string | :text | :number | :date | :boolean | :list | :url | :object
+
+        module DatapointListType
+          extend BrandDev::Internal::Type::Enum
+
+          STRING: :string
+          TEXT: :text
+          NUMBER: :number
+          DATE: :date
+          BOOLEAN: :boolean
+          LIST: :list
+          URL: :url
+          OBJECT: :object
+
+          def self?.values: -> ::Array[BrandDev::Models::BrandAIQueryParams::DataToExtract::datapoint_list_type]
+        end
+
+        type datapoint_object_schema = :string | :number | :date | :boolean
+
+        module DatapointObjectSchema
+          extend BrandDev::Internal::Type::Enum
+
+          STRING: :string
+          NUMBER: :number
+          DATE: :date
+          BOOLEAN: :boolean
+
+          def self?.values: -> ::Array[BrandDev::Models::BrandAIQueryParams::DataToExtract::datapoint_object_schema]
+        end
       end
 
       type specific_pages =
@@ -98,6 +147,7 @@ module BrandDev
           contact_us: bool,
           faq: bool,
           home_page: bool,
+          pricing: bool,
           privacy_policy: bool,
           terms_and_conditions: bool
         }
@@ -127,6 +177,10 @@ module BrandDev
 
         def home_page=: (bool) -> bool
 
+        attr_reader pricing: bool?
+
+        def pricing=: (bool) -> bool
+
         attr_reader privacy_policy: bool?
 
         def privacy_policy=: (bool) -> bool
@@ -142,6 +196,7 @@ module BrandDev
           ?contact_us: bool,
           ?faq: bool,
           ?home_page: bool,
+          ?pricing: bool,
           ?privacy_policy: bool,
           ?terms_and_conditions: bool
         ) -> void
@@ -153,6 +208,7 @@ module BrandDev
           contact_us: bool,
           faq: bool,
           home_page: bool,
+          pricing: bool,
           privacy_policy: bool,
           terms_and_conditions: bool
         }
