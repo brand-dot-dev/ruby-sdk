@@ -69,7 +69,12 @@ module BrandDev
         }
 
         type datapoint_value =
-          String | Float | bool | ::Array[String] | ::Array[Float]
+          String
+          | Float
+          | bool
+          | ::Array[String]
+          | ::Array[Float]
+          | ::Array[top]
 
         module DatapointValue
           extend BrandDev::Internal::Type::Union
@@ -79,6 +84,8 @@ module BrandDev
           StringArray: BrandDev::Internal::Type::Converter
 
           FloatArray: BrandDev::Internal::Type::Converter
+
+          UnionMember5Array: BrandDev::Internal::Type::Converter
         end
       end
     end

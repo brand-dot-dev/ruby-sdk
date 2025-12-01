@@ -108,13 +108,64 @@ module BrandDev
         end
         attr_accessor :datapoint_type
 
+        # Type of items in the list when datapoint_type is 'list'. Defaults to 'string'.
+        # Use 'object' to extract an array of objects matching a schema.
+        sig do
+          returns(
+            T.nilable(
+              BrandDev::BrandAIQueryParams::DataToExtract::DatapointListType::OrSymbol
+            )
+          )
+        end
+        attr_reader :datapoint_list_type
+
+        sig do
+          params(
+            datapoint_list_type:
+              BrandDev::BrandAIQueryParams::DataToExtract::DatapointListType::OrSymbol
+          ).void
+        end
+        attr_writer :datapoint_list_type
+
+        # Schema definition for objects when datapoint_list_type is 'object'. Provide a
+        # map of field names to their scalar types.
+        sig do
+          returns(
+            T.nilable(
+              T::Hash[
+                Symbol,
+                BrandDev::BrandAIQueryParams::DataToExtract::DatapointObjectSchema::OrSymbol
+              ]
+            )
+          )
+        end
+        attr_reader :datapoint_object_schema
+
+        sig do
+          params(
+            datapoint_object_schema:
+              T::Hash[
+                Symbol,
+                BrandDev::BrandAIQueryParams::DataToExtract::DatapointObjectSchema::OrSymbol
+              ]
+          ).void
+        end
+        attr_writer :datapoint_object_schema
+
         sig do
           params(
             datapoint_description: String,
             datapoint_example: String,
             datapoint_name: String,
             datapoint_type:
-              BrandDev::BrandAIQueryParams::DataToExtract::DatapointType::OrSymbol
+              BrandDev::BrandAIQueryParams::DataToExtract::DatapointType::OrSymbol,
+            datapoint_list_type:
+              BrandDev::BrandAIQueryParams::DataToExtract::DatapointListType::OrSymbol,
+            datapoint_object_schema:
+              T::Hash[
+                Symbol,
+                BrandDev::BrandAIQueryParams::DataToExtract::DatapointObjectSchema::OrSymbol
+              ]
           ).returns(T.attached_class)
         end
         def self.new(
@@ -125,7 +176,13 @@ module BrandDev
           # Name of the data point to extract
           datapoint_name:,
           # Type of the data point
-          datapoint_type:
+          datapoint_type:,
+          # Type of items in the list when datapoint_type is 'list'. Defaults to 'string'.
+          # Use 'object' to extract an array of objects matching a schema.
+          datapoint_list_type: nil,
+          # Schema definition for objects when datapoint_list_type is 'object'. Provide a
+          # map of field names to their scalar types.
+          datapoint_object_schema: nil
         )
         end
 
@@ -136,7 +193,14 @@ module BrandDev
               datapoint_example: String,
               datapoint_name: String,
               datapoint_type:
-                BrandDev::BrandAIQueryParams::DataToExtract::DatapointType::OrSymbol
+                BrandDev::BrandAIQueryParams::DataToExtract::DatapointType::OrSymbol,
+              datapoint_list_type:
+                BrandDev::BrandAIQueryParams::DataToExtract::DatapointListType::OrSymbol,
+              datapoint_object_schema:
+                T::Hash[
+                  Symbol,
+                  BrandDev::BrandAIQueryParams::DataToExtract::DatapointObjectSchema::OrSymbol
+                ]
             }
           )
         end
@@ -197,6 +261,116 @@ module BrandDev
           def self.values
           end
         end
+
+        # Type of items in the list when datapoint_type is 'list'. Defaults to 'string'.
+        # Use 'object' to extract an array of objects matching a schema.
+        module DatapointListType
+          extend BrandDev::Internal::Type::Enum
+
+          TaggedSymbol =
+            T.type_alias do
+              T.all(
+                Symbol,
+                BrandDev::BrandAIQueryParams::DataToExtract::DatapointListType
+              )
+            end
+          OrSymbol = T.type_alias { T.any(Symbol, String) }
+
+          STRING =
+            T.let(
+              :string,
+              BrandDev::BrandAIQueryParams::DataToExtract::DatapointListType::TaggedSymbol
+            )
+          TEXT =
+            T.let(
+              :text,
+              BrandDev::BrandAIQueryParams::DataToExtract::DatapointListType::TaggedSymbol
+            )
+          NUMBER =
+            T.let(
+              :number,
+              BrandDev::BrandAIQueryParams::DataToExtract::DatapointListType::TaggedSymbol
+            )
+          DATE =
+            T.let(
+              :date,
+              BrandDev::BrandAIQueryParams::DataToExtract::DatapointListType::TaggedSymbol
+            )
+          BOOLEAN =
+            T.let(
+              :boolean,
+              BrandDev::BrandAIQueryParams::DataToExtract::DatapointListType::TaggedSymbol
+            )
+          LIST =
+            T.let(
+              :list,
+              BrandDev::BrandAIQueryParams::DataToExtract::DatapointListType::TaggedSymbol
+            )
+          URL =
+            T.let(
+              :url,
+              BrandDev::BrandAIQueryParams::DataToExtract::DatapointListType::TaggedSymbol
+            )
+          OBJECT =
+            T.let(
+              :object,
+              BrandDev::BrandAIQueryParams::DataToExtract::DatapointListType::TaggedSymbol
+            )
+
+          sig do
+            override.returns(
+              T::Array[
+                BrandDev::BrandAIQueryParams::DataToExtract::DatapointListType::TaggedSymbol
+              ]
+            )
+          end
+          def self.values
+          end
+        end
+
+        module DatapointObjectSchema
+          extend BrandDev::Internal::Type::Enum
+
+          TaggedSymbol =
+            T.type_alias do
+              T.all(
+                Symbol,
+                BrandDev::BrandAIQueryParams::DataToExtract::DatapointObjectSchema
+              )
+            end
+          OrSymbol = T.type_alias { T.any(Symbol, String) }
+
+          STRING =
+            T.let(
+              :string,
+              BrandDev::BrandAIQueryParams::DataToExtract::DatapointObjectSchema::TaggedSymbol
+            )
+          NUMBER =
+            T.let(
+              :number,
+              BrandDev::BrandAIQueryParams::DataToExtract::DatapointObjectSchema::TaggedSymbol
+            )
+          DATE =
+            T.let(
+              :date,
+              BrandDev::BrandAIQueryParams::DataToExtract::DatapointObjectSchema::TaggedSymbol
+            )
+          BOOLEAN =
+            T.let(
+              :boolean,
+              BrandDev::BrandAIQueryParams::DataToExtract::DatapointObjectSchema::TaggedSymbol
+            )
+
+          sig do
+            override.returns(
+              T::Array[
+                BrandDev::BrandAIQueryParams::DataToExtract::DatapointObjectSchema::TaggedSymbol
+              ]
+            )
+          end
+          def self.values
+          end
+        end
       end
 
       class SpecificPages < BrandDev::Internal::Type::BaseModel
@@ -250,6 +424,13 @@ module BrandDev
         sig { params(home_page: T::Boolean).void }
         attr_writer :home_page
 
+        # Whether to analyze the pricing page
+        sig { returns(T.nilable(T::Boolean)) }
+        attr_reader :pricing
+
+        sig { params(pricing: T::Boolean).void }
+        attr_writer :pricing
+
         # Whether to analyze the privacy policy page
         sig { returns(T.nilable(T::Boolean)) }
         attr_reader :privacy_policy
@@ -273,6 +454,7 @@ module BrandDev
             contact_us: T::Boolean,
             faq: T::Boolean,
             home_page: T::Boolean,
+            pricing: T::Boolean,
             privacy_policy: T::Boolean,
             terms_and_conditions: T::Boolean
           ).returns(T.attached_class)
@@ -290,6 +472,8 @@ module BrandDev
           faq: nil,
           # Whether to analyze the home page
           home_page: nil,
+          # Whether to analyze the pricing page
+          pricing: nil,
           # Whether to analyze the privacy policy page
           privacy_policy: nil,
           # Whether to analyze the terms and conditions page
@@ -306,6 +490,7 @@ module BrandDev
               contact_us: T::Boolean,
               faq: T::Boolean,
               home_page: T::Boolean,
+              pricing: T::Boolean,
               privacy_policy: T::Boolean,
               terms_and_conditions: T::Boolean
             }

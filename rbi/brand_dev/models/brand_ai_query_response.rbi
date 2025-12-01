@@ -105,7 +105,8 @@ module BrandDev
         sig { params(datapoint_name: String).void }
         attr_writer :datapoint_name
 
-        # Value of the extracted data point
+        # Value of the extracted data point. Can be a primitive type, an array of
+        # primitives, or an array of objects when datapoint_list_type is 'object'.
         sig do
           returns(
             T.nilable(
@@ -133,7 +134,8 @@ module BrandDev
         def self.new(
           # Name of the extracted data point
           datapoint_name: nil,
-          # Value of the extracted data point
+          # Value of the extracted data point. Can be a primitive type, an array of
+          # primitives, or an array of objects when datapoint_list_type is 'object'.
           datapoint_value: nil
         )
         end
@@ -150,7 +152,8 @@ module BrandDev
         def to_hash
         end
 
-        # Value of the extracted data point
+        # Value of the extracted data point. Can be a primitive type, an array of
+        # primitives, or an array of objects when datapoint_list_type is 'object'.
         module DatapointValue
           extend BrandDev::Internal::Type::Union
 
@@ -161,7 +164,8 @@ module BrandDev
                 Float,
                 T::Boolean,
                 T::Array[String],
-                T::Array[Float]
+                T::Array[Float],
+                T::Array[T.anything]
               )
             end
 
@@ -184,6 +188,14 @@ module BrandDev
           FloatArray =
             T.let(
               BrandDev::Internal::Type::ArrayOf[Float],
+              BrandDev::Internal::Type::Converter
+            )
+
+          UnionMember5Array =
+            T.let(
+              BrandDev::Internal::Type::ArrayOf[
+                BrandDev::Internal::Type::Unknown
+              ],
               BrandDev::Internal::Type::Converter
             )
         end

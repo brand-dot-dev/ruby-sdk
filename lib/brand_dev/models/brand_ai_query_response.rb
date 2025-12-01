@@ -46,18 +46,23 @@ module BrandDev
         optional :datapoint_name, String
 
         # @!attribute datapoint_value
-        #   Value of the extracted data point
+        #   Value of the extracted data point. Can be a primitive type, an array of
+        #   primitives, or an array of objects when datapoint_list_type is 'object'.
         #
-        #   @return [String, Float, Boolean, Array<String>, Array<Float>, nil]
+        #   @return [String, Float, Boolean, Array<String>, Array<Float>, Array<Object>, nil]
         optional :datapoint_value,
                  union: -> { BrandDev::Models::BrandAIQueryResponse::DataExtracted::DatapointValue }
 
         # @!method initialize(datapoint_name: nil, datapoint_value: nil)
+        #   Some parameter documentations has been truncated, see
+        #   {BrandDev::Models::BrandAIQueryResponse::DataExtracted} for more details.
+        #
         #   @param datapoint_name [String] Name of the extracted data point
         #
-        #   @param datapoint_value [String, Float, Boolean, Array<String>, Array<Float>] Value of the extracted data point
+        #   @param datapoint_value [String, Float, Boolean, Array<String>, Array<Float>, Array<Object>] Value of the extracted data point. Can be a primitive type, an array of primitiv
 
-        # Value of the extracted data point
+        # Value of the extracted data point. Can be a primitive type, an array of
+        # primitives, or an array of objects when datapoint_list_type is 'object'.
         #
         # @see BrandDev::Models::BrandAIQueryResponse::DataExtracted#datapoint_value
         module DatapointValue
@@ -73,14 +78,19 @@ module BrandDev
 
           variant -> { BrandDev::Models::BrandAIQueryResponse::DataExtracted::DatapointValue::FloatArray }
 
+          variant -> { BrandDev::Models::BrandAIQueryResponse::DataExtracted::DatapointValue::UnionMember5Array }
+
           # @!method self.variants
-          #   @return [Array(String, Float, Boolean, Array<String>, Array<Float>)]
+          #   @return [Array(String, Float, Boolean, Array<String>, Array<Float>, Array<Object>)]
 
           # @type [BrandDev::Internal::Type::Converter]
           StringArray = BrandDev::Internal::Type::ArrayOf[String]
 
           # @type [BrandDev::Internal::Type::Converter]
           FloatArray = BrandDev::Internal::Type::ArrayOf[Float]
+
+          # @type [BrandDev::Internal::Type::Converter]
+          UnionMember5Array = BrandDev::Internal::Type::ArrayOf[BrandDev::Internal::Type::Unknown]
         end
       end
     end
