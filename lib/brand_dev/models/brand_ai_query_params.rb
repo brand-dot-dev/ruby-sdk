@@ -73,7 +73,25 @@ module BrandDev
         #   @return [Symbol, BrandDev::Models::BrandAIQueryParams::DataToExtract::DatapointType]
         required :datapoint_type, enum: -> { BrandDev::BrandAIQueryParams::DataToExtract::DatapointType }
 
-        # @!method initialize(datapoint_description:, datapoint_example:, datapoint_name:, datapoint_type:)
+        # @!attribute datapoint_list_type
+        #   Type of items in the list when datapoint_type is 'list'. Defaults to 'string'.
+        #   Use 'object' to extract an array of objects matching a schema.
+        #
+        #   @return [Symbol, BrandDev::Models::BrandAIQueryParams::DataToExtract::DatapointListType, nil]
+        optional :datapoint_list_type, enum: -> { BrandDev::BrandAIQueryParams::DataToExtract::DatapointListType }
+
+        # @!attribute datapoint_object_schema
+        #   Schema definition for objects when datapoint_list_type is 'object'. Provide a
+        #   map of field names to their scalar types.
+        #
+        #   @return [Hash{Symbol=>Symbol, BrandDev::Models::BrandAIQueryParams::DataToExtract::DatapointObjectSchema}, nil]
+        optional :datapoint_object_schema,
+                 -> { BrandDev::Internal::Type::HashOf[enum: BrandDev::BrandAIQueryParams::DataToExtract::DatapointObjectSchema] }
+
+        # @!method initialize(datapoint_description:, datapoint_example:, datapoint_name:, datapoint_type:, datapoint_list_type: nil, datapoint_object_schema: nil)
+        #   Some parameter documentations has been truncated, see
+        #   {BrandDev::Models::BrandAIQueryParams::DataToExtract} for more details.
+        #
         #   @param datapoint_description [String] Description of what to extract
         #
         #   @param datapoint_example [String] Example of the expected value
@@ -81,6 +99,10 @@ module BrandDev
         #   @param datapoint_name [String] Name of the data point to extract
         #
         #   @param datapoint_type [Symbol, BrandDev::Models::BrandAIQueryParams::DataToExtract::DatapointType] Type of the data point
+        #
+        #   @param datapoint_list_type [Symbol, BrandDev::Models::BrandAIQueryParams::DataToExtract::DatapointListType] Type of items in the list when datapoint_type is 'list'. Defaults to 'string'. U
+        #
+        #   @param datapoint_object_schema [Hash{Symbol=>Symbol, BrandDev::Models::BrandAIQueryParams::DataToExtract::DatapointObjectSchema}] Schema definition for objects when datapoint_list_type is 'object'. Provide a ma
 
         # Type of the data point
         #
@@ -94,6 +116,38 @@ module BrandDev
           BOOLEAN = :boolean
           LIST = :list
           URL = :url
+
+          # @!method self.values
+          #   @return [Array<Symbol>]
+        end
+
+        # Type of items in the list when datapoint_type is 'list'. Defaults to 'string'.
+        # Use 'object' to extract an array of objects matching a schema.
+        #
+        # @see BrandDev::Models::BrandAIQueryParams::DataToExtract#datapoint_list_type
+        module DatapointListType
+          extend BrandDev::Internal::Type::Enum
+
+          STRING = :string
+          TEXT = :text
+          NUMBER = :number
+          DATE = :date
+          BOOLEAN = :boolean
+          LIST = :list
+          URL = :url
+          OBJECT = :object
+
+          # @!method self.values
+          #   @return [Array<Symbol>]
+        end
+
+        module DatapointObjectSchema
+          extend BrandDev::Internal::Type::Enum
+
+          STRING = :string
+          NUMBER = :number
+          DATE = :date
+          BOOLEAN = :boolean
 
           # @!method self.values
           #   @return [Array<Symbol>]
@@ -137,6 +191,12 @@ module BrandDev
         #   @return [Boolean, nil]
         optional :home_page, BrandDev::Internal::Type::Boolean
 
+        # @!attribute pricing
+        #   Whether to analyze the pricing page
+        #
+        #   @return [Boolean, nil]
+        optional :pricing, BrandDev::Internal::Type::Boolean
+
         # @!attribute privacy_policy
         #   Whether to analyze the privacy policy page
         #
@@ -149,7 +209,7 @@ module BrandDev
         #   @return [Boolean, nil]
         optional :terms_and_conditions, BrandDev::Internal::Type::Boolean
 
-        # @!method initialize(about_us: nil, blog: nil, careers: nil, contact_us: nil, faq: nil, home_page: nil, privacy_policy: nil, terms_and_conditions: nil)
+        # @!method initialize(about_us: nil, blog: nil, careers: nil, contact_us: nil, faq: nil, home_page: nil, pricing: nil, privacy_policy: nil, terms_and_conditions: nil)
         #   Optional object specifying which pages to analyze
         #
         #   @param about_us [Boolean] Whether to analyze the about us page
@@ -163,6 +223,8 @@ module BrandDev
         #   @param faq [Boolean] Whether to analyze the FAQ page
         #
         #   @param home_page [Boolean] Whether to analyze the home page
+        #
+        #   @param pricing [Boolean] Whether to analyze the pricing page
         #
         #   @param privacy_policy [Boolean] Whether to analyze the privacy policy page
         #
