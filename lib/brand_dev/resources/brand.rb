@@ -102,7 +102,7 @@ module BrandDev
       # Endpoint specially designed for platforms that want to identify transaction data
       # by the transaction title.
       #
-      # @overload identify_from_transaction(transaction_info:, city: nil, country_gl: nil, force_language: nil, max_speed: nil, mcc: nil, timeout_ms: nil, request_options: {})
+      # @overload identify_from_transaction(transaction_info:, city: nil, country_gl: nil, force_language: nil, max_speed: nil, mcc: nil, phone: nil, timeout_ms: nil, request_options: {})
       #
       # @param transaction_info [String] Transaction information to identify the brand
       #
@@ -115,6 +115,8 @@ module BrandDev
       # @param max_speed [Boolean] Optional parameter to optimize the API call for maximum speed. When set to true,
       #
       # @param mcc [String] Optional Merchant Category Code (MCC) to help identify the business category/ind
+      #
+      # @param phone [Float] Optional phone number from the transaction to help verify brand match.
       #
       # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #
