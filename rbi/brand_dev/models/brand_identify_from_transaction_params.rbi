@@ -79,6 +79,13 @@ module BrandDev
       sig { params(mcc: String).void }
       attr_writer :mcc
 
+      # Optional phone number from the transaction to help verify brand match.
+      sig { returns(T.nilable(Float)) }
+      attr_reader :phone
+
+      sig { params(phone: Float).void }
+      attr_writer :phone
+
       # Optional timeout in milliseconds for the request. If the request takes longer
       # than this value, it will be aborted with a 408 status code. Maximum allowed
       # value is 300000ms (5 minutes).
@@ -98,6 +105,7 @@ module BrandDev
             BrandDev::BrandIdentifyFromTransactionParams::ForceLanguage::OrSymbol,
           max_speed: T::Boolean,
           mcc: String,
+          phone: Float,
           timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(T.attached_class)
@@ -119,6 +127,8 @@ module BrandDev
         # Optional Merchant Category Code (MCC) to help identify the business
         # category/industry.
         mcc: nil,
+        # Optional phone number from the transaction to help verify brand match.
+        phone: nil,
         # Optional timeout in milliseconds for the request. If the request takes longer
         # than this value, it will be aborted with a 408 status code. Maximum allowed
         # value is 300000ms (5 minutes).
@@ -138,6 +148,7 @@ module BrandDev
               BrandDev::BrandIdentifyFromTransactionParams::ForceLanguage::OrSymbol,
             max_speed: T::Boolean,
             mcc: String,
+            phone: Float,
             timeout_ms: Integer,
             request_options: BrandDev::RequestOptions
           }

@@ -8,6 +8,7 @@ module BrandDev
         force_language: BrandDev::Models::BrandIdentifyFromTransactionParams::force_language,
         max_speed: bool,
         mcc: String,
+        phone: Float,
         timeout_ms: Integer
       }
       & BrandDev::Internal::Type::request_parameters
@@ -42,6 +43,10 @@ module BrandDev
 
       def mcc=: (String) -> String
 
+      attr_reader phone: Float?
+
+      def phone=: (Float) -> Float
+
       attr_reader timeout_ms: Integer?
 
       def timeout_ms=: (Integer) -> Integer
@@ -53,6 +58,7 @@ module BrandDev
         ?force_language: BrandDev::Models::BrandIdentifyFromTransactionParams::force_language,
         ?max_speed: bool,
         ?mcc: String,
+        ?phone: Float,
         ?timeout_ms: Integer,
         ?request_options: BrandDev::request_opts
       ) -> void
@@ -64,6 +70,7 @@ module BrandDev
         force_language: BrandDev::Models::BrandIdentifyFromTransactionParams::force_language,
         max_speed: bool,
         mcc: String,
+        phone: Float,
         timeout_ms: Integer,
         request_options: BrandDev::RequestOptions
       }
