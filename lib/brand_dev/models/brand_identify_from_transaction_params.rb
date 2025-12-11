@@ -47,6 +47,12 @@ module BrandDev
       #   @return [String, nil]
       optional :mcc, String
 
+      # @!attribute phone
+      #   Optional phone number from the transaction to help verify brand match.
+      #
+      #   @return [Float, nil]
+      optional :phone, Float
+
       # @!attribute timeout_ms
       #   Optional timeout in milliseconds for the request. If the request takes longer
       #   than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -55,7 +61,7 @@ module BrandDev
       #   @return [Integer, nil]
       optional :timeout_ms, Integer
 
-      # @!method initialize(transaction_info:, city: nil, country_gl: nil, force_language: nil, max_speed: nil, mcc: nil, timeout_ms: nil, request_options: {})
+      # @!method initialize(transaction_info:, city: nil, country_gl: nil, force_language: nil, max_speed: nil, mcc: nil, phone: nil, timeout_ms: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
       #   {BrandDev::Models::BrandIdentifyFromTransactionParams} for more details.
       #
@@ -70,6 +76,8 @@ module BrandDev
       #   @param max_speed [Boolean] Optional parameter to optimize the API call for maximum speed. When set to true,
       #
       #   @param mcc [String] Optional Merchant Category Code (MCC) to help identify the business category/ind
+      #
+      #   @param phone [Float] Optional phone number from the transaction to help verify brand match.
       #
       #   @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #
