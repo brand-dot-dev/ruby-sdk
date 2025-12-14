@@ -42,19 +42,41 @@ module BrandDev
         # @!attribute code
         #   NAICS code
         #
-        #   @return [String, nil]
-        optional :code, String
+        #   @return [String]
+        required :code, String
 
-        # @!attribute title
+        # @!attribute confidence
+        #   Confidence level for how well this NAICS code matches the company description
+        #
+        #   @return [Symbol, BrandDev::Models::BrandRetrieveNaicsResponse::Code::Confidence]
+        required :confidence, enum: -> { BrandDev::Models::BrandRetrieveNaicsResponse::Code::Confidence }
+
+        # @!attribute name
         #   NAICS title
         #
-        #   @return [String, nil]
-        optional :title, String
+        #   @return [String]
+        required :name, String
 
-        # @!method initialize(code: nil, title: nil)
+        # @!method initialize(code:, confidence:, name:)
         #   @param code [String] NAICS code
         #
-        #   @param title [String] NAICS title
+        #   @param confidence [Symbol, BrandDev::Models::BrandRetrieveNaicsResponse::Code::Confidence] Confidence level for how well this NAICS code matches the company description
+        #
+        #   @param name [String] NAICS title
+
+        # Confidence level for how well this NAICS code matches the company description
+        #
+        # @see BrandDev::Models::BrandRetrieveNaicsResponse::Code#confidence
+        module Confidence
+          extend BrandDev::Internal::Type::Enum
+
+          HIGH = :high
+          MEDIUM = :medium
+          LOW = :low
+
+          # @!method self.values
+          #   @return [Array<Symbol>]
+        end
       end
     end
   end

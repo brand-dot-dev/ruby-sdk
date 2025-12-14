@@ -304,9 +304,13 @@ module BrandDev
       #
       # Endpoint to classify any brand into a 2022 NAICS code.
       #
-      # @overload retrieve_naics(input:, timeout_ms: nil, request_options: {})
+      # @overload retrieve_naics(input:, max_results: nil, min_results: nil, timeout_ms: nil, request_options: {})
       #
       # @param input [String] Brand domain or title to retrieve NAICS code for. If a valid domain is provided
+      #
+      # @param max_results [Integer] Maximum number of NAICS codes to return. Must be between 1 and 10. Defaults to 5
+      #
+      # @param min_results [Integer] Minimum number of NAICS codes to return. Must be at least 1. Defaults to 1.
       #
       # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #
@@ -320,7 +324,11 @@ module BrandDev
         @client.request(
           method: :get,
           path: "brand/naics",
-          query: parsed.transform_keys(timeout_ms: "timeoutMS"),
+          query: parsed.transform_keys(
+            max_results: "maxResults",
+            min_results: "minResults",
+            timeout_ms: "timeoutMS"
+          ),
           model: BrandDev::Models::BrandRetrieveNaicsResponse,
           options: options
         )
