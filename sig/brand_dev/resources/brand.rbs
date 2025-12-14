@@ -76,6 +76,8 @@ module BrandDev
 
       def retrieve_naics: (
         input: String,
+        ?max_results: Integer,
+        ?min_results: Integer,
         ?timeout_ms: Integer,
         ?request_options: BrandDev::request_opts
       ) -> BrandDev::Models::BrandRetrieveNaicsResponse
