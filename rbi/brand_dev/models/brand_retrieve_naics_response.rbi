@@ -96,30 +96,90 @@ module BrandDev
           end
 
         # NAICS code
-        sig { returns(T.nilable(String)) }
-        attr_reader :code
+        sig { returns(String) }
+        attr_accessor :code
 
-        sig { params(code: String).void }
-        attr_writer :code
+        # Confidence level for how well this NAICS code matches the company description
+        sig do
+          returns(
+            BrandDev::Models::BrandRetrieveNaicsResponse::Code::Confidence::TaggedSymbol
+          )
+        end
+        attr_accessor :confidence
 
         # NAICS title
-        sig { returns(T.nilable(String)) }
-        attr_reader :title
+        sig { returns(String) }
+        attr_accessor :name
 
-        sig { params(title: String).void }
-        attr_writer :title
-
-        sig { params(code: String, title: String).returns(T.attached_class) }
+        sig do
+          params(
+            code: String,
+            confidence:
+              BrandDev::Models::BrandRetrieveNaicsResponse::Code::Confidence::OrSymbol,
+            name: String
+          ).returns(T.attached_class)
+        end
         def self.new(
           # NAICS code
-          code: nil,
+          code:,
+          # Confidence level for how well this NAICS code matches the company description
+          confidence:,
           # NAICS title
-          title: nil
+          name:
         )
         end
 
-        sig { override.returns({ code: String, title: String }) }
+        sig do
+          override.returns(
+            {
+              code: String,
+              confidence:
+                BrandDev::Models::BrandRetrieveNaicsResponse::Code::Confidence::TaggedSymbol,
+              name: String
+            }
+          )
+        end
         def to_hash
+        end
+
+        # Confidence level for how well this NAICS code matches the company description
+        module Confidence
+          extend BrandDev::Internal::Type::Enum
+
+          TaggedSymbol =
+            T.type_alias do
+              T.all(
+                Symbol,
+                BrandDev::Models::BrandRetrieveNaicsResponse::Code::Confidence
+              )
+            end
+          OrSymbol = T.type_alias { T.any(Symbol, String) }
+
+          HIGH =
+            T.let(
+              :high,
+              BrandDev::Models::BrandRetrieveNaicsResponse::Code::Confidence::TaggedSymbol
+            )
+          MEDIUM =
+            T.let(
+              :medium,
+              BrandDev::Models::BrandRetrieveNaicsResponse::Code::Confidence::TaggedSymbol
+            )
+          LOW =
+            T.let(
+              :low,
+              BrandDev::Models::BrandRetrieveNaicsResponse::Code::Confidence::TaggedSymbol
+            )
+
+          sig do
+            override.returns(
+              T::Array[
+                BrandDev::Models::BrandRetrieveNaicsResponse::Code::Confidence::TaggedSymbol
+              ]
+            )
+          end
+          def self.values
+          end
         end
       end
     end

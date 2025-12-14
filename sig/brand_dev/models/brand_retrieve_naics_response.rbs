@@ -41,20 +41,43 @@ module BrandDev
         type: String
       }
 
-      type code = { code: String, title: String }
+      type code =
+        {
+          code: String,
+          confidence: BrandDev::Models::BrandRetrieveNaicsResponse::Code::confidence,
+          name: String
+        }
 
       class Code < BrandDev::Internal::Type::BaseModel
-        attr_reader code: String?
+        attr_accessor code: String
 
-        def code=: (String) -> String
+        attr_accessor confidence: BrandDev::Models::BrandRetrieveNaicsResponse::Code::confidence
 
-        attr_reader title: String?
+        attr_accessor name: String
 
-        def title=: (String) -> String
+        def initialize: (
+          code: String,
+          confidence: BrandDev::Models::BrandRetrieveNaicsResponse::Code::confidence,
+          name: String
+        ) -> void
 
-        def initialize: (?code: String, ?title: String) -> void
+        def to_hash: -> {
+          code: String,
+          confidence: BrandDev::Models::BrandRetrieveNaicsResponse::Code::confidence,
+          name: String
+        }
 
-        def to_hash: -> { code: String, title: String }
+        type confidence = :high | :medium | :low
+
+        module Confidence
+          extend BrandDev::Internal::Type::Enum
+
+          HIGH: :high
+          MEDIUM: :medium
+          LOW: :low
+
+          def self?.values: -> ::Array[BrandDev::Models::BrandRetrieveNaicsResponse::Code::confidence]
+        end
       end
     end
   end
