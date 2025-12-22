@@ -41,6 +41,12 @@ module BrandDev
         ?request_options: BrandDev::request_opts
       ) -> BrandDev::Models::BrandPrefetchResponse
 
+      def prefetch_by_email: (
+        email: String,
+        ?timeout_ms: Integer,
+        ?request_options: BrandDev::request_opts
+      ) -> BrandDev::Models::BrandPrefetchByEmailResponse
+
       def retrieve_by_email: (
         email: String,
         ?force_language: BrandDev::Models::BrandRetrieveByEmailParams::force_language,

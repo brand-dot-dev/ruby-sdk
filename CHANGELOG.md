@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.19.0 (2025-12-22)
+
+Full Changelog: [v0.18.0...v0.19.0](https://github.com/brand-dot-dev/ruby-sdk/compare/v0.18.0...v0.19.0)
+
+### Features
+
+* **api:** manual updates ([eb518d4](https://github.com/brand-dot-dev/ruby-sdk/commit/eb518d4ef48fa91039cf54e2ccdc0b9261770268))
+
+
+### Bug Fixes
+
+* calling `break` out of streams should be instantaneous ([df6f134](https://github.com/brand-dot-dev/ruby-sdk/commit/df6f1348f710b76e3fe4d0b604bb1e98472143d6))
+* issue where json.parse errors when receiving HTTP 204 with nobody ([f041e46](https://github.com/brand-dot-dev/ruby-sdk/commit/f041e461d2fd1b711b63cd11a909a1b44e50247c))
+
 ## 0.18.0 (2025-12-14)
 
 Full Changelog: [v0.17.0...v0.18.0](https://github.com/brand-dot-dev/ruby-sdk/compare/v0.17.0...v0.18.0)
