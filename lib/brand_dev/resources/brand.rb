@@ -167,6 +167,38 @@ module BrandDev
       end
 
       # Some parameter documentations has been truncated, see
+      # {BrandDev::Models::BrandPrefetchByEmailParams} for more details.
+      #
+      # Signal that you may fetch brand data for a particular domain soon to improve
+      # latency. This endpoint accepts an email address, extracts the domain from it,
+      # validates that it's not a disposable or free email provider, and queues the
+      # domain for prefetching. This endpoint does not charge credits and is available
+      # for paid customers to optimize future requests. [You must be on a paid plan to
+      # use this endpoint]
+      #
+      # @overload prefetch_by_email(email:, timeout_ms: nil, request_options: {})
+      #
+      # @param email [String] Email address to prefetch brand data for. The domain will be extracted from the
+      #
+      # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
+      #
+      # @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}, nil]
+      #
+      # @return [BrandDev::Models::BrandPrefetchByEmailResponse]
+      #
+      # @see BrandDev::Models::BrandPrefetchByEmailParams
+      def prefetch_by_email(params)
+        parsed, options = BrandDev::BrandPrefetchByEmailParams.dump_request(params)
+        @client.request(
+          method: :post,
+          path: "brand/prefetch-by-email",
+          body: parsed,
+          model: BrandDev::Models::BrandPrefetchByEmailResponse,
+          options: options
+        )
+      end
+
+      # Some parameter documentations has been truncated, see
       # {BrandDev::Models::BrandRetrieveByEmailParams} for more details.
       #
       # Retrieve brand information using an email address while detecting disposable and
