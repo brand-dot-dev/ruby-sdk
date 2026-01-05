@@ -9,6 +9,13 @@ module BrandDev
         ?request_options: BrandDev::request_opts
       ) -> BrandDev::Models::BrandRetrieveResponse
 
+      def ai_products: (
+        domain: String,
+        ?max_products: Integer,
+        ?timeout_ms: Integer,
+        ?request_options: BrandDev::request_opts
+      ) -> BrandDev::Models::BrandAIProductsResponse
+
       def ai_query: (
         data_to_extract: ::Array[BrandDev::BrandAIQueryParams::DataToExtract],
         domain: String,
