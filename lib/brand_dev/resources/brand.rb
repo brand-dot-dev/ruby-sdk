@@ -36,11 +36,42 @@ module BrandDev
       end
 
       # Some parameter documentations has been truncated, see
+      # {BrandDev::Models::BrandAIProductsParams} for more details.
+      #
+      # Beta feature: Extract product information from a brand's website. Brand.dev will
+      # analyze the website and return a list of products with details such as name,
+      # description, image, pricing, features, and more.
+      #
+      # @overload ai_products(domain:, max_products: nil, timeout_ms: nil, request_options: {})
+      #
+      # @param domain [String] The domain name to analyze
+      #
+      # @param max_products [Integer] Maximum number of products to extract.
+      #
+      # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
+      #
+      # @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}, nil]
+      #
+      # @return [BrandDev::Models::BrandAIProductsResponse]
+      #
+      # @see BrandDev::Models::BrandAIProductsParams
+      def ai_products(params)
+        parsed, options = BrandDev::BrandAIProductsParams.dump_request(params)
+        @client.request(
+          method: :post,
+          path: "brand/ai/products",
+          body: parsed,
+          model: BrandDev::Models::BrandAIProductsResponse,
+          options: options
+        )
+      end
+
+      # Some parameter documentations has been truncated, see
       # {BrandDev::Models::BrandAIQueryParams} for more details.
       #
-      # Beta feature: Use AI to extract specific data points from a brand's website. The
-      # AI will crawl the website and extract the requested information based on the
-      # provided data points.
+      # Use AI to extract specific data points from a brand's website. The AI will crawl
+      # the website and extract the requested information based on the provided data
+      # points.
       #
       # @overload ai_query(data_to_extract:, domain:, specific_pages: nil, timeout_ms: nil, request_options: {})
       #
@@ -71,8 +102,8 @@ module BrandDev
       # Some parameter documentations has been truncated, see
       # {BrandDev::Models::BrandFontsParams} for more details.
       #
-      # Beta feature: Extract font information from a brand's website including font
-      # families, usage statistics, fallbacks, and element/word counts.
+      # Extract font information from a brand's website including font families, usage
+      # statistics, fallbacks, and element/word counts.
       #
       # @overload fonts(domain:, timeout_ms: nil, request_options: {})
       #
@@ -398,10 +429,10 @@ module BrandDev
       # Some parameter documentations has been truncated, see
       # {BrandDev::Models::BrandScreenshotParams} for more details.
       #
-      # Beta feature: Capture a screenshot of a website. Supports both viewport
-      # (standard browser view) and full-page screenshots. Can also screenshot specific
-      # page types (login, pricing, etc.) by using heuristics to find the appropriate
-      # URL. Returns a URL to the uploaded screenshot image hosted on our CDN.
+      # Capture a screenshot of a website. Supports both viewport (standard browser
+      # view) and full-page screenshots. Can also screenshot specific page types (login,
+      # pricing, etc.) by using heuristics to find the appropriate URL. Returns a URL to
+      # the uploaded screenshot image hosted on our CDN.
       #
       # @overload screenshot(domain:, full_screenshot: nil, page: nil, prioritize: nil, request_options: {})
       #
@@ -432,9 +463,8 @@ module BrandDev
       # Some parameter documentations has been truncated, see
       # {BrandDev::Models::BrandStyleguideParams} for more details.
       #
-      # Beta feature: Automatically extract comprehensive design system information from
-      # a brand's website including colors, typography, spacing, shadows, and UI
-      # components.
+      # Automatically extract comprehensive design system information from a brand's
+      # website including colors, typography, spacing, shadows, and UI components.
       #
       # @overload styleguide(domain:, prioritize: nil, timeout_ms: nil, request_options: {})
       #

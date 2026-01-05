@@ -34,9 +34,33 @@ module BrandDev
       )
       end
 
-      # Beta feature: Use AI to extract specific data points from a brand's website. The
-      # AI will crawl the website and extract the requested information based on the
-      # provided data points.
+      # Beta feature: Extract product information from a brand's website. Brand.dev will
+      # analyze the website and return a list of products with details such as name,
+      # description, image, pricing, features, and more.
+      sig do
+        params(
+          domain: String,
+          max_products: Integer,
+          timeout_ms: Integer,
+          request_options: BrandDev::RequestOptions::OrHash
+        ).returns(BrandDev::Models::BrandAIProductsResponse)
+      end
+      def ai_products(
+        # The domain name to analyze
+        domain:,
+        # Maximum number of products to extract.
+        max_products: nil,
+        # Optional timeout in milliseconds for the request. If the request takes longer
+        # than this value, it will be aborted with a 408 status code. Maximum allowed
+        # value is 300000ms (5 minutes).
+        timeout_ms: nil,
+        request_options: {}
+      )
+      end
+
+      # Use AI to extract specific data points from a brand's website. The AI will crawl
+      # the website and extract the requested information based on the provided data
+      # points.
       sig do
         params(
           data_to_extract:
@@ -62,8 +86,8 @@ module BrandDev
       )
       end
 
-      # Beta feature: Extract font information from a brand's website including font
-      # families, usage statistics, fallbacks, and element/word counts.
+      # Extract font information from a brand's website including font families, usage
+      # statistics, fallbacks, and element/word counts.
       sig do
         params(
           domain: String,
@@ -353,10 +377,10 @@ module BrandDev
       )
       end
 
-      # Beta feature: Capture a screenshot of a website. Supports both viewport
-      # (standard browser view) and full-page screenshots. Can also screenshot specific
-      # page types (login, pricing, etc.) by using heuristics to find the appropriate
-      # URL. Returns a URL to the uploaded screenshot image hosted on our CDN.
+      # Capture a screenshot of a website. Supports both viewport (standard browser
+      # view) and full-page screenshots. Can also screenshot specific page types (login,
+      # pricing, etc.) by using heuristics to find the appropriate URL. Returns a URL to
+      # the uploaded screenshot image hosted on our CDN.
       sig do
         params(
           domain: String,
@@ -388,9 +412,8 @@ module BrandDev
       )
       end
 
-      # Beta feature: Automatically extract comprehensive design system information from
-      # a brand's website including colors, typography, spacing, shadows, and UI
-      # components.
+      # Automatically extract comprehensive design system information from a brand's
+      # website including colors, typography, spacing, shadows, and UI components.
       sig do
         params(
           domain: String,

@@ -1,0 +1,36 @@
+module BrandDev
+  module Models
+    type brand_ai_products_params =
+      { domain: String, max_products: Integer, timeout_ms: Integer }
+      & BrandDev::Internal::Type::request_parameters
+
+    class BrandAIProductsParams < BrandDev::Internal::Type::BaseModel
+      extend BrandDev::Internal::Type::RequestParameters::Converter
+      include BrandDev::Internal::Type::RequestParameters
+
+      attr_accessor domain: String
+
+      attr_reader max_products: Integer?
+
+      def max_products=: (Integer) -> Integer
+
+      attr_reader timeout_ms: Integer?
+
+      def timeout_ms=: (Integer) -> Integer
+
+      def initialize: (
+        domain: String,
+        ?max_products: Integer,
+        ?timeout_ms: Integer,
+        ?request_options: BrandDev::request_opts
+      ) -> void
+
+      def to_hash: -> {
+        domain: String,
+        max_products: Integer,
+        timeout_ms: Integer,
+        request_options: BrandDev::RequestOptions
+      }
+    end
+  end
+end

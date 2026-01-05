@@ -1,6 +1,8 @@
 # typed: strong
 
 module BrandDev
+  BrandAIProductsParams = BrandDev::Models::BrandAIProductsParams
+
   BrandAIQueryParams = BrandDev::Models::BrandAIQueryParams
 
   BrandFontsParams = BrandDev::Models::BrandFontsParams

@@ -1,0 +1,121 @@
+module BrandDev
+  module Models
+    type brand_ai_products_response =
+      { products: ::Array[BrandDev::Models::BrandAIProductsResponse::Product] }
+
+    class BrandAIProductsResponse < BrandDev::Internal::Type::BaseModel
+      attr_reader products: ::Array[BrandDev::Models::BrandAIProductsResponse::Product]?
+
+      def products=: (
+        ::Array[BrandDev::Models::BrandAIProductsResponse::Product]
+      ) -> ::Array[BrandDev::Models::BrandAIProductsResponse::Product]
+
+      def initialize: (
+        ?products: ::Array[BrandDev::Models::BrandAIProductsResponse::Product]
+      ) -> void
+
+      def to_hash: -> {
+        products: ::Array[BrandDev::Models::BrandAIProductsResponse::Product]
+      }
+
+      type product =
+        {
+          description: String,
+          features: ::Array[String],
+          name: String,
+          tags: ::Array[String],
+          target_audience: ::Array[String],
+          billing_frequency: BrandDev::Models::BrandAIProductsResponse::Product::billing_frequency?,
+          category: String?,
+          currency: String?,
+          image_url: String?,
+          price: Float?,
+          pricing_model: BrandDev::Models::BrandAIProductsResponse::Product::pricing_model?,
+          url: String?
+        }
+
+      class Product < BrandDev::Internal::Type::BaseModel
+        attr_accessor description: String
+
+        attr_accessor features: ::Array[String]
+
+        attr_accessor name: String
+
+        attr_accessor tags: ::Array[String]
+
+        attr_accessor target_audience: ::Array[String]
+
+        attr_accessor billing_frequency: BrandDev::Models::BrandAIProductsResponse::Product::billing_frequency?
+
+        attr_accessor category: String?
+
+        attr_accessor currency: String?
+
+        attr_accessor image_url: String?
+
+        attr_accessor price: Float?
+
+        attr_accessor pricing_model: BrandDev::Models::BrandAIProductsResponse::Product::pricing_model?
+
+        attr_accessor url: String?
+
+        def initialize: (
+          description: String,
+          features: ::Array[String],
+          name: String,
+          tags: ::Array[String],
+          target_audience: ::Array[String],
+          ?billing_frequency: BrandDev::Models::BrandAIProductsResponse::Product::billing_frequency?,
+          ?category: String?,
+          ?currency: String?,
+          ?image_url: String?,
+          ?price: Float?,
+          ?pricing_model: BrandDev::Models::BrandAIProductsResponse::Product::pricing_model?,
+          ?url: String?
+        ) -> void
+
+        def to_hash: -> {
+          description: String,
+          features: ::Array[String],
+          name: String,
+          tags: ::Array[String],
+          target_audience: ::Array[String],
+          billing_frequency: BrandDev::Models::BrandAIProductsResponse::Product::billing_frequency?,
+          category: String?,
+          currency: String?,
+          image_url: String?,
+          price: Float?,
+          pricing_model: BrandDev::Models::BrandAIProductsResponse::Product::pricing_model?,
+          url: String?
+        }
+
+        type billing_frequency = :monthly | :yearly | :one_time | :usage_based
+
+        module BillingFrequency
+          extend BrandDev::Internal::Type::Enum
+
+          MONTHLY: :monthly
+          YEARLY: :yearly
+          ONE_TIME: :one_time
+          USAGE_BASED: :usage_based
+
+          def self?.values: -> ::Array[BrandDev::Models::BrandAIProductsResponse::Product::billing_frequency]
+        end
+
+        type pricing_model = :per_seat | :flat | :tiered | :freemium | :custom
+
+        module PricingModel
+          extend BrandDev::Internal::Type::Enum
+
+          PER_SEAT: :per_seat
+          FLAT: :flat
+          TIERED: :tiered
+          FREEMIUM: :freemium
+          CUSTOM: :custom
+
+          def self?.values: -> ::Array[BrandDev::Models::BrandAIProductsResponse::Product::pricing_model]
+        end
+      end
+    end
+  end
+end
