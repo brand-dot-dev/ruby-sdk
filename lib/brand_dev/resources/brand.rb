@@ -38,9 +38,9 @@ module BrandDev
       # Some parameter documentations has been truncated, see
       # {BrandDev::Models::BrandAIProductsParams} for more details.
       #
-      # Beta feature: Use AI to extract product information from a brand's website. The
-      # AI will analyze the website and return a list of products with details such as
-      # name, description, pricing, features, and more.
+      # Beta feature: Extract product information from a brand's website. Brand.dev will
+      # analyze the website and return a list of products with details such as name,
+      # description, image, pricing, features, and more.
       #
       # @overload ai_products(domain:, max_products: nil, timeout_ms: nil, request_options: {})
       #
