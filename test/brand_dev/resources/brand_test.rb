@@ -21,6 +21,22 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
     end
   end
 
+  def test_ai_products_required_params
+    skip("Prism tests are disabled")
+
+    response = @brand_dev.brand.ai_products(domain: "domain")
+
+    assert_pattern do
+      response => BrandDev::Models::BrandAIProductsResponse
+    end
+
+    assert_pattern do
+      response => {
+        products: ^(BrandDev::Internal::Type::ArrayOf[BrandDev::Models::BrandAIProductsResponse::Product]) | nil
+      }
+    end
+  end
+
   def test_ai_query_required_params
     skip("Prism tests are disabled")
 
