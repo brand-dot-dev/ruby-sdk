@@ -13,9 +13,7 @@ module BrandDev
       extend BrandDev::Internal::Type::RequestParameters::Converter
       include BrandDev::Internal::Type::RequestParameters
 
-      attr_reader domain: String?
-
-      def domain=: (String) -> String
+      attr_accessor domain: String
 
       attr_reader force_language: BrandDev::Models::BrandRetrieveParams::force_language?
 
@@ -32,7 +30,7 @@ module BrandDev
       def timeout_ms=: (Integer) -> Integer
 
       def initialize: (
-        ?domain: String,
+        domain: String,
         ?force_language: BrandDev::Models::BrandRetrieveParams::force_language,
         ?max_speed: bool,
         ?timeout_ms: Integer,
