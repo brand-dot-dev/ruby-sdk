@@ -13,11 +13,8 @@ module BrandDev
 
       # Domain name to retrieve brand data for (e.g., 'example.com', 'google.com').
       # Cannot be used with name or ticker parameters.
-      sig { returns(T.nilable(String)) }
-      attr_reader :domain
-
-      sig { params(domain: String).void }
-      attr_writer :domain
+      sig { returns(String) }
+      attr_accessor :domain
 
       # Optional parameter to force the language of the retrieved brand data. Works with
       # all three lookup methods.
@@ -66,7 +63,7 @@ module BrandDev
       def self.new(
         # Domain name to retrieve brand data for (e.g., 'example.com', 'google.com').
         # Cannot be used with name or ticker parameters.
-        domain: nil,
+        domain:,
         # Optional parameter to force the language of the retrieved brand data. Works with
         # all three lookup methods.
         force_language: nil,

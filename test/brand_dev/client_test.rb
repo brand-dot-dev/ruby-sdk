@@ -40,7 +40,7 @@ class BrandDevTest < Minitest::Test
     brand_dev = BrandDev::Client.new(base_url: "http://localhost", api_key: "My API Key")
 
     assert_raises(BrandDev::Errors::InternalServerError) do
-      brand_dev.brand.retrieve
+      brand_dev.brand.retrieve(domain: "domain")
     end
 
     assert_requested(:any, /./, times: 3)
@@ -52,7 +52,7 @@ class BrandDevTest < Minitest::Test
     brand_dev = BrandDev::Client.new(base_url: "http://localhost", api_key: "My API Key", max_retries: 3)
 
     assert_raises(BrandDev::Errors::InternalServerError) do
-      brand_dev.brand.retrieve
+      brand_dev.brand.retrieve(domain: "domain")
     end
 
     assert_requested(:any, /./, times: 4)
@@ -64,7 +64,7 @@ class BrandDevTest < Minitest::Test
     brand_dev = BrandDev::Client.new(base_url: "http://localhost", api_key: "My API Key")
 
     assert_raises(BrandDev::Errors::InternalServerError) do
-      brand_dev.brand.retrieve(request_options: {max_retries: 3})
+      brand_dev.brand.retrieve(domain: "domain", request_options: {max_retries: 3})
     end
 
     assert_requested(:any, /./, times: 4)
@@ -76,7 +76,7 @@ class BrandDevTest < Minitest::Test
     brand_dev = BrandDev::Client.new(base_url: "http://localhost", api_key: "My API Key", max_retries: 3)
 
     assert_raises(BrandDev::Errors::InternalServerError) do
-      brand_dev.brand.retrieve(request_options: {max_retries: 4})
+      brand_dev.brand.retrieve(domain: "domain", request_options: {max_retries: 4})
     end
 
     assert_requested(:any, /./, times: 5)
@@ -92,7 +92,7 @@ class BrandDevTest < Minitest::Test
     brand_dev = BrandDev::Client.new(base_url: "http://localhost", api_key: "My API Key", max_retries: 1)
 
     assert_raises(BrandDev::Errors::InternalServerError) do
-      brand_dev.brand.retrieve
+      brand_dev.brand.retrieve(domain: "domain")
     end
 
     assert_requested(:any, /./, times: 2)
@@ -110,7 +110,7 @@ class BrandDevTest < Minitest::Test
 
     assert_raises(BrandDev::Errors::InternalServerError) do
       Thread.current.thread_variable_set(:time_now, Time.now)
-      brand_dev.brand.retrieve
+      brand_dev.brand.retrieve(domain: "domain")
       Thread.current.thread_variable_set(:time_now, nil)
     end
 
@@ -128,7 +128,7 @@ class BrandDevTest < Minitest::Test
     brand_dev = BrandDev::Client.new(base_url: "http://localhost", api_key: "My API Key", max_retries: 1)
 
     assert_raises(BrandDev::Errors::InternalServerError) do
-      brand_dev.brand.retrieve
+      brand_dev.brand.retrieve(domain: "domain")
     end
 
     assert_requested(:any, /./, times: 2)
@@ -141,7 +141,7 @@ class BrandDevTest < Minitest::Test
     brand_dev = BrandDev::Client.new(base_url: "http://localhost", api_key: "My API Key")
 
     assert_raises(BrandDev::Errors::InternalServerError) do
-      brand_dev.brand.retrieve
+      brand_dev.brand.retrieve(domain: "domain")
     end
 
     3.times do
@@ -155,7 +155,10 @@ class BrandDevTest < Minitest::Test
     brand_dev = BrandDev::Client.new(base_url: "http://localhost", api_key: "My API Key")
 
     assert_raises(BrandDev::Errors::InternalServerError) do
-      brand_dev.brand.retrieve(request_options: {extra_headers: {"x-stainless-retry-count" => nil}})
+      brand_dev.brand.retrieve(
+        domain: "domain",
+        request_options: {extra_headers: {"x-stainless-retry-count" => nil}}
+      )
     end
 
     assert_requested(:any, /./, times: 3) do
@@ -169,7 +172,10 @@ class BrandDevTest < Minitest::Test
     brand_dev = BrandDev::Client.new(base_url: "http://localhost", api_key: "My API Key")
 
     assert_raises(BrandDev::Errors::InternalServerError) do
-      brand_dev.brand.retrieve(request_options: {extra_headers: {"x-stainless-retry-count" => "42"}})
+      brand_dev.brand.retrieve(
+        domain: "domain",
+        request_options: {extra_headers: {"x-stainless-retry-count" => "42"}}
+      )
     end
 
     assert_requested(:any, /./, headers: {"x-stainless-retry-count" => "42"}, times: 3)
@@ -189,7 +195,7 @@ class BrandDevTest < Minitest::Test
     brand_dev = BrandDev::Client.new(base_url: "http://localhost", api_key: "My API Key")
 
     assert_raises(BrandDev::Errors::APIConnectionError) do
-      brand_dev.brand.retrieve(request_options: {extra_headers: {}})
+      brand_dev.brand.retrieve(domain: "domain", request_options: {extra_headers: {}})
     end
 
     recorded, = WebMock::RequestRegistry.instance.requested_signatures.hash.first
@@ -218,7 +224,7 @@ class BrandDevTest < Minitest::Test
     brand_dev = BrandDev::Client.new(base_url: "http://localhost", api_key: "My API Key")
 
     assert_raises(BrandDev::Errors::APIConnectionError) do
-      brand_dev.brand.retrieve(request_options: {extra_headers: {}})
+      brand_dev.brand.retrieve(domain: "domain", request_options: {extra_headers: {}})
     end
 
     assert_requested(:get, "http://localhost/redirected", times: BrandDev::Client::MAX_REDIRECTS) do
@@ -242,7 +248,10 @@ class BrandDevTest < Minitest::Test
     brand_dev = BrandDev::Client.new(base_url: "http://localhost", api_key: "My API Key")
 
     assert_raises(BrandDev::Errors::APIConnectionError) do
-      brand_dev.brand.retrieve(request_options: {extra_headers: {"authorization" => "Bearer xyz"}})
+      brand_dev.brand.retrieve(
+        domain: "domain",
+        request_options: {extra_headers: {"authorization" => "Bearer xyz"}}
+      )
     end
 
     recorded, = WebMock::RequestRegistry.instance.requested_signatures.hash.first
@@ -269,7 +278,10 @@ class BrandDevTest < Minitest::Test
     brand_dev = BrandDev::Client.new(base_url: "http://localhost", api_key: "My API Key")
 
     assert_raises(BrandDev::Errors::APIConnectionError) do
-      brand_dev.brand.retrieve(request_options: {extra_headers: {"authorization" => "Bearer xyz"}})
+      brand_dev.brand.retrieve(
+        domain: "domain",
+        request_options: {extra_headers: {"authorization" => "Bearer xyz"}}
+      )
     end
 
     assert_requested(:any, "https://example.com/redirected", times: BrandDev::Client::MAX_REDIRECTS) do
@@ -283,7 +295,7 @@ class BrandDevTest < Minitest::Test
 
     brand_dev = BrandDev::Client.new(base_url: "http://localhost", api_key: "My API Key")
 
-    brand_dev.brand.retrieve
+    brand_dev.brand.retrieve(domain: "domain")
 
     assert_requested(:any, /./) do |req|
       headers = req.headers.transform_keys(&:downcase).fetch_values("accept", "content-type")
