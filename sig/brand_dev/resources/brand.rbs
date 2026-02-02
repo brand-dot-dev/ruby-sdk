@@ -2,7 +2,7 @@ module BrandDev
   module Resources
     class Brand
       def retrieve: (
-        ?domain: String,
+        domain: String,
         ?force_language: BrandDev::Models::BrandRetrieveParams::force_language,
         ?max_speed: bool,
         ?timeout_ms: Integer,

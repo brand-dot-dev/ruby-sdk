@@ -11,8 +11,8 @@ module BrandDev
       #   Domain name to retrieve brand data for (e.g., 'example.com', 'google.com').
       #   Cannot be used with name or ticker parameters.
       #
-      #   @return [String, nil]
-      optional :domain, String
+      #   @return [String]
+      required :domain, String
 
       # @!attribute force_language
       #   Optional parameter to force the language of the retrieved brand data. Works with
@@ -37,7 +37,7 @@ module BrandDev
       #   @return [Integer, nil]
       optional :timeout_ms, Integer
 
-      # @!method initialize(domain: nil, force_language: nil, max_speed: nil, timeout_ms: nil, request_options: {})
+      # @!method initialize(domain:, force_language: nil, max_speed: nil, timeout_ms: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
       #   {BrandDev::Models::BrandRetrieveParams} for more details.
       #

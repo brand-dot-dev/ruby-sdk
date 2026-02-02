@@ -18,7 +18,7 @@ module BrandDev
       def retrieve(
         # Domain name to retrieve brand data for (e.g., 'example.com', 'google.com').
         # Cannot be used with name or ticker parameters.
-        domain: nil,
+        domain:,
         # Optional parameter to force the language of the retrieved brand data. Works with
         # all three lookup methods.
         force_language: nil,

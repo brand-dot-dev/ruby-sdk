@@ -9,7 +9,7 @@ module BrandDev
       # Retrieve logos, backdrops, colors, industry, description, and more from any
       # domain
       #
-      # @overload retrieve(domain: nil, force_language: nil, max_speed: nil, timeout_ms: nil, request_options: {})
+      # @overload retrieve(domain:, force_language: nil, max_speed: nil, timeout_ms: nil, request_options: {})
       #
       # @param domain [String] Domain name to retrieve brand data for (e.g., 'example.com', 'google.com'). Cann
       #
@@ -24,7 +24,7 @@ module BrandDev
       # @return [BrandDev::Models::BrandRetrieveResponse]
       #
       # @see BrandDev::Models::BrandRetrieveParams
-      def retrieve(params = {})
+      def retrieve(params)
         parsed, options = BrandDev::BrandRetrieveParams.dump_request(params)
         @client.request(
           method: :get,

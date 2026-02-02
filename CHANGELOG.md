@@ -1,5 +1,29 @@
 # Changelog
 
+## 0.21.0 (2026-02-02)
+
+Full Changelog: [v0.20.0...v0.21.0](https://github.com/brand-dot-dev/ruby-sdk/compare/v0.20.0...v0.21.0)
+
+### Features
+
+* **api:** api update ([a423b3c](https://github.com/brand-dot-dev/ruby-sdk/commit/a423b3c7bb3672541395e056cc611df45597d188))
+
+
+### Bug Fixes
+
+* **docs:** fix mcp installation instructions for remote servers ([a6ec5ef](https://github.com/brand-dot-dev/ruby-sdk/commit/a6ec5efbad9664835ade1580fe9433adda3b495b))
+
+
+### Chores
+
+* **internal:** update `actions/checkout` version ([06ba397](https://github.com/brand-dot-dev/ruby-sdk/commit/06ba3972227f9850264787f04bb0d49cf786ee74))
+* move `cgi` into dependencies for ruby 4 ([0e2e7df](https://github.com/brand-dot-dev/ruby-sdk/commit/0e2e7df7deebaa4950ff7813f52ad00fc033b74a))
+
+
+### Documentation
+
+* prominently feature MCP server setup in root SDK readmes ([328c136](https://github.com/brand-dot-dev/ruby-sdk/commit/328c136767a0b5ae60cc7cdfd23681e50f2569b5))
+
 ## 0.20.0 (2026-01-05)
 
 Full Changelog: [v0.19.0...v0.20.0](https://github.com/brand-dot-dev/ruby-sdk/compare/v0.19.0...v0.20.0)
