@@ -43,13 +43,13 @@ If you’d like to use the repository from source, you can either install from g
 To install via git in your `Gemfile`:
 
 ```ruby
-gem "brand.dev", git: "https://www.github.com/brand-dot-dev/ruby-sdk"
+gem "brand.dev", git: "https://github.com/brand-dot-dev/ruby-sdk"
 ```
 
 Alternatively, reference local copy of the repo:
 
 ```bash
-$ git clone -- 'https://www.github.com/brand-dot-dev/ruby-sdk' '<path-to-repo>'
+$ git clone -- 'https://github.com/brand-dot-dev/ruby-sdk' '<path-to-repo>'
 ```
 
 ```ruby
