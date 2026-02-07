@@ -42,22 +42,22 @@ module BrandDev
       # analyze the website and return a list of products with details such as name,
       # description, image, pricing, features, and more.
       #
-      # @overload ai_products(direct_url: nil, domain: nil, max_products: nil, timeout_ms: nil, request_options: {})
+      # @overload ai_products(domain:, direct_url:, max_products: nil, timeout_ms: nil, request_options: {})
+      #
+      # @param domain [String] The domain name to analyze.
       #
       # @param direct_url [String] A specific URL to use directly as the starting point for extraction without doma
       #
-      # @param domain [String] The domain name to analyze. Either 'domain' or 'directUrl' must be provided, but
-      #
       # @param max_products [Integer] Maximum number of products to extract.
       #
-      # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
+      # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. Maximum allowed value is 30000
       #
       # @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}, nil]
       #
       # @return [BrandDev::Models::BrandAIProductsResponse]
       #
       # @see BrandDev::Models::BrandAIProductsParams
-      def ai_products(params = {})
+      def ai_products(params)
         parsed, options = BrandDev::BrandAIProductsParams.dump_request(params)
         @client.request(
           method: :post,
