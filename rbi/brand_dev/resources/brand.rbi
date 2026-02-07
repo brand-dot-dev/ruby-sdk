@@ -39,27 +39,23 @@ module BrandDev
       # description, image, pricing, features, and more.
       sig do
         params(
-          direct_url: String,
           domain: String,
+          direct_url: String,
           max_products: Integer,
           timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(BrandDev::Models::BrandAIProductsResponse)
       end
       def ai_products(
+        # The domain name to analyze.
+        domain:,
         # A specific URL to use directly as the starting point for extraction without
-        # domain resolution. Useful when you want to extract products from a specific page
-        # rather than discovering the site's product pages automatically. Either 'domain'
-        # or 'directUrl' must be provided, but not both.
-        direct_url: nil,
-        # The domain name to analyze. Either 'domain' or 'directUrl' must be provided, but
-        # not both.
-        domain: nil,
+        # domain resolution.
+        direct_url:,
         # Maximum number of products to extract.
         max_products: nil,
-        # Optional timeout in milliseconds for the request. If the request takes longer
-        # than this value, it will be aborted with a 408 status code. Maximum allowed
-        # value is 300000ms (5 minutes).
+        # Optional timeout in milliseconds for the request. Maximum allowed value is
+        # 300000ms (5 minutes).
         timeout_ms: nil,
         request_options: {}
       )
