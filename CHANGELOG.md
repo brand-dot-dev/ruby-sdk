@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.21.1 (2026-02-07)
+
+Full Changelog: [v0.21.0...v0.21.1](https://github.com/brand-dot-dev/ruby-sdk/compare/v0.21.0...v0.21.1)
+
+### Bug Fixes
+
+* **client:** always add content-length to post body, even when empty ([6d12b11](https://github.com/brand-dot-dev/ruby-sdk/commit/6d12b114daabfd7ca3afc167a18adbe1fe347a36))
+* **client:** loosen json header parsing ([3739920](https://github.com/brand-dot-dev/ruby-sdk/commit/37399200e8e055ed11e83489cdf2674a2a9e6aa8))
+
+
+### Chores
+
+* **docs:** remove www prefix ([5b8d2c8](https://github.com/brand-dot-dev/ruby-sdk/commit/5b8d2c8b141d6bc47c5ac75aa640d620bfd3ada2))
+
 ## 0.21.0 (2026-02-02)
 
 Full Changelog: [v0.20.0...v0.21.0](https://github.com/brand-dot-dev/ruby-sdk/compare/v0.20.0...v0.21.0)
