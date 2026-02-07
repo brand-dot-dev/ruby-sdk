@@ -11,9 +11,23 @@ module BrandDev
           T.any(BrandDev::BrandAIProductsParams, BrandDev::Internal::AnyHash)
         end
 
-      # The domain name to analyze
-      sig { returns(String) }
-      attr_accessor :domain
+      # A specific URL to use directly as the starting point for extraction without
+      # domain resolution. Useful when you want to extract products from a specific page
+      # rather than discovering the site's product pages automatically. Either 'domain'
+      # or 'directUrl' must be provided, but not both.
+      sig { returns(T.nilable(String)) }
+      attr_reader :direct_url
+
+      sig { params(direct_url: String).void }
+      attr_writer :direct_url
+
+      # The domain name to analyze. Either 'domain' or 'directUrl' must be provided, but
+      # not both.
+      sig { returns(T.nilable(String)) }
+      attr_reader :domain
+
+      sig { params(domain: String).void }
+      attr_writer :domain
 
       # Maximum number of products to extract.
       sig { returns(T.nilable(Integer)) }
@@ -33,6 +47,7 @@ module BrandDev
 
       sig do
         params(
+          direct_url: String,
           domain: String,
           max_products: Integer,
           timeout_ms: Integer,
@@ -40,8 +55,14 @@ module BrandDev
         ).returns(T.attached_class)
       end
       def self.new(
-        # The domain name to analyze
-        domain:,
+        # A specific URL to use directly as the starting point for extraction without
+        # domain resolution. Useful when you want to extract products from a specific page
+        # rather than discovering the site's product pages automatically. Either 'domain'
+        # or 'directUrl' must be provided, but not both.
+        direct_url: nil,
+        # The domain name to analyze. Either 'domain' or 'directUrl' must be provided, but
+        # not both.
+        domain: nil,
         # Maximum number of products to extract.
         max_products: nil,
         # Optional timeout in milliseconds for the request. If the request takes longer
@@ -55,6 +76,7 @@ module BrandDev
       sig do
         override.returns(
           {
+            direct_url: String,
             domain: String,
             max_products: Integer,
             timeout_ms: Integer,

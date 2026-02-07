@@ -21,10 +21,10 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
     end
   end
 
-  def test_ai_products_required_params
+  def test_ai_products
     skip("Prism tests are disabled")
 
-    response = @brand_dev.brand.ai_products(domain: "domain")
+    response = @brand_dev.brand.ai_products
 
     assert_pattern do
       response => BrandDev::Models::BrandAIProductsResponse
