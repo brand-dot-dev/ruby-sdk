@@ -7,11 +7,21 @@ module BrandDev
       extend BrandDev::Internal::Type::RequestParameters::Converter
       include BrandDev::Internal::Type::RequestParameters
 
-      # @!attribute domain
-      #   The domain name to analyze
+      # @!attribute direct_url
+      #   A specific URL to use directly as the starting point for extraction without
+      #   domain resolution. Useful when you want to extract products from a specific page
+      #   rather than discovering the site's product pages automatically. Either 'domain'
+      #   or 'directUrl' must be provided, but not both.
       #
-      #   @return [String]
-      required :domain, String
+      #   @return [String, nil]
+      optional :direct_url, String, api_name: :directUrl
+
+      # @!attribute domain
+      #   The domain name to analyze. Either 'domain' or 'directUrl' must be provided, but
+      #   not both.
+      #
+      #   @return [String, nil]
+      optional :domain, String
 
       # @!attribute max_products
       #   Maximum number of products to extract.
@@ -27,11 +37,13 @@ module BrandDev
       #   @return [Integer, nil]
       optional :timeout_ms, Integer, api_name: :timeoutMS
 
-      # @!method initialize(domain:, max_products: nil, timeout_ms: nil, request_options: {})
+      # @!method initialize(direct_url: nil, domain: nil, max_products: nil, timeout_ms: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
       #   {BrandDev::Models::BrandAIProductsParams} for more details.
       #
-      #   @param domain [String] The domain name to analyze
+      #   @param direct_url [String] A specific URL to use directly as the starting point for extraction without doma
+      #
+      #   @param domain [String] The domain name to analyze. Either 'domain' or 'directUrl' must be provided, but
       #
       #   @param max_products [Integer] Maximum number of products to extract.
       #
