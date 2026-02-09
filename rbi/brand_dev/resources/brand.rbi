@@ -34,6 +34,26 @@ module BrandDev
       )
       end
 
+      # Beta feature: Given a single URL, determines if it is a product detail page,
+      # classifies the platform/product type, and extracts the product information.
+      # Supports Amazon, TikTok Shop, Etsy, and generic ecommerce sites.
+      sig do
+        params(
+          url: String,
+          timeout_ms: Integer,
+          request_options: BrandDev::RequestOptions::OrHash
+        ).returns(BrandDev::Models::BrandAIProductResponse)
+      end
+      def ai_product(
+        # The product page URL to extract product data from.
+        url:,
+        # Optional timeout in milliseconds for the request. Maximum allowed value is
+        # 300000ms (5 minutes).
+        timeout_ms: nil,
+        request_options: {}
+      )
+      end
+
       # Beta feature: Extract product information from a brand's website. Brand.dev will
       # analyze the website and return a list of products with details such as name,
       # description, image, pricing, features, and more.

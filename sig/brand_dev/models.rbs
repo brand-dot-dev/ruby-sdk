@@ -1,4 +1,6 @@
 module BrandDev
+  class BrandAIProductParams = BrandDev::Models::BrandAIProductParams
+
   class BrandAIProductsParams = BrandDev::Models::BrandAIProductsParams
 
   class BrandAIQueryParams = BrandDev::Models::BrandAIQueryParams

@@ -21,6 +21,24 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
     end
   end
 
+  def test_ai_product_required_params
+    skip("Prism tests are disabled")
+
+    response = @brand_dev.brand.ai_product(url: "https://example.com")
+
+    assert_pattern do
+      response => BrandDev::Models::BrandAIProductResponse
+    end
+
+    assert_pattern do
+      response => {
+        is_product_page: BrandDev::Internal::Type::Boolean | nil,
+        platform: BrandDev::Models::BrandAIProductResponse::Platform | nil,
+        product: BrandDev::Models::BrandAIProductResponse::Product | nil
+      }
+    end
+  end
+
   def test_ai_products_required_params
     skip("Prism tests are disabled")
 
