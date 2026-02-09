@@ -36,6 +36,35 @@ module BrandDev
       end
 
       # Some parameter documentations has been truncated, see
+      # {BrandDev::Models::BrandAIProductParams} for more details.
+      #
+      # Beta feature: Given a single URL, determines if it is a product detail page,
+      # classifies the platform/product type, and extracts the product information.
+      # Supports Amazon, TikTok Shop, Etsy, and generic ecommerce sites.
+      #
+      # @overload ai_product(url:, timeout_ms: nil, request_options: {})
+      #
+      # @param url [String] The product page URL to extract product data from.
+      #
+      # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. Maximum allowed value is 30000
+      #
+      # @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}, nil]
+      #
+      # @return [BrandDev::Models::BrandAIProductResponse]
+      #
+      # @see BrandDev::Models::BrandAIProductParams
+      def ai_product(params)
+        parsed, options = BrandDev::BrandAIProductParams.dump_request(params)
+        @client.request(
+          method: :post,
+          path: "brand/ai/product",
+          body: parsed,
+          model: BrandDev::Models::BrandAIProductResponse,
+          options: options
+        )
+      end
+
+      # Some parameter documentations has been truncated, see
       # {BrandDev::Models::BrandAIProductsParams} for more details.
       #
       # Beta feature: Extract product information from a brand's website. Brand.dev will
