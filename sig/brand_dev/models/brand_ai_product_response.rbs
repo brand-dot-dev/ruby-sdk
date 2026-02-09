@@ -1,0 +1,144 @@
+module BrandDev
+  module Models
+    type brand_ai_product_response =
+      {
+        is_product_page: bool,
+        platform: BrandDev::Models::BrandAIProductResponse::platform?,
+        product: BrandDev::Models::BrandAIProductResponse::Product?
+      }
+
+    class BrandAIProductResponse < BrandDev::Internal::Type::BaseModel
+      attr_reader is_product_page: bool?
+
+      def is_product_page=: (bool) -> bool
+
+      attr_accessor platform: BrandDev::Models::BrandAIProductResponse::platform?
+
+      attr_accessor product: BrandDev::Models::BrandAIProductResponse::Product?
+
+      def initialize: (
+        ?is_product_page: bool,
+        ?platform: BrandDev::Models::BrandAIProductResponse::platform?,
+        ?product: BrandDev::Models::BrandAIProductResponse::Product?
+      ) -> void
+
+      def to_hash: -> {
+        is_product_page: bool,
+        platform: BrandDev::Models::BrandAIProductResponse::platform?,
+        product: BrandDev::Models::BrandAIProductResponse::Product?
+      }
+
+      type platform = :amazon | :tiktok_shop | :etsy | :generic
+
+      module Platform
+        extend BrandDev::Internal::Type::Enum
+
+        AMAZON: :amazon
+        TIKTOK_SHOP: :tiktok_shop
+        ETSY: :etsy
+        GENERIC: :generic
+
+        def self?.values: -> ::Array[BrandDev::Models::BrandAIProductResponse::platform]
+      end
+
+      type product =
+        {
+          description: String,
+          features: ::Array[String],
+          name: String,
+          tags: ::Array[String],
+          target_audience: ::Array[String],
+          billing_frequency: BrandDev::Models::BrandAIProductResponse::Product::billing_frequency?,
+          category: String?,
+          currency: String?,
+          image_url: String?,
+          price: Float?,
+          pricing_model: BrandDev::Models::BrandAIProductResponse::Product::pricing_model?,
+          url: String?
+        }
+
+      class Product < BrandDev::Internal::Type::BaseModel
+        attr_accessor description: String
+
+        attr_accessor features: ::Array[String]
+
+        attr_accessor name: String
+
+        attr_accessor tags: ::Array[String]
+
+        attr_accessor target_audience: ::Array[String]
+
+        attr_accessor billing_frequency: BrandDev::Models::BrandAIProductResponse::Product::billing_frequency?
+
+        attr_accessor category: String?
+
+        attr_accessor currency: String?
+
+        attr_accessor image_url: String?
+
+        attr_accessor price: Float?
+
+        attr_accessor pricing_model: BrandDev::Models::BrandAIProductResponse::Product::pricing_model?
+
+        attr_accessor url: String?
+
+        def initialize: (
+          description: String,
+          features: ::Array[String],
+          name: String,
+          tags: ::Array[String],
+          target_audience: ::Array[String],
+          ?billing_frequency: BrandDev::Models::BrandAIProductResponse::Product::billing_frequency?,
+          ?category: String?,
+          ?currency: String?,
+          ?image_url: String?,
+          ?price: Float?,
+          ?pricing_model: BrandDev::Models::BrandAIProductResponse::Product::pricing_model?,
+          ?url: String?
+        ) -> void
+
+        def to_hash: -> {
+          description: String,
+          features: ::Array[String],
+          name: String,
+          tags: ::Array[String],
+          target_audience: ::Array[String],
+          billing_frequency: BrandDev::Models::BrandAIProductResponse::Product::billing_frequency?,
+          category: String?,
+          currency: String?,
+          image_url: String?,
+          price: Float?,
+          pricing_model: BrandDev::Models::BrandAIProductResponse::Product::pricing_model?,
+          url: String?
+        }
+
+        type billing_frequency = :monthly | :yearly | :one_time | :usage_based
+
+        module BillingFrequency
+          extend BrandDev::Internal::Type::Enum
+
+          MONTHLY: :monthly
+          YEARLY: :yearly
+          ONE_TIME: :one_time
+          USAGE_BASED: :usage_based
+
+          def self?.values: -> ::Array[BrandDev::Models::BrandAIProductResponse::Product::billing_frequency]
+        end
+
+        type pricing_model = :per_seat | :flat | :tiered | :freemium | :custom
+
+        module PricingModel
+          extend BrandDev::Internal::Type::Enum
+
+          PER_SEAT: :per_seat
+          FLAT: :flat
+          TIERED: :tiered
+          FREEMIUM: :freemium
+          CUSTOM: :custom
+
+          def self?.values: -> ::Array[BrandDev::Models::BrandAIProductResponse::Product::pricing_model]
+        end
+      end
+    end
+  end
+end
