@@ -4,7 +4,7 @@ require_relative "../test_helper"
 
 class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
   def test_retrieve_required_params
-    skip("Prism tests are disabled")
+    skip("Mock server tests are disabled")
 
     response = @brand_dev.brand.retrieve(domain: "domain")
 
@@ -22,7 +22,7 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
   end
 
   def test_ai_product_required_params
-    skip("Prism tests are disabled")
+    skip("Mock server tests are disabled")
 
     response = @brand_dev.brand.ai_product(url: "https://example.com")
 
@@ -40,7 +40,7 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
   end
 
   def test_ai_products_required_params
-    skip("Prism tests are disabled")
+    skip("Mock server tests are disabled")
 
     response = @brand_dev.brand.ai_products(domain: "domain")
 
@@ -56,7 +56,7 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
   end
 
   def test_ai_query_required_params
-    skip("Prism tests are disabled")
+    skip("Mock server tests are disabled")
 
     response =
       @brand_dev.brand.ai_query(
@@ -86,7 +86,7 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
   end
 
   def test_fonts_required_params
-    skip("Prism tests are disabled")
+    skip("Mock server tests are disabled")
 
     response = @brand_dev.brand.fonts(domain: "domain")
 
@@ -105,7 +105,7 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
   end
 
   def test_identify_from_transaction_required_params
-    skip("Prism tests are disabled")
+    skip("Mock server tests are disabled")
 
     response = @brand_dev.brand.identify_from_transaction(transaction_info: "transaction_info")
 
@@ -123,7 +123,7 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
   end
 
   def test_prefetch_required_params
-    skip("Prism tests are disabled")
+    skip("Mock server tests are disabled")
 
     response = @brand_dev.brand.prefetch(domain: "domain")
 
@@ -141,7 +141,7 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
   end
 
   def test_prefetch_by_email_required_params
-    skip("Prism tests are disabled")
+    skip("Mock server tests are disabled")
 
     response = @brand_dev.brand.prefetch_by_email(email: "dev@stainless.com")
 
@@ -159,7 +159,7 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
   end
 
   def test_retrieve_by_email_required_params
-    skip("Prism tests are disabled")
+    skip("Mock server tests are disabled")
 
     response = @brand_dev.brand.retrieve_by_email(email: "dev@stainless.com")
 
@@ -177,7 +177,7 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
   end
 
   def test_retrieve_by_isin_required_params
-    skip("Prism tests are disabled")
+    skip("Mock server tests are disabled")
 
     response = @brand_dev.brand.retrieve_by_isin(isin: "SE60513A9993")
 
@@ -195,7 +195,7 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
   end
 
   def test_retrieve_by_name_required_params
-    skip("Prism tests are disabled")
+    skip("Mock server tests are disabled")
 
     response = @brand_dev.brand.retrieve_by_name(name: "xxx")
 
@@ -213,7 +213,7 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
   end
 
   def test_retrieve_by_ticker_required_params
-    skip("Prism tests are disabled")
+    skip("Mock server tests are disabled")
 
     response = @brand_dev.brand.retrieve_by_ticker(ticker: "ticker")
 
@@ -231,7 +231,7 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
   end
 
   def test_retrieve_naics_required_params
-    skip("Prism tests are disabled")
+    skip("Mock server tests are disabled")
 
     response = @brand_dev.brand.retrieve_naics(input: "input")
 
@@ -250,7 +250,7 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
   end
 
   def test_retrieve_simplified_required_params
-    skip("Prism tests are disabled")
+    skip("Mock server tests are disabled")
 
     response = @brand_dev.brand.retrieve_simplified(domain: "domain")
 
@@ -268,7 +268,7 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
   end
 
   def test_screenshot_required_params
-    skip("Prism tests are disabled")
+    skip("Mock server tests are disabled")
 
     response = @brand_dev.brand.screenshot(domain: "domain")
 
@@ -288,7 +288,7 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
   end
 
   def test_styleguide_required_params
-    skip("Prism tests are disabled")
+    skip("Mock server tests are disabled")
 
     response = @brand_dev.brand.styleguide(domain: "domain")
 
