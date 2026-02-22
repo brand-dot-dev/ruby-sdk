@@ -27,6 +27,12 @@ module BrandDev
         #   @return [Array<String>]
         required :features, BrandDev::Internal::Type::ArrayOf[String]
 
+        # @!attribute images
+        #   URLs to product images on the page (up to 7)
+        #
+        #   @return [Array<String>]
+        required :images, BrandDev::Internal::Type::ArrayOf[String]
+
         # @!attribute name
         #   Name of the product
         #
@@ -91,10 +97,12 @@ module BrandDev
         #   @return [String, nil]
         optional :url, String, nil?: true
 
-        # @!method initialize(description:, features:, name:, tags:, target_audience:, billing_frequency: nil, category: nil, currency: nil, image_url: nil, price: nil, pricing_model: nil, url: nil)
+        # @!method initialize(description:, features:, images:, name:, tags:, target_audience:, billing_frequency: nil, category: nil, currency: nil, image_url: nil, price: nil, pricing_model: nil, url: nil)
         #   @param description [String] Description of the product
         #
         #   @param features [Array<String>] List of product features
+        #
+        #   @param images [Array<String>] URLs to product images on the page (up to 7)
         #
         #   @param name [String] Name of the product
         #

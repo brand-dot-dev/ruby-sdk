@@ -45,6 +45,7 @@ module BrandDev
         {
           description: String,
           features: ::Array[String],
+          images: ::Array[String],
           name: String,
           tags: ::Array[String],
           target_audience: ::Array[String],
@@ -61,6 +62,8 @@ module BrandDev
         attr_accessor description: String
 
         attr_accessor features: ::Array[String]
+
+        attr_accessor images: ::Array[String]
 
         attr_accessor name: String
 
@@ -85,6 +88,7 @@ module BrandDev
         def initialize: (
           description: String,
           features: ::Array[String],
+          images: ::Array[String],
           name: String,
           tags: ::Array[String],
           target_audience: ::Array[String],
@@ -100,6 +104,7 @@ module BrandDev
         def to_hash: -> {
           description: String,
           features: ::Array[String],
+          images: ::Array[String],
           name: String,
           tags: ::Array[String],
           target_audience: ::Array[String],
