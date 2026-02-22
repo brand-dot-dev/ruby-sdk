@@ -138,6 +138,10 @@ module BrandDev
         sig { returns(T::Array[String]) }
         attr_accessor :features
 
+        # URLs to product images on the page (up to 7)
+        sig { returns(T::Array[String]) }
+        attr_accessor :images
+
         # Name of the product
         sig { returns(String) }
         attr_accessor :name
@@ -195,6 +199,7 @@ module BrandDev
           params(
             description: String,
             features: T::Array[String],
+            images: T::Array[String],
             name: String,
             tags: T::Array[String],
             target_audience: T::Array[String],
@@ -218,6 +223,8 @@ module BrandDev
           description:,
           # List of product features
           features:,
+          # URLs to product images on the page (up to 7)
+          images:,
           # Name of the product
           name:,
           # Tags associated with the product
@@ -246,6 +253,7 @@ module BrandDev
             {
               description: String,
               features: T::Array[String],
+              images: T::Array[String],
               name: String,
               tags: T::Array[String],
               target_audience: T::Array[String],
