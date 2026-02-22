@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.25.0 (2026-02-22)
+
+Full Changelog: [v0.24.0...v0.25.0](https://github.com/brand-dot-dev/ruby-sdk/compare/v0.24.0...v0.25.0)
+
+### Features
+
+* **api:** api update ([a8001da](https://github.com/brand-dot-dev/ruby-sdk/commit/a8001da388a5bf764a6fe19b7df7bc3572ae3dce))
+
+
+### Chores
+
+* **internal:** remove mock server code ([106d37c](https://github.com/brand-dot-dev/ruby-sdk/commit/106d37c53f7459910a897b4f675b97a003b73f7c))
+* update mock server docs ([e60e130](https://github.com/brand-dot-dev/ruby-sdk/commit/e60e13027cec2ae0282f1ca4c4785d3586efe304))
+
 ## 0.24.0 (2026-02-09)
 
 Full Changelog: [v0.23.0...v0.24.0](https://github.com/brand-dot-dev/ruby-sdk/compare/v0.23.0...v0.24.0)
