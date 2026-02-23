@@ -30,4 +30,12 @@ module BrandDev
   class BrandScreenshotParams = BrandDev::Models::BrandScreenshotParams
 
   class BrandStyleguideParams = BrandDev::Models::BrandStyleguideParams
+
+  class BrandWebScrapeHTMLParams = BrandDev::Models::BrandWebScrapeHTMLParams
+
+  class BrandWebScrapeImagesParams = BrandDev::Models::BrandWebScrapeImagesParams
+
+  class BrandWebScrapeMdParams = BrandDev::Models::BrandWebScrapeMdParams
+
+  class BrandWebScrapeSitemapParams = BrandDev::Models::BrandWebScrapeSitemapParams
 end

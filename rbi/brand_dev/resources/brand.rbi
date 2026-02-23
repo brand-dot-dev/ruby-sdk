@@ -462,6 +462,77 @@ module BrandDev
       )
       end
 
+      # Scrapes the given URL and returns the raw HTML content of the page. Uses
+      # automatic proxy escalation to handle blocked sites.
+      sig do
+        params(
+          url: String,
+          request_options: BrandDev::RequestOptions::OrHash
+        ).returns(BrandDev::Models::BrandWebScrapeHTMLResponse)
+      end
+      def web_scrape_html(
+        # Full URL to scrape (must include http:// or https:// protocol)
+        url:,
+        request_options: {}
+      )
+      end
+
+      # Scrapes all images from the given URL. Extracts images from img, svg,
+      # picture/source, link, and video elements including inline SVGs, base64 data
+      # URIs, and standard URLs.
+      sig do
+        params(
+          url: String,
+          request_options: BrandDev::RequestOptions::OrHash
+        ).returns(BrandDev::Models::BrandWebScrapeImagesResponse)
+      end
+      def web_scrape_images(
+        # Full URL to scrape images from (must include http:// or https:// protocol)
+        url:,
+        request_options: {}
+      )
+      end
+
+      # Scrapes the given URL, converts the HTML content to GitHub Flavored Markdown
+      # (GFM), and returns the result. Uses automatic proxy escalation to handle blocked
+      # sites.
+      sig do
+        params(
+          url: String,
+          include_images: T::Boolean,
+          include_links: T::Boolean,
+          request_options: BrandDev::RequestOptions::OrHash
+        ).returns(BrandDev::Models::BrandWebScrapeMdResponse)
+      end
+      def web_scrape_md(
+        # Full URL to scrape and convert to markdown (must include http:// or https://
+        # protocol)
+        url:,
+        # Include image references in Markdown output
+        include_images: nil,
+        # Preserve hyperlinks in Markdown output
+        include_links: nil,
+        request_options: {}
+      )
+      end
+
+      # Crawls the sitemap of the given domain and returns all discovered page URLs.
+      # Supports sitemap index files (recursive), parallel fetching with concurrency
+      # control, deduplication, and filters out non-page resources (images, PDFs, etc.).
+      sig do
+        params(
+          domain: String,
+          request_options: BrandDev::RequestOptions::OrHash
+        ).returns(BrandDev::Models::BrandWebScrapeSitemapResponse)
+      end
+      def web_scrape_sitemap(
+        # Domain name to crawl sitemaps for (e.g., 'example.com'). The domain will be
+        # automatically normalized and validated.
+        domain:,
+        request_options: {}
+      )
+      end
+
       # @api private
       sig { params(client: BrandDev::Client).returns(T.attached_class) }
       def self.new(client:)

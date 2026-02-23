@@ -521,6 +521,111 @@ module BrandDev
         )
       end
 
+      # Scrapes the given URL and returns the raw HTML content of the page. Uses
+      # automatic proxy escalation to handle blocked sites.
+      #
+      # @overload web_scrape_html(url:, request_options: {})
+      #
+      # @param url [String] Full URL to scrape (must include http:// or https:// protocol)
+      #
+      # @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}, nil]
+      #
+      # @return [BrandDev::Models::BrandWebScrapeHTMLResponse]
+      #
+      # @see BrandDev::Models::BrandWebScrapeHTMLParams
+      def web_scrape_html(params)
+        parsed, options = BrandDev::BrandWebScrapeHTMLParams.dump_request(params)
+        @client.request(
+          method: :get,
+          path: "web/scrape/html",
+          query: parsed,
+          model: BrandDev::Models::BrandWebScrapeHTMLResponse,
+          options: options
+        )
+      end
+
+      # Scrapes all images from the given URL. Extracts images from img, svg,
+      # picture/source, link, and video elements including inline SVGs, base64 data
+      # URIs, and standard URLs.
+      #
+      # @overload web_scrape_images(url:, request_options: {})
+      #
+      # @param url [String] Full URL to scrape images from (must include http:// or https:// protocol)
+      #
+      # @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}, nil]
+      #
+      # @return [BrandDev::Models::BrandWebScrapeImagesResponse]
+      #
+      # @see BrandDev::Models::BrandWebScrapeImagesParams
+      def web_scrape_images(params)
+        parsed, options = BrandDev::BrandWebScrapeImagesParams.dump_request(params)
+        @client.request(
+          method: :get,
+          path: "web/scrape/images",
+          query: parsed,
+          model: BrandDev::Models::BrandWebScrapeImagesResponse,
+          options: options
+        )
+      end
+
+      # Some parameter documentations has been truncated, see
+      # {BrandDev::Models::BrandWebScrapeMdParams} for more details.
+      #
+      # Scrapes the given URL, converts the HTML content to GitHub Flavored Markdown
+      # (GFM), and returns the result. Uses automatic proxy escalation to handle blocked
+      # sites.
+      #
+      # @overload web_scrape_md(url:, include_images: nil, include_links: nil, request_options: {})
+      #
+      # @param url [String] Full URL to scrape and convert to markdown (must include http:// or https:// pro
+      #
+      # @param include_images [Boolean] Include image references in Markdown output
+      #
+      # @param include_links [Boolean] Preserve hyperlinks in Markdown output
+      #
+      # @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}, nil]
+      #
+      # @return [BrandDev::Models::BrandWebScrapeMdResponse]
+      #
+      # @see BrandDev::Models::BrandWebScrapeMdParams
+      def web_scrape_md(params)
+        parsed, options = BrandDev::BrandWebScrapeMdParams.dump_request(params)
+        @client.request(
+          method: :get,
+          path: "web/scrape/markdown",
+          query: parsed.transform_keys(include_images: "includeImages", include_links: "includeLinks"),
+          model: BrandDev::Models::BrandWebScrapeMdResponse,
+          options: options
+        )
+      end
+
+      # Some parameter documentations has been truncated, see
+      # {BrandDev::Models::BrandWebScrapeSitemapParams} for more details.
+      #
+      # Crawls the sitemap of the given domain and returns all discovered page URLs.
+      # Supports sitemap index files (recursive), parallel fetching with concurrency
+      # control, deduplication, and filters out non-page resources (images, PDFs, etc.).
+      #
+      # @overload web_scrape_sitemap(domain:, request_options: {})
+      #
+      # @param domain [String] Domain name to crawl sitemaps for (e.g., 'example.com'). The domain will be auto
+      #
+      # @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}, nil]
+      #
+      # @return [BrandDev::Models::BrandWebScrapeSitemapResponse]
+      #
+      # @see BrandDev::Models::BrandWebScrapeSitemapParams
+      def web_scrape_sitemap(params)
+        parsed, options = BrandDev::BrandWebScrapeSitemapParams.dump_request(params)
+        @client.request(
+          method: :get,
+          path: "web/scrape/sitemap",
+          query: parsed,
+          model: BrandDev::Models::BrandWebScrapeSitemapResponse,
+          options: options
+        )
+      end
+
       # @api private
       #
       # @param client [BrandDev::Client]

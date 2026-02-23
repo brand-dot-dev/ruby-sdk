@@ -1,0 +1,36 @@
+module BrandDev
+  module Models
+    type brand_web_scrape_md_params =
+      { url: String, include_images: bool, include_links: bool }
+      & BrandDev::Internal::Type::request_parameters
+
+    class BrandWebScrapeMdParams < BrandDev::Internal::Type::BaseModel
+      extend BrandDev::Internal::Type::RequestParameters::Converter
+      include BrandDev::Internal::Type::RequestParameters
+
+      attr_accessor url: String
+
+      attr_reader include_images: bool?
+
+      def include_images=: (bool) -> bool
+
+      attr_reader include_links: bool?
+
+      def include_links=: (bool) -> bool
+
+      def initialize: (
+        url: String,
+        ?include_images: bool,
+        ?include_links: bool,
+        ?request_options: BrandDev::request_opts
+      ) -> void
+
+      def to_hash: -> {
+        url: String,
+        include_images: bool,
+        include_links: bool,
+        request_options: BrandDev::RequestOptions
+      }
+    end
+  end
+end

@@ -1,0 +1,40 @@
+module BrandDev
+  module Models
+    type brand_web_scrape_html_response =
+      {
+        html: String,
+        success: BrandDev::Models::BrandWebScrapeHTMLResponse::success,
+        url: String
+      }
+
+    class BrandWebScrapeHTMLResponse < BrandDev::Internal::Type::BaseModel
+      attr_accessor html: String
+
+      attr_accessor success: BrandDev::Models::BrandWebScrapeHTMLResponse::success
+
+      attr_accessor url: String
+
+      def initialize: (
+        html: String,
+        success: BrandDev::Models::BrandWebScrapeHTMLResponse::success,
+        url: String
+      ) -> void
+
+      def to_hash: -> {
+        html: String,
+        success: BrandDev::Models::BrandWebScrapeHTMLResponse::success,
+        url: String
+      }
+
+      type success = true
+
+      module Success
+        extend BrandDev::Internal::Type::Enum
+
+        TRUE: true
+
+        def self?.values: -> ::Array[BrandDev::Models::BrandWebScrapeHTMLResponse::success]
+      end
+    end
+  end
+end
