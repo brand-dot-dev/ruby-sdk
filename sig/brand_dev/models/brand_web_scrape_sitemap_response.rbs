@@ -1,0 +1,77 @@
+module BrandDev
+  module Models
+    type brand_web_scrape_sitemap_response =
+      {
+        domain: String,
+        meta: BrandDev::Models::BrandWebScrapeSitemapResponse::Meta,
+        success: BrandDev::Models::BrandWebScrapeSitemapResponse::success,
+        urls: ::Array[String]
+      }
+
+    class BrandWebScrapeSitemapResponse < BrandDev::Internal::Type::BaseModel
+      attr_accessor domain: String
+
+      attr_accessor meta: BrandDev::Models::BrandWebScrapeSitemapResponse::Meta
+
+      attr_accessor success: BrandDev::Models::BrandWebScrapeSitemapResponse::success
+
+      attr_accessor urls: ::Array[String]
+
+      def initialize: (
+        domain: String,
+        meta: BrandDev::Models::BrandWebScrapeSitemapResponse::Meta,
+        success: BrandDev::Models::BrandWebScrapeSitemapResponse::success,
+        urls: ::Array[String]
+      ) -> void
+
+      def to_hash: -> {
+        domain: String,
+        meta: BrandDev::Models::BrandWebScrapeSitemapResponse::Meta,
+        success: BrandDev::Models::BrandWebScrapeSitemapResponse::success,
+        urls: ::Array[String]
+      }
+
+      type meta =
+        {
+          errors: Integer,
+          sitemaps_discovered: Integer,
+          sitemaps_fetched: Integer,
+          sitemaps_skipped: Integer
+        }
+
+      class Meta < BrandDev::Internal::Type::BaseModel
+        attr_accessor errors: Integer
+
+        attr_accessor sitemaps_discovered: Integer
+
+        attr_accessor sitemaps_fetched: Integer
+
+        attr_accessor sitemaps_skipped: Integer
+
+        def initialize: (
+          errors: Integer,
+          sitemaps_discovered: Integer,
+          sitemaps_fetched: Integer,
+          sitemaps_skipped: Integer
+        ) -> void
+
+        def to_hash: -> {
+          errors: Integer,
+          sitemaps_discovered: Integer,
+          sitemaps_fetched: Integer,
+          sitemaps_skipped: Integer
+        }
+      end
+
+      type success = true
+
+      module Success
+        extend BrandDev::Internal::Type::Enum
+
+        TRUE: true
+
+        def self?.values: -> ::Array[BrandDev::Models::BrandWebScrapeSitemapResponse::success]
+      end
+    end
+  end
+end

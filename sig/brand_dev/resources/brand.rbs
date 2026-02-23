@@ -123,6 +123,28 @@ module BrandDev
         ?request_options: BrandDev::request_opts
       ) -> BrandDev::Models::BrandStyleguideResponse
 
+      def web_scrape_html: (
+        url: String,
+        ?request_options: BrandDev::request_opts
+      ) -> BrandDev::Models::BrandWebScrapeHTMLResponse
+
+      def web_scrape_images: (
+        url: String,
+        ?request_options: BrandDev::request_opts
+      ) -> BrandDev::Models::BrandWebScrapeImagesResponse
+
+      def web_scrape_md: (
+        url: String,
+        ?include_images: bool,
+        ?include_links: bool,
+        ?request_options: BrandDev::request_opts
+      ) -> BrandDev::Models::BrandWebScrapeMdResponse
+
+      def web_scrape_sitemap: (
+        domain: String,
+        ?request_options: BrandDev::request_opts
+      ) -> BrandDev::Models::BrandWebScrapeSitemapResponse
+
       def initialize: (client: BrandDev::Client) -> void
     end
   end
