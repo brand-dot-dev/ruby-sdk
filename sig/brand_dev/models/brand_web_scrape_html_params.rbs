@@ -1,0 +1,20 @@
+module BrandDev
+  module Models
+    type brand_web_scrape_html_params =
+      { url: String } & BrandDev::Internal::Type::request_parameters
+
+    class BrandWebScrapeHTMLParams < BrandDev::Internal::Type::BaseModel
+      extend BrandDev::Internal::Type::RequestParameters::Converter
+      include BrandDev::Internal::Type::RequestParameters
+
+      attr_accessor url: String
+
+      def initialize: (
+        url: String,
+        ?request_options: BrandDev::request_opts
+      ) -> void
+
+      def to_hash: -> { url: String, request_options: BrandDev::RequestOptions }
+    end
+  end
+end

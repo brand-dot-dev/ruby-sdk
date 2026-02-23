@@ -1,0 +1,98 @@
+module BrandDev
+  module Models
+    type brand_web_scrape_images_response =
+      {
+        images: ::Array[BrandDev::Models::BrandWebScrapeImagesResponse::Image],
+        success: BrandDev::Models::BrandWebScrapeImagesResponse::success,
+        url: String
+      }
+
+    class BrandWebScrapeImagesResponse < BrandDev::Internal::Type::BaseModel
+      attr_accessor images: ::Array[BrandDev::Models::BrandWebScrapeImagesResponse::Image]
+
+      attr_accessor success: BrandDev::Models::BrandWebScrapeImagesResponse::success
+
+      attr_accessor url: String
+
+      def initialize: (
+        images: ::Array[BrandDev::Models::BrandWebScrapeImagesResponse::Image],
+        success: BrandDev::Models::BrandWebScrapeImagesResponse::success,
+        url: String
+      ) -> void
+
+      def to_hash: -> {
+        images: ::Array[BrandDev::Models::BrandWebScrapeImagesResponse::Image],
+        success: BrandDev::Models::BrandWebScrapeImagesResponse::success,
+        url: String
+      }
+
+      type image =
+        {
+          alt: String?,
+          element: BrandDev::Models::BrandWebScrapeImagesResponse::Image::element,
+          src: String,
+          type: BrandDev::Models::BrandWebScrapeImagesResponse::Image::type_
+        }
+
+      class Image < BrandDev::Internal::Type::BaseModel
+        attr_accessor alt: String?
+
+        attr_accessor element: BrandDev::Models::BrandWebScrapeImagesResponse::Image::element
+
+        attr_accessor src: String
+
+        attr_accessor type: BrandDev::Models::BrandWebScrapeImagesResponse::Image::type_
+
+        def initialize: (
+          alt: String?,
+          element: BrandDev::Models::BrandWebScrapeImagesResponse::Image::element,
+          src: String,
+          type: BrandDev::Models::BrandWebScrapeImagesResponse::Image::type_
+        ) -> void
+
+        def to_hash: -> {
+          alt: String?,
+          element: BrandDev::Models::BrandWebScrapeImagesResponse::Image::element,
+          src: String,
+          type: BrandDev::Models::BrandWebScrapeImagesResponse::Image::type_
+        }
+
+        type element = :img | :svg | :link | :source | :video
+
+        module Element
+          extend BrandDev::Internal::Type::Enum
+
+          IMG: :img
+          SVG: :svg
+          LINK: :link
+          SOURCE: :source
+          VIDEO: :video
+
+          def self?.values: -> ::Array[BrandDev::Models::BrandWebScrapeImagesResponse::Image::element]
+        end
+
+        type type_ = :url | :html | :base64
+
+        module Type
+          extend BrandDev::Internal::Type::Enum
+
+          URL: :url
+          HTML: :html
+          BASE64: :base64
+
+          def self?.values: -> ::Array[BrandDev::Models::BrandWebScrapeImagesResponse::Image::type_]
+        end
+      end
+
+      type success = true
+
+      module Success
+        extend BrandDev::Internal::Type::Enum
+
+        TRUE: true
+
+        def self?.values: -> ::Array[BrandDev::Models::BrandWebScrapeImagesResponse::success]
+      end
+    end
+  end
+end

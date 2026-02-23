@@ -70,4 +70,12 @@ module BrandDev
   BrandScreenshotParams = BrandDev::Models::BrandScreenshotParams
 
   BrandStyleguideParams = BrandDev::Models::BrandStyleguideParams
+
+  BrandWebScrapeHTMLParams = BrandDev::Models::BrandWebScrapeHTMLParams
+
+  BrandWebScrapeImagesParams = BrandDev::Models::BrandWebScrapeImagesParams
+
+  BrandWebScrapeMdParams = BrandDev::Models::BrandWebScrapeMdParams
+
+  BrandWebScrapeSitemapParams = BrandDev::Models::BrandWebScrapeSitemapParams
 end

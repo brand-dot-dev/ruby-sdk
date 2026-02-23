@@ -305,4 +305,77 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
       }
     end
   end
+
+  def test_web_scrape_html_required_params
+    skip("Mock server tests are disabled")
+
+    response = @brand_dev.brand.web_scrape_html(url: "https://example.com")
+
+    assert_pattern do
+      response => BrandDev::Models::BrandWebScrapeHTMLResponse
+    end
+
+    assert_pattern do
+      response => {
+        html: String,
+        success: BrandDev::Models::BrandWebScrapeHTMLResponse::Success,
+        url: String
+      }
+    end
+  end
+
+  def test_web_scrape_images_required_params
+    skip("Mock server tests are disabled")
+
+    response = @brand_dev.brand.web_scrape_images(url: "https://example.com")
+
+    assert_pattern do
+      response => BrandDev::Models::BrandWebScrapeImagesResponse
+    end
+
+    assert_pattern do
+      response => {
+        images: ^(BrandDev::Internal::Type::ArrayOf[BrandDev::Models::BrandWebScrapeImagesResponse::Image]),
+        success: BrandDev::Models::BrandWebScrapeImagesResponse::Success,
+        url: String
+      }
+    end
+  end
+
+  def test_web_scrape_md_required_params
+    skip("Mock server tests are disabled")
+
+    response = @brand_dev.brand.web_scrape_md(url: "https://example.com")
+
+    assert_pattern do
+      response => BrandDev::Models::BrandWebScrapeMdResponse
+    end
+
+    assert_pattern do
+      response => {
+        markdown: String,
+        success: BrandDev::Models::BrandWebScrapeMdResponse::Success,
+        url: String
+      }
+    end
+  end
+
+  def test_web_scrape_sitemap_required_params
+    skip("Mock server tests are disabled")
+
+    response = @brand_dev.brand.web_scrape_sitemap(domain: "domain")
+
+    assert_pattern do
+      response => BrandDev::Models::BrandWebScrapeSitemapResponse
+    end
+
+    assert_pattern do
+      response => {
+        domain: String,
+        meta: BrandDev::Models::BrandWebScrapeSitemapResponse::Meta,
+        success: BrandDev::Models::BrandWebScrapeSitemapResponse::Success,
+        urls: ^(BrandDev::Internal::Type::ArrayOf[String])
+      }
+    end
+  end
 end
