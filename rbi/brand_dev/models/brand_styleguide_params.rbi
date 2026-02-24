@@ -11,10 +11,21 @@ module BrandDev
           T.any(BrandDev::BrandStyleguideParams, BrandDev::Internal::AnyHash)
         end
 
+      # A specific URL to fetch the styleguide from directly, bypassing domain
+      # resolution (e.g., 'https://example.com/design-system').
+      sig { returns(T.nilable(String)) }
+      attr_reader :direct_url
+
+      sig { params(direct_url: String).void }
+      attr_writer :direct_url
+
       # Domain name to extract styleguide from (e.g., 'example.com', 'google.com'). The
       # domain will be automatically normalized and validated.
-      sig { returns(String) }
-      attr_accessor :domain
+      sig { returns(T.nilable(String)) }
+      attr_reader :domain
+
+      sig { params(domain: String).void }
+      attr_writer :domain
 
       # Optional parameter to prioritize screenshot capture for styleguide extraction.
       # If 'speed', optimizes for faster capture with basic quality. If 'quality',
@@ -45,6 +56,7 @@ module BrandDev
 
       sig do
         params(
+          direct_url: String,
           domain: String,
           prioritize: BrandDev::BrandStyleguideParams::Prioritize::OrSymbol,
           timeout_ms: Integer,
@@ -52,9 +64,12 @@ module BrandDev
         ).returns(T.attached_class)
       end
       def self.new(
+        # A specific URL to fetch the styleguide from directly, bypassing domain
+        # resolution (e.g., 'https://example.com/design-system').
+        direct_url: nil,
         # Domain name to extract styleguide from (e.g., 'example.com', 'google.com'). The
         # domain will be automatically normalized and validated.
-        domain:,
+        domain: nil,
         # Optional parameter to prioritize screenshot capture for styleguide extraction.
         # If 'speed', optimizes for faster capture with basic quality. If 'quality',
         # optimizes for higher quality with longer wait times. Defaults to 'quality' if
@@ -71,6 +86,7 @@ module BrandDev
       sig do
         override.returns(
           {
+            direct_url: String,
             domain: String,
             prioritize: BrandDev::BrandStyleguideParams::Prioritize::OrSymbol,
             timeout_ms: Integer,
