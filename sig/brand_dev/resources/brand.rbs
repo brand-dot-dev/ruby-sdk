@@ -117,7 +117,8 @@ module BrandDev
       ) -> BrandDev::Models::BrandScreenshotResponse
 
       def styleguide: (
-        domain: String,
+        ?direct_url: String,
+        ?domain: String,
         ?prioritize: BrandDev::Models::BrandStyleguideParams::prioritize,
         ?timeout_ms: Integer,
         ?request_options: BrandDev::request_opts
