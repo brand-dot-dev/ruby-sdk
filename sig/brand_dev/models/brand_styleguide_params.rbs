@@ -2,6 +2,7 @@ module BrandDev
   module Models
     type brand_styleguide_params =
       {
+        direct_url: String,
         domain: String,
         prioritize: BrandDev::Models::BrandStyleguideParams::prioritize,
         timeout_ms: Integer
@@ -12,7 +13,13 @@ module BrandDev
       extend BrandDev::Internal::Type::RequestParameters::Converter
       include BrandDev::Internal::Type::RequestParameters
 
-      attr_accessor domain: String
+      attr_reader direct_url: String?
+
+      def direct_url=: (String) -> String
+
+      attr_reader domain: String?
+
+      def domain=: (String) -> String
 
       attr_reader prioritize: BrandDev::Models::BrandStyleguideParams::prioritize?
 
@@ -25,13 +32,15 @@ module BrandDev
       def timeout_ms=: (Integer) -> Integer
 
       def initialize: (
-        domain: String,
+        ?direct_url: String,
+        ?domain: String,
         ?prioritize: BrandDev::Models::BrandStyleguideParams::prioritize,
         ?timeout_ms: Integer,
         ?request_options: BrandDev::request_opts
       ) -> void
 
       def to_hash: -> {
+        direct_url: String,
         domain: String,
         prioritize: BrandDev::Models::BrandStyleguideParams::prioritize,
         timeout_ms: Integer,

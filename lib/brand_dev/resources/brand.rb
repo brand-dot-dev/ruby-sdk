@@ -496,8 +496,12 @@ module BrandDev
       #
       # Automatically extract comprehensive design system information from a brand's
       # website including colors, typography, spacing, shadows, and UI components.
+      # Either 'domain' or 'directUrl' must be provided as a query parameter, but not
+      # both.
       #
-      # @overload styleguide(domain:, prioritize: nil, timeout_ms: nil, request_options: {})
+      # @overload styleguide(direct_url: nil, domain: nil, prioritize: nil, timeout_ms: nil, request_options: {})
+      #
+      # @param direct_url [String] A specific URL to fetch the styleguide from directly, bypassing domain resolutio
       #
       # @param domain [String] Domain name to extract styleguide from (e.g., 'example.com', 'google.com'). The
       #
@@ -510,12 +514,12 @@ module BrandDev
       # @return [BrandDev::Models::BrandStyleguideResponse]
       #
       # @see BrandDev::Models::BrandStyleguideParams
-      def styleguide(params)
+      def styleguide(params = {})
         parsed, options = BrandDev::BrandStyleguideParams.dump_request(params)
         @client.request(
           method: :get,
           path: "brand/styleguide",
-          query: parsed.transform_keys(timeout_ms: "timeoutMS"),
+          query: parsed.transform_keys(direct_url: "directUrl", timeout_ms: "timeoutMS"),
           model: BrandDev::Models::BrandStyleguideResponse,
           options: options
         )
