@@ -6,6 +6,7 @@ module BrandDev
         city: String,
         country_gl: BrandDev::Models::BrandIdentifyFromTransactionParams::country_gl,
         force_language: BrandDev::Models::BrandIdentifyFromTransactionParams::force_language,
+        high_confidence_only: bool,
         max_speed: bool,
         mcc: String,
         phone: Float,
@@ -35,6 +36,10 @@ module BrandDev
         BrandDev::Models::BrandIdentifyFromTransactionParams::force_language
       ) -> BrandDev::Models::BrandIdentifyFromTransactionParams::force_language
 
+      attr_reader high_confidence_only: bool?
+
+      def high_confidence_only=: (bool) -> bool
+
       attr_reader max_speed: bool?
 
       def max_speed=: (bool) -> bool
@@ -56,6 +61,7 @@ module BrandDev
         ?city: String,
         ?country_gl: BrandDev::Models::BrandIdentifyFromTransactionParams::country_gl,
         ?force_language: BrandDev::Models::BrandIdentifyFromTransactionParams::force_language,
+        ?high_confidence_only: bool,
         ?max_speed: bool,
         ?mcc: String,
         ?phone: Float,
@@ -68,6 +74,7 @@ module BrandDev
         city: String,
         country_gl: BrandDev::Models::BrandIdentifyFromTransactionParams::country_gl,
         force_language: BrandDev::Models::BrandIdentifyFromTransactionParams::force_language,
+        high_confidence_only: bool,
         max_speed: bool,
         mcc: String,
         phone: Float,

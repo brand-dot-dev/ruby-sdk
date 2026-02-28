@@ -32,6 +32,14 @@ module BrandDev
       #   @return [Symbol, BrandDev::Models::BrandIdentifyFromTransactionParams::ForceLanguage, nil]
       optional :force_language, enum: -> { BrandDev::BrandIdentifyFromTransactionParams::ForceLanguage }
 
+      # @!attribute high_confidence_only
+      #   When set to true, the API will perform an additional verification steps to
+      #   ensure the identified brand matches the transaction with high confidence.
+      #   Defaults to false.
+      #
+      #   @return [Boolean, nil]
+      optional :high_confidence_only, BrandDev::Internal::Type::Boolean
+
       # @!attribute max_speed
       #   Optional parameter to optimize the API call for maximum speed. When set to true,
       #   the API will skip time-consuming operations for faster response at the cost of
@@ -61,7 +69,7 @@ module BrandDev
       #   @return [Integer, nil]
       optional :timeout_ms, Integer
 
-      # @!method initialize(transaction_info:, city: nil, country_gl: nil, force_language: nil, max_speed: nil, mcc: nil, phone: nil, timeout_ms: nil, request_options: {})
+      # @!method initialize(transaction_info:, city: nil, country_gl: nil, force_language: nil, high_confidence_only: nil, max_speed: nil, mcc: nil, phone: nil, timeout_ms: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
       #   {BrandDev::Models::BrandIdentifyFromTransactionParams} for more details.
       #
@@ -72,6 +80,8 @@ module BrandDev
       #   @param country_gl [Symbol, BrandDev::Models::BrandIdentifyFromTransactionParams::CountryGl] Optional country code (GL parameter) to specify the country. This affects the ge
       #
       #   @param force_language [Symbol, BrandDev::Models::BrandIdentifyFromTransactionParams::ForceLanguage] Optional parameter to force the language of the retrieved brand data.
+      #
+      #   @param high_confidence_only [Boolean] When set to true, the API will perform an additional verification steps to ensur
       #
       #   @param max_speed [Boolean] Optional parameter to optimize the API call for maximum speed. When set to true,
       #

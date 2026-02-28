@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.28.0 (2026-02-28)
+
+Full Changelog: [v0.27.0...v0.28.0](https://github.com/brand-dot-dev/ruby-sdk/compare/v0.27.0...v0.28.0)
+
+### Features
+
+* **api:** api update ([2a8660e](https://github.com/brand-dot-dev/ruby-sdk/commit/2a8660ed1f64a46657919b4d7cd314ea47e4d8c6))
+
+
+### Bug Fixes
+
+* properly mock time in ruby ci tests ([3d3021f](https://github.com/brand-dot-dev/ruby-sdk/commit/3d3021f8b4b775084459fa5559e9dec7d856b4be))
+
 ## 0.27.0 (2026-02-24)
 
 Full Changelog: [v0.26.0...v0.27.0](https://github.com/brand-dot-dev/ruby-sdk/compare/v0.26.0...v0.27.0)

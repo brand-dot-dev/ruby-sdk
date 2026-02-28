@@ -42,6 +42,7 @@ module BrandDev
         ?city: String,
         ?country_gl: BrandDev::Models::BrandIdentifyFromTransactionParams::country_gl,
         ?force_language: BrandDev::Models::BrandIdentifyFromTransactionParams::force_language,
+        ?high_confidence_only: bool,
         ?max_speed: bool,
         ?mcc: String,
         ?phone: Float,

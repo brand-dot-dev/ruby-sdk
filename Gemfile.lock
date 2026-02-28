@@ -11,7 +11,7 @@ GIT
 PATH
   remote: .
   specs:
-    brand.dev (0.27.0)
+    brand.dev (0.28.0)
       cgi
       connection_pool
 
