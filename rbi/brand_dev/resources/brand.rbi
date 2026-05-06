@@ -370,18 +370,27 @@ module BrandDev
       )
       end
 
-      # Scrapes all images from the given URL. Extracts images from img, svg,
-      # picture/source, link, and video elements including inline SVGs, base64 data
-      # URIs, and standard URLs.
+      # Extract image assets from a web page, including standard URLs, inline SVGs, data
+      # URIs, responsive image sources, metadata, CSS backgrounds, video posters, and
+      # embeds. The base request costs 1 credit; enrichment costs 1 credit per returned
+      # image.
       sig do
         params(
           url: String,
+          enrichment: BrandDev::BrandWebScrapeImagesParams::Enrichment::OrHash,
+          max_age_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(BrandDev::Models::BrandWebScrapeImagesResponse)
       end
       def web_scrape_images(
-        # Full URL to scrape images from (must include http:// or https:// protocol)
+        # Page URL to inspect. Must include http:// or https://.
         url:,
+        # Optional per-image processing, sent as deep-object query params such as
+        # enrichment[resolution]=true.
+        enrichment: nil,
+        # Reuse a cached result this many milliseconds old or newer. Default: 86400000 (1
+        # day). Set to 0 to bypass cache. Maximum: 2592000000 (30 days).
+        max_age_ms: nil,
         request_options: {}
       )
       end

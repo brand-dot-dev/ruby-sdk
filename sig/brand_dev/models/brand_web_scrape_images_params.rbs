@@ -1,7 +1,12 @@
 module BrandDev
   module Models
     type brand_web_scrape_images_params =
-      { url: String } & BrandDev::Internal::Type::request_parameters
+      {
+        url: String,
+        enrichment: BrandDev::BrandWebScrapeImagesParams::Enrichment,
+        max_age_ms: Integer
+      }
+      & BrandDev::Internal::Type::request_parameters
 
     class BrandWebScrapeImagesParams < BrandDev::Internal::Type::BaseModel
       extend BrandDev::Internal::Type::RequestParameters::Converter
@@ -9,12 +14,69 @@ module BrandDev
 
       attr_accessor url: String
 
+      attr_reader enrichment: BrandDev::BrandWebScrapeImagesParams::Enrichment?
+
+      def enrichment=: (
+        BrandDev::BrandWebScrapeImagesParams::Enrichment
+      ) -> BrandDev::BrandWebScrapeImagesParams::Enrichment
+
+      attr_reader max_age_ms: Integer?
+
+      def max_age_ms=: (Integer) -> Integer
+
       def initialize: (
         url: String,
+        ?enrichment: BrandDev::BrandWebScrapeImagesParams::Enrichment,
+        ?max_age_ms: Integer,
         ?request_options: BrandDev::request_opts
       ) -> void
 
-      def to_hash: -> { url: String, request_options: BrandDev::RequestOptions }
+      def to_hash: -> {
+        url: String,
+        enrichment: BrandDev::BrandWebScrapeImagesParams::Enrichment,
+        max_age_ms: Integer,
+        request_options: BrandDev::RequestOptions
+      }
+
+      type enrichment =
+        {
+          classification: bool,
+          hosted_url: bool,
+          max_time_per_ms: Integer,
+          resolution: bool
+        }
+
+      class Enrichment < BrandDev::Internal::Type::BaseModel
+        attr_reader classification: bool?
+
+        def classification=: (bool) -> bool
+
+        attr_reader hosted_url: bool?
+
+        def hosted_url=: (bool) -> bool
+
+        attr_reader max_time_per_ms: Integer?
+
+        def max_time_per_ms=: (Integer) -> Integer
+
+        attr_reader resolution: bool?
+
+        def resolution=: (bool) -> bool
+
+        def initialize: (
+          ?classification: bool,
+          ?hosted_url: bool,
+          ?max_time_per_ms: Integer,
+          ?resolution: bool
+        ) -> void
+
+        def to_hash: -> {
+          classification: bool,
+          hosted_url: bool,
+          max_time_per_ms: Integer,
+          resolution: bool
+        }
+      end
     end
   end
 end
