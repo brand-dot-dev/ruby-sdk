@@ -27,6 +27,15 @@ module BrandDev
       #   @return [Symbol, BrandDev::Models::BrandRetrieveByNameParams::ForceLanguage, nil]
       optional :force_language, enum: -> { BrandDev::BrandRetrieveByNameParams::ForceLanguage }
 
+      # @!attribute max_age_ms
+      #   Maximum age in milliseconds for cached brand data before the API performs a hard
+      #   refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
+      #   are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
+      #   year.
+      #
+      #   @return [Integer, nil]
+      optional :max_age_ms, Integer
+
       # @!attribute max_speed
       #   Optional parameter to optimize the API call for maximum speed. When set to true,
       #   the API will skip time-consuming operations for faster response at the cost of
@@ -43,7 +52,7 @@ module BrandDev
       #   @return [Integer, nil]
       optional :timeout_ms, Integer
 
-      # @!method initialize(name:, country_gl: nil, force_language: nil, max_speed: nil, timeout_ms: nil, request_options: {})
+      # @!method initialize(name:, country_gl: nil, force_language: nil, max_age_ms: nil, max_speed: nil, timeout_ms: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
       #   {BrandDev::Models::BrandRetrieveByNameParams} for more details.
       #
@@ -52,6 +61,8 @@ module BrandDev
       #   @param country_gl [Symbol, BrandDev::Models::BrandRetrieveByNameParams::CountryGl] Optional country code hint (GL parameter) to specify the country for the company
       #
       #   @param force_language [Symbol, BrandDev::Models::BrandRetrieveByNameParams::ForceLanguage] Optional parameter to force the language of the retrieved brand data.
+      #
+      #   @param max_age_ms [Integer] Maximum age in milliseconds for cached brand data before the API performs a hard
       #
       #   @param max_speed [Boolean] Optional parameter to optimize the API call for maximum speed. When set to true,
       #

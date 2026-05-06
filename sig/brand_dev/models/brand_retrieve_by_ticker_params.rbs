@@ -4,6 +4,7 @@ module BrandDev
       {
         ticker: String,
         force_language: BrandDev::Models::BrandRetrieveByTickerParams::force_language,
+        max_age_ms: Integer,
         max_speed: bool,
         ticker_exchange: BrandDev::Models::BrandRetrieveByTickerParams::ticker_exchange,
         timeout_ms: Integer
@@ -22,6 +23,10 @@ module BrandDev
         BrandDev::Models::BrandRetrieveByTickerParams::force_language
       ) -> BrandDev::Models::BrandRetrieveByTickerParams::force_language
 
+      attr_reader max_age_ms: Integer?
+
+      def max_age_ms=: (Integer) -> Integer
+
       attr_reader max_speed: bool?
 
       def max_speed=: (bool) -> bool
@@ -39,6 +44,7 @@ module BrandDev
       def initialize: (
         ticker: String,
         ?force_language: BrandDev::Models::BrandRetrieveByTickerParams::force_language,
+        ?max_age_ms: Integer,
         ?max_speed: bool,
         ?ticker_exchange: BrandDev::Models::BrandRetrieveByTickerParams::ticker_exchange,
         ?timeout_ms: Integer,
@@ -48,6 +54,7 @@ module BrandDev
       def to_hash: -> {
         ticker: String,
         force_language: BrandDev::Models::BrandRetrieveByTickerParams::force_language,
+        max_age_ms: Integer,
         max_speed: bool,
         ticker_exchange: BrandDev::Models::BrandRetrieveByTickerParams::ticker_exchange,
         timeout_ms: Integer,

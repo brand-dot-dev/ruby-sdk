@@ -1,7 +1,7 @@
 module BrandDev
   module Models
     type brand_retrieve_simplified_params =
-      { domain: String, timeout_ms: Integer }
+      { domain: String, max_age_ms: Integer, timeout_ms: Integer }
       & BrandDev::Internal::Type::request_parameters
 
     class BrandRetrieveSimplifiedParams < BrandDev::Internal::Type::BaseModel
@@ -10,18 +10,24 @@ module BrandDev
 
       attr_accessor domain: String
 
+      attr_reader max_age_ms: Integer?
+
+      def max_age_ms=: (Integer) -> Integer
+
       attr_reader timeout_ms: Integer?
 
       def timeout_ms=: (Integer) -> Integer
 
       def initialize: (
         domain: String,
+        ?max_age_ms: Integer,
         ?timeout_ms: Integer,
         ?request_options: BrandDev::request_opts
       ) -> void
 
       def to_hash: -> {
         domain: String,
+        max_age_ms: Integer,
         timeout_ms: Integer,
         request_options: BrandDev::RequestOptions
       }
