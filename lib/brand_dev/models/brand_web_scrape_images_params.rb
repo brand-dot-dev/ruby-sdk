@@ -54,7 +54,7 @@ module BrandDev
         optional :hosted_url, BrandDev::Internal::Type::Boolean, api_name: :hostedUrl
 
         # @!attribute max_time_per_ms
-        #   Per-image enrichment timeout in milliseconds. Default: 6000. Maximum: 60000.
+        #   Per-image enrichment timeout in milliseconds. Default: 30000. Maximum: 60000.
         #
         #   @return [Integer, nil]
         optional :max_time_per_ms, Integer, api_name: :maxTimePerMs
@@ -76,7 +76,7 @@ module BrandDev
         #
         #   @param hosted_url [Boolean] Host materializable images on the Brand.dev CDN and return their URL and MIME ty
         #
-        #   @param max_time_per_ms [Integer] Per-image enrichment timeout in milliseconds. Default: 6000. Maximum: 60000.
+        #   @param max_time_per_ms [Integer] Per-image enrichment timeout in milliseconds. Default: 30000. Maximum: 60000.
         #
         #   @param resolution [Boolean] Measure image width and height when possible.
       end

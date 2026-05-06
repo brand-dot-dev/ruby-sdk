@@ -98,7 +98,7 @@ module BrandDev
         sig { params(hosted_url: T::Boolean).void }
         attr_writer :hosted_url
 
-        # Per-image enrichment timeout in milliseconds. Default: 6000. Maximum: 60000.
+        # Per-image enrichment timeout in milliseconds. Default: 30000. Maximum: 60000.
         sig { returns(T.nilable(Integer)) }
         attr_reader :max_time_per_ms
 
@@ -128,7 +128,7 @@ module BrandDev
           # Host materializable images on the Brand.dev CDN and return their URL and MIME
           # type.
           hosted_url: nil,
-          # Per-image enrichment timeout in milliseconds. Default: 6000. Maximum: 60000.
+          # Per-image enrichment timeout in milliseconds. Default: 30000. Maximum: 60000.
           max_time_per_ms: nil,
           # Measure image width and height when possible.
           resolution: nil

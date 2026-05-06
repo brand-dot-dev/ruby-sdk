@@ -18,6 +18,16 @@ module BrandDev
       sig { returns(String) }
       attr_accessor :domain
 
+      # Maximum age in milliseconds for cached brand data before the API performs a hard
+      # refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
+      # are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
+      # year.
+      sig { returns(T.nilable(Integer)) }
+      attr_reader :max_age_ms
+
+      sig { params(max_age_ms: Integer).void }
+      attr_writer :max_age_ms
+
       # Optional timeout in milliseconds for the request. If the request takes longer
       # than this value, it will be aborted with a 408 status code. Maximum allowed
       # value is 300000ms (5 minutes).
@@ -30,6 +40,7 @@ module BrandDev
       sig do
         params(
           domain: String,
+          max_age_ms: Integer,
           timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(T.attached_class)
@@ -37,6 +48,11 @@ module BrandDev
       def self.new(
         # Domain name to retrieve simplified brand data for
         domain:,
+        # Maximum age in milliseconds for cached brand data before the API performs a hard
+        # refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
+        # are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
+        # year.
+        max_age_ms: nil,
         # Optional timeout in milliseconds for the request. If the request takes longer
         # than this value, it will be aborted with a 408 status code. Maximum allowed
         # value is 300000ms (5 minutes).
@@ -49,6 +65,7 @@ module BrandDev
         override.returns(
           {
             domain: String,
+            max_age_ms: Integer,
             timeout_ms: Integer,
             request_options: BrandDev::RequestOptions
           }

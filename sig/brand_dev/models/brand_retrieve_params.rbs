@@ -4,6 +4,7 @@ module BrandDev
       {
         domain: String,
         force_language: BrandDev::Models::BrandRetrieveParams::force_language,
+        max_age_ms: Integer,
         max_speed: bool,
         timeout_ms: Integer
       }
@@ -21,6 +22,10 @@ module BrandDev
         BrandDev::Models::BrandRetrieveParams::force_language
       ) -> BrandDev::Models::BrandRetrieveParams::force_language
 
+      attr_reader max_age_ms: Integer?
+
+      def max_age_ms=: (Integer) -> Integer
+
       attr_reader max_speed: bool?
 
       def max_speed=: (bool) -> bool
@@ -32,6 +37,7 @@ module BrandDev
       def initialize: (
         domain: String,
         ?force_language: BrandDev::Models::BrandRetrieveParams::force_language,
+        ?max_age_ms: Integer,
         ?max_speed: bool,
         ?timeout_ms: Integer,
         ?request_options: BrandDev::request_opts
@@ -40,6 +46,7 @@ module BrandDev
       def to_hash: -> {
         domain: String,
         force_language: BrandDev::Models::BrandRetrieveParams::force_language,
+        max_age_ms: Integer,
         max_speed: bool,
         timeout_ms: Integer,
         request_options: BrandDev::RequestOptions

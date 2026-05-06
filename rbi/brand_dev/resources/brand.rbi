@@ -10,6 +10,7 @@ module BrandDev
           domain: String,
           force_language:
             BrandDev::BrandRetrieveParams::ForceLanguage::OrSymbol,
+          max_age_ms: Integer,
           max_speed: T::Boolean,
           timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
@@ -21,6 +22,11 @@ module BrandDev
         domain:,
         # Optional parameter to force the language of the retrieved brand data.
         force_language: nil,
+        # Maximum age in milliseconds for cached brand data before the API performs a hard
+        # refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
+        # are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
+        # year.
+        max_age_ms: nil,
         # Optional parameter to optimize the API call for maximum speed. When set to true,
         # the API will skip time-consuming operations for faster response at the cost of
         # less comprehensive data. Works with all three lookup methods.
@@ -201,6 +207,7 @@ module BrandDev
           email: String,
           force_language:
             BrandDev::BrandRetrieveByEmailParams::ForceLanguage::OrSymbol,
+          max_age_ms: Integer,
           max_speed: T::Boolean,
           timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
@@ -213,6 +220,11 @@ module BrandDev
         email:,
         # Optional parameter to force the language of the retrieved brand data.
         force_language: nil,
+        # Maximum age in milliseconds for cached brand data before the API performs a hard
+        # refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
+        # are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
+        # year.
+        max_age_ms: nil,
         # Optional parameter to optimize the API call for maximum speed. When set to true,
         # the API will skip time-consuming operations for faster response at the cost of
         # less comprehensive data.
@@ -232,6 +244,7 @@ module BrandDev
           isin: String,
           force_language:
             BrandDev::BrandRetrieveByIsinParams::ForceLanguage::OrSymbol,
+          max_age_ms: Integer,
           max_speed: T::Boolean,
           timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
@@ -244,6 +257,11 @@ module BrandDev
         isin:,
         # Optional parameter to force the language of the retrieved brand data.
         force_language: nil,
+        # Maximum age in milliseconds for cached brand data before the API performs a hard
+        # refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
+        # are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
+        # year.
+        max_age_ms: nil,
         # Optional parameter to optimize the API call for maximum speed. When set to true,
         # the API will skip time-consuming operations for faster response at the cost of
         # less comprehensive data.
@@ -263,6 +281,7 @@ module BrandDev
           country_gl: BrandDev::BrandRetrieveByNameParams::CountryGl::OrSymbol,
           force_language:
             BrandDev::BrandRetrieveByNameParams::ForceLanguage::OrSymbol,
+          max_age_ms: Integer,
           max_speed: T::Boolean,
           timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
@@ -277,6 +296,11 @@ module BrandDev
         country_gl: nil,
         # Optional parameter to force the language of the retrieved brand data.
         force_language: nil,
+        # Maximum age in milliseconds for cached brand data before the API performs a hard
+        # refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
+        # are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
+        # year.
+        max_age_ms: nil,
         # Optional parameter to optimize the API call for maximum speed. When set to true,
         # the API will skip time-consuming operations for faster response at the cost of
         # less comprehensive data.
@@ -295,6 +319,7 @@ module BrandDev
           ticker: String,
           force_language:
             BrandDev::BrandRetrieveByTickerParams::ForceLanguage::OrSymbol,
+          max_age_ms: Integer,
           max_speed: T::Boolean,
           ticker_exchange:
             BrandDev::BrandRetrieveByTickerParams::TickerExchange::OrSymbol,
@@ -308,6 +333,11 @@ module BrandDev
         ticker:,
         # Optional parameter to force the language of the retrieved brand data.
         force_language: nil,
+        # Maximum age in milliseconds for cached brand data before the API performs a hard
+        # refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
+        # are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
+        # year.
+        max_age_ms: nil,
         # Optional parameter to optimize the API call for maximum speed. When set to true,
         # the API will skip time-consuming operations for faster response at the cost of
         # less comprehensive data.
@@ -328,6 +358,7 @@ module BrandDev
       sig do
         params(
           domain: String,
+          max_age_ms: Integer,
           timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(BrandDev::Models::BrandRetrieveSimplifiedResponse)
@@ -335,6 +366,11 @@ module BrandDev
       def retrieve_simplified(
         # Domain name to retrieve simplified brand data for
         domain:,
+        # Maximum age in milliseconds for cached brand data before the API performs a hard
+        # refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
+        # are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
+        # year.
+        max_age_ms: nil,
         # Optional timeout in milliseconds for the request. If the request takes longer
         # than this value, it will be aborted with a 408 status code. Maximum allowed
         # value is 300000ms (5 minutes).

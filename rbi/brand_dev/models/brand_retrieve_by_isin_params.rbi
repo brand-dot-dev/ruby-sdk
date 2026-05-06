@@ -38,6 +38,16 @@ module BrandDev
       end
       attr_writer :force_language
 
+      # Maximum age in milliseconds for cached brand data before the API performs a hard
+      # refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
+      # are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
+      # year.
+      sig { returns(T.nilable(Integer)) }
+      attr_reader :max_age_ms
+
+      sig { params(max_age_ms: Integer).void }
+      attr_writer :max_age_ms
+
       # Optional parameter to optimize the API call for maximum speed. When set to true,
       # the API will skip time-consuming operations for faster response at the cost of
       # less comprehensive data.
@@ -61,6 +71,7 @@ module BrandDev
           isin: String,
           force_language:
             BrandDev::BrandRetrieveByIsinParams::ForceLanguage::OrSymbol,
+          max_age_ms: Integer,
           max_speed: T::Boolean,
           timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
@@ -73,6 +84,11 @@ module BrandDev
         isin:,
         # Optional parameter to force the language of the retrieved brand data.
         force_language: nil,
+        # Maximum age in milliseconds for cached brand data before the API performs a hard
+        # refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
+        # are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
+        # year.
+        max_age_ms: nil,
         # Optional parameter to optimize the API call for maximum speed. When set to true,
         # the API will skip time-consuming operations for faster response at the cost of
         # less comprehensive data.
@@ -91,6 +107,7 @@ module BrandDev
             isin: String,
             force_language:
               BrandDev::BrandRetrieveByIsinParams::ForceLanguage::OrSymbol,
+            max_age_ms: Integer,
             max_speed: T::Boolean,
             timeout_ms: Integer,
             request_options: BrandDev::RequestOptions

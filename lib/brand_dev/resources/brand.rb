@@ -9,11 +9,13 @@ module BrandDev
       # Retrieve logos, backdrops, colors, industry, description, and more from any
       # domain
       #
-      # @overload retrieve(domain:, force_language: nil, max_speed: nil, timeout_ms: nil, request_options: {})
+      # @overload retrieve(domain:, force_language: nil, max_age_ms: nil, max_speed: nil, timeout_ms: nil, request_options: {})
       #
       # @param domain [String] Domain name to retrieve brand data for (e.g., 'example.com', 'google.com'). Cann
       #
       # @param force_language [Symbol, BrandDev::Models::BrandRetrieveParams::ForceLanguage] Optional parameter to force the language of the retrieved brand data.
+      #
+      # @param max_age_ms [Integer] Maximum age in milliseconds for cached brand data before the API performs a hard
       #
       # @param max_speed [Boolean] Optional parameter to optimize the API call for maximum speed. When set to true,
       #
@@ -30,7 +32,7 @@ module BrandDev
         @client.request(
           method: :get,
           path: "brand/retrieve",
-          query: query.transform_keys(max_speed: "maxSpeed", timeout_ms: "timeoutMS"),
+          query: query.transform_keys(max_age_ms: "maxAgeMs", max_speed: "maxSpeed", timeout_ms: "timeoutMS"),
           model: BrandDev::Models::BrandRetrieveResponse,
           options: options
         )
@@ -230,11 +232,13 @@ module BrandDev
       # free email addresses. Disposable and free email addresses (like gmail.com,
       # yahoo.com) will throw a 422 error.
       #
-      # @overload retrieve_by_email(email:, force_language: nil, max_speed: nil, timeout_ms: nil, request_options: {})
+      # @overload retrieve_by_email(email:, force_language: nil, max_age_ms: nil, max_speed: nil, timeout_ms: nil, request_options: {})
       #
       # @param email [String] Email address to retrieve brand data for (e.g., 'contact@example.com'). The doma
       #
       # @param force_language [Symbol, BrandDev::Models::BrandRetrieveByEmailParams::ForceLanguage] Optional parameter to force the language of the retrieved brand data.
+      #
+      # @param max_age_ms [Integer] Maximum age in milliseconds for cached brand data before the API performs a hard
       #
       # @param max_speed [Boolean] Optional parameter to optimize the API call for maximum speed. When set to true,
       #
@@ -251,7 +255,7 @@ module BrandDev
         @client.request(
           method: :get,
           path: "brand/retrieve-by-email",
-          query: query.transform_keys(max_speed: "maxSpeed", timeout_ms: "timeoutMS"),
+          query: query.transform_keys(max_age_ms: "maxAgeMs", max_speed: "maxSpeed", timeout_ms: "timeoutMS"),
           model: BrandDev::Models::BrandRetrieveByEmailResponse,
           options: options
         )
@@ -263,11 +267,13 @@ module BrandDev
       # Retrieve brand information using an ISIN (International Securities
       # Identification Number).
       #
-      # @overload retrieve_by_isin(isin:, force_language: nil, max_speed: nil, timeout_ms: nil, request_options: {})
+      # @overload retrieve_by_isin(isin:, force_language: nil, max_age_ms: nil, max_speed: nil, timeout_ms: nil, request_options: {})
       #
       # @param isin [String] ISIN (International Securities Identification Number) to retrieve brand data for
       #
       # @param force_language [Symbol, BrandDev::Models::BrandRetrieveByIsinParams::ForceLanguage] Optional parameter to force the language of the retrieved brand data.
+      #
+      # @param max_age_ms [Integer] Maximum age in milliseconds for cached brand data before the API performs a hard
       #
       # @param max_speed [Boolean] Optional parameter to optimize the API call for maximum speed. When set to true,
       #
@@ -284,7 +290,7 @@ module BrandDev
         @client.request(
           method: :get,
           path: "brand/retrieve-by-isin",
-          query: query.transform_keys(max_speed: "maxSpeed", timeout_ms: "timeoutMS"),
+          query: query.transform_keys(max_age_ms: "maxAgeMs", max_speed: "maxSpeed", timeout_ms: "timeoutMS"),
           model: BrandDev::Models::BrandRetrieveByIsinResponse,
           options: options
         )
@@ -295,13 +301,15 @@ module BrandDev
       #
       # Retrieve brand information using a company name.
       #
-      # @overload retrieve_by_name(name:, country_gl: nil, force_language: nil, max_speed: nil, timeout_ms: nil, request_options: {})
+      # @overload retrieve_by_name(name:, country_gl: nil, force_language: nil, max_age_ms: nil, max_speed: nil, timeout_ms: nil, request_options: {})
       #
       # @param name [String] Company name to retrieve brand data for (e.g., 'Apple Inc', 'Microsoft Corporati
       #
       # @param country_gl [Symbol, BrandDev::Models::BrandRetrieveByNameParams::CountryGl] Optional country code hint (GL parameter) to specify the country for the company
       #
       # @param force_language [Symbol, BrandDev::Models::BrandRetrieveByNameParams::ForceLanguage] Optional parameter to force the language of the retrieved brand data.
+      #
+      # @param max_age_ms [Integer] Maximum age in milliseconds for cached brand data before the API performs a hard
       #
       # @param max_speed [Boolean] Optional parameter to optimize the API call for maximum speed. When set to true,
       #
@@ -318,7 +326,7 @@ module BrandDev
         @client.request(
           method: :get,
           path: "brand/retrieve-by-name",
-          query: query.transform_keys(max_speed: "maxSpeed", timeout_ms: "timeoutMS"),
+          query: query.transform_keys(max_age_ms: "maxAgeMs", max_speed: "maxSpeed", timeout_ms: "timeoutMS"),
           model: BrandDev::Models::BrandRetrieveByNameResponse,
           options: options
         )
@@ -329,11 +337,13 @@ module BrandDev
       #
       # Retrieve brand information using a stock ticker symbol.
       #
-      # @overload retrieve_by_ticker(ticker:, force_language: nil, max_speed: nil, ticker_exchange: nil, timeout_ms: nil, request_options: {})
+      # @overload retrieve_by_ticker(ticker:, force_language: nil, max_age_ms: nil, max_speed: nil, ticker_exchange: nil, timeout_ms: nil, request_options: {})
       #
       # @param ticker [String] Stock ticker symbol to retrieve brand data for (e.g., 'AAPL', 'GOOGL', 'BRK.A').
       #
       # @param force_language [Symbol, BrandDev::Models::BrandRetrieveByTickerParams::ForceLanguage] Optional parameter to force the language of the retrieved brand data.
+      #
+      # @param max_age_ms [Integer] Maximum age in milliseconds for cached brand data before the API performs a hard
       #
       # @param max_speed [Boolean] Optional parameter to optimize the API call for maximum speed. When set to true,
       #
@@ -352,7 +362,7 @@ module BrandDev
         @client.request(
           method: :get,
           path: "brand/retrieve-by-ticker",
-          query: query.transform_keys(max_speed: "maxSpeed", timeout_ms: "timeoutMS"),
+          query: query.transform_keys(max_age_ms: "maxAgeMs", max_speed: "maxSpeed", timeout_ms: "timeoutMS"),
           model: BrandDev::Models::BrandRetrieveByTickerResponse,
           options: options
         )
@@ -365,9 +375,11 @@ module BrandDev
       # information: domain, title, colors, logos, and backdrops. Optimized for faster
       # responses and reduced data transfer.
       #
-      # @overload retrieve_simplified(domain:, timeout_ms: nil, request_options: {})
+      # @overload retrieve_simplified(domain:, max_age_ms: nil, timeout_ms: nil, request_options: {})
       #
       # @param domain [String] Domain name to retrieve simplified brand data for
+      #
+      # @param max_age_ms [Integer] Maximum age in milliseconds for cached brand data before the API performs a hard
       #
       # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #
@@ -382,7 +394,7 @@ module BrandDev
         @client.request(
           method: :get,
           path: "brand/retrieve-simplified",
-          query: query.transform_keys(timeout_ms: "timeoutMS"),
+          query: query.transform_keys(max_age_ms: "maxAgeMs", timeout_ms: "timeoutMS"),
           model: BrandDev::Models::BrandRetrieveSimplifiedResponse,
           options: options
         )
