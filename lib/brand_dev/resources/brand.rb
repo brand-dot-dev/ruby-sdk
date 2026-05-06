@@ -424,13 +424,21 @@ module BrandDev
         )
       end
 
-      # Scrapes all images from the given URL. Extracts images from img, svg,
-      # picture/source, link, and video elements including inline SVGs, base64 data
-      # URIs, and standard URLs.
+      # Some parameter documentations has been truncated, see
+      # {BrandDev::Models::BrandWebScrapeImagesParams} for more details.
       #
-      # @overload web_scrape_images(url:, request_options: {})
+      # Extract image assets from a web page, including standard URLs, inline SVGs, data
+      # URIs, responsive image sources, metadata, CSS backgrounds, video posters, and
+      # embeds. The base request costs 1 credit; enrichment costs 1 credit per returned
+      # image.
       #
-      # @param url [String] Full URL to scrape images from (must include http:// or https:// protocol)
+      # @overload web_scrape_images(url:, enrichment: nil, max_age_ms: nil, request_options: {})
+      #
+      # @param url [String] Page URL to inspect. Must include http:// or https://.
+      #
+      # @param enrichment [BrandDev::Models::BrandWebScrapeImagesParams::Enrichment] Optional per-image processing, sent as deep-object query params such as enrichme
+      #
+      # @param max_age_ms [Integer] Reuse a cached result this many milliseconds old or newer. Default: 86400000 (1
       #
       # @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}, nil]
       #
@@ -443,7 +451,7 @@ module BrandDev
         @client.request(
           method: :get,
           path: "web/scrape/images",
-          query: query,
+          query: query.transform_keys(max_age_ms: "maxAgeMs"),
           model: BrandDev::Models::BrandWebScrapeImagesResponse,
           options: options
         )

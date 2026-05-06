@@ -5,66 +5,74 @@ module BrandDev
     # @see BrandDev::Resources::Brand#web_scrape_images
     class BrandWebScrapeImagesResponse < BrandDev::Internal::Type::BaseModel
       # @!attribute images
-      #   Array of scraped images
+      #   Images found on the page.
       #
       #   @return [Array<BrandDev::Models::BrandWebScrapeImagesResponse::Image>]
       required :images,
                -> { BrandDev::Internal::Type::ArrayOf[BrandDev::Models::BrandWebScrapeImagesResponse::Image] }
 
       # @!attribute success
-      #   Indicates success
+      #   Always true on success.
       #
       #   @return [Boolean, BrandDev::Models::BrandWebScrapeImagesResponse::Success]
       required :success, enum: -> { BrandDev::Models::BrandWebScrapeImagesResponse::Success }
 
       # @!attribute url
-      #   The URL that was scraped
+      #   Page URL that was scraped.
       #
       #   @return [String]
       required :url, String
 
       # @!method initialize(images:, success:, url:)
-      #   @param images [Array<BrandDev::Models::BrandWebScrapeImagesResponse::Image>] Array of scraped images
+      #   @param images [Array<BrandDev::Models::BrandWebScrapeImagesResponse::Image>] Images found on the page.
       #
-      #   @param success [Boolean, BrandDev::Models::BrandWebScrapeImagesResponse::Success] Indicates success
+      #   @param success [Boolean, BrandDev::Models::BrandWebScrapeImagesResponse::Success] Always true on success.
       #
-      #   @param url [String] The URL that was scraped
+      #   @param url [String] Page URL that was scraped.
 
       class Image < BrandDev::Internal::Type::BaseModel
         # @!attribute alt
-        #   Alt text of the image, or null if not present
+        #   Image alt text, or null when unavailable.
         #
         #   @return [String, nil]
         required :alt, String, nil?: true
 
         # @!attribute element
-        #   The HTML element the image was found in
+        #   Where the image was found.
         #
         #   @return [Symbol, BrandDev::Models::BrandWebScrapeImagesResponse::Image::Element]
         required :element, enum: -> { BrandDev::Models::BrandWebScrapeImagesResponse::Image::Element }
 
         # @!attribute src
-        #   The image source - can be a URL, inline HTML (for SVGs), or a base64 data URI
+        #   Original image value: URL, inline SVG or HTML, or base64 data URI.
         #
         #   @return [String]
         required :src, String
 
         # @!attribute type
-        #   The type/format of the src value
+        #   Format of src.
         #
         #   @return [Symbol, BrandDev::Models::BrandWebScrapeImagesResponse::Image::Type]
         required :type, enum: -> { BrandDev::Models::BrandWebScrapeImagesResponse::Image::Type }
 
-        # @!method initialize(alt:, element:, src:, type:)
-        #   @param alt [String, nil] Alt text of the image, or null if not present
+        # @!attribute enrichment
+        #   Requested metadata for images that could be processed.
         #
-        #   @param element [Symbol, BrandDev::Models::BrandWebScrapeImagesResponse::Image::Element] The HTML element the image was found in
-        #
-        #   @param src [String] The image source - can be a URL, inline HTML (for SVGs), or a base64 data URI
-        #
-        #   @param type [Symbol, BrandDev::Models::BrandWebScrapeImagesResponse::Image::Type] The type/format of the src value
+        #   @return [BrandDev::Models::BrandWebScrapeImagesResponse::Image::Enrichment, nil]
+        optional :enrichment, -> { BrandDev::Models::BrandWebScrapeImagesResponse::Image::Enrichment }
 
-        # The HTML element the image was found in
+        # @!method initialize(alt:, element:, src:, type:, enrichment: nil)
+        #   @param alt [String, nil] Image alt text, or null when unavailable.
+        #
+        #   @param element [Symbol, BrandDev::Models::BrandWebScrapeImagesResponse::Image::Element] Where the image was found.
+        #
+        #   @param src [String] Original image value: URL, inline SVG or HTML, or base64 data URI.
+        #
+        #   @param type [Symbol, BrandDev::Models::BrandWebScrapeImagesResponse::Image::Type] Format of src.
+        #
+        #   @param enrichment [BrandDev::Models::BrandWebScrapeImagesResponse::Image::Enrichment] Requested metadata for images that could be processed.
+
+        # Where the image was found.
         #
         # @see BrandDev::Models::BrandWebScrapeImagesResponse::Image#element
         module Element
@@ -84,7 +92,7 @@ module BrandDev
           #   @return [Array<Symbol>]
         end
 
-        # The type/format of the src value
+        # Format of src.
         #
         # @see BrandDev::Models::BrandWebScrapeImagesResponse::Image#type
         module Type
@@ -97,9 +105,74 @@ module BrandDev
           # @!method self.values
           #   @return [Array<Symbol>]
         end
+
+        # @see BrandDev::Models::BrandWebScrapeImagesResponse::Image#enrichment
+        class Enrichment < BrandDev::Internal::Type::BaseModel
+          # @!attribute height
+          #   Image height in pixels, when measured.
+          #
+          #   @return [Integer, nil]
+          optional :height, Integer
+
+          # @!attribute mimetype
+          #   Detected MIME type, when hosted.
+          #
+          #   @return [String, nil]
+          optional :mimetype, String
+
+          # @!attribute type
+          #   Visual asset category, when classified.
+          #
+          #   @return [Symbol, BrandDev::Models::BrandWebScrapeImagesResponse::Image::Enrichment::Type, nil]
+          optional :type, enum: -> { BrandDev::Models::BrandWebScrapeImagesResponse::Image::Enrichment::Type }
+
+          # @!attribute url
+          #   Brand.dev CDN URL, when hosted.
+          #
+          #   @return [String, nil]
+          optional :url, String
+
+          # @!attribute width
+          #   Image width in pixels, when measured.
+          #
+          #   @return [Integer, nil]
+          optional :width, Integer
+
+          # @!method initialize(height: nil, mimetype: nil, type: nil, url: nil, width: nil)
+          #   Requested metadata for images that could be processed.
+          #
+          #   @param height [Integer] Image height in pixels, when measured.
+          #
+          #   @param mimetype [String] Detected MIME type, when hosted.
+          #
+          #   @param type [Symbol, BrandDev::Models::BrandWebScrapeImagesResponse::Image::Enrichment::Type] Visual asset category, when classified.
+          #
+          #   @param url [String] Brand.dev CDN URL, when hosted.
+          #
+          #   @param width [Integer] Image width in pixels, when measured.
+
+          # Visual asset category, when classified.
+          #
+          # @see BrandDev::Models::BrandWebScrapeImagesResponse::Image::Enrichment#type
+          module Type
+            extend BrandDev::Internal::Type::Enum
+
+            PHOTOGRAPHY = :photography
+            ILLUSTRATION = :illustration
+            LOGO = :logo
+            WORDMARK = :wordmark
+            ICON = :icon
+            PATTERN = :pattern
+            GRAPHIC = :graphic
+            OTHER = :other
+
+            # @!method self.values
+            #   @return [Array<Symbol>]
+          end
+        end
       end
 
-      # Indicates success
+      # Always true on success.
       #
       # @see BrandDev::Models::BrandWebScrapeImagesResponse#success
       module Success
