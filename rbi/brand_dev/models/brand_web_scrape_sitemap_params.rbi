@@ -26,6 +26,15 @@ module BrandDev
       sig { params(max_links: Integer).void }
       attr_writer :max_links
 
+      # Optional timeout in milliseconds for the request. If the request takes longer
+      # than this value, it will be aborted with a 408 status code. Maximum allowed
+      # value is 300000ms (5 minutes).
+      sig { returns(T.nilable(Integer)) }
+      attr_reader :timeout_ms
+
+      sig { params(timeout_ms: Integer).void }
+      attr_writer :timeout_ms
+
       # Optional RE2-compatible regex pattern. Only URLs matching this pattern are
       # returned and counted against maxLinks.
       sig { returns(T.nilable(String)) }
@@ -38,6 +47,7 @@ module BrandDev
         params(
           domain: String,
           max_links: Integer,
+          timeout_ms: Integer,
           url_regex: String,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(T.attached_class)
@@ -48,6 +58,10 @@ module BrandDev
         # Maximum number of links to return from the sitemap crawl. Defaults to 10,000.
         # Minimum is 1, maximum is 100,000.
         max_links: nil,
+        # Optional timeout in milliseconds for the request. If the request takes longer
+        # than this value, it will be aborted with a 408 status code. Maximum allowed
+        # value is 300000ms (5 minutes).
+        timeout_ms: nil,
         # Optional RE2-compatible regex pattern. Only URLs matching this pattern are
         # returned and counted against maxLinks.
         url_regex: nil,
@@ -60,6 +74,7 @@ module BrandDev
           {
             domain: String,
             max_links: Integer,
+            timeout_ms: Integer,
             url_regex: String,
             request_options: BrandDev::RequestOptions
           }
