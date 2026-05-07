@@ -22,8 +22,9 @@ module BrandDev
       optional :max_age_ms, Integer, api_name: :maxAgeMs
 
       # @!attribute timeout_ms
-      #   Optional timeout in milliseconds for the request. Maximum allowed value is
-      #   300000ms (5 minutes).
+      #   Optional timeout in milliseconds for the request. If the request takes longer
+      #   than this value, it will be aborted with a 408 status code. Maximum allowed
+      #   value is 300000ms (5 minutes).
       #
       #   @return [Integer, nil]
       optional :timeout_ms, Integer, api_name: :timeoutMS
@@ -36,7 +37,7 @@ module BrandDev
       #
       #   @param max_age_ms [Integer] Return a cached result if a prior scrape for the same parameters exists and is y
       #
-      #   @param timeout_ms [Integer] Optional timeout in milliseconds for the request. Maximum allowed value is 30000
+      #   @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #
       #   @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}]
     end

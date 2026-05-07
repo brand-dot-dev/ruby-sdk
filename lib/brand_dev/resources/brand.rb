@@ -50,7 +50,7 @@ module BrandDev
       #
       # @param max_age_ms [Integer] Return a cached result if a prior scrape for the same parameters exists and is y
       #
-      # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. Maximum allowed value is 30000
+      # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #
       # @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}, nil]
       #
@@ -405,7 +405,7 @@ module BrandDev
       #
       # Scrapes the given URL and returns the raw HTML content of the page.
       #
-      # @overload web_scrape_html(url:, include_frames: nil, max_age_ms: nil, parse_pdf: nil, request_options: {})
+      # @overload web_scrape_html(url:, include_frames: nil, max_age_ms: nil, parse_pdf: nil, timeout_ms: nil, request_options: {})
       #
       # @param url [String] Full URL to scrape (must include http:// or https:// protocol)
       #
@@ -414,6 +414,8 @@ module BrandDev
       # @param max_age_ms [Integer] Return a cached result if a prior scrape for the same parameters exists and is y
       #
       # @param parse_pdf [Boolean] When true (default), PDF URLs are fetched and their text layer is extracted and
+      #
+      # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #
       # @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}, nil]
       #
@@ -429,7 +431,8 @@ module BrandDev
           query: query.transform_keys(
             include_frames: "includeFrames",
             max_age_ms: "maxAgeMs",
-            parse_pdf: "parsePDF"
+            parse_pdf: "parsePDF",
+            timeout_ms: "timeoutMS"
           ),
           model: BrandDev::Models::BrandWebScrapeHTMLResponse,
           options: options
@@ -444,13 +447,15 @@ module BrandDev
       # embeds. The base request costs 1 credit; enrichment costs 1 credit per returned
       # image.
       #
-      # @overload web_scrape_images(url:, enrichment: nil, max_age_ms: nil, request_options: {})
+      # @overload web_scrape_images(url:, enrichment: nil, max_age_ms: nil, timeout_ms: nil, request_options: {})
       #
       # @param url [String] Page URL to inspect. Must include http:// or https://.
       #
       # @param enrichment [BrandDev::Models::BrandWebScrapeImagesParams::Enrichment] Optional per-image processing, sent as deep-object query params such as enrichme
       #
       # @param max_age_ms [Integer] Reuse a cached result this many milliseconds old or newer. Default: 86400000 (1
+      #
+      # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #
       # @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}, nil]
       #
@@ -463,7 +468,7 @@ module BrandDev
         @client.request(
           method: :get,
           path: "web/scrape/images",
-          query: query.transform_keys(max_age_ms: "maxAgeMs"),
+          query: query.transform_keys(max_age_ms: "maxAgeMs", timeout_ms: "timeoutMS"),
           model: BrandDev::Models::BrandWebScrapeImagesResponse,
           options: options
         )
@@ -474,7 +479,7 @@ module BrandDev
       #
       # Scrapes the given URL into LLM usable Markdown.
       #
-      # @overload web_scrape_md(url:, include_frames: nil, include_images: nil, include_links: nil, max_age_ms: nil, parse_pdf: nil, shorten_base64_images: nil, use_main_content_only: nil, request_options: {})
+      # @overload web_scrape_md(url:, include_frames: nil, include_images: nil, include_links: nil, max_age_ms: nil, parse_pdf: nil, shorten_base64_images: nil, timeout_ms: nil, use_main_content_only: nil, request_options: {})
       #
       # @param url [String] Full URL to scrape into LLM usable Markdown (must include http:// or https:// pr
       #
@@ -489,6 +494,8 @@ module BrandDev
       # @param parse_pdf [Boolean] When true (default), PDF URLs are fetched and their text layer is extracted and
       #
       # @param shorten_base64_images [Boolean] Shorten base64-encoded image data in the Markdown output
+      #
+      # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #
       # @param use_main_content_only [Boolean] Extract only the main content of the page, excluding headers, footers, sidebars,
       #
@@ -510,6 +517,7 @@ module BrandDev
             max_age_ms: "maxAgeMs",
             parse_pdf: "parsePDF",
             shorten_base64_images: "shortenBase64Images",
+            timeout_ms: "timeoutMS",
             use_main_content_only: "useMainContentOnly"
           ),
           model: BrandDev::Models::BrandWebScrapeMdResponse,
@@ -522,11 +530,13 @@ module BrandDev
       #
       # Crawl an entire website's sitemap and return all discovered page URLs.
       #
-      # @overload web_scrape_sitemap(domain:, max_links: nil, url_regex: nil, request_options: {})
+      # @overload web_scrape_sitemap(domain:, max_links: nil, timeout_ms: nil, url_regex: nil, request_options: {})
       #
       # @param domain [String] Domain to build a sitemap for
       #
       # @param max_links [Integer] Maximum number of links to return from the sitemap crawl. Defaults to 10,000. Mi
+      #
+      # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #
       # @param url_regex [String] Optional RE2-compatible regex pattern. Only URLs matching this pattern are retur
       #
@@ -541,7 +551,7 @@ module BrandDev
         @client.request(
           method: :get,
           path: "web/scrape/sitemap",
-          query: query.transform_keys(max_links: "maxLinks", url_regex: "urlRegex"),
+          query: query.transform_keys(max_links: "maxLinks", timeout_ms: "timeoutMS", url_regex: "urlRegex"),
           model: BrandDev::Models::BrandWebScrapeSitemapResponse,
           options: options
         )

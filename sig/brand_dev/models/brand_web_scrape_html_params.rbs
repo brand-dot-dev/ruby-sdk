@@ -5,7 +5,8 @@ module BrandDev
         url: String,
         include_frames: bool,
         max_age_ms: Integer,
-        parse_pdf: bool
+        parse_pdf: bool,
+        timeout_ms: Integer
       }
       & BrandDev::Internal::Type::request_parameters
 
@@ -27,11 +28,16 @@ module BrandDev
 
       def parse_pdf=: (bool) -> bool
 
+      attr_reader timeout_ms: Integer?
+
+      def timeout_ms=: (Integer) -> Integer
+
       def initialize: (
         url: String,
         ?include_frames: bool,
         ?max_age_ms: Integer,
         ?parse_pdf: bool,
+        ?timeout_ms: Integer,
         ?request_options: BrandDev::request_opts
       ) -> void
 
@@ -40,6 +46,7 @@ module BrandDev
         include_frames: bool,
         max_age_ms: Integer,
         parse_pdf: bool,
+        timeout_ms: Integer,
         request_options: BrandDev::RequestOptions
       }
     end

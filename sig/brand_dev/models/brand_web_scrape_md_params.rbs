@@ -9,6 +9,7 @@ module BrandDev
         max_age_ms: Integer,
         parse_pdf: bool,
         :shorten_base64_images => bool,
+        timeout_ms: Integer,
         use_main_content_only: bool
       }
       & BrandDev::Internal::Type::request_parameters
@@ -43,6 +44,10 @@ module BrandDev
 
       def shorten_base64_images=: (bool) -> bool
 
+      attr_reader timeout_ms: Integer?
+
+      def timeout_ms=: (Integer) -> Integer
+
       attr_reader use_main_content_only: bool?
 
       def use_main_content_only=: (bool) -> bool
@@ -55,6 +60,7 @@ module BrandDev
         ?max_age_ms: Integer,
         ?parse_pdf: bool,
         ?shorten_base64_images: bool,
+        ?timeout_ms: Integer,
         ?use_main_content_only: bool,
         ?request_options: BrandDev::request_opts
       ) -> void
@@ -67,6 +73,7 @@ module BrandDev
         max_age_ms: Integer,
         parse_pdf: bool,
         :shorten_base64_images => bool,
+        timeout_ms: Integer,
         use_main_content_only: bool,
         request_options: BrandDev::RequestOptions
       }

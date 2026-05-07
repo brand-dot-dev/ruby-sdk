@@ -105,6 +105,7 @@ module BrandDev
         ?include_frames: bool,
         ?max_age_ms: Integer,
         ?parse_pdf: bool,
+        ?timeout_ms: Integer,
         ?request_options: BrandDev::request_opts
       ) -> BrandDev::Models::BrandWebScrapeHTMLResponse
 
@@ -112,6 +113,7 @@ module BrandDev
         url: String,
         ?enrichment: BrandDev::BrandWebScrapeImagesParams::Enrichment,
         ?max_age_ms: Integer,
+        ?timeout_ms: Integer,
         ?request_options: BrandDev::request_opts
       ) -> BrandDev::Models::BrandWebScrapeImagesResponse
 
@@ -123,6 +125,7 @@ module BrandDev
         ?max_age_ms: Integer,
         ?parse_pdf: bool,
         ?shorten_base64_images: bool,
+        ?timeout_ms: Integer,
         ?use_main_content_only: bool,
         ?request_options: BrandDev::request_opts
       ) -> BrandDev::Models::BrandWebScrapeMdResponse
@@ -130,6 +133,7 @@ module BrandDev
       def web_scrape_sitemap: (
         domain: String,
         ?max_links: Integer,
+        ?timeout_ms: Integer,
         ?url_regex: String,
         ?request_options: BrandDev::request_opts
       ) -> BrandDev::Models::BrandWebScrapeSitemapResponse

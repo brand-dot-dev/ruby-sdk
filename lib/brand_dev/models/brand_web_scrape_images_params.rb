@@ -27,7 +27,15 @@ module BrandDev
       #   @return [Integer, nil]
       optional :max_age_ms, Integer
 
-      # @!method initialize(url:, enrichment: nil, max_age_ms: nil, request_options: {})
+      # @!attribute timeout_ms
+      #   Optional timeout in milliseconds for the request. If the request takes longer
+      #   than this value, it will be aborted with a 408 status code. Maximum allowed
+      #   value is 300000ms (5 minutes).
+      #
+      #   @return [Integer, nil]
+      optional :timeout_ms, Integer
+
+      # @!method initialize(url:, enrichment: nil, max_age_ms: nil, timeout_ms: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
       #   {BrandDev::Models::BrandWebScrapeImagesParams} for more details.
       #
@@ -36,6 +44,8 @@ module BrandDev
       #   @param enrichment [BrandDev::Models::BrandWebScrapeImagesParams::Enrichment] Optional per-image processing, sent as deep-object query params such as enrichme
       #
       #   @param max_age_ms [Integer] Reuse a cached result this many milliseconds old or newer. Default: 86400000 (1
+      #
+      #   @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #
       #   @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}]
 

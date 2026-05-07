@@ -54,6 +54,14 @@ module BrandDev
       #   @return [Boolean, nil]
       optional :shorten_base64_images, BrandDev::Internal::Type::Boolean
 
+      # @!attribute timeout_ms
+      #   Optional timeout in milliseconds for the request. If the request takes longer
+      #   than this value, it will be aborted with a 408 status code. Maximum allowed
+      #   value is 300000ms (5 minutes).
+      #
+      #   @return [Integer, nil]
+      optional :timeout_ms, Integer
+
       # @!attribute use_main_content_only
       #   Extract only the main content of the page, excluding headers, footers, sidebars,
       #   and navigation
@@ -61,7 +69,7 @@ module BrandDev
       #   @return [Boolean, nil]
       optional :use_main_content_only, BrandDev::Internal::Type::Boolean
 
-      # @!method initialize(url:, include_frames: nil, include_images: nil, include_links: nil, max_age_ms: nil, parse_pdf: nil, shorten_base64_images: nil, use_main_content_only: nil, request_options: {})
+      # @!method initialize(url:, include_frames: nil, include_images: nil, include_links: nil, max_age_ms: nil, parse_pdf: nil, shorten_base64_images: nil, timeout_ms: nil, use_main_content_only: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
       #   {BrandDev::Models::BrandWebScrapeMdParams} for more details.
       #
@@ -78,6 +86,8 @@ module BrandDev
       #   @param parse_pdf [Boolean] When true (default), PDF URLs are fetched and their text layer is extracted and
       #
       #   @param shorten_base64_images [Boolean] Shorten base64-encoded image data in the Markdown output
+      #
+      #   @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #
       #   @param use_main_content_only [Boolean] Extract only the main content of the page, excluding headers, footers, sidebars,
       #
