@@ -49,12 +49,21 @@ module BrandDev
       sig { params(timeout_ms: Integer).void }
       attr_writer :timeout_ms
 
+      # Optional browser wait time in milliseconds after initial page load before
+      # collecting images. Min: 0. Max: 30000 (30 seconds).
+      sig { returns(T.nilable(Integer)) }
+      attr_reader :wait_for_ms
+
+      sig { params(wait_for_ms: Integer).void }
+      attr_writer :wait_for_ms
+
       sig do
         params(
           url: String,
           enrichment: BrandDev::BrandWebScrapeImagesParams::Enrichment::OrHash,
           max_age_ms: Integer,
           timeout_ms: Integer,
+          wait_for_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(T.attached_class)
       end
@@ -71,6 +80,9 @@ module BrandDev
         # than this value, it will be aborted with a 408 status code. Maximum allowed
         # value is 300000ms (5 minutes).
         timeout_ms: nil,
+        # Optional browser wait time in milliseconds after initial page load before
+        # collecting images. Min: 0. Max: 30000 (30 seconds).
+        wait_for_ms: nil,
         request_options: {}
       )
       end
@@ -82,6 +94,7 @@ module BrandDev
             enrichment: BrandDev::BrandWebScrapeImagesParams::Enrichment,
             max_age_ms: Integer,
             timeout_ms: Integer,
+            wait_for_ms: Integer,
             request_options: BrandDev::RequestOptions
           }
         )

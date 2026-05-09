@@ -388,6 +388,7 @@ module BrandDev
           max_age_ms: Integer,
           parse_pdf: T::Boolean,
           timeout_ms: Integer,
+          wait_for_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(BrandDev::Models::BrandWebScrapeHTMLResponse)
       end
@@ -408,6 +409,9 @@ module BrandDev
         # than this value, it will be aborted with a 408 status code. Maximum allowed
         # value is 300000ms (5 minutes).
         timeout_ms: nil,
+        # Optional browser wait time in milliseconds after initial page load. Min: 0. Max:
+        # 30000 (30 seconds).
+        wait_for_ms: nil,
         request_options: {}
       )
       end
@@ -422,6 +426,7 @@ module BrandDev
           enrichment: BrandDev::BrandWebScrapeImagesParams::Enrichment::OrHash,
           max_age_ms: Integer,
           timeout_ms: Integer,
+          wait_for_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(BrandDev::Models::BrandWebScrapeImagesResponse)
       end
@@ -438,6 +443,9 @@ module BrandDev
         # than this value, it will be aborted with a 408 status code. Maximum allowed
         # value is 300000ms (5 minutes).
         timeout_ms: nil,
+        # Optional browser wait time in milliseconds after initial page load before
+        # collecting images. Min: 0. Max: 30000 (30 seconds).
+        wait_for_ms: nil,
         request_options: {}
       )
       end
@@ -454,6 +462,7 @@ module BrandDev
           shorten_base64_images: T::Boolean,
           timeout_ms: Integer,
           use_main_content_only: T::Boolean,
+          wait_for_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(BrandDev::Models::BrandWebScrapeMdResponse)
       end
@@ -484,6 +493,9 @@ module BrandDev
         # Extract only the main content of the page, excluding headers, footers, sidebars,
         # and navigation
         use_main_content_only: nil,
+        # Optional browser wait time in milliseconds after initial page load before
+        # converting the page to Markdown. Min: 0. Max: 30000 (30 seconds).
+        wait_for_ms: nil,
         request_options: {}
       )
       end

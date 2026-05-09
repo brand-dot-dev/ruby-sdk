@@ -69,7 +69,14 @@ module BrandDev
       #   @return [Boolean, nil]
       optional :use_main_content_only, BrandDev::Internal::Type::Boolean
 
-      # @!method initialize(url:, include_frames: nil, include_images: nil, include_links: nil, max_age_ms: nil, parse_pdf: nil, shorten_base64_images: nil, timeout_ms: nil, use_main_content_only: nil, request_options: {})
+      # @!attribute wait_for_ms
+      #   Optional browser wait time in milliseconds after initial page load before
+      #   converting the page to Markdown. Min: 0. Max: 30000 (30 seconds).
+      #
+      #   @return [Integer, nil]
+      optional :wait_for_ms, Integer
+
+      # @!method initialize(url:, include_frames: nil, include_images: nil, include_links: nil, max_age_ms: nil, parse_pdf: nil, shorten_base64_images: nil, timeout_ms: nil, use_main_content_only: nil, wait_for_ms: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
       #   {BrandDev::Models::BrandWebScrapeMdParams} for more details.
       #
@@ -90,6 +97,8 @@ module BrandDev
       #   @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #
       #   @param use_main_content_only [Boolean] Extract only the main content of the page, excluding headers, footers, sidebars,
+      #
+      #   @param wait_for_ms [Integer] Optional browser wait time in milliseconds after initial page load before conver
       #
       #   @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}]
     end

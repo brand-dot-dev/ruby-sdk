@@ -10,7 +10,8 @@ module BrandDev
         parse_pdf: bool,
         :shorten_base64_images => bool,
         timeout_ms: Integer,
-        use_main_content_only: bool
+        use_main_content_only: bool,
+        wait_for_ms: Integer
       }
       & BrandDev::Internal::Type::request_parameters
 
@@ -52,6 +53,10 @@ module BrandDev
 
       def use_main_content_only=: (bool) -> bool
 
+      attr_reader wait_for_ms: Integer?
+
+      def wait_for_ms=: (Integer) -> Integer
+
       def initialize: (
         url: String,
         ?include_frames: bool,
@@ -62,6 +67,7 @@ module BrandDev
         ?shorten_base64_images: bool,
         ?timeout_ms: Integer,
         ?use_main_content_only: bool,
+        ?wait_for_ms: Integer,
         ?request_options: BrandDev::request_opts
       ) -> void
 
@@ -75,6 +81,7 @@ module BrandDev
         :shorten_base64_images => bool,
         timeout_ms: Integer,
         use_main_content_only: bool,
+        wait_for_ms: Integer,
         request_options: BrandDev::RequestOptions
       }
     end

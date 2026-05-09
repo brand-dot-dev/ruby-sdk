@@ -35,7 +35,14 @@ module BrandDev
       #   @return [Integer, nil]
       optional :timeout_ms, Integer
 
-      # @!method initialize(url:, enrichment: nil, max_age_ms: nil, timeout_ms: nil, request_options: {})
+      # @!attribute wait_for_ms
+      #   Optional browser wait time in milliseconds after initial page load before
+      #   collecting images. Min: 0. Max: 30000 (30 seconds).
+      #
+      #   @return [Integer, nil]
+      optional :wait_for_ms, Integer
+
+      # @!method initialize(url:, enrichment: nil, max_age_ms: nil, timeout_ms: nil, wait_for_ms: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
       #   {BrandDev::Models::BrandWebScrapeImagesParams} for more details.
       #
@@ -46,6 +53,8 @@ module BrandDev
       #   @param max_age_ms [Integer] Reuse a cached result this many milliseconds old or newer. Default: 86400000 (1
       #
       #   @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
+      #
+      #   @param wait_for_ms [Integer] Optional browser wait time in milliseconds after initial page load before collec
       #
       #   @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}]
 

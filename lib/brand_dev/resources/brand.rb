@@ -405,7 +405,7 @@ module BrandDev
       #
       # Scrapes the given URL and returns the raw HTML content of the page.
       #
-      # @overload web_scrape_html(url:, include_frames: nil, max_age_ms: nil, parse_pdf: nil, timeout_ms: nil, request_options: {})
+      # @overload web_scrape_html(url:, include_frames: nil, max_age_ms: nil, parse_pdf: nil, timeout_ms: nil, wait_for_ms: nil, request_options: {})
       #
       # @param url [String] Full URL to scrape (must include http:// or https:// protocol)
       #
@@ -416,6 +416,8 @@ module BrandDev
       # @param parse_pdf [Boolean] When true (default), PDF URLs are fetched and their text layer is extracted and
       #
       # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
+      #
+      # @param wait_for_ms [Integer] Optional browser wait time in milliseconds after initial page load. Min: 0. Max:
       #
       # @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}, nil]
       #
@@ -432,7 +434,8 @@ module BrandDev
             include_frames: "includeFrames",
             max_age_ms: "maxAgeMs",
             parse_pdf: "parsePDF",
-            timeout_ms: "timeoutMS"
+            timeout_ms: "timeoutMS",
+            wait_for_ms: "waitForMs"
           ),
           model: BrandDev::Models::BrandWebScrapeHTMLResponse,
           options: options
@@ -447,7 +450,7 @@ module BrandDev
       # embeds. The base request costs 1 credit; enrichment costs 1 credit per returned
       # image.
       #
-      # @overload web_scrape_images(url:, enrichment: nil, max_age_ms: nil, timeout_ms: nil, request_options: {})
+      # @overload web_scrape_images(url:, enrichment: nil, max_age_ms: nil, timeout_ms: nil, wait_for_ms: nil, request_options: {})
       #
       # @param url [String] Page URL to inspect. Must include http:// or https://.
       #
@@ -456,6 +459,8 @@ module BrandDev
       # @param max_age_ms [Integer] Reuse a cached result this many milliseconds old or newer. Default: 86400000 (1
       #
       # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
+      #
+      # @param wait_for_ms [Integer] Optional browser wait time in milliseconds after initial page load before collec
       #
       # @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}, nil]
       #
@@ -468,7 +473,11 @@ module BrandDev
         @client.request(
           method: :get,
           path: "web/scrape/images",
-          query: query.transform_keys(max_age_ms: "maxAgeMs", timeout_ms: "timeoutMS"),
+          query: query.transform_keys(
+            max_age_ms: "maxAgeMs",
+            timeout_ms: "timeoutMS",
+            wait_for_ms: "waitForMs"
+          ),
           model: BrandDev::Models::BrandWebScrapeImagesResponse,
           options: options
         )
@@ -479,7 +488,7 @@ module BrandDev
       #
       # Scrapes the given URL into LLM usable Markdown.
       #
-      # @overload web_scrape_md(url:, include_frames: nil, include_images: nil, include_links: nil, max_age_ms: nil, parse_pdf: nil, shorten_base64_images: nil, timeout_ms: nil, use_main_content_only: nil, request_options: {})
+      # @overload web_scrape_md(url:, include_frames: nil, include_images: nil, include_links: nil, max_age_ms: nil, parse_pdf: nil, shorten_base64_images: nil, timeout_ms: nil, use_main_content_only: nil, wait_for_ms: nil, request_options: {})
       #
       # @param url [String] Full URL to scrape into LLM usable Markdown (must include http:// or https:// pr
       #
@@ -498,6 +507,8 @@ module BrandDev
       # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #
       # @param use_main_content_only [Boolean] Extract only the main content of the page, excluding headers, footers, sidebars,
+      #
+      # @param wait_for_ms [Integer] Optional browser wait time in milliseconds after initial page load before conver
       #
       # @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}, nil]
       #
@@ -518,7 +529,8 @@ module BrandDev
             parse_pdf: "parsePDF",
             shorten_base64_images: "shortenBase64Images",
             timeout_ms: "timeoutMS",
-            use_main_content_only: "useMainContentOnly"
+            use_main_content_only: "useMainContentOnly",
+            wait_for_ms: "waitForMs"
           ),
           model: BrandDev::Models::BrandWebScrapeMdResponse,
           options: options
