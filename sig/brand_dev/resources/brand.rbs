@@ -106,6 +106,7 @@ module BrandDev
         ?max_age_ms: Integer,
         ?parse_pdf: bool,
         ?timeout_ms: Integer,
+        ?wait_for_ms: Integer,
         ?request_options: BrandDev::request_opts
       ) -> BrandDev::Models::BrandWebScrapeHTMLResponse
 
@@ -114,6 +115,7 @@ module BrandDev
         ?enrichment: BrandDev::BrandWebScrapeImagesParams::Enrichment,
         ?max_age_ms: Integer,
         ?timeout_ms: Integer,
+        ?wait_for_ms: Integer,
         ?request_options: BrandDev::request_opts
       ) -> BrandDev::Models::BrandWebScrapeImagesResponse
 
@@ -127,6 +129,7 @@ module BrandDev
         ?shorten_base64_images: bool,
         ?timeout_ms: Integer,
         ?use_main_content_only: bool,
+        ?wait_for_ms: Integer,
         ?request_options: BrandDev::request_opts
       ) -> BrandDev::Models::BrandWebScrapeMdResponse
 

@@ -43,7 +43,14 @@ module BrandDev
       #   @return [Integer, nil]
       optional :timeout_ms, Integer
 
-      # @!method initialize(url:, include_frames: nil, max_age_ms: nil, parse_pdf: nil, timeout_ms: nil, request_options: {})
+      # @!attribute wait_for_ms
+      #   Optional browser wait time in milliseconds after initial page load. Min: 0. Max:
+      #   30000 (30 seconds).
+      #
+      #   @return [Integer, nil]
+      optional :wait_for_ms, Integer
+
+      # @!method initialize(url:, include_frames: nil, max_age_ms: nil, parse_pdf: nil, timeout_ms: nil, wait_for_ms: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
       #   {BrandDev::Models::BrandWebScrapeHTMLParams} for more details.
       #
@@ -56,6 +63,8 @@ module BrandDev
       #   @param parse_pdf [Boolean] When true (default), PDF URLs are fetched and their text layer is extracted and
       #
       #   @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
+      #
+      #   @param wait_for_ms [Integer] Optional browser wait time in milliseconds after initial page load. Min: 0. Max:
       #
       #   @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}]
     end

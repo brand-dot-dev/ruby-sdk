@@ -5,7 +5,8 @@ module BrandDev
         url: String,
         enrichment: BrandDev::BrandWebScrapeImagesParams::Enrichment,
         max_age_ms: Integer,
-        timeout_ms: Integer
+        timeout_ms: Integer,
+        wait_for_ms: Integer
       }
       & BrandDev::Internal::Type::request_parameters
 
@@ -29,11 +30,16 @@ module BrandDev
 
       def timeout_ms=: (Integer) -> Integer
 
+      attr_reader wait_for_ms: Integer?
+
+      def wait_for_ms=: (Integer) -> Integer
+
       def initialize: (
         url: String,
         ?enrichment: BrandDev::BrandWebScrapeImagesParams::Enrichment,
         ?max_age_ms: Integer,
         ?timeout_ms: Integer,
+        ?wait_for_ms: Integer,
         ?request_options: BrandDev::request_opts
       ) -> void
 
@@ -42,6 +48,7 @@ module BrandDev
         enrichment: BrandDev::BrandWebScrapeImagesParams::Enrichment,
         max_age_ms: Integer,
         timeout_ms: Integer,
+        wait_for_ms: Integer,
         request_options: BrandDev::RequestOptions
       }
 
