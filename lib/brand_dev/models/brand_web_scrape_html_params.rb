@@ -27,13 +27,12 @@ module BrandDev
       #   @return [Integer, nil]
       optional :max_age_ms, Integer
 
-      # @!attribute parse_pdf
-      #   When true (default), PDF URLs are fetched and their text layer is extracted and
-      #   returned wrapped in <html><pdf>…</pdf></html>. When false, PDF URLs are skipped
-      #   and a 400 WEBSITE_ACCESS_ERROR is returned.
+      # @!attribute pdf
+      #   PDF parsing controls. Use start/end to limit text extraction and OCR to an
+      #   inclusive 1-based page range.
       #
-      #   @return [Boolean, nil]
-      optional :parse_pdf, BrandDev::Internal::Type::Boolean
+      #   @return [BrandDev::Models::BrandWebScrapeHTMLParams::Pdf, nil]
+      optional :pdf, -> { BrandDev::BrandWebScrapeHTMLParams::Pdf }
 
       # @!attribute timeout_ms
       #   Optional timeout in milliseconds for the request. If the request takes longer
@@ -50,7 +49,7 @@ module BrandDev
       #   @return [Integer, nil]
       optional :wait_for_ms, Integer
 
-      # @!method initialize(url:, include_frames: nil, max_age_ms: nil, parse_pdf: nil, timeout_ms: nil, wait_for_ms: nil, request_options: {})
+      # @!method initialize(url:, include_frames: nil, max_age_ms: nil, pdf: nil, timeout_ms: nil, wait_for_ms: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
       #   {BrandDev::Models::BrandWebScrapeHTMLParams} for more details.
       #
@@ -60,13 +59,48 @@ module BrandDev
       #
       #   @param max_age_ms [Integer] Return a cached result if a prior scrape for the same parameters exists and is y
       #
-      #   @param parse_pdf [Boolean] When true (default), PDF URLs are fetched and their text layer is extracted and
+      #   @param pdf [BrandDev::Models::BrandWebScrapeHTMLParams::Pdf] PDF parsing controls. Use start/end to limit text extraction and OCR to an inclu
       #
       #   @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #
       #   @param wait_for_ms [Integer] Optional browser wait time in milliseconds after initial page load. Min: 0. Max:
       #
       #   @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}]
+
+      class Pdf < BrandDev::Internal::Type::BaseModel
+        # @!attribute end_
+        #   Last 1-based PDF page to parse. When omitted, parsing ends at the last page.
+        #   Must be greater than or equal to start when both are provided.
+        #
+        #   @return [Integer, nil]
+        optional :end_, Integer, api_name: :end
+
+        # @!attribute should_parse
+        #   When true, PDF URLs are fetched and parsed. When false, PDF URLs are skipped and
+        #   a 400 WEBSITE_ACCESS_ERROR is returned.
+        #
+        #   @return [Boolean, nil]
+        optional :should_parse, BrandDev::Internal::Type::Boolean, api_name: :shouldParse
+
+        # @!attribute start
+        #   First 1-based PDF page to parse. When omitted, parsing starts at the first page.
+        #
+        #   @return [Integer, nil]
+        optional :start, Integer
+
+        # @!method initialize(end_: nil, should_parse: nil, start: nil)
+        #   Some parameter documentations has been truncated, see
+        #   {BrandDev::Models::BrandWebScrapeHTMLParams::Pdf} for more details.
+        #
+        #   PDF parsing controls. Use start/end to limit text extraction and OCR to an
+        #   inclusive 1-based page range.
+        #
+        #   @param end_ [Integer] Last 1-based PDF page to parse. When omitted, parsing ends at the last page. Mus
+        #
+        #   @param should_parse [Boolean] When true, PDF URLs are fetched and parsed. When false, PDF URLs are skipped and
+        #
+        #   @param start [Integer] First 1-based PDF page to parse. When omitted, parsing starts at the first page.
+      end
     end
   end
 end

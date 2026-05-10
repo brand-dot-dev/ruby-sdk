@@ -7,7 +7,7 @@ module BrandDev
         include_images: bool,
         include_links: bool,
         max_age_ms: Integer,
-        parse_pdf: bool,
+        pdf: BrandDev::BrandWebScrapeMdParams::Pdf,
         :shorten_base64_images => bool,
         timeout_ms: Integer,
         use_main_content_only: bool,
@@ -37,9 +37,11 @@ module BrandDev
 
       def max_age_ms=: (Integer) -> Integer
 
-      attr_reader parse_pdf: bool?
+      attr_reader pdf: BrandDev::BrandWebScrapeMdParams::Pdf?
 
-      def parse_pdf=: (bool) -> bool
+      def pdf=: (
+        BrandDev::BrandWebScrapeMdParams::Pdf
+      ) -> BrandDev::BrandWebScrapeMdParams::Pdf
 
       attr_reader shorten_base64_images: bool?
 
@@ -63,7 +65,7 @@ module BrandDev
         ?include_images: bool,
         ?include_links: bool,
         ?max_age_ms: Integer,
-        ?parse_pdf: bool,
+        ?pdf: BrandDev::BrandWebScrapeMdParams::Pdf,
         ?shorten_base64_images: bool,
         ?timeout_ms: Integer,
         ?use_main_content_only: bool,
@@ -77,13 +79,37 @@ module BrandDev
         include_images: bool,
         include_links: bool,
         max_age_ms: Integer,
-        parse_pdf: bool,
+        pdf: BrandDev::BrandWebScrapeMdParams::Pdf,
         :shorten_base64_images => bool,
         timeout_ms: Integer,
         use_main_content_only: bool,
         wait_for_ms: Integer,
         request_options: BrandDev::RequestOptions
       }
+
+      type pdf = { end_: Integer, should_parse: bool, start: Integer }
+
+      class Pdf < BrandDev::Internal::Type::BaseModel
+        attr_reader end_: Integer?
+
+        def end_=: (Integer) -> Integer
+
+        attr_reader should_parse: bool?
+
+        def should_parse=: (bool) -> bool
+
+        attr_reader start: Integer?
+
+        def start=: (Integer) -> Integer
+
+        def initialize: (
+          ?end_: Integer,
+          ?should_parse: bool,
+          ?start: Integer
+        ) -> void
+
+        def to_hash: -> { end_: Integer, should_parse: bool, start: Integer }
+      end
     end
   end
 end

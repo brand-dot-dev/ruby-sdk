@@ -46,14 +46,13 @@ module BrandDev
       sig { params(max_age_ms: Integer).void }
       attr_writer :max_age_ms
 
-      # When true (default), PDF URLs are fetched and their text layer is extracted and
-      # converted to Markdown. When false, PDF URLs are skipped and a 400
-      # WEBSITE_ACCESS_ERROR is returned.
-      sig { returns(T.nilable(T::Boolean)) }
-      attr_reader :parse_pdf
+      # PDF parsing controls. Use start/end to limit text extraction and OCR to an
+      # inclusive 1-based page range.
+      sig { returns(T.nilable(BrandDev::BrandWebScrapeMdParams::Pdf)) }
+      attr_reader :pdf
 
-      sig { params(parse_pdf: T::Boolean).void }
-      attr_writer :parse_pdf
+      sig { params(pdf: BrandDev::BrandWebScrapeMdParams::Pdf::OrHash).void }
+      attr_writer :pdf
 
       # Shorten base64-encoded image data in the Markdown output
       sig { returns(T.nilable(T::Boolean)) }
@@ -94,7 +93,7 @@ module BrandDev
           include_images: T::Boolean,
           include_links: T::Boolean,
           max_age_ms: Integer,
-          parse_pdf: T::Boolean,
+          pdf: BrandDev::BrandWebScrapeMdParams::Pdf::OrHash,
           shorten_base64_images: T::Boolean,
           timeout_ms: Integer,
           use_main_content_only: T::Boolean,
@@ -116,10 +115,9 @@ module BrandDev
         # younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
         # omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
         max_age_ms: nil,
-        # When true (default), PDF URLs are fetched and their text layer is extracted and
-        # converted to Markdown. When false, PDF URLs are skipped and a 400
-        # WEBSITE_ACCESS_ERROR is returned.
-        parse_pdf: nil,
+        # PDF parsing controls. Use start/end to limit text extraction and OCR to an
+        # inclusive 1-based page range.
+        pdf: nil,
         # Shorten base64-encoded image data in the Markdown output
         shorten_base64_images: nil,
         # Optional timeout in milliseconds for the request. If the request takes longer
@@ -144,7 +142,7 @@ module BrandDev
             include_images: T::Boolean,
             include_links: T::Boolean,
             max_age_ms: Integer,
-            parse_pdf: T::Boolean,
+            pdf: BrandDev::BrandWebScrapeMdParams::Pdf,
             shorten_base64_images: T::Boolean,
             timeout_ms: Integer,
             use_main_content_only: T::Boolean,
@@ -154,6 +152,68 @@ module BrandDev
         )
       end
       def to_hash
+      end
+
+      class Pdf < BrandDev::Internal::Type::BaseModel
+        OrHash =
+          T.type_alias do
+            T.any(
+              BrandDev::BrandWebScrapeMdParams::Pdf,
+              BrandDev::Internal::AnyHash
+            )
+          end
+
+        # Last 1-based PDF page to parse. When omitted, parsing ends at the last page.
+        # Must be greater than or equal to start when both are provided.
+        sig { returns(T.nilable(Integer)) }
+        attr_reader :end_
+
+        sig { params(end_: Integer).void }
+        attr_writer :end_
+
+        # When true, PDF URLs are fetched and parsed. When false, PDF URLs are skipped and
+        # a 400 WEBSITE_ACCESS_ERROR is returned.
+        sig { returns(T.nilable(T::Boolean)) }
+        attr_reader :should_parse
+
+        sig { params(should_parse: T::Boolean).void }
+        attr_writer :should_parse
+
+        # First 1-based PDF page to parse. When omitted, parsing starts at the first page.
+        sig { returns(T.nilable(Integer)) }
+        attr_reader :start
+
+        sig { params(start: Integer).void }
+        attr_writer :start
+
+        # PDF parsing controls. Use start/end to limit text extraction and OCR to an
+        # inclusive 1-based page range.
+        sig do
+          params(
+            end_: Integer,
+            should_parse: T::Boolean,
+            start: Integer
+          ).returns(T.attached_class)
+        end
+        def self.new(
+          # Last 1-based PDF page to parse. When omitted, parsing ends at the last page.
+          # Must be greater than or equal to start when both are provided.
+          end_: nil,
+          # When true, PDF URLs are fetched and parsed. When false, PDF URLs are skipped and
+          # a 400 WEBSITE_ACCESS_ERROR is returned.
+          should_parse: nil,
+          # First 1-based PDF page to parse. When omitted, parsing starts at the first page.
+          start: nil
+        )
+        end
+
+        sig do
+          override.returns(
+            { end_: Integer, should_parse: T::Boolean, start: Integer }
+          )
+        end
+        def to_hash
+        end
       end
     end
   end
