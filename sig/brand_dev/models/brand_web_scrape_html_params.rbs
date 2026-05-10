@@ -5,7 +5,7 @@ module BrandDev
         url: String,
         include_frames: bool,
         max_age_ms: Integer,
-        parse_pdf: bool,
+        pdf: BrandDev::BrandWebScrapeHTMLParams::Pdf,
         timeout_ms: Integer,
         wait_for_ms: Integer
       }
@@ -25,9 +25,11 @@ module BrandDev
 
       def max_age_ms=: (Integer) -> Integer
 
-      attr_reader parse_pdf: bool?
+      attr_reader pdf: BrandDev::BrandWebScrapeHTMLParams::Pdf?
 
-      def parse_pdf=: (bool) -> bool
+      def pdf=: (
+        BrandDev::BrandWebScrapeHTMLParams::Pdf
+      ) -> BrandDev::BrandWebScrapeHTMLParams::Pdf
 
       attr_reader timeout_ms: Integer?
 
@@ -41,7 +43,7 @@ module BrandDev
         url: String,
         ?include_frames: bool,
         ?max_age_ms: Integer,
-        ?parse_pdf: bool,
+        ?pdf: BrandDev::BrandWebScrapeHTMLParams::Pdf,
         ?timeout_ms: Integer,
         ?wait_for_ms: Integer,
         ?request_options: BrandDev::request_opts
@@ -51,11 +53,35 @@ module BrandDev
         url: String,
         include_frames: bool,
         max_age_ms: Integer,
-        parse_pdf: bool,
+        pdf: BrandDev::BrandWebScrapeHTMLParams::Pdf,
         timeout_ms: Integer,
         wait_for_ms: Integer,
         request_options: BrandDev::RequestOptions
       }
+
+      type pdf = { end_: Integer, should_parse: bool, start: Integer }
+
+      class Pdf < BrandDev::Internal::Type::BaseModel
+        attr_reader end_: Integer?
+
+        def end_=: (Integer) -> Integer
+
+        attr_reader should_parse: bool?
+
+        def should_parse=: (bool) -> bool
+
+        attr_reader start: Integer?
+
+        def start=: (Integer) -> Integer
+
+        def initialize: (
+          ?end_: Integer,
+          ?should_parse: bool,
+          ?start: Integer
+        ) -> void
+
+        def to_hash: -> { end_: Integer, should_parse: bool, start: Integer }
+      end
     end
   end
 end

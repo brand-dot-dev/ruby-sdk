@@ -104,7 +104,7 @@ module BrandDev
         url: String,
         ?include_frames: bool,
         ?max_age_ms: Integer,
-        ?parse_pdf: bool,
+        ?pdf: BrandDev::BrandWebScrapeHTMLParams::Pdf,
         ?timeout_ms: Integer,
         ?wait_for_ms: Integer,
         ?request_options: BrandDev::request_opts
@@ -125,7 +125,7 @@ module BrandDev
         ?include_images: bool,
         ?include_links: bool,
         ?max_age_ms: Integer,
-        ?parse_pdf: bool,
+        ?pdf: BrandDev::BrandWebScrapeMdParams::Pdf,
         ?shorten_base64_images: bool,
         ?timeout_ms: Integer,
         ?use_main_content_only: bool,
