@@ -3,6 +3,7 @@ module BrandDev
     type brand_web_scrape_md_params =
       {
         url: String,
+        headers: ::Hash[Symbol, String],
         include_frames: bool,
         include_images: bool,
         include_links: bool,
@@ -20,6 +21,10 @@ module BrandDev
       include BrandDev::Internal::Type::RequestParameters
 
       attr_accessor url: String
+
+      attr_reader headers: ::Hash[Symbol, String]?
+
+      def headers=: (::Hash[Symbol, String]) -> ::Hash[Symbol, String]
 
       attr_reader include_frames: bool?
 
@@ -61,6 +66,7 @@ module BrandDev
 
       def initialize: (
         url: String,
+        ?headers: ::Hash[Symbol, String],
         ?include_frames: bool,
         ?include_images: bool,
         ?include_links: bool,
@@ -75,6 +81,7 @@ module BrandDev
 
       def to_hash: -> {
         url: String,
+        headers: ::Hash[Symbol, String],
         include_frames: bool,
         include_images: bool,
         include_links: bool,

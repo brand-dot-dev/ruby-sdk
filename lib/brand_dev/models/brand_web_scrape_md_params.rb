@@ -14,6 +14,14 @@ module BrandDev
       #   @return [String]
       required :url, String
 
+      # @!attribute headers
+      #   Optional outbound HTTP headers forwarded only to the target URL, sent as
+      #   deep-object query params such as headers[X-Custom]=value. When provided, caching
+      #   is bypassed: the result is neither read from nor written to cache.
+      #
+      #   @return [Hash{Symbol=>String}, nil]
+      optional :headers, BrandDev::Internal::Type::HashOf[String]
+
       # @!attribute include_frames
       #   When true, the contents of iframes are rendered to Markdown.
       #
@@ -75,11 +83,13 @@ module BrandDev
       #   @return [Integer, nil]
       optional :wait_for_ms, Integer
 
-      # @!method initialize(url:, include_frames: nil, include_images: nil, include_links: nil, max_age_ms: nil, pdf: nil, shorten_base64_images: nil, timeout_ms: nil, use_main_content_only: nil, wait_for_ms: nil, request_options: {})
+      # @!method initialize(url:, headers: nil, include_frames: nil, include_images: nil, include_links: nil, max_age_ms: nil, pdf: nil, shorten_base64_images: nil, timeout_ms: nil, use_main_content_only: nil, wait_for_ms: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
       #   {BrandDev::Models::BrandWebScrapeMdParams} for more details.
       #
       #   @param url [String] Full URL to scrape into LLM usable Markdown (must include http:// or https:// pr
+      #
+      #   @param headers [Hash{Symbol=>String}] Optional outbound HTTP headers forwarded only to the target URL, sent as deep-ob
       #
       #   @param include_frames [Boolean] When true, the contents of iframes are rendered to Markdown.
       #

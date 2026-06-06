@@ -32,6 +32,15 @@ module BrandDev
       end
       attr_writer :enrichment
 
+      # Optional outbound HTTP headers forwarded only to the target URL, sent as
+      # deep-object query params such as headers[X-Custom]=value. When provided, caching
+      # is bypassed: the result is neither read from nor written to cache.
+      sig { returns(T.nilable(T::Hash[Symbol, String])) }
+      attr_reader :headers
+
+      sig { params(headers: T::Hash[Symbol, String]).void }
+      attr_writer :headers
+
       # Reuse a cached result this many milliseconds old or newer. Default: 86400000 (1
       # day). Set to 0 to bypass cache. Maximum: 2592000000 (30 days).
       sig { returns(T.nilable(Integer)) }
@@ -61,6 +70,7 @@ module BrandDev
         params(
           url: String,
           enrichment: BrandDev::BrandWebScrapeImagesParams::Enrichment::OrHash,
+          headers: T::Hash[Symbol, String],
           max_age_ms: Integer,
           timeout_ms: Integer,
           wait_for_ms: Integer,
@@ -73,6 +83,10 @@ module BrandDev
         # Optional per-image processing, sent as deep-object query params such as
         # enrichment[resolution]=true.
         enrichment: nil,
+        # Optional outbound HTTP headers forwarded only to the target URL, sent as
+        # deep-object query params such as headers[X-Custom]=value. When provided, caching
+        # is bypassed: the result is neither read from nor written to cache.
+        headers: nil,
         # Reuse a cached result this many milliseconds old or newer. Default: 86400000 (1
         # day). Set to 0 to bypass cache. Maximum: 2592000000 (30 days).
         max_age_ms: nil,
@@ -92,6 +106,7 @@ module BrandDev
           {
             url: String,
             enrichment: BrandDev::BrandWebScrapeImagesParams::Enrichment,
+            headers: T::Hash[Symbol, String],
             max_age_ms: Integer,
             timeout_ms: Integer,
             wait_for_ms: Integer,

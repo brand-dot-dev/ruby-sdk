@@ -4,6 +4,7 @@ module BrandDev
       {
         url: String,
         enrichment: BrandDev::BrandWebScrapeImagesParams::Enrichment,
+        headers: ::Hash[Symbol, String],
         max_age_ms: Integer,
         timeout_ms: Integer,
         wait_for_ms: Integer
@@ -22,6 +23,10 @@ module BrandDev
         BrandDev::BrandWebScrapeImagesParams::Enrichment
       ) -> BrandDev::BrandWebScrapeImagesParams::Enrichment
 
+      attr_reader headers: ::Hash[Symbol, String]?
+
+      def headers=: (::Hash[Symbol, String]) -> ::Hash[Symbol, String]
+
       attr_reader max_age_ms: Integer?
 
       def max_age_ms=: (Integer) -> Integer
@@ -37,6 +42,7 @@ module BrandDev
       def initialize: (
         url: String,
         ?enrichment: BrandDev::BrandWebScrapeImagesParams::Enrichment,
+        ?headers: ::Hash[Symbol, String],
         ?max_age_ms: Integer,
         ?timeout_ms: Integer,
         ?wait_for_ms: Integer,
@@ -46,6 +52,7 @@ module BrandDev
       def to_hash: -> {
         url: String,
         enrichment: BrandDev::BrandWebScrapeImagesParams::Enrichment,
+        headers: ::Hash[Symbol, String],
         max_age_ms: Integer,
         timeout_ms: Integer,
         wait_for_ms: Integer,

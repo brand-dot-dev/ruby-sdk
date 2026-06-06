@@ -13,6 +13,14 @@ module BrandDev
       #   @return [String]
       required :domain, String
 
+      # @!attribute headers
+      #   Optional outbound HTTP headers forwarded only to the target URL, sent as
+      #   deep-object query params such as headers[X-Custom]=value. When provided, caching
+      #   is bypassed: the result is neither read from nor written to cache.
+      #
+      #   @return [Hash{Symbol=>String}, nil]
+      optional :headers, BrandDev::Internal::Type::HashOf[String]
+
       # @!attribute max_links
       #   Maximum number of links to return from the sitemap crawl. Defaults to 10,000.
       #   Minimum is 1, maximum is 100,000.
@@ -35,11 +43,13 @@ module BrandDev
       #   @return [String, nil]
       optional :url_regex, String
 
-      # @!method initialize(domain:, max_links: nil, timeout_ms: nil, url_regex: nil, request_options: {})
+      # @!method initialize(domain:, headers: nil, max_links: nil, timeout_ms: nil, url_regex: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
       #   {BrandDev::Models::BrandWebScrapeSitemapParams} for more details.
       #
       #   @param domain [String] Domain to build a sitemap for
+      #
+      #   @param headers [Hash{Symbol=>String}] Optional outbound HTTP headers forwarded only to the target URL, sent as deep-ob
       #
       #   @param max_links [Integer] Maximum number of links to return from the sitemap crawl. Defaults to 10,000. Mi
       #

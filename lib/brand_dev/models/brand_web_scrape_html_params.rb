@@ -13,6 +13,14 @@ module BrandDev
       #   @return [String]
       required :url, String
 
+      # @!attribute headers
+      #   Optional outbound HTTP headers forwarded only to the target URL, sent as
+      #   deep-object query params such as headers[X-Custom]=value. When provided, caching
+      #   is bypassed: the result is neither read from nor written to cache.
+      #
+      #   @return [Hash{Symbol=>String}, nil]
+      optional :headers, BrandDev::Internal::Type::HashOf[String]
+
       # @!attribute include_frames
       #   When true, iframes are rendered inline into the returned HTML.
       #
@@ -49,11 +57,13 @@ module BrandDev
       #   @return [Integer, nil]
       optional :wait_for_ms, Integer
 
-      # @!method initialize(url:, include_frames: nil, max_age_ms: nil, pdf: nil, timeout_ms: nil, wait_for_ms: nil, request_options: {})
+      # @!method initialize(url:, headers: nil, include_frames: nil, max_age_ms: nil, pdf: nil, timeout_ms: nil, wait_for_ms: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
       #   {BrandDev::Models::BrandWebScrapeHTMLParams} for more details.
       #
       #   @param url [String] Full URL to scrape (must include http:// or https:// protocol)
+      #
+      #   @param headers [Hash{Symbol=>String}] Optional outbound HTTP headers forwarded only to the target URL, sent as deep-ob
       #
       #   @param include_frames [Boolean] When true, iframes are rendered inline into the returned HTML.
       #
