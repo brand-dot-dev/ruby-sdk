@@ -18,6 +18,15 @@ module BrandDev
       sig { returns(String) }
       attr_accessor :domain
 
+      # Optional outbound HTTP headers forwarded only to the target URL, sent as
+      # deep-object query params such as headers[X-Custom]=value. When provided, caching
+      # is bypassed: the result is neither read from nor written to cache.
+      sig { returns(T.nilable(T::Hash[Symbol, String])) }
+      attr_reader :headers
+
+      sig { params(headers: T::Hash[Symbol, String]).void }
+      attr_writer :headers
+
       # Maximum number of links to return from the sitemap crawl. Defaults to 10,000.
       # Minimum is 1, maximum is 100,000.
       sig { returns(T.nilable(Integer)) }
@@ -46,6 +55,7 @@ module BrandDev
       sig do
         params(
           domain: String,
+          headers: T::Hash[Symbol, String],
           max_links: Integer,
           timeout_ms: Integer,
           url_regex: String,
@@ -55,6 +65,10 @@ module BrandDev
       def self.new(
         # Domain to build a sitemap for
         domain:,
+        # Optional outbound HTTP headers forwarded only to the target URL, sent as
+        # deep-object query params such as headers[X-Custom]=value. When provided, caching
+        # is bypassed: the result is neither read from nor written to cache.
+        headers: nil,
         # Maximum number of links to return from the sitemap crawl. Defaults to 10,000.
         # Minimum is 1, maximum is 100,000.
         max_links: nil,
@@ -73,6 +87,7 @@ module BrandDev
         override.returns(
           {
             domain: String,
+            headers: T::Hash[Symbol, String],
             max_links: Integer,
             timeout_ms: Integer,
             url_regex: String,

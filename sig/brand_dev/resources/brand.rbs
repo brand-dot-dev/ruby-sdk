@@ -102,6 +102,7 @@ module BrandDev
 
       def web_scrape_html: (
         url: String,
+        ?headers: ::Hash[Symbol, String],
         ?include_frames: bool,
         ?max_age_ms: Integer,
         ?pdf: BrandDev::BrandWebScrapeHTMLParams::Pdf,
@@ -113,6 +114,7 @@ module BrandDev
       def web_scrape_images: (
         url: String,
         ?enrichment: BrandDev::BrandWebScrapeImagesParams::Enrichment,
+        ?headers: ::Hash[Symbol, String],
         ?max_age_ms: Integer,
         ?timeout_ms: Integer,
         ?wait_for_ms: Integer,
@@ -121,6 +123,7 @@ module BrandDev
 
       def web_scrape_md: (
         url: String,
+        ?headers: ::Hash[Symbol, String],
         ?include_frames: bool,
         ?include_images: bool,
         ?include_links: bool,
@@ -135,6 +138,7 @@ module BrandDev
 
       def web_scrape_sitemap: (
         domain: String,
+        ?headers: ::Hash[Symbol, String],
         ?max_links: Integer,
         ?timeout_ms: Integer,
         ?url_regex: String,

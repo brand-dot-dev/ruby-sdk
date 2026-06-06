@@ -16,6 +16,15 @@ module BrandDev
       sig { returns(String) }
       attr_accessor :url
 
+      # Optional outbound HTTP headers forwarded only to the target URL, sent as
+      # deep-object query params such as headers[X-Custom]=value. When provided, caching
+      # is bypassed: the result is neither read from nor written to cache.
+      sig { returns(T.nilable(T::Hash[Symbol, String])) }
+      attr_reader :headers
+
+      sig { params(headers: T::Hash[Symbol, String]).void }
+      attr_writer :headers
+
       # When true, the contents of iframes are rendered to Markdown.
       sig { returns(T.nilable(T::Boolean)) }
       attr_reader :include_frames
@@ -89,6 +98,7 @@ module BrandDev
       sig do
         params(
           url: String,
+          headers: T::Hash[Symbol, String],
           include_frames: T::Boolean,
           include_images: T::Boolean,
           include_links: T::Boolean,
@@ -105,6 +115,10 @@ module BrandDev
         # Full URL to scrape into LLM usable Markdown (must include http:// or https://
         # protocol)
         url:,
+        # Optional outbound HTTP headers forwarded only to the target URL, sent as
+        # deep-object query params such as headers[X-Custom]=value. When provided, caching
+        # is bypassed: the result is neither read from nor written to cache.
+        headers: nil,
         # When true, the contents of iframes are rendered to Markdown.
         include_frames: nil,
         # Include image references in Markdown output
@@ -138,6 +152,7 @@ module BrandDev
         override.returns(
           {
             url: String,
+            headers: T::Hash[Symbol, String],
             include_frames: T::Boolean,
             include_images: T::Boolean,
             include_links: T::Boolean,

@@ -3,6 +3,7 @@ module BrandDev
     type brand_web_scrape_html_params =
       {
         url: String,
+        headers: ::Hash[Symbol, String],
         include_frames: bool,
         max_age_ms: Integer,
         pdf: BrandDev::BrandWebScrapeHTMLParams::Pdf,
@@ -16,6 +17,10 @@ module BrandDev
       include BrandDev::Internal::Type::RequestParameters
 
       attr_accessor url: String
+
+      attr_reader headers: ::Hash[Symbol, String]?
+
+      def headers=: (::Hash[Symbol, String]) -> ::Hash[Symbol, String]
 
       attr_reader include_frames: bool?
 
@@ -41,6 +46,7 @@ module BrandDev
 
       def initialize: (
         url: String,
+        ?headers: ::Hash[Symbol, String],
         ?include_frames: bool,
         ?max_age_ms: Integer,
         ?pdf: BrandDev::BrandWebScrapeHTMLParams::Pdf,
@@ -51,6 +57,7 @@ module BrandDev
 
       def to_hash: -> {
         url: String,
+        headers: ::Hash[Symbol, String],
         include_frames: bool,
         max_age_ms: Integer,
         pdf: BrandDev::BrandWebScrapeHTMLParams::Pdf,
