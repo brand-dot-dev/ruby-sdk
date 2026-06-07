@@ -242,6 +242,7 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
       response => {
         html: String,
         success: BrandDev::Models::BrandWebScrapeHTMLResponse::Success,
+        type: BrandDev::Models::BrandWebScrapeHTMLResponse::Type,
         url: String
       }
     end
