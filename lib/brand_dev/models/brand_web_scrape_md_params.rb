@@ -14,6 +14,14 @@ module BrandDev
       #   @return [String]
       required :url, String
 
+      # @!attribute exclude_selectors
+      #   CSS selectors to remove before conversion to Markdown. Applied after
+      #   includeSelectors. Exclusion takes precedence: an element matching both is
+      #   removed. Examples: "nav", "footer", ".ad-banner", "[aria-hidden=true]".
+      #
+      #   @return [Array<String>, nil]
+      optional :exclude_selectors, BrandDev::Internal::Type::ArrayOf[String]
+
       # @!attribute headers
       #   Optional outbound HTTP headers forwarded only to the target URL, sent as
       #   deep-object query params such as headers[X-Custom]=value. When provided, caching
@@ -39,6 +47,14 @@ module BrandDev
       #
       #   @return [Boolean, nil]
       optional :include_links, BrandDev::Internal::Type::Boolean
+
+      # @!attribute include_selectors
+      #   CSS selectors. When provided, only matching HTML subtrees (and their
+      #   descendants) are kept before conversion to Markdown. When omitted, the entire
+      #   document is kept. Examples: "article.main", "#content", "[role=main]".
+      #
+      #   @return [Array<String>, nil]
+      optional :include_selectors, BrandDev::Internal::Type::ArrayOf[String]
 
       # @!attribute max_age_ms
       #   Return a cached result if a prior scrape for the same parameters exists and is
@@ -83,11 +99,13 @@ module BrandDev
       #   @return [Integer, nil]
       optional :wait_for_ms, Integer
 
-      # @!method initialize(url:, headers: nil, include_frames: nil, include_images: nil, include_links: nil, max_age_ms: nil, pdf: nil, shorten_base64_images: nil, timeout_ms: nil, use_main_content_only: nil, wait_for_ms: nil, request_options: {})
+      # @!method initialize(url:, exclude_selectors: nil, headers: nil, include_frames: nil, include_images: nil, include_links: nil, include_selectors: nil, max_age_ms: nil, pdf: nil, shorten_base64_images: nil, timeout_ms: nil, use_main_content_only: nil, wait_for_ms: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
       #   {BrandDev::Models::BrandWebScrapeMdParams} for more details.
       #
       #   @param url [String] Full URL to scrape into LLM usable Markdown (must include http:// or https:// pr
+      #
+      #   @param exclude_selectors [Array<String>] CSS selectors to remove before conversion to Markdown. Applied after includeSele
       #
       #   @param headers [Hash{Symbol=>String}] Optional outbound HTTP headers forwarded only to the target URL, sent as deep-ob
       #
@@ -96,6 +114,8 @@ module BrandDev
       #   @param include_images [Boolean] Include image references in Markdown output
       #
       #   @param include_links [Boolean] Preserve hyperlinks in Markdown output
+      #
+      #   @param include_selectors [Array<String>] CSS selectors. When provided, only matching HTML subtrees (and their descendants
       #
       #   @param max_age_ms [Integer] Return a cached result if a prior scrape for the same parameters exists and is y
       #

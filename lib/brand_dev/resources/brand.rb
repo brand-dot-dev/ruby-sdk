@@ -405,13 +405,17 @@ module BrandDev
       #
       # Scrapes the given URL and returns the raw HTML content of the page.
       #
-      # @overload web_scrape_html(url:, headers: nil, include_frames: nil, max_age_ms: nil, pdf: nil, timeout_ms: nil, wait_for_ms: nil, request_options: {})
+      # @overload web_scrape_html(url:, exclude_selectors: nil, headers: nil, include_frames: nil, include_selectors: nil, max_age_ms: nil, pdf: nil, timeout_ms: nil, wait_for_ms: nil, request_options: {})
       #
       # @param url [String] Full URL to scrape (must include http:// or https:// protocol)
+      #
+      # @param exclude_selectors [Array<String>] CSS selectors to remove from the result. Applied after includeSelectors. Exclusi
       #
       # @param headers [Hash{Symbol=>String}] Optional outbound HTTP headers forwarded only to the target URL, sent as deep-ob
       #
       # @param include_frames [Boolean] When true, iframes are rendered inline into the returned HTML.
+      #
+      # @param include_selectors [Array<String>] CSS selectors. When provided, only matching subtrees (and their descendants) are
       #
       # @param max_age_ms [Integer] Return a cached result if a prior scrape for the same parameters exists and is y
       #
@@ -433,7 +437,9 @@ module BrandDev
           method: :get,
           path: "web/scrape/html",
           query: query.transform_keys(
+            exclude_selectors: "excludeSelectors",
             include_frames: "includeFrames",
+            include_selectors: "includeSelectors",
             max_age_ms: "maxAgeMs",
             timeout_ms: "timeoutMS",
             wait_for_ms: "waitForMs"
@@ -491,9 +497,11 @@ module BrandDev
       #
       # Scrapes the given URL into LLM usable Markdown.
       #
-      # @overload web_scrape_md(url:, headers: nil, include_frames: nil, include_images: nil, include_links: nil, max_age_ms: nil, pdf: nil, shorten_base64_images: nil, timeout_ms: nil, use_main_content_only: nil, wait_for_ms: nil, request_options: {})
+      # @overload web_scrape_md(url:, exclude_selectors: nil, headers: nil, include_frames: nil, include_images: nil, include_links: nil, include_selectors: nil, max_age_ms: nil, pdf: nil, shorten_base64_images: nil, timeout_ms: nil, use_main_content_only: nil, wait_for_ms: nil, request_options: {})
       #
       # @param url [String] Full URL to scrape into LLM usable Markdown (must include http:// or https:// pr
+      #
+      # @param exclude_selectors [Array<String>] CSS selectors to remove before conversion to Markdown. Applied after includeSele
       #
       # @param headers [Hash{Symbol=>String}] Optional outbound HTTP headers forwarded only to the target URL, sent as deep-ob
       #
@@ -502,6 +510,8 @@ module BrandDev
       # @param include_images [Boolean] Include image references in Markdown output
       #
       # @param include_links [Boolean] Preserve hyperlinks in Markdown output
+      #
+      # @param include_selectors [Array<String>] CSS selectors. When provided, only matching HTML subtrees (and their descendants
       #
       # @param max_age_ms [Integer] Return a cached result if a prior scrape for the same parameters exists and is y
       #
@@ -527,9 +537,11 @@ module BrandDev
           method: :get,
           path: "web/scrape/markdown",
           query: query.transform_keys(
+            exclude_selectors: "excludeSelectors",
             include_frames: "includeFrames",
             include_images: "includeImages",
             include_links: "includeLinks",
+            include_selectors: "includeSelectors",
             max_age_ms: "maxAgeMs",
             shorten_base64_images: "shortenBase64Images",
             timeout_ms: "timeoutMS",
