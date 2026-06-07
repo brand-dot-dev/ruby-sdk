@@ -4,6 +4,7 @@ module BrandDev
       {
         html: String,
         success: BrandDev::Models::BrandWebScrapeHTMLResponse::success,
+        type: BrandDev::Models::BrandWebScrapeHTMLResponse::type_,
         url: String
       }
 
@@ -12,17 +13,21 @@ module BrandDev
 
       attr_accessor success: BrandDev::Models::BrandWebScrapeHTMLResponse::success
 
+      attr_accessor type: BrandDev::Models::BrandWebScrapeHTMLResponse::type_
+
       attr_accessor url: String
 
       def initialize: (
         html: String,
         success: BrandDev::Models::BrandWebScrapeHTMLResponse::success,
+        type: BrandDev::Models::BrandWebScrapeHTMLResponse::type_,
         url: String
       ) -> void
 
       def to_hash: -> {
         html: String,
         success: BrandDev::Models::BrandWebScrapeHTMLResponse::success,
+        type: BrandDev::Models::BrandWebScrapeHTMLResponse::type_,
         url: String
       }
 
@@ -34,6 +39,23 @@ module BrandDev
         TRUE: true
 
         def self?.values: -> ::Array[BrandDev::Models::BrandWebScrapeHTMLResponse::success]
+      end
+
+      type type_ = :html | :xml | :json | :text | :csv | :markdown | :svg | :pdf
+
+      module Type
+        extend BrandDev::Internal::Type::Enum
+
+        HTML: :html
+        XML: :xml
+        JSON: :json
+        TEXT: :text
+        CSV: :csv
+        MARKDOWN: :markdown
+        SVG: :svg
+        PDF: :pdf
+
+        def self?.values: -> ::Array[BrandDev::Models::BrandWebScrapeHTMLResponse::type_]
       end
     end
   end
