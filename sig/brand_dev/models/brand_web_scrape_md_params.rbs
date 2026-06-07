@@ -3,10 +3,12 @@ module BrandDev
     type brand_web_scrape_md_params =
       {
         url: String,
+        exclude_selectors: ::Array[String],
         headers: ::Hash[Symbol, String],
         include_frames: bool,
         include_images: bool,
         include_links: bool,
+        include_selectors: ::Array[String],
         max_age_ms: Integer,
         pdf: BrandDev::BrandWebScrapeMdParams::Pdf,
         :shorten_base64_images => bool,
@@ -21,6 +23,10 @@ module BrandDev
       include BrandDev::Internal::Type::RequestParameters
 
       attr_accessor url: String
+
+      attr_reader exclude_selectors: ::Array[String]?
+
+      def exclude_selectors=: (::Array[String]) -> ::Array[String]
 
       attr_reader headers: ::Hash[Symbol, String]?
 
@@ -37,6 +43,10 @@ module BrandDev
       attr_reader include_links: bool?
 
       def include_links=: (bool) -> bool
+
+      attr_reader include_selectors: ::Array[String]?
+
+      def include_selectors=: (::Array[String]) -> ::Array[String]
 
       attr_reader max_age_ms: Integer?
 
@@ -66,10 +76,12 @@ module BrandDev
 
       def initialize: (
         url: String,
+        ?exclude_selectors: ::Array[String],
         ?headers: ::Hash[Symbol, String],
         ?include_frames: bool,
         ?include_images: bool,
         ?include_links: bool,
+        ?include_selectors: ::Array[String],
         ?max_age_ms: Integer,
         ?pdf: BrandDev::BrandWebScrapeMdParams::Pdf,
         ?shorten_base64_images: bool,
@@ -81,10 +93,12 @@ module BrandDev
 
       def to_hash: -> {
         url: String,
+        exclude_selectors: ::Array[String],
         headers: ::Hash[Symbol, String],
         include_frames: bool,
         include_images: bool,
         include_links: bool,
+        include_selectors: ::Array[String],
         max_age_ms: Integer,
         pdf: BrandDev::BrandWebScrapeMdParams::Pdf,
         :shorten_base64_images => bool,

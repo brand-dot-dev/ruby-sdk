@@ -102,8 +102,10 @@ module BrandDev
 
       def web_scrape_html: (
         url: String,
+        ?exclude_selectors: ::Array[String],
         ?headers: ::Hash[Symbol, String],
         ?include_frames: bool,
+        ?include_selectors: ::Array[String],
         ?max_age_ms: Integer,
         ?pdf: BrandDev::BrandWebScrapeHTMLParams::Pdf,
         ?timeout_ms: Integer,
@@ -123,10 +125,12 @@ module BrandDev
 
       def web_scrape_md: (
         url: String,
+        ?exclude_selectors: ::Array[String],
         ?headers: ::Hash[Symbol, String],
         ?include_frames: bool,
         ?include_images: bool,
         ?include_links: bool,
+        ?include_selectors: ::Array[String],
         ?max_age_ms: Integer,
         ?pdf: BrandDev::BrandWebScrapeMdParams::Pdf,
         ?shorten_base64_images: bool,

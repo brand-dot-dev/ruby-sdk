@@ -384,8 +384,10 @@ module BrandDev
       sig do
         params(
           url: String,
+          exclude_selectors: T::Array[String],
           headers: T::Hash[Symbol, String],
           include_frames: T::Boolean,
+          include_selectors: T::Array[String],
           max_age_ms: Integer,
           pdf: BrandDev::BrandWebScrapeHTMLParams::Pdf::OrHash,
           timeout_ms: Integer,
@@ -396,12 +398,20 @@ module BrandDev
       def web_scrape_html(
         # Full URL to scrape (must include http:// or https:// protocol)
         url:,
+        # CSS selectors to remove from the result. Applied after includeSelectors.
+        # Exclusion takes precedence: an element matching both is removed. Examples:
+        # "nav", "footer", ".ad-banner", "[aria-hidden=true]".
+        exclude_selectors: nil,
         # Optional outbound HTTP headers forwarded only to the target URL, sent as
         # deep-object query params such as headers[X-Custom]=value. When provided, caching
         # is bypassed: the result is neither read from nor written to cache.
         headers: nil,
         # When true, iframes are rendered inline into the returned HTML.
         include_frames: nil,
+        # CSS selectors. When provided, only matching subtrees (and their descendants) are
+        # kept and everything else is dropped. When omitted, the entire document is kept.
+        # Examples: "article.main", "#content", "[role=main]".
+        include_selectors: nil,
         # Return a cached result if a prior scrape for the same parameters exists and is
         # younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
         # omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
@@ -463,10 +473,12 @@ module BrandDev
       sig do
         params(
           url: String,
+          exclude_selectors: T::Array[String],
           headers: T::Hash[Symbol, String],
           include_frames: T::Boolean,
           include_images: T::Boolean,
           include_links: T::Boolean,
+          include_selectors: T::Array[String],
           max_age_ms: Integer,
           pdf: BrandDev::BrandWebScrapeMdParams::Pdf::OrHash,
           shorten_base64_images: T::Boolean,
@@ -480,6 +492,10 @@ module BrandDev
         # Full URL to scrape into LLM usable Markdown (must include http:// or https://
         # protocol)
         url:,
+        # CSS selectors to remove before conversion to Markdown. Applied after
+        # includeSelectors. Exclusion takes precedence: an element matching both is
+        # removed. Examples: "nav", "footer", ".ad-banner", "[aria-hidden=true]".
+        exclude_selectors: nil,
         # Optional outbound HTTP headers forwarded only to the target URL, sent as
         # deep-object query params such as headers[X-Custom]=value. When provided, caching
         # is bypassed: the result is neither read from nor written to cache.
@@ -490,6 +506,10 @@ module BrandDev
         include_images: nil,
         # Preserve hyperlinks in Markdown output
         include_links: nil,
+        # CSS selectors. When provided, only matching HTML subtrees (and their
+        # descendants) are kept before conversion to Markdown. When omitted, the entire
+        # document is kept. Examples: "article.main", "#content", "[role=main]".
+        include_selectors: nil,
         # Return a cached result if a prior scrape for the same parameters exists and is
         # younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
         # omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.

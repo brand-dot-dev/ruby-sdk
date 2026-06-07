@@ -13,6 +13,14 @@ module BrandDev
       #   @return [String]
       required :url, String
 
+      # @!attribute exclude_selectors
+      #   CSS selectors to remove from the result. Applied after includeSelectors.
+      #   Exclusion takes precedence: an element matching both is removed. Examples:
+      #   "nav", "footer", ".ad-banner", "[aria-hidden=true]".
+      #
+      #   @return [Array<String>, nil]
+      optional :exclude_selectors, BrandDev::Internal::Type::ArrayOf[String]
+
       # @!attribute headers
       #   Optional outbound HTTP headers forwarded only to the target URL, sent as
       #   deep-object query params such as headers[X-Custom]=value. When provided, caching
@@ -26,6 +34,14 @@ module BrandDev
       #
       #   @return [Boolean, nil]
       optional :include_frames, BrandDev::Internal::Type::Boolean
+
+      # @!attribute include_selectors
+      #   CSS selectors. When provided, only matching subtrees (and their descendants) are
+      #   kept and everything else is dropped. When omitted, the entire document is kept.
+      #   Examples: "article.main", "#content", "[role=main]".
+      #
+      #   @return [Array<String>, nil]
+      optional :include_selectors, BrandDev::Internal::Type::ArrayOf[String]
 
       # @!attribute max_age_ms
       #   Return a cached result if a prior scrape for the same parameters exists and is
@@ -57,15 +73,19 @@ module BrandDev
       #   @return [Integer, nil]
       optional :wait_for_ms, Integer
 
-      # @!method initialize(url:, headers: nil, include_frames: nil, max_age_ms: nil, pdf: nil, timeout_ms: nil, wait_for_ms: nil, request_options: {})
+      # @!method initialize(url:, exclude_selectors: nil, headers: nil, include_frames: nil, include_selectors: nil, max_age_ms: nil, pdf: nil, timeout_ms: nil, wait_for_ms: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
       #   {BrandDev::Models::BrandWebScrapeHTMLParams} for more details.
       #
       #   @param url [String] Full URL to scrape (must include http:// or https:// protocol)
       #
+      #   @param exclude_selectors [Array<String>] CSS selectors to remove from the result. Applied after includeSelectors. Exclusi
+      #
       #   @param headers [Hash{Symbol=>String}] Optional outbound HTTP headers forwarded only to the target URL, sent as deep-ob
       #
       #   @param include_frames [Boolean] When true, iframes are rendered inline into the returned HTML.
+      #
+      #   @param include_selectors [Array<String>] CSS selectors. When provided, only matching subtrees (and their descendants) are
       #
       #   @param max_age_ms [Integer] Return a cached result if a prior scrape for the same parameters exists and is y
       #
