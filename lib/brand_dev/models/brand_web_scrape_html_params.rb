@@ -66,6 +66,13 @@ module BrandDev
       #   @return [Integer, nil]
       optional :timeout_ms, Integer
 
+      # @!attribute use_main_content_only
+      #   When true, return only the page's main content in the HTML response, excluding
+      #   headers, footers, sidebars, and navigation when detectable.
+      #
+      #   @return [Boolean, nil]
+      optional :use_main_content_only, BrandDev::Internal::Type::Boolean
+
       # @!attribute wait_for_ms
       #   Optional browser wait time in milliseconds after initial page load. Min: 0. Max:
       #   30000 (30 seconds).
@@ -73,7 +80,7 @@ module BrandDev
       #   @return [Integer, nil]
       optional :wait_for_ms, Integer
 
-      # @!method initialize(url:, exclude_selectors: nil, headers: nil, include_frames: nil, include_selectors: nil, max_age_ms: nil, pdf: nil, timeout_ms: nil, wait_for_ms: nil, request_options: {})
+      # @!method initialize(url:, exclude_selectors: nil, headers: nil, include_frames: nil, include_selectors: nil, max_age_ms: nil, pdf: nil, timeout_ms: nil, use_main_content_only: nil, wait_for_ms: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
       #   {BrandDev::Models::BrandWebScrapeHTMLParams} for more details.
       #
@@ -92,6 +99,8 @@ module BrandDev
       #   @param pdf [BrandDev::Models::BrandWebScrapeHTMLParams::Pdf] PDF parsing controls. Use start/end to limit text extraction and OCR to an inclu
       #
       #   @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
+      #
+      #   @param use_main_content_only [Boolean] When true, return only the page's main content in the HTML response, excluding h
       #
       #   @param wait_for_ms [Integer] Optional browser wait time in milliseconds after initial page load. Min: 0. Max:
       #
