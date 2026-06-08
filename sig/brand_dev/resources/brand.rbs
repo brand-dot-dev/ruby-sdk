@@ -109,6 +109,7 @@ module BrandDev
         ?max_age_ms: Integer,
         ?pdf: BrandDev::BrandWebScrapeHTMLParams::Pdf,
         ?timeout_ms: Integer,
+        ?use_main_content_only: bool,
         ?wait_for_ms: Integer,
         ?request_options: BrandDev::request_opts
       ) -> BrandDev::Models::BrandWebScrapeHTMLResponse

@@ -75,6 +75,14 @@ module BrandDev
       sig { params(timeout_ms: Integer).void }
       attr_writer :timeout_ms
 
+      # When true, return only the page's main content in the HTML response, excluding
+      # headers, footers, sidebars, and navigation when detectable.
+      sig { returns(T.nilable(T::Boolean)) }
+      attr_reader :use_main_content_only
+
+      sig { params(use_main_content_only: T::Boolean).void }
+      attr_writer :use_main_content_only
+
       # Optional browser wait time in milliseconds after initial page load. Min: 0. Max:
       # 30000 (30 seconds).
       sig { returns(T.nilable(Integer)) }
@@ -93,6 +101,7 @@ module BrandDev
           max_age_ms: Integer,
           pdf: BrandDev::BrandWebScrapeHTMLParams::Pdf::OrHash,
           timeout_ms: Integer,
+          use_main_content_only: T::Boolean,
           wait_for_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(T.attached_class)
@@ -125,6 +134,9 @@ module BrandDev
         # than this value, it will be aborted with a 408 status code. Maximum allowed
         # value is 300000ms (5 minutes).
         timeout_ms: nil,
+        # When true, return only the page's main content in the HTML response, excluding
+        # headers, footers, sidebars, and navigation when detectable.
+        use_main_content_only: nil,
         # Optional browser wait time in milliseconds after initial page load. Min: 0. Max:
         # 30000 (30 seconds).
         wait_for_ms: nil,
@@ -143,6 +155,7 @@ module BrandDev
             max_age_ms: Integer,
             pdf: BrandDev::BrandWebScrapeHTMLParams::Pdf,
             timeout_ms: Integer,
+            use_main_content_only: T::Boolean,
             wait_for_ms: Integer,
             request_options: BrandDev::RequestOptions
           }

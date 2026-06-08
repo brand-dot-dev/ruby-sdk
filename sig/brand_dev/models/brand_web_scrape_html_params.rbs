@@ -10,6 +10,7 @@ module BrandDev
         max_age_ms: Integer,
         pdf: BrandDev::BrandWebScrapeHTMLParams::Pdf,
         timeout_ms: Integer,
+        use_main_content_only: bool,
         wait_for_ms: Integer
       }
       & BrandDev::Internal::Type::request_parameters
@@ -50,6 +51,10 @@ module BrandDev
 
       def timeout_ms=: (Integer) -> Integer
 
+      attr_reader use_main_content_only: bool?
+
+      def use_main_content_only=: (bool) -> bool
+
       attr_reader wait_for_ms: Integer?
 
       def wait_for_ms=: (Integer) -> Integer
@@ -63,6 +68,7 @@ module BrandDev
         ?max_age_ms: Integer,
         ?pdf: BrandDev::BrandWebScrapeHTMLParams::Pdf,
         ?timeout_ms: Integer,
+        ?use_main_content_only: bool,
         ?wait_for_ms: Integer,
         ?request_options: BrandDev::request_opts
       ) -> void
@@ -76,6 +82,7 @@ module BrandDev
         max_age_ms: Integer,
         pdf: BrandDev::BrandWebScrapeHTMLParams::Pdf,
         timeout_ms: Integer,
+        use_main_content_only: bool,
         wait_for_ms: Integer,
         request_options: BrandDev::RequestOptions
       }
