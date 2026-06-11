@@ -4,6 +4,7 @@ module BrandDev
       {
         brand: BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand,
         code: Integer,
+        key_metadata: BrandDev::Models::BrandRetrieveSimplifiedResponse::KeyMetadata,
         status: String
       }
 
@@ -18,6 +19,12 @@ module BrandDev
 
       def code=: (Integer) -> Integer
 
+      attr_reader key_metadata: BrandDev::Models::BrandRetrieveSimplifiedResponse::KeyMetadata?
+
+      def key_metadata=: (
+        BrandDev::Models::BrandRetrieveSimplifiedResponse::KeyMetadata
+      ) -> BrandDev::Models::BrandRetrieveSimplifiedResponse::KeyMetadata
+
       attr_reader status: String?
 
       def status=: (String) -> String
@@ -25,12 +32,14 @@ module BrandDev
       def initialize: (
         ?brand: BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand,
         ?code: Integer,
+        ?key_metadata: BrandDev::Models::BrandRetrieveSimplifiedResponse::KeyMetadata,
         ?status: String
       ) -> void
 
       def to_hash: -> {
         brand: BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand,
         code: Integer,
+        key_metadata: BrandDev::Models::BrandRetrieveSimplifiedResponse::KeyMetadata,
         status: String
       }
 
@@ -306,6 +315,25 @@ module BrandDev
             def self?.values: -> ::Array[BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo::type_]
           end
         end
+      end
+
+      type key_metadata =
+        { credits_consumed: Integer, credits_remaining: Integer }
+
+      class KeyMetadata < BrandDev::Internal::Type::BaseModel
+        attr_accessor credits_consumed: Integer
+
+        attr_accessor credits_remaining: Integer
+
+        def initialize: (
+          credits_consumed: Integer,
+          credits_remaining: Integer
+        ) -> void
+
+        def to_hash: -> {
+          credits_consumed: Integer,
+          credits_remaining: Integer
+        }
       end
     end
   end

@@ -16,6 +16,7 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
       response => {
         brand: BrandDev::Models::BrandRetrieveResponse::Brand | nil,
         code: Integer | nil,
+        key_metadata: BrandDev::Models::BrandRetrieveResponse::KeyMetadata | nil,
         status: String | nil
       }
     end
@@ -33,6 +34,7 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
     assert_pattern do
       response => {
         is_product_page: BrandDev::Internal::Type::Boolean | nil,
+        key_metadata: BrandDev::Models::BrandAIProductResponse::KeyMetadata | nil,
         platform: BrandDev::Models::BrandAIProductResponse::Platform | nil,
         product: BrandDev::Models::BrandAIProductResponse::Product | nil
       }
@@ -50,6 +52,7 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
 
     assert_pattern do
       response => {
+        key_metadata: BrandDev::Models::BrandAIProductsResponse::KeyMetadata | nil,
         products: ^(BrandDev::Internal::Type::ArrayOf[BrandDev::Models::BrandAIProductsResponse::Product]) | nil
       }
     end
@@ -79,6 +82,7 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
       response => {
         data_extracted: ^(BrandDev::Internal::Type::ArrayOf[BrandDev::Models::BrandAIQueryResponse::DataExtracted]) | nil,
         domain: String | nil,
+        key_metadata: BrandDev::Models::BrandAIQueryResponse::KeyMetadata | nil,
         status: String | nil,
         urls_analyzed: ^(BrandDev::Internal::Type::ArrayOf[String]) | nil
       }
@@ -98,6 +102,7 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
       response => {
         brand: BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand | nil,
         code: Integer | nil,
+        key_metadata: BrandDev::Models::BrandIdentifyFromTransactionResponse::KeyMetadata | nil,
         status: String | nil
       }
     end
@@ -115,6 +120,7 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
     assert_pattern do
       response => {
         domain: String | nil,
+        key_metadata: BrandDev::Models::BrandPrefetchResponse::KeyMetadata | nil,
         message: String | nil,
         status: String | nil
       }
@@ -133,6 +139,7 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
     assert_pattern do
       response => {
         domain: String | nil,
+        key_metadata: BrandDev::Models::BrandPrefetchByEmailResponse::KeyMetadata | nil,
         message: String | nil,
         status: String | nil
       }
@@ -152,6 +159,7 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
       response => {
         brand: BrandDev::Models::BrandRetrieveByEmailResponse::Brand | nil,
         code: Integer | nil,
+        key_metadata: BrandDev::Models::BrandRetrieveByEmailResponse::KeyMetadata | nil,
         status: String | nil
       }
     end
@@ -170,6 +178,7 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
       response => {
         brand: BrandDev::Models::BrandRetrieveByIsinResponse::Brand | nil,
         code: Integer | nil,
+        key_metadata: BrandDev::Models::BrandRetrieveByIsinResponse::KeyMetadata | nil,
         status: String | nil
       }
     end
@@ -188,6 +197,7 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
       response => {
         brand: BrandDev::Models::BrandRetrieveByNameResponse::Brand | nil,
         code: Integer | nil,
+        key_metadata: BrandDev::Models::BrandRetrieveByNameResponse::KeyMetadata | nil,
         status: String | nil
       }
     end
@@ -206,6 +216,7 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
       response => {
         brand: BrandDev::Models::BrandRetrieveByTickerResponse::Brand | nil,
         code: Integer | nil,
+        key_metadata: BrandDev::Models::BrandRetrieveByTickerResponse::KeyMetadata | nil,
         status: String | nil
       }
     end
@@ -224,6 +235,7 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
       response => {
         brand: BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand | nil,
         code: Integer | nil,
+        key_metadata: BrandDev::Models::BrandRetrieveSimplifiedResponse::KeyMetadata | nil,
         status: String | nil
       }
     end
@@ -243,7 +255,8 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
         html: String,
         success: BrandDev::Models::BrandWebScrapeHTMLResponse::Success,
         type: BrandDev::Models::BrandWebScrapeHTMLResponse::Type,
-        url: String
+        url: String,
+        key_metadata: BrandDev::Models::BrandWebScrapeHTMLResponse::KeyMetadata | nil
       }
     end
   end
@@ -261,7 +274,8 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
       response => {
         images: ^(BrandDev::Internal::Type::ArrayOf[BrandDev::Models::BrandWebScrapeImagesResponse::Image]),
         success: BrandDev::Models::BrandWebScrapeImagesResponse::Success,
-        url: String
+        url: String,
+        key_metadata: BrandDev::Models::BrandWebScrapeImagesResponse::KeyMetadata | nil
       }
     end
   end
@@ -279,7 +293,8 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
       response => {
         markdown: String,
         success: BrandDev::Models::BrandWebScrapeMdResponse::Success,
-        url: String
+        url: String,
+        key_metadata: BrandDev::Models::BrandWebScrapeMdResponse::KeyMetadata | nil
       }
     end
   end
@@ -298,7 +313,8 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
         domain: String,
         meta: BrandDev::Models::BrandWebScrapeSitemapResponse::Meta,
         success: BrandDev::Models::BrandWebScrapeSitemapResponse::Success,
-        urls: ^(BrandDev::Internal::Type::ArrayOf[String])
+        urls: ^(BrandDev::Internal::Type::ArrayOf[String]),
+        key_metadata: BrandDev::Models::BrandWebScrapeSitemapResponse::KeyMetadata | nil
       }
     end
   end

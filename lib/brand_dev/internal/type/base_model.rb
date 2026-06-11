@@ -442,7 +442,7 @@ module BrandDev
         #   brand_retrieve_response => {
         #     brand: brand,
         #     code: code,
-        #     status: status
+        #     key_metadata: key_metadata
         #   }
         def deconstruct_keys(keys)
           (keys || self.class.known_fields.keys)

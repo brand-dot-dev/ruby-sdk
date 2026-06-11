@@ -1,12 +1,23 @@
 module BrandDev
   module Models
     type brand_prefetch_by_email_response =
-      { domain: String, message: String, status: String }
+      {
+        domain: String,
+        key_metadata: BrandDev::Models::BrandPrefetchByEmailResponse::KeyMetadata,
+        message: String,
+        status: String
+      }
 
     class BrandPrefetchByEmailResponse < BrandDev::Internal::Type::BaseModel
       attr_reader domain: String?
 
       def domain=: (String) -> String
+
+      attr_reader key_metadata: BrandDev::Models::BrandPrefetchByEmailResponse::KeyMetadata?
+
+      def key_metadata=: (
+        BrandDev::Models::BrandPrefetchByEmailResponse::KeyMetadata
+      ) -> BrandDev::Models::BrandPrefetchByEmailResponse::KeyMetadata
 
       attr_reader message: String?
 
@@ -18,11 +29,36 @@ module BrandDev
 
       def initialize: (
         ?domain: String,
+        ?key_metadata: BrandDev::Models::BrandPrefetchByEmailResponse::KeyMetadata,
         ?message: String,
         ?status: String
       ) -> void
 
-      def to_hash: -> { domain: String, message: String, status: String }
+      def to_hash: -> {
+        domain: String,
+        key_metadata: BrandDev::Models::BrandPrefetchByEmailResponse::KeyMetadata,
+        message: String,
+        status: String
+      }
+
+      type key_metadata =
+        { credits_consumed: Integer, credits_remaining: Integer }
+
+      class KeyMetadata < BrandDev::Internal::Type::BaseModel
+        attr_accessor credits_consumed: Integer
+
+        attr_accessor credits_remaining: Integer
+
+        def initialize: (
+          credits_consumed: Integer,
+          credits_remaining: Integer
+        ) -> void
+
+        def to_hash: -> {
+          credits_consumed: Integer,
+          credits_remaining: Integer
+        }
+      end
     end
   end
 end

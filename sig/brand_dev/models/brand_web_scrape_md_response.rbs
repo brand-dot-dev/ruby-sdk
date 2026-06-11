@@ -4,7 +4,8 @@ module BrandDev
       {
         markdown: String,
         success: BrandDev::Models::BrandWebScrapeMdResponse::success,
-        url: String
+        url: String,
+        key_metadata: BrandDev::Models::BrandWebScrapeMdResponse::KeyMetadata
       }
 
     class BrandWebScrapeMdResponse < BrandDev::Internal::Type::BaseModel
@@ -14,16 +15,24 @@ module BrandDev
 
       attr_accessor url: String
 
+      attr_reader key_metadata: BrandDev::Models::BrandWebScrapeMdResponse::KeyMetadata?
+
+      def key_metadata=: (
+        BrandDev::Models::BrandWebScrapeMdResponse::KeyMetadata
+      ) -> BrandDev::Models::BrandWebScrapeMdResponse::KeyMetadata
+
       def initialize: (
         markdown: String,
         success: BrandDev::Models::BrandWebScrapeMdResponse::success,
-        url: String
+        url: String,
+        ?key_metadata: BrandDev::Models::BrandWebScrapeMdResponse::KeyMetadata
       ) -> void
 
       def to_hash: -> {
         markdown: String,
         success: BrandDev::Models::BrandWebScrapeMdResponse::success,
-        url: String
+        url: String,
+        key_metadata: BrandDev::Models::BrandWebScrapeMdResponse::KeyMetadata
       }
 
       type success = true
@@ -34,6 +43,25 @@ module BrandDev
         TRUE: true
 
         def self?.values: -> ::Array[BrandDev::Models::BrandWebScrapeMdResponse::success]
+      end
+
+      type key_metadata =
+        { credits_consumed: Integer, credits_remaining: Integer }
+
+      class KeyMetadata < BrandDev::Internal::Type::BaseModel
+        attr_accessor credits_consumed: Integer
+
+        attr_accessor credits_remaining: Integer
+
+        def initialize: (
+          credits_consumed: Integer,
+          credits_remaining: Integer
+        ) -> void
+
+        def to_hash: -> {
+          credits_consumed: Integer,
+          credits_remaining: Integer
+        }
       end
     end
   end

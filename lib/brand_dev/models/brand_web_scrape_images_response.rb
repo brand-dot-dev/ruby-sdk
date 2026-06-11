@@ -23,12 +23,24 @@ module BrandDev
       #   @return [String]
       required :url, String
 
-      # @!method initialize(images:, success:, url:)
+      # @!attribute key_metadata
+      #   Metadata about the API key used for the request. Included in every response
+      #   whenever a valid API key is provided, even when the response status is not 200.
+      #
+      #   @return [BrandDev::Models::BrandWebScrapeImagesResponse::KeyMetadata, nil]
+      optional :key_metadata, -> { BrandDev::Models::BrandWebScrapeImagesResponse::KeyMetadata }
+
+      # @!method initialize(images:, success:, url:, key_metadata: nil)
+      #   Some parameter documentations has been truncated, see
+      #   {BrandDev::Models::BrandWebScrapeImagesResponse} for more details.
+      #
       #   @param images [Array<BrandDev::Models::BrandWebScrapeImagesResponse::Image>] Images found on the page.
       #
       #   @param success [Boolean, BrandDev::Models::BrandWebScrapeImagesResponse::Success] Always true on success.
       #
       #   @param url [String] Page URL that was scraped.
+      #
+      #   @param key_metadata [BrandDev::Models::BrandWebScrapeImagesResponse::KeyMetadata] Metadata about the API key used for the request. Included in every response when
 
       class Image < BrandDev::Internal::Type::BaseModel
         # @!attribute alt
@@ -182,6 +194,29 @@ module BrandDev
 
         # @!method self.values
         #   @return [Array<Boolean>]
+      end
+
+      # @see BrandDev::Models::BrandWebScrapeImagesResponse#key_metadata
+      class KeyMetadata < BrandDev::Internal::Type::BaseModel
+        # @!attribute credits_consumed
+        #   The number of credits consumed by this request.
+        #
+        #   @return [Integer]
+        required :credits_consumed, Integer
+
+        # @!attribute credits_remaining
+        #   The number of credits remaining for your organization after this request.
+        #
+        #   @return [Integer]
+        required :credits_remaining, Integer
+
+        # @!method initialize(credits_consumed:, credits_remaining:)
+        #   Metadata about the API key used for the request. Included in every response
+        #   whenever a valid API key is provided, even when the response status is not 200.
+        #
+        #   @param credits_consumed [Integer] The number of credits consumed by this request.
+        #
+        #   @param credits_remaining [Integer] The number of credits remaining for your organization after this request.
       end
     end
   end

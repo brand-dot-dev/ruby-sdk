@@ -3,6 +3,7 @@ module BrandDev
     type brand_ai_product_response =
       {
         is_product_page: bool,
+        key_metadata: BrandDev::Models::BrandAIProductResponse::KeyMetadata,
         platform: BrandDev::Models::BrandAIProductResponse::platform?,
         product: BrandDev::Models::BrandAIProductResponse::Product?
       }
@@ -12,21 +13,48 @@ module BrandDev
 
       def is_product_page=: (bool) -> bool
 
+      attr_reader key_metadata: BrandDev::Models::BrandAIProductResponse::KeyMetadata?
+
+      def key_metadata=: (
+        BrandDev::Models::BrandAIProductResponse::KeyMetadata
+      ) -> BrandDev::Models::BrandAIProductResponse::KeyMetadata
+
       attr_accessor platform: BrandDev::Models::BrandAIProductResponse::platform?
 
       attr_accessor product: BrandDev::Models::BrandAIProductResponse::Product?
 
       def initialize: (
         ?is_product_page: bool,
+        ?key_metadata: BrandDev::Models::BrandAIProductResponse::KeyMetadata,
         ?platform: BrandDev::Models::BrandAIProductResponse::platform?,
         ?product: BrandDev::Models::BrandAIProductResponse::Product?
       ) -> void
 
       def to_hash: -> {
         is_product_page: bool,
+        key_metadata: BrandDev::Models::BrandAIProductResponse::KeyMetadata,
         platform: BrandDev::Models::BrandAIProductResponse::platform?,
         product: BrandDev::Models::BrandAIProductResponse::Product?
       }
+
+      type key_metadata =
+        { credits_consumed: Integer, credits_remaining: Integer }
+
+      class KeyMetadata < BrandDev::Internal::Type::BaseModel
+        attr_accessor credits_consumed: Integer
+
+        attr_accessor credits_remaining: Integer
+
+        def initialize: (
+          credits_consumed: Integer,
+          credits_remaining: Integer
+        ) -> void
+
+        def to_hash: -> {
+          credits_consumed: Integer,
+          credits_remaining: Integer
+        }
+      end
 
       type platform = :amazon | :tiktok_shop | :etsy | :generic
 

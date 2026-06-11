@@ -5,7 +5,8 @@ module BrandDev
         domain: String,
         meta: BrandDev::Models::BrandWebScrapeSitemapResponse::Meta,
         success: BrandDev::Models::BrandWebScrapeSitemapResponse::success,
-        urls: ::Array[String]
+        urls: ::Array[String],
+        key_metadata: BrandDev::Models::BrandWebScrapeSitemapResponse::KeyMetadata
       }
 
     class BrandWebScrapeSitemapResponse < BrandDev::Internal::Type::BaseModel
@@ -17,18 +18,26 @@ module BrandDev
 
       attr_accessor urls: ::Array[String]
 
+      attr_reader key_metadata: BrandDev::Models::BrandWebScrapeSitemapResponse::KeyMetadata?
+
+      def key_metadata=: (
+        BrandDev::Models::BrandWebScrapeSitemapResponse::KeyMetadata
+      ) -> BrandDev::Models::BrandWebScrapeSitemapResponse::KeyMetadata
+
       def initialize: (
         domain: String,
         meta: BrandDev::Models::BrandWebScrapeSitemapResponse::Meta,
         success: BrandDev::Models::BrandWebScrapeSitemapResponse::success,
-        urls: ::Array[String]
+        urls: ::Array[String],
+        ?key_metadata: BrandDev::Models::BrandWebScrapeSitemapResponse::KeyMetadata
       ) -> void
 
       def to_hash: -> {
         domain: String,
         meta: BrandDev::Models::BrandWebScrapeSitemapResponse::Meta,
         success: BrandDev::Models::BrandWebScrapeSitemapResponse::success,
-        urls: ::Array[String]
+        urls: ::Array[String],
+        key_metadata: BrandDev::Models::BrandWebScrapeSitemapResponse::KeyMetadata
       }
 
       type meta =
@@ -71,6 +80,25 @@ module BrandDev
         TRUE: true
 
         def self?.values: -> ::Array[BrandDev::Models::BrandWebScrapeSitemapResponse::success]
+      end
+
+      type key_metadata =
+        { credits_consumed: Integer, credits_remaining: Integer }
+
+      class KeyMetadata < BrandDev::Internal::Type::BaseModel
+        attr_accessor credits_consumed: Integer
+
+        attr_accessor credits_remaining: Integer
+
+        def initialize: (
+          credits_consumed: Integer,
+          credits_remaining: Integer
+        ) -> void
+
+        def to_hash: -> {
+          credits_consumed: Integer,
+          credits_remaining: Integer
+        }
       end
     end
   end

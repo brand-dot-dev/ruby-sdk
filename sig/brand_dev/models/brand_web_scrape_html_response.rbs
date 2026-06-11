@@ -5,7 +5,8 @@ module BrandDev
         html: String,
         success: BrandDev::Models::BrandWebScrapeHTMLResponse::success,
         type: BrandDev::Models::BrandWebScrapeHTMLResponse::type_,
-        url: String
+        url: String,
+        key_metadata: BrandDev::Models::BrandWebScrapeHTMLResponse::KeyMetadata
       }
 
     class BrandWebScrapeHTMLResponse < BrandDev::Internal::Type::BaseModel
@@ -17,18 +18,26 @@ module BrandDev
 
       attr_accessor url: String
 
+      attr_reader key_metadata: BrandDev::Models::BrandWebScrapeHTMLResponse::KeyMetadata?
+
+      def key_metadata=: (
+        BrandDev::Models::BrandWebScrapeHTMLResponse::KeyMetadata
+      ) -> BrandDev::Models::BrandWebScrapeHTMLResponse::KeyMetadata
+
       def initialize: (
         html: String,
         success: BrandDev::Models::BrandWebScrapeHTMLResponse::success,
         type: BrandDev::Models::BrandWebScrapeHTMLResponse::type_,
-        url: String
+        url: String,
+        ?key_metadata: BrandDev::Models::BrandWebScrapeHTMLResponse::KeyMetadata
       ) -> void
 
       def to_hash: -> {
         html: String,
         success: BrandDev::Models::BrandWebScrapeHTMLResponse::success,
         type: BrandDev::Models::BrandWebScrapeHTMLResponse::type_,
-        url: String
+        url: String,
+        key_metadata: BrandDev::Models::BrandWebScrapeHTMLResponse::KeyMetadata
       }
 
       type success = true
@@ -56,6 +65,25 @@ module BrandDev
         PDF: :pdf
 
         def self?.values: -> ::Array[BrandDev::Models::BrandWebScrapeHTMLResponse::type_]
+      end
+
+      type key_metadata =
+        { credits_consumed: Integer, credits_remaining: Integer }
+
+      class KeyMetadata < BrandDev::Internal::Type::BaseModel
+        attr_accessor credits_consumed: Integer
+
+        attr_accessor credits_remaining: Integer
+
+        def initialize: (
+          credits_consumed: Integer,
+          credits_remaining: Integer
+        ) -> void
+
+        def to_hash: -> {
+          credits_consumed: Integer,
+          credits_remaining: Integer
+        }
       end
     end
   end
