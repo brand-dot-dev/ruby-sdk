@@ -1,9 +1,18 @@
 module BrandDev
   module Models
     type brand_ai_products_response =
-      { products: ::Array[BrandDev::Models::BrandAIProductsResponse::Product] }
+      {
+        key_metadata: BrandDev::Models::BrandAIProductsResponse::KeyMetadata,
+        products: ::Array[BrandDev::Models::BrandAIProductsResponse::Product]
+      }
 
     class BrandAIProductsResponse < BrandDev::Internal::Type::BaseModel
+      attr_reader key_metadata: BrandDev::Models::BrandAIProductsResponse::KeyMetadata?
+
+      def key_metadata=: (
+        BrandDev::Models::BrandAIProductsResponse::KeyMetadata
+      ) -> BrandDev::Models::BrandAIProductsResponse::KeyMetadata
+
       attr_reader products: ::Array[BrandDev::Models::BrandAIProductsResponse::Product]?
 
       def products=: (
@@ -11,12 +20,33 @@ module BrandDev
       ) -> ::Array[BrandDev::Models::BrandAIProductsResponse::Product]
 
       def initialize: (
+        ?key_metadata: BrandDev::Models::BrandAIProductsResponse::KeyMetadata,
         ?products: ::Array[BrandDev::Models::BrandAIProductsResponse::Product]
       ) -> void
 
       def to_hash: -> {
+        key_metadata: BrandDev::Models::BrandAIProductsResponse::KeyMetadata,
         products: ::Array[BrandDev::Models::BrandAIProductsResponse::Product]
       }
+
+      type key_metadata =
+        { credits_consumed: Integer, credits_remaining: Integer }
+
+      class KeyMetadata < BrandDev::Internal::Type::BaseModel
+        attr_accessor credits_consumed: Integer
+
+        attr_accessor credits_remaining: Integer
+
+        def initialize: (
+          credits_consumed: Integer,
+          credits_remaining: Integer
+        ) -> void
+
+        def to_hash: -> {
+          credits_consumed: Integer,
+          credits_remaining: Integer
+        }
+      end
 
       type product =
         {

@@ -18,6 +18,23 @@ module BrandDev
       sig { params(domain: String).void }
       attr_writer :domain
 
+      # Metadata about the API key used for the request. Included in every response
+      # whenever a valid API key is provided, even when the response status is not 200.
+      sig do
+        returns(
+          T.nilable(BrandDev::Models::BrandPrefetchByEmailResponse::KeyMetadata)
+        )
+      end
+      attr_reader :key_metadata
+
+      sig do
+        params(
+          key_metadata:
+            BrandDev::Models::BrandPrefetchByEmailResponse::KeyMetadata::OrHash
+        ).void
+      end
+      attr_writer :key_metadata
+
       # Success message
       sig { returns(T.nilable(String)) }
       attr_reader :message
@@ -33,13 +50,20 @@ module BrandDev
       attr_writer :status
 
       sig do
-        params(domain: String, message: String, status: String).returns(
-          T.attached_class
-        )
+        params(
+          domain: String,
+          key_metadata:
+            BrandDev::Models::BrandPrefetchByEmailResponse::KeyMetadata::OrHash,
+          message: String,
+          status: String
+        ).returns(T.attached_class)
       end
       def self.new(
         # The domain that was queued for prefetching
         domain: nil,
+        # Metadata about the API key used for the request. Included in every response
+        # whenever a valid API key is provided, even when the response status is not 200.
+        key_metadata: nil,
         # Success message
         message: nil,
         # Status of the response, e.g., 'ok'
@@ -48,9 +72,58 @@ module BrandDev
       end
 
       sig do
-        override.returns({ domain: String, message: String, status: String })
+        override.returns(
+          {
+            domain: String,
+            key_metadata:
+              BrandDev::Models::BrandPrefetchByEmailResponse::KeyMetadata,
+            message: String,
+            status: String
+          }
+        )
       end
       def to_hash
+      end
+
+      class KeyMetadata < BrandDev::Internal::Type::BaseModel
+        OrHash =
+          T.type_alias do
+            T.any(
+              BrandDev::Models::BrandPrefetchByEmailResponse::KeyMetadata,
+              BrandDev::Internal::AnyHash
+            )
+          end
+
+        # The number of credits consumed by this request.
+        sig { returns(Integer) }
+        attr_accessor :credits_consumed
+
+        # The number of credits remaining for your organization after this request.
+        sig { returns(Integer) }
+        attr_accessor :credits_remaining
+
+        # Metadata about the API key used for the request. Included in every response
+        # whenever a valid API key is provided, even when the response status is not 200.
+        sig do
+          params(credits_consumed: Integer, credits_remaining: Integer).returns(
+            T.attached_class
+          )
+        end
+        def self.new(
+          # The number of credits consumed by this request.
+          credits_consumed:,
+          # The number of credits remaining for your organization after this request.
+          credits_remaining:
+        )
+        end
+
+        sig do
+          override.returns(
+            { credits_consumed: Integer, credits_remaining: Integer }
+          )
+        end
+        def to_hash
+        end
       end
     end
   end

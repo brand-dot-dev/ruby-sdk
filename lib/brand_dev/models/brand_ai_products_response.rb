@@ -4,6 +4,13 @@ module BrandDev
   module Models
     # @see BrandDev::Resources::Brand#ai_products
     class BrandAIProductsResponse < BrandDev::Internal::Type::BaseModel
+      # @!attribute key_metadata
+      #   Metadata about the API key used for the request. Included in every response
+      #   whenever a valid API key is provided, even when the response status is not 200.
+      #
+      #   @return [BrandDev::Models::BrandAIProductsResponse::KeyMetadata, nil]
+      optional :key_metadata, -> { BrandDev::Models::BrandAIProductsResponse::KeyMetadata }
+
       # @!attribute products
       #   Array of products extracted from the website
       #
@@ -11,8 +18,36 @@ module BrandDev
       optional :products,
                -> { BrandDev::Internal::Type::ArrayOf[BrandDev::Models::BrandAIProductsResponse::Product] }
 
-      # @!method initialize(products: nil)
+      # @!method initialize(key_metadata: nil, products: nil)
+      #   Some parameter documentations has been truncated, see
+      #   {BrandDev::Models::BrandAIProductsResponse} for more details.
+      #
+      #   @param key_metadata [BrandDev::Models::BrandAIProductsResponse::KeyMetadata] Metadata about the API key used for the request. Included in every response when
+      #
       #   @param products [Array<BrandDev::Models::BrandAIProductsResponse::Product>] Array of products extracted from the website
+
+      # @see BrandDev::Models::BrandAIProductsResponse#key_metadata
+      class KeyMetadata < BrandDev::Internal::Type::BaseModel
+        # @!attribute credits_consumed
+        #   The number of credits consumed by this request.
+        #
+        #   @return [Integer]
+        required :credits_consumed, Integer
+
+        # @!attribute credits_remaining
+        #   The number of credits remaining for your organization after this request.
+        #
+        #   @return [Integer]
+        required :credits_remaining, Integer
+
+        # @!method initialize(credits_consumed:, credits_remaining:)
+        #   Metadata about the API key used for the request. Included in every response
+        #   whenever a valid API key is provided, even when the response status is not 200.
+        #
+        #   @param credits_consumed [Integer] The number of credits consumed by this request.
+        #
+        #   @param credits_remaining [Integer] The number of credits remaining for your organization after this request.
+      end
 
       class Product < BrandDev::Internal::Type::BaseModel
         # @!attribute description

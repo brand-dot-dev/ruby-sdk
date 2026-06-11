@@ -16,16 +16,28 @@ module BrandDev
       #   @return [Integer, nil]
       optional :code, Integer
 
+      # @!attribute key_metadata
+      #   Metadata about the API key used for the request. Included in every response
+      #   whenever a valid API key is provided, even when the response status is not 200.
+      #
+      #   @return [BrandDev::Models::BrandRetrieveSimplifiedResponse::KeyMetadata, nil]
+      optional :key_metadata, -> { BrandDev::Models::BrandRetrieveSimplifiedResponse::KeyMetadata }
+
       # @!attribute status
       #   Status of the response, e.g., 'ok'
       #
       #   @return [String, nil]
       optional :status, String
 
-      # @!method initialize(brand: nil, code: nil, status: nil)
+      # @!method initialize(brand: nil, code: nil, key_metadata: nil, status: nil)
+      #   Some parameter documentations has been truncated, see
+      #   {BrandDev::Models::BrandRetrieveSimplifiedResponse} for more details.
+      #
       #   @param brand [BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand] Simplified brand information
       #
       #   @param code [Integer] HTTP status code of the response
+      #
+      #   @param key_metadata [BrandDev::Models::BrandRetrieveSimplifiedResponse::KeyMetadata] Metadata about the API key used for the request. Included in every response when
       #
       #   @param status [String] Status of the response, e.g., 'ok'
 
@@ -301,6 +313,29 @@ module BrandDev
             #   @return [Array<Symbol>]
           end
         end
+      end
+
+      # @see BrandDev::Models::BrandRetrieveSimplifiedResponse#key_metadata
+      class KeyMetadata < BrandDev::Internal::Type::BaseModel
+        # @!attribute credits_consumed
+        #   The number of credits consumed by this request.
+        #
+        #   @return [Integer]
+        required :credits_consumed, Integer
+
+        # @!attribute credits_remaining
+        #   The number of credits remaining for your organization after this request.
+        #
+        #   @return [Integer]
+        required :credits_remaining, Integer
+
+        # @!method initialize(credits_consumed:, credits_remaining:)
+        #   Metadata about the API key used for the request. Included in every response
+        #   whenever a valid API key is provided, even when the response status is not 200.
+        #
+        #   @param credits_consumed [Integer] The number of credits consumed by this request.
+        #
+        #   @param credits_remaining [Integer] The number of credits remaining for your organization after this request.
       end
     end
   end
