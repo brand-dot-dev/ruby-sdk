@@ -253,6 +253,7 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
     assert_pattern do
       response => {
         html: String,
+        metadata: BrandDev::Models::BrandWebScrapeHTMLResponse::Metadata,
         success: BrandDev::Models::BrandWebScrapeHTMLResponse::Success,
         type: BrandDev::Models::BrandWebScrapeHTMLResponse::Type,
         url: String,
@@ -292,6 +293,7 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
     assert_pattern do
       response => {
         markdown: String,
+        metadata: BrandDev::Models::BrandWebScrapeMdResponse::Metadata,
         success: BrandDev::Models::BrandWebScrapeMdResponse::Success,
         url: String,
         key_metadata: BrandDev::Models::BrandWebScrapeMdResponse::KeyMetadata | nil

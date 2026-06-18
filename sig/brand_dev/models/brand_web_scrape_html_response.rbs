@@ -3,6 +3,7 @@ module BrandDev
     type brand_web_scrape_html_response =
       {
         html: String,
+        metadata: BrandDev::Models::BrandWebScrapeHTMLResponse::Metadata,
         success: BrandDev::Models::BrandWebScrapeHTMLResponse::success,
         type: BrandDev::Models::BrandWebScrapeHTMLResponse::type_,
         url: String,
@@ -11,6 +12,8 @@ module BrandDev
 
     class BrandWebScrapeHTMLResponse < BrandDev::Internal::Type::BaseModel
       attr_accessor html: String
+
+      attr_accessor metadata: BrandDev::Models::BrandWebScrapeHTMLResponse::Metadata
 
       attr_accessor success: BrandDev::Models::BrandWebScrapeHTMLResponse::success
 
@@ -26,6 +29,7 @@ module BrandDev
 
       def initialize: (
         html: String,
+        metadata: BrandDev::Models::BrandWebScrapeHTMLResponse::Metadata,
         success: BrandDev::Models::BrandWebScrapeHTMLResponse::success,
         type: BrandDev::Models::BrandWebScrapeHTMLResponse::type_,
         url: String,
@@ -34,11 +38,226 @@ module BrandDev
 
       def to_hash: -> {
         html: String,
+        metadata: BrandDev::Models::BrandWebScrapeHTMLResponse::Metadata,
         success: BrandDev::Models::BrandWebScrapeHTMLResponse::success,
         type: BrandDev::Models::BrandWebScrapeHTMLResponse::type_,
         url: String,
         key_metadata: BrandDev::Models::BrandWebScrapeHTMLResponse::KeyMetadata
       }
+
+      type metadata =
+        {
+          final_url: String,
+          source_url: String,
+          additional_meta: ::Hash[Symbol, BrandDev::Models::BrandWebScrapeHTMLResponse::Metadata::additional_meta],
+          alternates: ::Array[BrandDev::Models::BrandWebScrapeHTMLResponse::Metadata::Alternate],
+          author: String,
+          canonical_url: String,
+          description: String,
+          favicon: String,
+          image: String,
+          json_ld: ::Array[::Hash[Symbol, top]],
+          keywords: ::Array[String],
+          language: String,
+          modified_time: String,
+          open_graph: ::Hash[Symbol, BrandDev::Models::BrandWebScrapeHTMLResponse::Metadata::open_graph],
+          published_time: String,
+          robots: String,
+          site_name: String,
+          title: String,
+          twitter: ::Hash[Symbol, BrandDev::Models::BrandWebScrapeHTMLResponse::Metadata::twitter]
+        }
+
+      class Metadata < BrandDev::Internal::Type::BaseModel
+        attr_accessor final_url: String
+
+        attr_accessor source_url: String
+
+        attr_reader additional_meta: ::Hash[Symbol, BrandDev::Models::BrandWebScrapeHTMLResponse::Metadata::additional_meta]?
+
+        def additional_meta=: (
+          ::Hash[Symbol, BrandDev::Models::BrandWebScrapeHTMLResponse::Metadata::additional_meta]
+        ) -> ::Hash[Symbol, BrandDev::Models::BrandWebScrapeHTMLResponse::Metadata::additional_meta]
+
+        attr_reader alternates: ::Array[BrandDev::Models::BrandWebScrapeHTMLResponse::Metadata::Alternate]?
+
+        def alternates=: (
+          ::Array[BrandDev::Models::BrandWebScrapeHTMLResponse::Metadata::Alternate]
+        ) -> ::Array[BrandDev::Models::BrandWebScrapeHTMLResponse::Metadata::Alternate]
+
+        attr_reader author: String?
+
+        def author=: (String) -> String
+
+        attr_reader canonical_url: String?
+
+        def canonical_url=: (String) -> String
+
+        attr_reader description: String?
+
+        def description=: (String) -> String
+
+        attr_reader favicon: String?
+
+        def favicon=: (String) -> String
+
+        attr_reader image: String?
+
+        def image=: (String) -> String
+
+        attr_reader json_ld: ::Array[::Hash[Symbol, top]]?
+
+        def json_ld=: (
+          ::Array[::Hash[Symbol, top]]
+        ) -> ::Array[::Hash[Symbol, top]]
+
+        attr_reader keywords: ::Array[String]?
+
+        def keywords=: (::Array[String]) -> ::Array[String]
+
+        attr_reader language: String?
+
+        def language=: (String) -> String
+
+        attr_reader modified_time: String?
+
+        def modified_time=: (String) -> String
+
+        attr_reader open_graph: ::Hash[Symbol, BrandDev::Models::BrandWebScrapeHTMLResponse::Metadata::open_graph]?
+
+        def open_graph=: (
+          ::Hash[Symbol, BrandDev::Models::BrandWebScrapeHTMLResponse::Metadata::open_graph]
+        ) -> ::Hash[Symbol, BrandDev::Models::BrandWebScrapeHTMLResponse::Metadata::open_graph]
+
+        attr_reader published_time: String?
+
+        def published_time=: (String) -> String
+
+        attr_reader robots: String?
+
+        def robots=: (String) -> String
+
+        attr_reader site_name: String?
+
+        def site_name=: (String) -> String
+
+        attr_reader title: String?
+
+        def title=: (String) -> String
+
+        attr_reader twitter: ::Hash[Symbol, BrandDev::Models::BrandWebScrapeHTMLResponse::Metadata::twitter]?
+
+        def twitter=: (
+          ::Hash[Symbol, BrandDev::Models::BrandWebScrapeHTMLResponse::Metadata::twitter]
+        ) -> ::Hash[Symbol, BrandDev::Models::BrandWebScrapeHTMLResponse::Metadata::twitter]
+
+        def initialize: (
+          final_url: String,
+          source_url: String,
+          ?additional_meta: ::Hash[Symbol, BrandDev::Models::BrandWebScrapeHTMLResponse::Metadata::additional_meta],
+          ?alternates: ::Array[BrandDev::Models::BrandWebScrapeHTMLResponse::Metadata::Alternate],
+          ?author: String,
+          ?canonical_url: String,
+          ?description: String,
+          ?favicon: String,
+          ?image: String,
+          ?json_ld: ::Array[::Hash[Symbol, top]],
+          ?keywords: ::Array[String],
+          ?language: String,
+          ?modified_time: String,
+          ?open_graph: ::Hash[Symbol, BrandDev::Models::BrandWebScrapeHTMLResponse::Metadata::open_graph],
+          ?published_time: String,
+          ?robots: String,
+          ?site_name: String,
+          ?title: String,
+          ?twitter: ::Hash[Symbol, BrandDev::Models::BrandWebScrapeHTMLResponse::Metadata::twitter]
+        ) -> void
+
+        def to_hash: -> {
+          final_url: String,
+          source_url: String,
+          additional_meta: ::Hash[Symbol, BrandDev::Models::BrandWebScrapeHTMLResponse::Metadata::additional_meta],
+          alternates: ::Array[BrandDev::Models::BrandWebScrapeHTMLResponse::Metadata::Alternate],
+          author: String,
+          canonical_url: String,
+          description: String,
+          favicon: String,
+          image: String,
+          json_ld: ::Array[::Hash[Symbol, top]],
+          keywords: ::Array[String],
+          language: String,
+          modified_time: String,
+          open_graph: ::Hash[Symbol, BrandDev::Models::BrandWebScrapeHTMLResponse::Metadata::open_graph],
+          published_time: String,
+          robots: String,
+          site_name: String,
+          title: String,
+          twitter: ::Hash[Symbol, BrandDev::Models::BrandWebScrapeHTMLResponse::Metadata::twitter]
+        }
+
+        type additional_meta = String | ::Array[String]
+
+        module AdditionalMeta
+          extend BrandDev::Internal::Type::Union
+
+          def self?.variants: -> ::Array[BrandDev::Models::BrandWebScrapeHTMLResponse::Metadata::additional_meta]
+
+          StringArray: BrandDev::Internal::Type::Converter
+        end
+
+        type alternate =
+          { href: String, hreflang: String, title: String, type: String }
+
+        class Alternate < BrandDev::Internal::Type::BaseModel
+          attr_accessor href: String
+
+          attr_reader hreflang: String?
+
+          def hreflang=: (String) -> String
+
+          attr_reader title: String?
+
+          def title=: (String) -> String
+
+          attr_reader type: String?
+
+          def type=: (String) -> String
+
+          def initialize: (
+            href: String,
+            ?hreflang: String,
+            ?title: String,
+            ?type: String
+          ) -> void
+
+          def to_hash: -> {
+            href: String,
+            hreflang: String,
+            title: String,
+            type: String
+          }
+        end
+
+        type open_graph = String | ::Array[String]
+
+        module OpenGraph
+          extend BrandDev::Internal::Type::Union
+
+          def self?.variants: -> ::Array[BrandDev::Models::BrandWebScrapeHTMLResponse::Metadata::open_graph]
+
+          StringArray: BrandDev::Internal::Type::Converter
+        end
+
+        type twitter = String | ::Array[String]
+
+        module Twitter
+          extend BrandDev::Internal::Type::Union
+
+          def self?.variants: -> ::Array[BrandDev::Models::BrandWebScrapeHTMLResponse::Metadata::twitter]
+
+          StringArray: BrandDev::Internal::Type::Converter
+        end
+      end
 
       type success = true
 
