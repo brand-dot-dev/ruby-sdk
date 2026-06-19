@@ -334,6 +334,8 @@ module BrandDev
         MARKDOWN = :markdown
         SVG = :svg
         PDF = :pdf
+        DOCX = :docx
+        DOC = :doc
 
         # @!method self.values
         #   @return [Array<Symbol>]

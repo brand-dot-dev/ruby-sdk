@@ -269,7 +269,17 @@ module BrandDev
         def self?.values: -> ::Array[BrandDev::Models::BrandWebScrapeHTMLResponse::success]
       end
 
-      type type_ = :html | :xml | :json | :text | :csv | :markdown | :svg | :pdf
+      type type_ =
+        :html
+        | :xml
+        | :json
+        | :text
+        | :csv
+        | :markdown
+        | :svg
+        | :pdf
+        | :docx
+        | :doc
 
       module Type
         extend BrandDev::Internal::Type::Enum
@@ -282,6 +292,8 @@ module BrandDev
         MARKDOWN: :markdown
         SVG: :svg
         PDF: :pdf
+        DOCX: :docx
+        DOC: :doc
 
         def self?.values: -> ::Array[BrandDev::Models::BrandWebScrapeHTMLResponse::type_]
       end
