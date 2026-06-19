@@ -657,6 +657,16 @@ module BrandDev
             :pdf,
             BrandDev::Models::BrandWebScrapeHTMLResponse::Type::TaggedSymbol
           )
+        DOCX =
+          T.let(
+            :docx,
+            BrandDev::Models::BrandWebScrapeHTMLResponse::Type::TaggedSymbol
+          )
+        DOC =
+          T.let(
+            :doc,
+            BrandDev::Models::BrandWebScrapeHTMLResponse::Type::TaggedSymbol
+          )
 
         sig do
           override.returns(
