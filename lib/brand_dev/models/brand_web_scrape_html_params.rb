@@ -13,6 +13,13 @@ module BrandDev
       #   @return [String]
       required :url, String
 
+      # @!attribute country
+      #   Two-letter ISO 3166-1 alpha-2 country code for the website request location.
+      #   When provided, Context.dev fetches the target page from that country.
+      #
+      #   @return [Symbol, BrandDev::Models::BrandWebScrapeHTMLParams::Country, nil]
+      optional :country, enum: -> { BrandDev::BrandWebScrapeHTMLParams::Country }
+
       # @!attribute exclude_selectors
       #   CSS selectors to remove from the result. Applied after includeSelectors.
       #   Exclusion takes precedence: an element matching both is removed. Examples:
@@ -80,11 +87,13 @@ module BrandDev
       #   @return [Integer, nil]
       optional :wait_for_ms, Integer
 
-      # @!method initialize(url:, exclude_selectors: nil, headers: nil, include_frames: nil, include_selectors: nil, max_age_ms: nil, pdf: nil, timeout_ms: nil, use_main_content_only: nil, wait_for_ms: nil, request_options: {})
+      # @!method initialize(url:, country: nil, exclude_selectors: nil, headers: nil, include_frames: nil, include_selectors: nil, max_age_ms: nil, pdf: nil, timeout_ms: nil, use_main_content_only: nil, wait_for_ms: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
       #   {BrandDev::Models::BrandWebScrapeHTMLParams} for more details.
       #
       #   @param url [String] Full URL to scrape (must include http:// or https:// protocol)
+      #
+      #   @param country [Symbol, BrandDev::Models::BrandWebScrapeHTMLParams::Country] Two-letter ISO 3166-1 alpha-2 country code for the website request location. Whe
       #
       #   @param exclude_selectors [Array<String>] CSS selectors to remove from the result. Applied after includeSelectors. Exclusi
       #
@@ -105,6 +114,220 @@ module BrandDev
       #   @param wait_for_ms [Integer] Optional browser wait time in milliseconds after initial page load. Min: 0. Max:
       #
       #   @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}]
+
+      # Two-letter ISO 3166-1 alpha-2 country code for the website request location.
+      # When provided, Context.dev fetches the target page from that country.
+      module Country
+        extend BrandDev::Internal::Type::Enum
+
+        AD = :ad
+        AE = :ae
+        AF = :af
+        AG = :ag
+        AI = :ai
+        AL = :al
+        AM = :am
+        AO = :ao
+        AR = :ar
+        AT = :at
+        AU = :au
+        AW = :aw
+        AZ = :az
+        BA = :ba
+        BB = :bb
+        BD = :bd
+        BE = :be
+        BF = :bf
+        BG = :bg
+        BH = :bh
+        BI = :bi
+        BJ = :bj
+        BM = :bm
+        BN = :bn
+        BO = :bo
+        BQ = :bq
+        BR = :br
+        BS = :bs
+        BW = :bw
+        BY = :by
+        BZ = :bz
+        CA = :ca
+        CD = :cd
+        CF = :cf
+        CG = :cg
+        CH = :ch
+        CI = :ci
+        CL = :cl
+        CM = :cm
+        CN = :cn
+        CO = :co
+        CR = :cr
+        CV = :cv
+        CW = :cw
+        CY = :cy
+        CZ = :cz
+        DE = :de
+        DJ = :dj
+        DK = :dk
+        DM = :dm
+        DO = :do
+        DZ = :dz
+        EC = :ec
+        EE = :ee
+        EG = :eg
+        ES = :es
+        ET = :et
+        FI = :fi
+        FJ = :fj
+        FR = :fr
+        GA = :ga
+        GB = :gb
+        GD = :gd
+        GE = :ge
+        GF = :gf
+        GG = :gg
+        GH = :gh
+        GM = :gm
+        GN = :gn
+        GP = :gp
+        GQ = :gq
+        GR = :gr
+        GT = :gt
+        GU = :gu
+        GW = :gw
+        GY = :gy
+        HK = :hk
+        HN = :hn
+        HR = :hr
+        HT = :ht
+        HU = :hu
+        ID = :id
+        IE = :ie
+        IL = :il
+        IM = :im
+        IN = :in
+        IQ = :iq
+        IR = :ir
+        IS = :is
+        IT = :it
+        JE = :je
+        JM = :jm
+        JO = :jo
+        JP = :jp
+        KE = :ke
+        KG = :kg
+        KH = :kh
+        KN = :kn
+        KR = :kr
+        KW = :kw
+        KY = :ky
+        KZ = :kz
+        LA = :la
+        LB = :lb
+        LC = :lc
+        LK = :lk
+        LR = :lr
+        LS = :ls
+        LT = :lt
+        LU = :lu
+        LV = :lv
+        LY = :ly
+        MA = :ma
+        MC = :mc
+        MD = :md
+        ME = :me
+        MF = :mf
+        MG = :mg
+        MK = :mk
+        ML = :ml
+        MM = :mm
+        MN = :mn
+        MO = :mo
+        MQ = :mq
+        MR = :mr
+        MT = :mt
+        MU = :mu
+        MV = :mv
+        MW = :mw
+        MX = :mx
+        MY = :my
+        MZ = :mz
+        NA = :na
+        NC = :nc
+        NE = :ne
+        NG = :ng
+        NI = :ni
+        NL = :nl
+        NO = :no
+        NP = :np
+        NZ = :nz
+        OM = :om
+        PA = :pa
+        PE = :pe
+        PF = :pf
+        PG = :pg
+        PH = :ph
+        PK = :pk
+        PL = :pl
+        PR = :pr
+        PS = :ps
+        PT = :pt
+        PY = :py
+        QA = :qa
+        RE = :re
+        RO = :ro
+        RS = :rs
+        RU = :ru
+        RW = :rw
+        SA = :sa
+        SC = :sc
+        SD = :sd
+        SE = :se
+        SG = :sg
+        SI = :si
+        SK = :sk
+        SL = :sl
+        SM = :sm
+        SN = :sn
+        SO = :so
+        SR = :sr
+        SS = :ss
+        ST = :st
+        SV = :sv
+        SX = :sx
+        SY = :sy
+        SZ = :sz
+        TC = :tc
+        TD = :td
+        TG = :tg
+        TH = :th
+        TJ = :tj
+        TL = :tl
+        TM = :tm
+        TN = :tn
+        TR = :tr
+        TT = :tt
+        TW = :tw
+        TZ = :tz
+        UA = :ua
+        UG = :ug
+        US = :us
+        UY = :uy
+        UZ = :uz
+        VC = :vc
+        VE = :ve
+        VG = :vg
+        VI = :vi
+        VN = :vn
+        YE = :ye
+        YT = :yt
+        ZA = :za
+        ZM = :zm
+        ZW = :zw
+
+        # @!method self.values
+        #   @return [Array<Symbol>]
+      end
 
       class Pdf < BrandDev::Internal::Type::BaseModel
         # @!attribute end_

@@ -384,6 +384,7 @@ module BrandDev
       sig do
         params(
           url: String,
+          country: BrandDev::BrandWebScrapeHTMLParams::Country::OrSymbol,
           exclude_selectors: T::Array[String],
           headers: T::Hash[Symbol, String],
           include_frames: T::Boolean,
@@ -399,6 +400,9 @@ module BrandDev
       def web_scrape_html(
         # Full URL to scrape (must include http:// or https:// protocol)
         url:,
+        # Two-letter ISO 3166-1 alpha-2 country code for the website request location.
+        # When provided, Context.dev fetches the target page from that country.
+        country: nil,
         # CSS selectors to remove from the result. Applied after includeSelectors.
         # Exclusion takes precedence: an element matching both is removed. Examples:
         # "nav", "footer", ".ad-banner", "[aria-hidden=true]".
@@ -477,6 +481,7 @@ module BrandDev
       sig do
         params(
           url: String,
+          country: BrandDev::BrandWebScrapeMdParams::Country::OrSymbol,
           exclude_selectors: T::Array[String],
           headers: T::Hash[Symbol, String],
           include_frames: T::Boolean,
@@ -496,6 +501,9 @@ module BrandDev
         # Full URL to scrape into LLM usable Markdown (must include http:// or https://
         # protocol)
         url:,
+        # Two-letter ISO 3166-1 alpha-2 country code for the website request location.
+        # When provided, Context.dev fetches the target page from that country.
+        country: nil,
         # CSS selectors to remove before conversion to Markdown. Applied after
         # includeSelectors. Exclusion takes precedence: an element matching both is
         # removed. Examples: "nav", "footer", ".ad-banner", "[aria-hidden=true]".

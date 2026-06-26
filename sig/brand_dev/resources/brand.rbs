@@ -102,6 +102,7 @@ module BrandDev
 
       def web_scrape_html: (
         url: String,
+        ?country: BrandDev::Models::BrandWebScrapeHTMLParams::country,
         ?exclude_selectors: ::Array[String],
         ?headers: ::Hash[Symbol, String],
         ?include_frames: bool,
@@ -126,6 +127,7 @@ module BrandDev
 
       def web_scrape_md: (
         url: String,
+        ?country: BrandDev::Models::BrandWebScrapeMdParams::country,
         ?exclude_selectors: ::Array[String],
         ?headers: ::Hash[Symbol, String],
         ?include_frames: bool,
