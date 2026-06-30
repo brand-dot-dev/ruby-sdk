@@ -95,6 +95,15 @@ module BrandDev
       sig { params(pdf: BrandDev::BrandWebScrapeMdParams::Pdf::OrHash).void }
       attr_writer :pdf
 
+      # When true, waits briefly for CSS and transition animations to settle before
+      # converting to Markdown. Defaults to false. This adds a bit of latency in
+      # exchange for more stable output on animated pages.
+      sig { returns(T.nilable(T::Boolean)) }
+      attr_reader :settle_animations
+
+      sig { params(settle_animations: T::Boolean).void }
+      attr_writer :settle_animations
+
       # Shorten base64-encoded image data in the Markdown output
       sig { returns(T.nilable(T::Boolean)) }
       attr_reader :shorten_base64_images
@@ -139,6 +148,7 @@ module BrandDev
           include_selectors: T::Array[String],
           max_age_ms: Integer,
           pdf: BrandDev::BrandWebScrapeMdParams::Pdf::OrHash,
+          settle_animations: T::Boolean,
           shorten_base64_images: T::Boolean,
           timeout_ms: Integer,
           use_main_content_only: T::Boolean,
@@ -178,6 +188,10 @@ module BrandDev
         # PDF parsing controls. Use start/end to limit text extraction and OCR to an
         # inclusive 1-based page range.
         pdf: nil,
+        # When true, waits briefly for CSS and transition animations to settle before
+        # converting to Markdown. Defaults to false. This adds a bit of latency in
+        # exchange for more stable output on animated pages.
+        settle_animations: nil,
         # Shorten base64-encoded image data in the Markdown output
         shorten_base64_images: nil,
         # Optional timeout in milliseconds for the request. If the request takes longer
@@ -207,6 +221,7 @@ module BrandDev
             include_selectors: T::Array[String],
             max_age_ms: Integer,
             pdf: BrandDev::BrandWebScrapeMdParams::Pdf,
+            settle_animations: T::Boolean,
             shorten_base64_images: T::Boolean,
             timeout_ms: Integer,
             use_main_content_only: T::Boolean,

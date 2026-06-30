@@ -65,6 +65,14 @@ module BrandDev
       #   @return [BrandDev::Models::BrandWebScrapeHTMLParams::Pdf, nil]
       optional :pdf, -> { BrandDev::BrandWebScrapeHTMLParams::Pdf }
 
+      # @!attribute settle_animations
+      #   When true, waits briefly for CSS and transition animations to settle before
+      #   extracting HTML. Defaults to false. This adds a bit of latency in exchange for
+      #   more stable output on animated pages.
+      #
+      #   @return [Boolean, nil]
+      optional :settle_animations, BrandDev::Internal::Type::Boolean
+
       # @!attribute timeout_ms
       #   Optional timeout in milliseconds for the request. If the request takes longer
       #   than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -87,7 +95,7 @@ module BrandDev
       #   @return [Integer, nil]
       optional :wait_for_ms, Integer
 
-      # @!method initialize(url:, country: nil, exclude_selectors: nil, headers: nil, include_frames: nil, include_selectors: nil, max_age_ms: nil, pdf: nil, timeout_ms: nil, use_main_content_only: nil, wait_for_ms: nil, request_options: {})
+      # @!method initialize(url:, country: nil, exclude_selectors: nil, headers: nil, include_frames: nil, include_selectors: nil, max_age_ms: nil, pdf: nil, settle_animations: nil, timeout_ms: nil, use_main_content_only: nil, wait_for_ms: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
       #   {BrandDev::Models::BrandWebScrapeHTMLParams} for more details.
       #
@@ -106,6 +114,8 @@ module BrandDev
       #   @param max_age_ms [Integer] Return a cached result if a prior scrape for the same parameters exists and is y
       #
       #   @param pdf [BrandDev::Models::BrandWebScrapeHTMLParams::Pdf] PDF parsing controls. Use start/end to limit text extraction and OCR to an inclu
+      #
+      #   @param settle_animations [Boolean] When true, waits briefly for CSS and transition animations to settle before extr
       #
       #   @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #

@@ -78,6 +78,14 @@ module BrandDev
       #   @return [BrandDev::Models::BrandWebScrapeMdParams::Pdf, nil]
       optional :pdf, -> { BrandDev::BrandWebScrapeMdParams::Pdf }
 
+      # @!attribute settle_animations
+      #   When true, waits briefly for CSS and transition animations to settle before
+      #   converting to Markdown. Defaults to false. This adds a bit of latency in
+      #   exchange for more stable output on animated pages.
+      #
+      #   @return [Boolean, nil]
+      optional :settle_animations, BrandDev::Internal::Type::Boolean
+
       # @!attribute shorten_base64_images
       #   Shorten base64-encoded image data in the Markdown output
       #
@@ -106,7 +114,7 @@ module BrandDev
       #   @return [Integer, nil]
       optional :wait_for_ms, Integer
 
-      # @!method initialize(url:, country: nil, exclude_selectors: nil, headers: nil, include_frames: nil, include_images: nil, include_links: nil, include_selectors: nil, max_age_ms: nil, pdf: nil, shorten_base64_images: nil, timeout_ms: nil, use_main_content_only: nil, wait_for_ms: nil, request_options: {})
+      # @!method initialize(url:, country: nil, exclude_selectors: nil, headers: nil, include_frames: nil, include_images: nil, include_links: nil, include_selectors: nil, max_age_ms: nil, pdf: nil, settle_animations: nil, shorten_base64_images: nil, timeout_ms: nil, use_main_content_only: nil, wait_for_ms: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
       #   {BrandDev::Models::BrandWebScrapeMdParams} for more details.
       #
@@ -129,6 +137,8 @@ module BrandDev
       #   @param max_age_ms [Integer] Return a cached result if a prior scrape for the same parameters exists and is y
       #
       #   @param pdf [BrandDev::Models::BrandWebScrapeMdParams::Pdf] PDF parsing controls. Use start/end to limit text extraction and OCR to an inclu
+      #
+      #   @param settle_animations [Boolean] When true, waits briefly for CSS and transition animations to settle before conv
       #
       #   @param shorten_base64_images [Boolean] Shorten base64-encoded image data in the Markdown output
       #
