@@ -38,7 +38,8 @@ module BrandDev
       attr_accessor :success
 
       # Detected content type of the returned `html` field. Sitemaps and feeds are
-      # surfaced as `xml`; ordinary pages are `html`.
+      # surfaced as `xml`; ordinary pages are `html`. Excel workbooks are surfaced as
+      # `xlsx`/`xls` with the extracted sheets as HTML tables.
       sig do
         returns(
           BrandDev::Models::BrandWebScrapeHTMLResponse::Type::TaggedSymbol
@@ -90,7 +91,8 @@ module BrandDev
         # Indicates success
         success:,
         # Detected content type of the returned `html` field. Sitemaps and feeds are
-        # surfaced as `xml`; ordinary pages are `html`.
+        # surfaced as `xml`; ordinary pages are `html`. Excel workbooks are surfaced as
+        # `xlsx`/`xls` with the extracted sheets as HTML tables.
         type:,
         # The URL that was scraped
         url:,
@@ -607,7 +609,8 @@ module BrandDev
       end
 
       # Detected content type of the returned `html` field. Sitemaps and feeds are
-      # surfaced as `xml`; ordinary pages are `html`.
+      # surfaced as `xml`; ordinary pages are `html`. Excel workbooks are surfaced as
+      # `xlsx`/`xls` with the extracted sheets as HTML tables.
       module Type
         extend BrandDev::Internal::Type::Enum
 
@@ -665,6 +668,16 @@ module BrandDev
         DOC =
           T.let(
             :doc,
+            BrandDev::Models::BrandWebScrapeHTMLResponse::Type::TaggedSymbol
+          )
+        XLSX =
+          T.let(
+            :xlsx,
+            BrandDev::Models::BrandWebScrapeHTMLResponse::Type::TaggedSymbol
+          )
+        XLS =
+          T.let(
+            :xls,
             BrandDev::Models::BrandWebScrapeHTMLResponse::Type::TaggedSymbol
           )
 
