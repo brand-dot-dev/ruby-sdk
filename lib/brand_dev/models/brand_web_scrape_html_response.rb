@@ -26,7 +26,8 @@ module BrandDev
 
       # @!attribute type
       #   Detected content type of the returned `html` field. Sitemaps and feeds are
-      #   surfaced as `xml`; ordinary pages are `html`.
+      #   surfaced as `xml`; ordinary pages are `html`. Excel workbooks are surfaced as
+      #   `xlsx`/`xls` with the extracted sheets as HTML tables.
       #
       #   @return [Symbol, BrandDev::Models::BrandWebScrapeHTMLResponse::Type]
       required :type, enum: -> { BrandDev::Models::BrandWebScrapeHTMLResponse::Type }
@@ -320,7 +321,8 @@ module BrandDev
       end
 
       # Detected content type of the returned `html` field. Sitemaps and feeds are
-      # surfaced as `xml`; ordinary pages are `html`.
+      # surfaced as `xml`; ordinary pages are `html`. Excel workbooks are surfaced as
+      # `xlsx`/`xls` with the extracted sheets as HTML tables.
       #
       # @see BrandDev::Models::BrandWebScrapeHTMLResponse#type
       module Type
@@ -336,6 +338,8 @@ module BrandDev
         PDF = :pdf
         DOCX = :docx
         DOC = :doc
+        XLSX = :xlsx
+        XLS = :xls
 
         # @!method self.values
         #   @return [Array<Symbol>]
