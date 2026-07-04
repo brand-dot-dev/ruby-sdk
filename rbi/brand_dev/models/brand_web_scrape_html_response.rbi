@@ -39,7 +39,8 @@ module BrandDev
 
       # Detected content type of the returned `html` field. Sitemaps and feeds are
       # surfaced as `xml`; ordinary pages are `html`. Excel workbooks are surfaced as
-      # `xlsx`/`xls` with the extracted sheets as HTML tables.
+      # `xlsx`/`xls` with the extracted sheets as HTML tables; PowerPoint presentations
+      # are surfaced as `pptx`/`ppt` with the extracted slides as HTML.
       sig do
         returns(
           BrandDev::Models::BrandWebScrapeHTMLResponse::Type::TaggedSymbol
@@ -92,7 +93,8 @@ module BrandDev
         success:,
         # Detected content type of the returned `html` field. Sitemaps and feeds are
         # surfaced as `xml`; ordinary pages are `html`. Excel workbooks are surfaced as
-        # `xlsx`/`xls` with the extracted sheets as HTML tables.
+        # `xlsx`/`xls` with the extracted sheets as HTML tables; PowerPoint presentations
+        # are surfaced as `pptx`/`ppt` with the extracted slides as HTML.
         type:,
         # The URL that was scraped
         url:,
@@ -610,7 +612,8 @@ module BrandDev
 
       # Detected content type of the returned `html` field. Sitemaps and feeds are
       # surfaced as `xml`; ordinary pages are `html`. Excel workbooks are surfaced as
-      # `xlsx`/`xls` with the extracted sheets as HTML tables.
+      # `xlsx`/`xls` with the extracted sheets as HTML tables; PowerPoint presentations
+      # are surfaced as `pptx`/`ppt` with the extracted slides as HTML.
       module Type
         extend BrandDev::Internal::Type::Enum
 
@@ -678,6 +681,16 @@ module BrandDev
         XLS =
           T.let(
             :xls,
+            BrandDev::Models::BrandWebScrapeHTMLResponse::Type::TaggedSymbol
+          )
+        PPTX =
+          T.let(
+            :pptx,
+            BrandDev::Models::BrandWebScrapeHTMLResponse::Type::TaggedSymbol
+          )
+        PPT =
+          T.let(
+            :ppt,
             BrandDev::Models::BrandWebScrapeHTMLResponse::Type::TaggedSymbol
           )
 

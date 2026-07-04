@@ -282,6 +282,8 @@ module BrandDev
         | :doc
         | :xlsx
         | :xls
+        | :pptx
+        | :ppt
 
       module Type
         extend BrandDev::Internal::Type::Enum
@@ -298,6 +300,8 @@ module BrandDev
         DOC: :doc
         XLSX: :xlsx
         XLS: :xls
+        PPTX: :pptx
+        PPT: :ppt
 
         def self?.values: -> ::Array[BrandDev::Models::BrandWebScrapeHTMLResponse::type_]
       end
