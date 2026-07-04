@@ -13,6 +13,15 @@ module BrandDev
       #   @return [String]
       required :url, String
 
+      # @!attribute dedupe
+      #   When true, visually duplicate images are removed: every image is loaded and
+      #   perceptually hashed, and only the highest-resolution copy of each duplicate
+      #   group is kept. Images that cannot be downloaded or hashed are kept. Default:
+      #   false.
+      #
+      #   @return [Boolean, nil]
+      optional :dedupe, BrandDev::Internal::Type::Boolean
+
       # @!attribute enrichment
       #   Optional per-image processing, sent as deep-object query params such as
       #   enrichment[resolution]=true.
@@ -50,11 +59,13 @@ module BrandDev
       #   @return [Integer, nil]
       optional :wait_for_ms, Integer
 
-      # @!method initialize(url:, enrichment: nil, headers: nil, max_age_ms: nil, timeout_ms: nil, wait_for_ms: nil, request_options: {})
+      # @!method initialize(url:, dedupe: nil, enrichment: nil, headers: nil, max_age_ms: nil, timeout_ms: nil, wait_for_ms: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
       #   {BrandDev::Models::BrandWebScrapeImagesParams} for more details.
       #
       #   @param url [String] Page URL to inspect. Must include http:// or https://.
+      #
+      #   @param dedupe [Boolean] When true, visually duplicate images are removed: every image is loaded and perc
       #
       #   @param enrichment [BrandDev::Models::BrandWebScrapeImagesParams::Enrichment] Optional per-image processing, sent as deep-object query params such as enrichme
       #

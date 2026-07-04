@@ -18,6 +18,16 @@ module BrandDev
       sig { returns(String) }
       attr_accessor :url
 
+      # When true, visually duplicate images are removed: every image is loaded and
+      # perceptually hashed, and only the highest-resolution copy of each duplicate
+      # group is kept. Images that cannot be downloaded or hashed are kept. Default:
+      # false.
+      sig { returns(T.nilable(T::Boolean)) }
+      attr_reader :dedupe
+
+      sig { params(dedupe: T::Boolean).void }
+      attr_writer :dedupe
+
       # Optional per-image processing, sent as deep-object query params such as
       # enrichment[resolution]=true.
       sig do
@@ -69,6 +79,7 @@ module BrandDev
       sig do
         params(
           url: String,
+          dedupe: T::Boolean,
           enrichment: BrandDev::BrandWebScrapeImagesParams::Enrichment::OrHash,
           headers: T::Hash[Symbol, String],
           max_age_ms: Integer,
@@ -80,6 +91,11 @@ module BrandDev
       def self.new(
         # Page URL to inspect. Must include http:// or https://.
         url:,
+        # When true, visually duplicate images are removed: every image is loaded and
+        # perceptually hashed, and only the highest-resolution copy of each duplicate
+        # group is kept. Images that cannot be downloaded or hashed are kept. Default:
+        # false.
+        dedupe: nil,
         # Optional per-image processing, sent as deep-object query params such as
         # enrichment[resolution]=true.
         enrichment: nil,
@@ -105,6 +121,7 @@ module BrandDev
         override.returns(
           {
             url: String,
+            dedupe: T::Boolean,
             enrichment: BrandDev::BrandWebScrapeImagesParams::Enrichment,
             headers: T::Hash[Symbol, String],
             max_age_ms: Integer,

@@ -3,6 +3,7 @@ module BrandDev
     type brand_web_scrape_images_params =
       {
         url: String,
+        dedupe: bool,
         enrichment: BrandDev::BrandWebScrapeImagesParams::Enrichment,
         headers: ::Hash[Symbol, String],
         max_age_ms: Integer,
@@ -16,6 +17,10 @@ module BrandDev
       include BrandDev::Internal::Type::RequestParameters
 
       attr_accessor url: String
+
+      attr_reader dedupe: bool?
+
+      def dedupe=: (bool) -> bool
 
       attr_reader enrichment: BrandDev::BrandWebScrapeImagesParams::Enrichment?
 
@@ -41,6 +46,7 @@ module BrandDev
 
       def initialize: (
         url: String,
+        ?dedupe: bool,
         ?enrichment: BrandDev::BrandWebScrapeImagesParams::Enrichment,
         ?headers: ::Hash[Symbol, String],
         ?max_age_ms: Integer,
@@ -51,6 +57,7 @@ module BrandDev
 
       def to_hash: -> {
         url: String,
+        dedupe: bool,
         enrichment: BrandDev::BrandWebScrapeImagesParams::Enrichment,
         headers: ::Hash[Symbol, String],
         max_age_ms: Integer,
