@@ -4,6 +4,14 @@ module BrandDev
   module Models
     # @see BrandDev::Resources::Brand#web_scrape_md
     class BrandWebScrapeMdResponse < BrandDev::Internal::Type::BaseModel
+      # @!attribute content_length
+      #   UTF-8 byte length of the returned Markdown. Use 0 to identify an empty result
+      #   and compare small values against your workload's minimum useful-content
+      #   threshold.
+      #
+      #   @return [Integer]
+      required :content_length, Integer, api_name: :contentLength
+
       # @!attribute markdown
       #   Page content converted to GitHub Flavored Markdown
       #
@@ -35,9 +43,11 @@ module BrandDev
       #   @return [BrandDev::Models::BrandWebScrapeMdResponse::KeyMetadata, nil]
       optional :key_metadata, -> { BrandDev::Models::BrandWebScrapeMdResponse::KeyMetadata }
 
-      # @!method initialize(markdown:, metadata:, success:, url:, key_metadata: nil)
+      # @!method initialize(content_length:, markdown:, metadata:, success:, url:, key_metadata: nil)
       #   Some parameter documentations has been truncated, see
       #   {BrandDev::Models::BrandWebScrapeMdResponse} for more details.
+      #
+      #   @param content_length [Integer] UTF-8 byte length of the returned Markdown. Use 0 to identify an empty result an
       #
       #   @param markdown [String] Page content converted to GitHub Flavored Markdown
       #
