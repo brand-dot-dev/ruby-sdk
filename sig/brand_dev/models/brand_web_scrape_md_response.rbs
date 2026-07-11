@@ -2,6 +2,7 @@ module BrandDev
   module Models
     type brand_web_scrape_md_response =
       {
+        content_length: Integer,
         markdown: String,
         metadata: BrandDev::Models::BrandWebScrapeMdResponse::Metadata,
         success: BrandDev::Models::BrandWebScrapeMdResponse::success,
@@ -10,6 +11,8 @@ module BrandDev
       }
 
     class BrandWebScrapeMdResponse < BrandDev::Internal::Type::BaseModel
+      attr_accessor content_length: Integer
+
       attr_accessor markdown: String
 
       attr_accessor metadata: BrandDev::Models::BrandWebScrapeMdResponse::Metadata
@@ -25,6 +28,7 @@ module BrandDev
       ) -> BrandDev::Models::BrandWebScrapeMdResponse::KeyMetadata
 
       def initialize: (
+        content_length: Integer,
         markdown: String,
         metadata: BrandDev::Models::BrandWebScrapeMdResponse::Metadata,
         success: BrandDev::Models::BrandWebScrapeMdResponse::success,
@@ -33,6 +37,7 @@ module BrandDev
       ) -> void
 
       def to_hash: -> {
+        content_length: Integer,
         markdown: String,
         metadata: BrandDev::Models::BrandWebScrapeMdResponse::Metadata,
         success: BrandDev::Models::BrandWebScrapeMdResponse::success,

@@ -11,6 +11,12 @@ module BrandDev
           )
         end
 
+      # UTF-8 byte length of the returned Markdown. Use 0 to identify an empty result
+      # and compare small values against your workload's minimum useful-content
+      # threshold.
+      sig { returns(Integer) }
+      attr_accessor :content_length
+
       # Page content converted to GitHub Flavored Markdown
       sig { returns(String) }
       attr_accessor :markdown
@@ -57,6 +63,7 @@ module BrandDev
 
       sig do
         params(
+          content_length: Integer,
           markdown: String,
           metadata:
             BrandDev::Models::BrandWebScrapeMdResponse::Metadata::OrHash,
@@ -68,6 +75,10 @@ module BrandDev
         ).returns(T.attached_class)
       end
       def self.new(
+        # UTF-8 byte length of the returned Markdown. Use 0 to identify an empty result
+        # and compare small values against your workload's minimum useful-content
+        # threshold.
+        content_length:,
         # Page content converted to GitHub Flavored Markdown
         markdown:,
         # Metadata extracted from the scraped page HTML.
@@ -85,6 +96,7 @@ module BrandDev
       sig do
         override.returns(
           {
+            content_length: Integer,
             markdown: String,
             metadata: BrandDev::Models::BrandWebScrapeMdResponse::Metadata,
             success:
