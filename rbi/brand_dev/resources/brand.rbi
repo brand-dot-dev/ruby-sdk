@@ -422,8 +422,8 @@ module BrandDev
         # younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
         # omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
         max_age_ms: nil,
-        # PDF parsing controls. Use start/end to limit text extraction and OCR to an
-        # inclusive 1-based page range.
+        # PDF parsing controls. Use start/end to limit text extraction and embedded-image
+        # detection/OCR to an inclusive 1-based page range.
         pdf: nil,
         # When true, waits briefly for CSS and transition animations to settle before
         # extracting HTML. Defaults to false. This adds a bit of latency in exchange for
@@ -553,8 +553,8 @@ module BrandDev
         # younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
         # omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
         max_age_ms: nil,
-        # PDF parsing controls. Use start/end to limit text extraction and OCR to an
-        # inclusive 1-based page range.
+        # PDF parsing controls. Use start/end to limit text extraction and embedded-image
+        # detection/OCR to an inclusive 1-based page range.
         pdf: nil,
         # When true, waits briefly for CSS and transition animations to settle before
         # converting to Markdown. Defaults to false. This adds a bit of latency in

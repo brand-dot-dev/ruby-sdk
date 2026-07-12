@@ -421,7 +421,7 @@ module BrandDev
       #
       # @param max_age_ms [Integer] Return a cached result if a prior scrape for the same parameters exists and is y
       #
-      # @param pdf [BrandDev::Models::BrandWebScrapeHTMLParams::Pdf] PDF parsing controls. Use start/end to limit text extraction and OCR to an inclu
+      # @param pdf [BrandDev::Models::BrandWebScrapeHTMLParams::Pdf] PDF parsing controls. Use start/end to limit text extraction and embedded-image
       #
       # @param settle_animations [Boolean] When true, waits briefly for CSS and transition animations to settle before extr
       #
@@ -542,7 +542,7 @@ module BrandDev
       #
       # @param max_age_ms [Integer] Return a cached result if a prior scrape for the same parameters exists and is y
       #
-      # @param pdf [BrandDev::Models::BrandWebScrapeMdParams::Pdf] PDF parsing controls. Use start/end to limit text extraction and OCR to an inclu
+      # @param pdf [BrandDev::Models::BrandWebScrapeMdParams::Pdf] PDF parsing controls. Use start/end to limit text extraction and embedded-image
       #
       # @param settle_animations [Boolean] When true, waits briefly for CSS and transition animations to settle before conv
       #

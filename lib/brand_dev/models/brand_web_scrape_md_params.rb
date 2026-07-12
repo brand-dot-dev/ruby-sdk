@@ -72,8 +72,8 @@ module BrandDev
       optional :max_age_ms, Integer
 
       # @!attribute pdf
-      #   PDF parsing controls. Use start/end to limit text extraction and OCR to an
-      #   inclusive 1-based page range.
+      #   PDF parsing controls. Use start/end to limit text extraction and embedded-image
+      #   detection/OCR to an inclusive 1-based page range.
       #
       #   @return [BrandDev::Models::BrandWebScrapeMdParams::Pdf, nil]
       optional :pdf, -> { BrandDev::BrandWebScrapeMdParams::Pdf }
@@ -136,7 +136,7 @@ module BrandDev
       #
       #   @param max_age_ms [Integer] Return a cached result if a prior scrape for the same parameters exists and is y
       #
-      #   @param pdf [BrandDev::Models::BrandWebScrapeMdParams::Pdf] PDF parsing controls. Use start/end to limit text extraction and OCR to an inclu
+      #   @param pdf [BrandDev::Models::BrandWebScrapeMdParams::Pdf] PDF parsing controls. Use start/end to limit text extraction and embedded-image
       #
       #   @param settle_animations [Boolean] When true, waits briefly for CSS and transition animations to settle before conv
       #
@@ -372,6 +372,14 @@ module BrandDev
         #   @return [Integer, nil]
         optional :end_, Integer, api_name: :end
 
+        # @!attribute ocr
+        #   When true, detect and OCR images embedded in the selected PDF pages, inserting
+        #   recognized text at each image's position in page reading order while preserving
+        #   the PDF text layer. This is separate from automatic scanned-PDF OCR fallback.
+        #
+        #   @return [Boolean, nil]
+        optional :ocr, BrandDev::Internal::Type::Boolean
+
         # @!attribute should_parse
         #   When true, PDF URLs are fetched and parsed. When false, PDF URLs are skipped and
         #   a 400 WEBSITE_ACCESS_ERROR is returned.
@@ -385,14 +393,16 @@ module BrandDev
         #   @return [Integer, nil]
         optional :start, Integer
 
-        # @!method initialize(end_: nil, should_parse: nil, start: nil)
+        # @!method initialize(end_: nil, ocr: nil, should_parse: nil, start: nil)
         #   Some parameter documentations has been truncated, see
         #   {BrandDev::Models::BrandWebScrapeMdParams::Pdf} for more details.
         #
-        #   PDF parsing controls. Use start/end to limit text extraction and OCR to an
-        #   inclusive 1-based page range.
+        #   PDF parsing controls. Use start/end to limit text extraction and embedded-image
+        #   detection/OCR to an inclusive 1-based page range.
         #
         #   @param end_ [Integer] Last 1-based PDF page to parse. When omitted, parsing ends at the last page. Mus
+        #
+        #   @param ocr [Boolean] When true, detect and OCR images embedded in the selected PDF pages, inserting r
         #
         #   @param should_parse [Boolean] When true, PDF URLs are fetched and parsed. When false, PDF URLs are skipped and
         #
