@@ -541,12 +541,17 @@ module BrandDev
         def self?.values: -> ::Array[BrandDev::Models::BrandWebScrapeMdParams::country]
       end
 
-      type pdf = { end_: Integer, should_parse: bool, start: Integer }
+      type pdf =
+        { end_: Integer, ocr: bool, should_parse: bool, start: Integer }
 
       class Pdf < BrandDev::Internal::Type::BaseModel
         attr_reader end_: Integer?
 
         def end_=: (Integer) -> Integer
+
+        attr_reader ocr: bool?
+
+        def ocr=: (bool) -> bool
 
         attr_reader should_parse: bool?
 
@@ -558,11 +563,17 @@ module BrandDev
 
         def initialize: (
           ?end_: Integer,
+          ?ocr: bool,
           ?should_parse: bool,
           ?start: Integer
         ) -> void
 
-        def to_hash: -> { end_: Integer, should_parse: bool, start: Integer }
+        def to_hash: -> {
+          end_: Integer,
+          ocr: bool,
+          should_parse: bool,
+          start: Integer
+        }
       end
     end
   end
