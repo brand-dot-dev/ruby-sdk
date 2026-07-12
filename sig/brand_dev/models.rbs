@@ -30,4 +30,6 @@ module BrandDev
   class BrandWebScrapeMdParams = BrandDev::Models::BrandWebScrapeMdParams
 
   class BrandWebScrapeSitemapParams = BrandDev::Models::BrandWebScrapeSitemapParams
+
+  class WebhookDelivery = BrandDev::Models::WebhookDelivery
 end
