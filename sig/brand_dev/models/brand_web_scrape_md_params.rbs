@@ -4,20 +4,20 @@ module BrandDev
       {
         url: String,
         country: BrandDev::Models::BrandWebScrapeMdParams::country,
-        exclude_selectors: ::Array[String],
+        exclude_selectors: ::Array[String]?,
         headers: ::Hash[Symbol, String],
-        include_frames: bool,
-        include_images: bool,
-        include_links: bool,
-        include_selectors: ::Array[String],
-        max_age_ms: Integer,
+        include_frames: BrandDev::Models::BrandWebScrapeMdParams::include_frames,
+        include_images: BrandDev::Models::BrandWebScrapeMdParams::include_images,
+        include_links: BrandDev::Models::BrandWebScrapeMdParams::include_links,
+        include_selectors: ::Array[String]?,
+        max_age_ms: Integer?,
         pdf: BrandDev::BrandWebScrapeMdParams::Pdf,
-        settle_animations: bool,
-        :shorten_base64_images => bool,
+        settle_animations: BrandDev::Models::BrandWebScrapeMdParams::settle_animations,
+        :shorten_base64_images => BrandDev::Models::BrandWebScrapeMdParams::shorten_base64_images,
         tags: ::Array[String],
         timeout_ms: Integer,
-        use_main_content_only: bool,
-        wait_for_ms: Integer
+        use_main_content_only: BrandDev::Models::BrandWebScrapeMdParams::use_main_content_only,
+        wait_for_ms: Integer?
       }
       & BrandDev::Internal::Type::request_parameters
 
@@ -33,33 +33,33 @@ module BrandDev
         BrandDev::Models::BrandWebScrapeMdParams::country
       ) -> BrandDev::Models::BrandWebScrapeMdParams::country
 
-      attr_reader exclude_selectors: ::Array[String]?
-
-      def exclude_selectors=: (::Array[String]) -> ::Array[String]
+      attr_accessor exclude_selectors: ::Array[String]?
 
       attr_reader headers: ::Hash[Symbol, String]?
 
       def headers=: (::Hash[Symbol, String]) -> ::Hash[Symbol, String]
 
-      attr_reader include_frames: bool?
+      attr_reader include_frames: BrandDev::Models::BrandWebScrapeMdParams::include_frames?
 
-      def include_frames=: (bool) -> bool
+      def include_frames=: (
+        BrandDev::Models::BrandWebScrapeMdParams::include_frames
+      ) -> BrandDev::Models::BrandWebScrapeMdParams::include_frames
 
-      attr_reader include_images: bool?
+      attr_reader include_images: BrandDev::Models::BrandWebScrapeMdParams::include_images?
 
-      def include_images=: (bool) -> bool
+      def include_images=: (
+        BrandDev::Models::BrandWebScrapeMdParams::include_images
+      ) -> BrandDev::Models::BrandWebScrapeMdParams::include_images
 
-      attr_reader include_links: bool?
+      attr_reader include_links: BrandDev::Models::BrandWebScrapeMdParams::include_links?
 
-      def include_links=: (bool) -> bool
+      def include_links=: (
+        BrandDev::Models::BrandWebScrapeMdParams::include_links
+      ) -> BrandDev::Models::BrandWebScrapeMdParams::include_links
 
-      attr_reader include_selectors: ::Array[String]?
+      attr_accessor include_selectors: ::Array[String]?
 
-      def include_selectors=: (::Array[String]) -> ::Array[String]
-
-      attr_reader max_age_ms: Integer?
-
-      def max_age_ms=: (Integer) -> Integer
+      attr_accessor max_age_ms: Integer?
 
       attr_reader pdf: BrandDev::BrandWebScrapeMdParams::Pdf?
 
@@ -67,13 +67,17 @@ module BrandDev
         BrandDev::BrandWebScrapeMdParams::Pdf
       ) -> BrandDev::BrandWebScrapeMdParams::Pdf
 
-      attr_reader settle_animations: bool?
+      attr_reader settle_animations: BrandDev::Models::BrandWebScrapeMdParams::settle_animations?
 
-      def settle_animations=: (bool) -> bool
+      def settle_animations=: (
+        BrandDev::Models::BrandWebScrapeMdParams::settle_animations
+      ) -> BrandDev::Models::BrandWebScrapeMdParams::settle_animations
 
-      attr_reader shorten_base64_images: bool?
+      attr_reader shorten_base64_images: BrandDev::Models::BrandWebScrapeMdParams::shorten_base64_images?
 
-      def shorten_base64_images=: (bool) -> bool
+      def shorten_base64_images=: (
+        BrandDev::Models::BrandWebScrapeMdParams::shorten_base64_images
+      ) -> BrandDev::Models::BrandWebScrapeMdParams::shorten_base64_images
 
       attr_reader tags: ::Array[String]?
 
@@ -83,51 +87,51 @@ module BrandDev
 
       def timeout_ms=: (Integer) -> Integer
 
-      attr_reader use_main_content_only: bool?
+      attr_reader use_main_content_only: BrandDev::Models::BrandWebScrapeMdParams::use_main_content_only?
 
-      def use_main_content_only=: (bool) -> bool
+      def use_main_content_only=: (
+        BrandDev::Models::BrandWebScrapeMdParams::use_main_content_only
+      ) -> BrandDev::Models::BrandWebScrapeMdParams::use_main_content_only
 
-      attr_reader wait_for_ms: Integer?
-
-      def wait_for_ms=: (Integer) -> Integer
+      attr_accessor wait_for_ms: Integer?
 
       def initialize: (
         url: String,
         ?country: BrandDev::Models::BrandWebScrapeMdParams::country,
-        ?exclude_selectors: ::Array[String],
+        ?exclude_selectors: ::Array[String]?,
         ?headers: ::Hash[Symbol, String],
-        ?include_frames: bool,
-        ?include_images: bool,
-        ?include_links: bool,
-        ?include_selectors: ::Array[String],
-        ?max_age_ms: Integer,
+        ?include_frames: BrandDev::Models::BrandWebScrapeMdParams::include_frames,
+        ?include_images: BrandDev::Models::BrandWebScrapeMdParams::include_images,
+        ?include_links: BrandDev::Models::BrandWebScrapeMdParams::include_links,
+        ?include_selectors: ::Array[String]?,
+        ?max_age_ms: Integer?,
         ?pdf: BrandDev::BrandWebScrapeMdParams::Pdf,
-        ?settle_animations: bool,
-        ?shorten_base64_images: bool,
+        ?settle_animations: BrandDev::Models::BrandWebScrapeMdParams::settle_animations,
+        ?shorten_base64_images: BrandDev::Models::BrandWebScrapeMdParams::shorten_base64_images,
         ?tags: ::Array[String],
         ?timeout_ms: Integer,
-        ?use_main_content_only: bool,
-        ?wait_for_ms: Integer,
+        ?use_main_content_only: BrandDev::Models::BrandWebScrapeMdParams::use_main_content_only,
+        ?wait_for_ms: Integer?,
         ?request_options: BrandDev::request_opts
       ) -> void
 
       def to_hash: -> {
         url: String,
         country: BrandDev::Models::BrandWebScrapeMdParams::country,
-        exclude_selectors: ::Array[String],
+        exclude_selectors: ::Array[String]?,
         headers: ::Hash[Symbol, String],
-        include_frames: bool,
-        include_images: bool,
-        include_links: bool,
-        include_selectors: ::Array[String],
-        max_age_ms: Integer,
+        include_frames: BrandDev::Models::BrandWebScrapeMdParams::include_frames,
+        include_images: BrandDev::Models::BrandWebScrapeMdParams::include_images,
+        include_links: BrandDev::Models::BrandWebScrapeMdParams::include_links,
+        include_selectors: ::Array[String]?,
+        max_age_ms: Integer?,
         pdf: BrandDev::BrandWebScrapeMdParams::Pdf,
-        settle_animations: bool,
-        :shorten_base64_images => bool,
+        settle_animations: BrandDev::Models::BrandWebScrapeMdParams::settle_animations,
+        :shorten_base64_images => BrandDev::Models::BrandWebScrapeMdParams::shorten_base64_images,
         tags: ::Array[String],
         timeout_ms: Integer,
-        use_main_content_only: bool,
-        wait_for_ms: Integer,
+        use_main_content_only: BrandDev::Models::BrandWebScrapeMdParams::use_main_content_only,
+        wait_for_ms: Integer?,
         request_options: BrandDev::RequestOptions
       }
 
@@ -548,21 +552,63 @@ module BrandDev
         def self?.values: -> ::Array[BrandDev::Models::BrandWebScrapeMdParams::country]
       end
 
+      type include_frames = bool | :true | :false
+
+      module IncludeFrames
+        extend BrandDev::Internal::Type::Union
+
+        def self?.variants: -> ::Array[BrandDev::Models::BrandWebScrapeMdParams::include_frames]
+
+        TRUE: :true
+        FALSE: :false
+      end
+
+      type include_images = bool | :true | :false
+
+      module IncludeImages
+        extend BrandDev::Internal::Type::Union
+
+        def self?.variants: -> ::Array[BrandDev::Models::BrandWebScrapeMdParams::include_images]
+
+        TRUE: :true
+        FALSE: :false
+      end
+
+      type include_links = bool | :true | :false
+
+      module IncludeLinks
+        extend BrandDev::Internal::Type::Union
+
+        def self?.variants: -> ::Array[BrandDev::Models::BrandWebScrapeMdParams::include_links]
+
+        TRUE: :true
+        FALSE: :false
+      end
+
       type pdf =
-        { end_: Integer, ocr: bool, should_parse: bool, start: Integer }
+        {
+          end_: Integer,
+          ocr: BrandDev::Models::BrandWebScrapeMdParams::Pdf::ocr,
+          should_parse: BrandDev::Models::BrandWebScrapeMdParams::Pdf::should_parse,
+          start: Integer
+        }
 
       class Pdf < BrandDev::Internal::Type::BaseModel
         attr_reader end_: Integer?
 
         def end_=: (Integer) -> Integer
 
-        attr_reader ocr: bool?
+        attr_reader ocr: BrandDev::Models::BrandWebScrapeMdParams::Pdf::ocr?
 
-        def ocr=: (bool) -> bool
+        def ocr=: (
+          BrandDev::Models::BrandWebScrapeMdParams::Pdf::ocr
+        ) -> BrandDev::Models::BrandWebScrapeMdParams::Pdf::ocr
 
-        attr_reader should_parse: bool?
+        attr_reader should_parse: BrandDev::Models::BrandWebScrapeMdParams::Pdf::should_parse?
 
-        def should_parse=: (bool) -> bool
+        def should_parse=: (
+          BrandDev::Models::BrandWebScrapeMdParams::Pdf::should_parse
+        ) -> BrandDev::Models::BrandWebScrapeMdParams::Pdf::should_parse
 
         attr_reader start: Integer?
 
@@ -570,17 +616,72 @@ module BrandDev
 
         def initialize: (
           ?end_: Integer,
-          ?ocr: bool,
-          ?should_parse: bool,
+          ?ocr: BrandDev::Models::BrandWebScrapeMdParams::Pdf::ocr,
+          ?should_parse: BrandDev::Models::BrandWebScrapeMdParams::Pdf::should_parse,
           ?start: Integer
         ) -> void
 
         def to_hash: -> {
           end_: Integer,
-          ocr: bool,
-          should_parse: bool,
+          ocr: BrandDev::Models::BrandWebScrapeMdParams::Pdf::ocr,
+          should_parse: BrandDev::Models::BrandWebScrapeMdParams::Pdf::should_parse,
           start: Integer
         }
+
+        type ocr = bool | :true | :false
+
+        module Ocr
+          extend BrandDev::Internal::Type::Union
+
+          def self?.variants: -> ::Array[BrandDev::Models::BrandWebScrapeMdParams::Pdf::ocr]
+
+          TRUE: :true
+          FALSE: :false
+        end
+
+        type should_parse = bool | :true | :false
+
+        module ShouldParse
+          extend BrandDev::Internal::Type::Union
+
+          def self?.variants: -> ::Array[BrandDev::Models::BrandWebScrapeMdParams::Pdf::should_parse]
+
+          TRUE: :true
+          FALSE: :false
+        end
+      end
+
+      type settle_animations = bool | :true | :false
+
+      module SettleAnimations
+        extend BrandDev::Internal::Type::Union
+
+        def self?.variants: -> ::Array[BrandDev::Models::BrandWebScrapeMdParams::settle_animations]
+
+        TRUE: :true
+        FALSE: :false
+      end
+
+      type shorten_base64_images = bool | :true | :false
+
+      module ShortenBase64Images
+        extend BrandDev::Internal::Type::Union
+
+        def self?.variants: -> ::Array[BrandDev::Models::BrandWebScrapeMdParams::shorten_base64_images]
+
+        TRUE: :true
+        FALSE: :false
+      end
+
+      type use_main_content_only = bool | :true | :false
+
+      module UseMainContentOnly
+        extend BrandDev::Internal::Type::Union
+
+        def self?.variants: -> ::Array[BrandDev::Models::BrandWebScrapeMdParams::use_main_content_only]
+
+        TRUE: :true
+        FALSE: :false
       end
     end
   end

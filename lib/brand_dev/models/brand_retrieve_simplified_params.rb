@@ -20,7 +20,7 @@ module BrandDev
       #   year.
       #
       #   @return [Integer, nil]
-      optional :max_age_ms, Integer
+      optional :max_age_ms, Integer, nil?: true
 
       # @!attribute tags
       #   Optional comma-separated caller-defined tags for tracking this request. Tags are
@@ -30,6 +30,12 @@ module BrandDev
       #   @return [Array<String>, nil]
       optional :tags, BrandDev::Internal::Type::ArrayOf[String]
 
+      # @!attribute theme
+      #   Optional theme preference used when selecting brand assets.
+      #
+      #   @return [Symbol, BrandDev::Models::BrandRetrieveSimplifiedParams::Theme, nil]
+      optional :theme, enum: -> { BrandDev::BrandRetrieveSimplifiedParams::Theme }
+
       # @!attribute timeout_ms
       #   Optional timeout in milliseconds for the request. If the request takes longer
       #   than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -38,19 +44,32 @@ module BrandDev
       #   @return [Integer, nil]
       optional :timeout_ms, Integer
 
-      # @!method initialize(domain:, max_age_ms: nil, tags: nil, timeout_ms: nil, request_options: {})
+      # @!method initialize(domain:, max_age_ms: nil, tags: nil, theme: nil, timeout_ms: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
       #   {BrandDev::Models::BrandRetrieveSimplifiedParams} for more details.
       #
       #   @param domain [String] Domain name to retrieve simplified brand data for
       #
-      #   @param max_age_ms [Integer] Maximum age in milliseconds for cached brand data before the API performs a hard
+      #   @param max_age_ms [Integer, nil] Maximum age in milliseconds for cached brand data before the API performs a hard
       #
       #   @param tags [Array<String>] Optional comma-separated caller-defined tags for tracking this request. Tags are
+      #
+      #   @param theme [Symbol, BrandDev::Models::BrandRetrieveSimplifiedParams::Theme] Optional theme preference used when selecting brand assets.
       #
       #   @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #
       #   @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}]
+
+      # Optional theme preference used when selecting brand assets.
+      module Theme
+        extend BrandDev::Internal::Type::Enum
+
+        LIGHT = :light
+        DARK = :dark
+
+        # @!method self.values
+        #   @return [Array<Symbol>]
+      end
     end
   end
 end

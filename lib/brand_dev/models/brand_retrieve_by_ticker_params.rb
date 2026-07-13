@@ -15,10 +15,10 @@ module BrandDev
       required :ticker, String
 
       # @!attribute force_language
-      #   Optional parameter to force the language of the retrieved brand data.
+      #   Language to force for the retrieved brand data.
       #
       #   @return [Symbol, BrandDev::Models::BrandRetrieveByTickerParams::ForceLanguage, nil]
-      optional :force_language, enum: -> { BrandDev::BrandRetrieveByTickerParams::ForceLanguage }
+      optional :force_language, enum: -> { BrandDev::BrandRetrieveByTickerParams::ForceLanguage }, nil?: true
 
       # @!attribute max_age_ms
       #   Maximum age in milliseconds for cached brand data before the API performs a hard
@@ -27,15 +27,15 @@ module BrandDev
       #   year.
       #
       #   @return [Integer, nil]
-      optional :max_age_ms, Integer
+      optional :max_age_ms, Integer, nil?: true
 
       # @!attribute max_speed
       #   Optional parameter to optimize the API call for maximum speed. When set to true,
       #   the API will skip time-consuming operations for faster response at the cost of
       #   less comprehensive data.
       #
-      #   @return [Boolean, nil]
-      optional :max_speed, BrandDev::Internal::Type::Boolean
+      #   @return [Boolean, Symbol, BrandDev::Models::BrandRetrieveByTickerParams::MaxSpeed, nil]
+      optional :max_speed, union: -> { BrandDev::BrandRetrieveByTickerParams::MaxSpeed }
 
       # @!attribute tags
       #   Optional comma-separated caller-defined tags for tracking this request. Tags are
@@ -46,7 +46,7 @@ module BrandDev
       optional :tags, BrandDev::Internal::Type::ArrayOf[String]
 
       # @!attribute ticker_exchange
-      #   Optional stock exchange for the ticker. Defaults to NASDAQ if not specified.
+      #   Stock exchange code.
       #
       #   @return [Symbol, BrandDev::Models::BrandRetrieveByTickerParams::TickerExchange, nil]
       optional :ticker_exchange, enum: -> { BrandDev::BrandRetrieveByTickerParams::TickerExchange }
@@ -65,21 +65,21 @@ module BrandDev
       #
       #   @param ticker [String] Stock ticker symbol to retrieve brand data for (e.g., 'AAPL', 'GOOGL', 'BRK.A').
       #
-      #   @param force_language [Symbol, BrandDev::Models::BrandRetrieveByTickerParams::ForceLanguage] Optional parameter to force the language of the retrieved brand data.
+      #   @param force_language [Symbol, BrandDev::Models::BrandRetrieveByTickerParams::ForceLanguage, nil] Language to force for the retrieved brand data.
       #
-      #   @param max_age_ms [Integer] Maximum age in milliseconds for cached brand data before the API performs a hard
+      #   @param max_age_ms [Integer, nil] Maximum age in milliseconds for cached brand data before the API performs a hard
       #
-      #   @param max_speed [Boolean] Optional parameter to optimize the API call for maximum speed. When set to true,
+      #   @param max_speed [Boolean, Symbol, BrandDev::Models::BrandRetrieveByTickerParams::MaxSpeed] Optional parameter to optimize the API call for maximum speed. When set to true,
       #
       #   @param tags [Array<String>] Optional comma-separated caller-defined tags for tracking this request. Tags are
       #
-      #   @param ticker_exchange [Symbol, BrandDev::Models::BrandRetrieveByTickerParams::TickerExchange] Optional stock exchange for the ticker. Defaults to NASDAQ if not specified.
+      #   @param ticker_exchange [Symbol, BrandDev::Models::BrandRetrieveByTickerParams::TickerExchange] Stock exchange code.
       #
       #   @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #
       #   @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}]
 
-      # Optional parameter to force the language of the retrieved brand data.
+      # Language to force for the retrieved brand data.
       module ForceLanguage
         extend BrandDev::Internal::Type::Enum
 
@@ -208,7 +208,34 @@ module BrandDev
         #   @return [Array<Symbol>]
       end
 
-      # Optional stock exchange for the ticker. Defaults to NASDAQ if not specified.
+      # Optional parameter to optimize the API call for maximum speed. When set to true,
+      # the API will skip time-consuming operations for faster response at the cost of
+      # less comprehensive data.
+      module MaxSpeed
+        extend BrandDev::Internal::Type::Union
+
+        variant BrandDev::Internal::Type::Boolean
+
+        variant const: -> { BrandDev::Models::BrandRetrieveByTickerParams::MaxSpeed::TRUE }
+
+        variant const: -> { BrandDev::Models::BrandRetrieveByTickerParams::MaxSpeed::FALSE }
+
+        # @!method self.variants
+        #   @return [Array(Boolean, Symbol)]
+
+        define_sorbet_constant!(:Variants) do
+          T.type_alias { T.any(T::Boolean, BrandDev::BrandRetrieveByTickerParams::MaxSpeed::TaggedSymbol) }
+        end
+
+        # @!group
+
+        TRUE = :true
+        FALSE = :false
+
+        # @!endgroup
+      end
+
+      # Stock exchange code.
       module TickerExchange
         extend BrandDev::Internal::Type::Enum
 

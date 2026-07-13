@@ -3,10 +3,10 @@
 require_relative "../test_helper"
 
 class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
-  def test_retrieve_required_params
+  def test_retrieve
     skip("Mock server tests are disabled")
 
-    response = @brand_dev.brand.retrieve(domain: "domain")
+    response = @brand_dev.brand.retrieve
 
     assert_pattern do
       response => BrandDev::Models::BrandRetrieveResponse
@@ -92,7 +92,7 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
   def test_identify_from_transaction_required_params
     skip("Mock server tests are disabled")
 
-    response = @brand_dev.brand.identify_from_transaction(transaction_info: "transaction_info")
+    response = @brand_dev.brand.identify_from_transaction(transaction_info: "xxx")
 
     assert_pattern do
       response => BrandDev::Models::BrandIdentifyFromTransactionResponse
@@ -225,7 +225,7 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
   def test_retrieve_simplified_required_params
     skip("Mock server tests are disabled")
 
-    response = @brand_dev.brand.retrieve_simplified(domain: "domain")
+    response = @brand_dev.brand.retrieve_simplified(domain: "xxx")
 
     assert_pattern do
       response => BrandDev::Models::BrandRetrieveSimplifiedResponse
@@ -305,7 +305,7 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
   def test_web_scrape_sitemap_required_params
     skip("Mock server tests are disabled")
 
-    response = @brand_dev.brand.web_scrape_sitemap(domain: "domain")
+    response = @brand_dev.brand.web_scrape_sitemap(domain: "xxx")
 
     assert_pattern do
       response => BrandDev::Models::BrandWebScrapeSitemapResponse

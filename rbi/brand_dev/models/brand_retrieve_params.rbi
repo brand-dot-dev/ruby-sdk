@@ -13,42 +13,54 @@ module BrandDev
 
       # Domain name to retrieve brand data for (e.g., 'example.com', 'google.com').
       # Cannot be used with name or ticker parameters.
-      sig { returns(String) }
-      attr_accessor :domain
+      sig { returns(T.nilable(String)) }
+      attr_reader :domain
 
-      # Optional parameter to force the language of the retrieved brand data.
+      sig { params(domain: String).void }
+      attr_writer :domain
+
+      # Language to force for the retrieved brand data.
       sig do
         returns(
           T.nilable(BrandDev::BrandRetrieveParams::ForceLanguage::OrSymbol)
         )
       end
-      attr_reader :force_language
-
-      sig do
-        params(
-          force_language: BrandDev::BrandRetrieveParams::ForceLanguage::OrSymbol
-        ).void
-      end
-      attr_writer :force_language
+      attr_accessor :force_language
 
       # Maximum age in milliseconds for cached brand data before the API performs a hard
       # refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
       # are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
       # year.
       sig { returns(T.nilable(Integer)) }
-      attr_reader :max_age_ms
-
-      sig { params(max_age_ms: Integer).void }
-      attr_writer :max_age_ms
+      attr_accessor :max_age_ms
 
       # Optional parameter to optimize the API call for maximum speed. When set to true,
       # the API will skip time-consuming operations for faster response at the cost of
       # less comprehensive data. Works with all three lookup methods.
-      sig { returns(T.nilable(T::Boolean)) }
+      sig do
+        returns(
+          T.nilable(
+            T.any(T::Boolean, BrandDev::BrandRetrieveParams::MaxSpeed::OrSymbol)
+          )
+        )
+      end
       attr_reader :max_speed
 
-      sig { params(max_speed: T::Boolean).void }
+      sig do
+        params(
+          max_speed:
+            T.any(T::Boolean, BrandDev::BrandRetrieveParams::MaxSpeed::OrSymbol)
+        ).void
+      end
       attr_writer :max_speed
+
+      # Company name to retrieve brand data for (e.g., 'Apple Inc'). Cannot be used with
+      # domain or ticker parameters.
+      sig { returns(T.nilable(String)) }
+      attr_reader :name
+
+      sig { params(name: String).void }
+      attr_writer :name
 
       # Optional comma-separated caller-defined tags for tracking this request. Tags are
       # recorded on the request's usage log and can be used to filter usage on the
@@ -58,6 +70,30 @@ module BrandDev
 
       sig { params(tags: T::Array[String]).void }
       attr_writer :tags
+
+      # Stock ticker symbol to retrieve brand data for (e.g., 'AAPL'). Cannot be used
+      # with domain or name parameters.
+      sig { returns(T.nilable(String)) }
+      attr_reader :ticker
+
+      sig { params(ticker: String).void }
+      attr_writer :ticker
+
+      # Stock exchange code.
+      sig do
+        returns(
+          T.nilable(BrandDev::BrandRetrieveParams::TickerExchange::OrSymbol)
+        )
+      end
+      attr_reader :ticker_exchange
+
+      sig do
+        params(
+          ticker_exchange:
+            BrandDev::BrandRetrieveParams::TickerExchange::OrSymbol
+        ).void
+      end
+      attr_writer :ticker_exchange
 
       # Optional timeout in milliseconds for the request. If the request takes longer
       # than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -72,10 +108,18 @@ module BrandDev
         params(
           domain: String,
           force_language:
-            BrandDev::BrandRetrieveParams::ForceLanguage::OrSymbol,
-          max_age_ms: Integer,
-          max_speed: T::Boolean,
+            T.nilable(BrandDev::BrandRetrieveParams::ForceLanguage::OrSymbol),
+          max_age_ms: T.nilable(Integer),
+          max_speed:
+            T.any(
+              T::Boolean,
+              BrandDev::BrandRetrieveParams::MaxSpeed::OrSymbol
+            ),
+          name: String,
           tags: T::Array[String],
+          ticker: String,
+          ticker_exchange:
+            BrandDev::BrandRetrieveParams::TickerExchange::OrSymbol,
           timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(T.attached_class)
@@ -83,8 +127,8 @@ module BrandDev
       def self.new(
         # Domain name to retrieve brand data for (e.g., 'example.com', 'google.com').
         # Cannot be used with name or ticker parameters.
-        domain:,
-        # Optional parameter to force the language of the retrieved brand data.
+        domain: nil,
+        # Language to force for the retrieved brand data.
         force_language: nil,
         # Maximum age in milliseconds for cached brand data before the API performs a hard
         # refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
@@ -95,10 +139,18 @@ module BrandDev
         # the API will skip time-consuming operations for faster response at the cost of
         # less comprehensive data. Works with all three lookup methods.
         max_speed: nil,
+        # Company name to retrieve brand data for (e.g., 'Apple Inc'). Cannot be used with
+        # domain or ticker parameters.
+        name: nil,
         # Optional comma-separated caller-defined tags for tracking this request. Tags are
         # recorded on the request's usage log and can be used to filter usage on the
         # dashboard usage page. Up to 20 tags, each 1-50 characters.
         tags: nil,
+        # Stock ticker symbol to retrieve brand data for (e.g., 'AAPL'). Cannot be used
+        # with domain or name parameters.
+        ticker: nil,
+        # Stock exchange code.
+        ticker_exchange: nil,
         # Optional timeout in milliseconds for the request. If the request takes longer
         # than this value, it will be aborted with a 408 status code. Maximum allowed
         # value is 300000ms (5 minutes).
@@ -112,10 +164,18 @@ module BrandDev
           {
             domain: String,
             force_language:
-              BrandDev::BrandRetrieveParams::ForceLanguage::OrSymbol,
-            max_age_ms: Integer,
-            max_speed: T::Boolean,
+              T.nilable(BrandDev::BrandRetrieveParams::ForceLanguage::OrSymbol),
+            max_age_ms: T.nilable(Integer),
+            max_speed:
+              T.any(
+                T::Boolean,
+                BrandDev::BrandRetrieveParams::MaxSpeed::OrSymbol
+              ),
+            name: String,
             tags: T::Array[String],
+            ticker: String,
+            ticker_exchange:
+              BrandDev::BrandRetrieveParams::TickerExchange::OrSymbol,
             timeout_ms: Integer,
             request_options: BrandDev::RequestOptions
           }
@@ -124,7 +184,7 @@ module BrandDev
       def to_hash
       end
 
-      # Optional parameter to force the language of the retrieved brand data.
+      # Language to force for the retrieved brand data.
       module ForceLanguage
         extend BrandDev::Internal::Type::Enum
 
@@ -738,6 +798,422 @@ module BrandDev
         sig do
           override.returns(
             T::Array[BrandDev::BrandRetrieveParams::ForceLanguage::TaggedSymbol]
+          )
+        end
+        def self.values
+        end
+      end
+
+      # Optional parameter to optimize the API call for maximum speed. When set to true,
+      # the API will skip time-consuming operations for faster response at the cost of
+      # less comprehensive data. Works with all three lookup methods.
+      module MaxSpeed
+        extend BrandDev::Internal::Type::Union
+
+        Variants =
+          T.type_alias do
+            T.any(
+              T::Boolean,
+              BrandDev::BrandRetrieveParams::MaxSpeed::TaggedSymbol
+            )
+          end
+
+        sig do
+          override.returns(
+            T::Array[BrandDev::BrandRetrieveParams::MaxSpeed::Variants]
+          )
+        end
+        def self.variants
+        end
+
+        TaggedSymbol =
+          T.type_alias do
+            T.all(Symbol, BrandDev::BrandRetrieveParams::MaxSpeed)
+          end
+        OrSymbol = T.type_alias { T.any(Symbol, String) }
+
+        TRUE =
+          T.let(:true, BrandDev::BrandRetrieveParams::MaxSpeed::TaggedSymbol)
+        FALSE =
+          T.let(:false, BrandDev::BrandRetrieveParams::MaxSpeed::TaggedSymbol)
+      end
+
+      # Stock exchange code.
+      module TickerExchange
+        extend BrandDev::Internal::Type::Enum
+
+        TaggedSymbol =
+          T.type_alias do
+            T.all(Symbol, BrandDev::BrandRetrieveParams::TickerExchange)
+          end
+        OrSymbol = T.type_alias { T.any(Symbol, String) }
+
+        AMEX =
+          T.let(
+            :AMEX,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        AMS =
+          T.let(
+            :AMS,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        AQS =
+          T.let(
+            :AQS,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        ASX =
+          T.let(
+            :ASX,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        ATH =
+          T.let(
+            :ATH,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        BER =
+          T.let(
+            :BER,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        BME =
+          T.let(
+            :BME,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        BRU =
+          T.let(
+            :BRU,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        BSE =
+          T.let(
+            :BSE,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        BUD =
+          T.let(
+            :BUD,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        BUE =
+          T.let(
+            :BUE,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        BVC =
+          T.let(
+            :BVC,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        CBOE =
+          T.let(
+            :CBOE,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        CNQ =
+          T.let(
+            :CNQ,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        CPH =
+          T.let(
+            :CPH,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        DFM =
+          T.let(
+            :DFM,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        DOH =
+          T.let(
+            :DOH,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        DUB =
+          T.let(
+            :DUB,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        DUS =
+          T.let(
+            :DUS,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        DXE =
+          T.let(
+            :DXE,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        EGX =
+          T.let(
+            :EGX,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        FSX =
+          T.let(
+            :FSX,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        HAM =
+          T.let(
+            :HAM,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        HEL =
+          T.let(
+            :HEL,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        HKSE =
+          T.let(
+            :HKSE,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        HOSE =
+          T.let(
+            :HOSE,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        ICE =
+          T.let(
+            :ICE,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        IOB =
+          T.let(
+            :IOB,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        IST =
+          T.let(
+            :IST,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        JKT =
+          T.let(
+            :JKT,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        JNB =
+          T.let(
+            :JNB,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        JPX =
+          T.let(
+            :JPX,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        KLS =
+          T.let(
+            :KLS,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        KOE =
+          T.let(
+            :KOE,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        KSC =
+          T.let(
+            :KSC,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        KUW =
+          T.let(
+            :KUW,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        LIS =
+          T.let(
+            :LIS,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        LSE =
+          T.let(
+            :LSE,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        MCX =
+          T.let(
+            :MCX,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        MEX =
+          T.let(
+            :MEX,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        MIL =
+          T.let(
+            :MIL,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        MUN =
+          T.let(
+            :MUN,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        NASDAQ =
+          T.let(
+            :NASDAQ,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        NEO =
+          T.let(
+            :NEO,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        NSE =
+          T.let(
+            :NSE,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        NYSE =
+          T.let(
+            :NYSE,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        NZE =
+          T.let(
+            :NZE,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        OSL =
+          T.let(
+            :OSL,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        OTC =
+          T.let(
+            :OTC,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        PAR =
+          T.let(
+            :PAR,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        PNK =
+          T.let(
+            :PNK,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        PRA =
+          T.let(
+            :PRA,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        RIS =
+          T.let(
+            :RIS,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        SAO =
+          T.let(
+            :SAO,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        SAU =
+          T.let(
+            :SAU,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        SES =
+          T.let(
+            :SES,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        SET =
+          T.let(
+            :SET,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        SGO =
+          T.let(
+            :SGO,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        SHH =
+          T.let(
+            :SHH,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        SHZ =
+          T.let(
+            :SHZ,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        SIX =
+          T.let(
+            :SIX,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        STO =
+          T.let(
+            :STO,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        STU =
+          T.let(
+            :STU,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        TAI =
+          T.let(
+            :TAI,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        TAL =
+          T.let(
+            :TAL,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        TLV =
+          T.let(
+            :TLV,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        TSX =
+          T.let(
+            :TSX,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        TSXV =
+          T.let(
+            :TSXV,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        TWO =
+          T.let(
+            :TWO,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        VIE =
+          T.let(
+            :VIE,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        WSE =
+          T.let(
+            :WSE,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+        XETRA =
+          T.let(
+            :XETRA,
+            BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+          )
+
+        sig do
+          override.returns(
+            T::Array[
+              BrandDev::BrandRetrieveParams::TickerExchange::TaggedSymbol
+            ]
           )
         end
         def self.values

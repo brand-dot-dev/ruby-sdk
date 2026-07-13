@@ -1,7 +1,0 @@
-module BrandDev
-  module Resources
-    class Monitors
-      def initialize: (client: BrandDev::Client) -> void
-    end
-  end
-end

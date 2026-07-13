@@ -25,8 +25,8 @@ module BrandDev
       sig { params(city: String).void }
       attr_writer :city
 
-      # Optional country code (GL parameter) to specify the country. This affects the
-      # geographic location used for search queries.
+      # Two-letter ISO 3166-1 alpha-2 country code (GL parameter) used to localize
+      # search.
       sig do
         returns(
           T.nilable(
@@ -44,7 +44,7 @@ module BrandDev
       end
       attr_writer :country_gl
 
-      # Optional parameter to force the language of the retrieved brand data.
+      # Language to force for the retrieved brand data.
       sig do
         returns(
           T.nilable(
@@ -52,46 +52,90 @@ module BrandDev
           )
         )
       end
-      attr_reader :force_language
-
-      sig do
-        params(
-          force_language:
-            BrandDev::BrandIdentifyFromTransactionParams::ForceLanguage::OrSymbol
-        ).void
-      end
-      attr_writer :force_language
+      attr_accessor :force_language
 
       # When set to true, the API will perform an additional verification steps to
       # ensure the identified brand matches the transaction with high confidence.
-      sig { returns(T.nilable(T::Boolean)) }
+      sig do
+        returns(
+          T.nilable(
+            T.any(
+              T::Boolean,
+              BrandDev::BrandIdentifyFromTransactionParams::HighConfidenceOnly::OrSymbol
+            )
+          )
+        )
+      end
       attr_reader :high_confidence_only
 
-      sig { params(high_confidence_only: T::Boolean).void }
+      sig do
+        params(
+          high_confidence_only:
+            T.any(
+              T::Boolean,
+              BrandDev::BrandIdentifyFromTransactionParams::HighConfidenceOnly::OrSymbol
+            )
+        ).void
+      end
       attr_writer :high_confidence_only
 
       # Optional parameter to optimize the API call for maximum speed. When set to true,
       # the API will skip time-consuming operations for faster response at the cost of
       # less comprehensive data.
-      sig { returns(T.nilable(T::Boolean)) }
+      sig do
+        returns(
+          T.nilable(
+            T.any(
+              T::Boolean,
+              BrandDev::BrandIdentifyFromTransactionParams::MaxSpeed::OrSymbol
+            )
+          )
+        )
+      end
       attr_reader :max_speed
 
-      sig { params(max_speed: T::Boolean).void }
+      sig do
+        params(
+          max_speed:
+            T.any(
+              T::Boolean,
+              BrandDev::BrandIdentifyFromTransactionParams::MaxSpeed::OrSymbol
+            )
+        ).void
+      end
       attr_writer :max_speed
 
       # Optional Merchant Category Code (MCC) to help identify the business
       # category/industry.
-      sig { returns(T.nilable(String)) }
+      sig do
+        returns(
+          T.nilable(BrandDev::BrandIdentifyFromTransactionParams::Mcc::Variants)
+        )
+      end
       attr_reader :mcc
 
-      sig { params(mcc: String).void }
+      sig do
+        params(
+          mcc: BrandDev::BrandIdentifyFromTransactionParams::Mcc::Variants
+        ).void
+      end
       attr_writer :mcc
 
       # Optional phone number from the transaction to help verify brand match.
-      sig { returns(T.nilable(Float)) }
+      sig do
+        returns(
+          T.nilable(
+            BrandDev::BrandIdentifyFromTransactionParams::Phone::Variants
+          )
+        )
+      end
       attr_reader :phone
 
-      sig { params(phone: Float).void }
+      sig do
+        params(
+          phone: BrandDev::BrandIdentifyFromTransactionParams::Phone::Variants
+        ).void
+      end
       attr_writer :phone
 
       # Optional comma-separated caller-defined tags for tracking this request. Tags are
@@ -119,11 +163,21 @@ module BrandDev
           country_gl:
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::OrSymbol,
           force_language:
-            BrandDev::BrandIdentifyFromTransactionParams::ForceLanguage::OrSymbol,
-          high_confidence_only: T::Boolean,
-          max_speed: T::Boolean,
-          mcc: String,
-          phone: Float,
+            T.nilable(
+              BrandDev::BrandIdentifyFromTransactionParams::ForceLanguage::OrSymbol
+            ),
+          high_confidence_only:
+            T.any(
+              T::Boolean,
+              BrandDev::BrandIdentifyFromTransactionParams::HighConfidenceOnly::OrSymbol
+            ),
+          max_speed:
+            T.any(
+              T::Boolean,
+              BrandDev::BrandIdentifyFromTransactionParams::MaxSpeed::OrSymbol
+            ),
+          mcc: BrandDev::BrandIdentifyFromTransactionParams::Mcc::Variants,
+          phone: BrandDev::BrandIdentifyFromTransactionParams::Phone::Variants,
           tags: T::Array[String],
           timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
@@ -134,10 +188,10 @@ module BrandDev
         transaction_info:,
         # Optional city name to prioritize when searching for the brand.
         city: nil,
-        # Optional country code (GL parameter) to specify the country. This affects the
-        # geographic location used for search queries.
+        # Two-letter ISO 3166-1 alpha-2 country code (GL parameter) used to localize
+        # search.
         country_gl: nil,
-        # Optional parameter to force the language of the retrieved brand data.
+        # Language to force for the retrieved brand data.
         force_language: nil,
         # When set to true, the API will perform an additional verification steps to
         # ensure the identified brand matches the transaction with high confidence.
@@ -171,11 +225,22 @@ module BrandDev
             country_gl:
               BrandDev::BrandIdentifyFromTransactionParams::CountryGl::OrSymbol,
             force_language:
-              BrandDev::BrandIdentifyFromTransactionParams::ForceLanguage::OrSymbol,
-            high_confidence_only: T::Boolean,
-            max_speed: T::Boolean,
-            mcc: String,
-            phone: Float,
+              T.nilable(
+                BrandDev::BrandIdentifyFromTransactionParams::ForceLanguage::OrSymbol
+              ),
+            high_confidence_only:
+              T.any(
+                T::Boolean,
+                BrandDev::BrandIdentifyFromTransactionParams::HighConfidenceOnly::OrSymbol
+              ),
+            max_speed:
+              T.any(
+                T::Boolean,
+                BrandDev::BrandIdentifyFromTransactionParams::MaxSpeed::OrSymbol
+              ),
+            mcc: BrandDev::BrandIdentifyFromTransactionParams::Mcc::Variants,
+            phone:
+              BrandDev::BrandIdentifyFromTransactionParams::Phone::Variants,
             tags: T::Array[String],
             timeout_ms: Integer,
             request_options: BrandDev::RequestOptions
@@ -185,8 +250,8 @@ module BrandDev
       def to_hash
       end
 
-      # Optional country code (GL parameter) to specify the country. This affects the
-      # geographic location used for search queries.
+      # Two-letter ISO 3166-1 alpha-2 country code (GL parameter) used to localize
+      # search.
       module CountryGl
         extend BrandDev::Internal::Type::Enum
 
@@ -199,29 +264,9 @@ module BrandDev
           end
         OrSymbol = T.type_alias { T.any(Symbol, String) }
 
-        AD =
-          T.let(
-            :ad,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        AE =
-          T.let(
-            :ae,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
         AF =
           T.let(
             :af,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        AG =
-          T.let(
-            :ag,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        AI =
-          T.let(
-            :ai,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
         AL =
@@ -229,29 +274,9 @@ module BrandDev
             :al,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
-        AM =
+        DZ =
           T.let(
-            :am,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        AN =
-          T.let(
-            :an,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        AO =
-          T.let(
-            :ao,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        AQ =
-          T.let(
-            :aq,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        AR =
-          T.let(
-            :ar,
+            :dz,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
         AS =
@@ -259,14 +284,39 @@ module BrandDev
             :as,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
-        AT =
+        AD =
           T.let(
-            :at,
+            :ad,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
-        AU =
+        AO =
           T.let(
-            :au,
+            :ao,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        AI =
+          T.let(
+            :ai,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        AQ =
+          T.let(
+            :aq,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        AG =
+          T.let(
+            :ag,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        AR =
+          T.let(
+            :ar,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        AM =
+          T.let(
+            :am,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
         AW =
@@ -274,39 +324,24 @@ module BrandDev
             :aw,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
+        AU =
+          T.let(
+            :au,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        AT =
+          T.let(
+            :at,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
         AZ =
           T.let(
             :az,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
-        BA =
+        BS =
           T.let(
-            :ba,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        BB =
-          T.let(
-            :bb,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        BD =
-          T.let(
-            :bd,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        BE =
-          T.let(
-            :be,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        BF =
-          T.let(
-            :bf,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        BG =
-          T.let(
-            :bg,
+            :bs,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
         BH =
@@ -314,9 +349,29 @@ module BrandDev
             :bh,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
-        BI =
+        BD =
           T.let(
-            :bi,
+            :bd,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        BB =
+          T.let(
+            :bb,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        BY =
+          T.let(
+            :by,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        BE =
+          T.let(
+            :be,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        BZ =
+          T.let(
+            :bz,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
         BJ =
@@ -329,9 +384,9 @@ module BrandDev
             :bm,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
-        BN =
+        BT =
           T.let(
-            :bn,
+            :bt,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
         BO =
@@ -339,24 +394,9 @@ module BrandDev
             :bo,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
-        BR =
+        BA =
           T.let(
-            :br,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        BS =
-          T.let(
-            :bs,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        BT =
-          T.let(
-            :bt,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        BV =
-          T.let(
-            :bv,
+            :ba,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
         BW =
@@ -364,59 +404,44 @@ module BrandDev
             :bw,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
-        BY =
+        BV =
           T.let(
-            :by,
+            :bv,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
-        BZ =
+        BR =
           T.let(
-            :bz,
+            :br,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
-        CA =
+        IO =
           T.let(
-            :ca,
+            :io,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
-        CC =
+        BN =
           T.let(
-            :cc,
+            :bn,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
-        CD =
+        BG =
           T.let(
-            :cd,
+            :bg,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
-        CF =
+        BF =
           T.let(
-            :cf,
+            :bf,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
-        CG =
+        BI =
           T.let(
-            :cg,
+            :bi,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
-        CH =
+        KH =
           T.let(
-            :ch,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        CI =
-          T.let(
-            :ci,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        CK =
-          T.let(
-            :ck,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        CL =
-          T.let(
-            :cl,
+            :kh,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
         CM =
@@ -424,24 +449,9 @@ module BrandDev
             :cm,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
-        CN =
+        CA =
           T.let(
-            :cn,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        CO =
-          T.let(
-            :co,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        CR =
-          T.let(
-            :cr,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        CU =
-          T.let(
-            :cu,
+            :ca,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
         CV =
@@ -449,9 +459,84 @@ module BrandDev
             :cv,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
+        KY =
+          T.let(
+            :ky,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        CF =
+          T.let(
+            :cf,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        TD =
+          T.let(
+            :td,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        CL =
+          T.let(
+            :cl,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        CN =
+          T.let(
+            :cn,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
         CX =
           T.let(
             :cx,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        CC =
+          T.let(
+            :cc,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        CO =
+          T.let(
+            :co,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        KM =
+          T.let(
+            :km,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        CG =
+          T.let(
+            :cg,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        CD =
+          T.let(
+            :cd,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        CK =
+          T.let(
+            :ck,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        CR =
+          T.let(
+            :cr,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        CI =
+          T.let(
+            :ci,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        HR =
+          T.let(
+            :hr,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        CU =
+          T.let(
+            :cu,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
         CY =
@@ -464,19 +549,14 @@ module BrandDev
             :cz,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
-        DE =
+        DK =
           T.let(
-            :de,
+            :dk,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
         DJ =
           T.let(
             :dj,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        DK =
-          T.let(
-            :dk,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
         DM =
@@ -489,19 +569,9 @@ module BrandDev
             :do,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
-        DZ =
-          T.let(
-            :dz,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
         EC =
           T.let(
             :ec,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        EE =
-          T.let(
-            :ee,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
         EG =
@@ -509,9 +579,14 @@ module BrandDev
             :eg,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
-        EH =
+        SV =
           T.let(
-            :eh,
+            :sv,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        GQ =
+          T.let(
+            :gq,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
         ER =
@@ -519,9 +594,9 @@ module BrandDev
             :er,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
-        ES =
+        EE =
           T.let(
-            :es,
+            :ee,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
         ET =
@@ -529,24 +604,9 @@ module BrandDev
             :et,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
-        FI =
-          T.let(
-            :fi,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        FJ =
-          T.let(
-            :fj,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
         FK =
           T.let(
             :fk,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        FM =
-          T.let(
-            :fm,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
         FO =
@@ -554,9 +614,34 @@ module BrandDev
             :fo,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
+        FJ =
+          T.let(
+            :fj,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        FI =
+          T.let(
+            :fi,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
         FR =
           T.let(
             :fr,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        GF =
+          T.let(
+            :gf,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        PF =
+          T.let(
+            :pf,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        TF =
+          T.let(
+            :tf,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
         GA =
@@ -564,14 +649,9 @@ module BrandDev
             :ga,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
-        GB =
+        GM =
           T.let(
-            :gb,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        GD =
-          T.let(
-            :gd,
+            :gm,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
         GE =
@@ -579,9 +659,9 @@ module BrandDev
             :ge,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
-        GF =
+        DE =
           T.let(
-            :gf,
+            :de,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
         GH =
@@ -594,19 +674,19 @@ module BrandDev
             :gi,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
+        GR =
+          T.let(
+            :gr,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
         GL =
           T.let(
             :gl,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
-        GM =
+        GD =
           T.let(
-            :gm,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        GN =
-          T.let(
-            :gn,
+            :gd,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
         GP =
@@ -614,19 +694,9 @@ module BrandDev
             :gp,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
-        GQ =
+        GU =
           T.let(
-            :gq,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        GR =
-          T.let(
-            :gr,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        GS =
-          T.let(
-            :gs,
+            :gu,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
         GT =
@@ -634,9 +704,9 @@ module BrandDev
             :gt,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
-        GU =
+        GN =
           T.let(
-            :gu,
+            :gn,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
         GW =
@@ -649,9 +719,9 @@ module BrandDev
             :gy,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
-        HK =
+        HT =
           T.let(
-            :hk,
+            :ht,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
         HM =
@@ -659,19 +729,19 @@ module BrandDev
             :hm,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
+        VA =
+          T.let(
+            :va,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
         HN =
           T.let(
             :hn,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
-        HR =
+        HK =
           T.let(
-            :hr,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        HT =
-          T.let(
-            :ht,
+            :hk,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
         HU =
@@ -679,9 +749,29 @@ module BrandDev
             :hu,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
+        IS =
+          T.let(
+            :is,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        IN =
+          T.let(
+            :in,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
         ID =
           T.let(
             :id,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        IR =
+          T.let(
+            :ir,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        IQ =
+          T.let(
+            :iq,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
         IE =
@@ -694,31 +784,6 @@ module BrandDev
             :il,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
-        IN =
-          T.let(
-            :in,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        IO =
-          T.let(
-            :io,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        IQ =
-          T.let(
-            :iq,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        IR =
-          T.let(
-            :ir,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        IS =
-          T.let(
-            :is,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
         IT =
           T.let(
             :it,
@@ -729,14 +794,19 @@ module BrandDev
             :jm,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
+        JP =
+          T.let(
+            :jp,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
         JO =
           T.let(
             :jo,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
-        JP =
+        KZ =
           T.let(
-            :jp,
+            :kz,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
         KE =
@@ -744,29 +814,9 @@ module BrandDev
             :ke,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
-        KG =
-          T.let(
-            :kg,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        KH =
-          T.let(
-            :kh,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
         KI =
           T.let(
             :ki,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        KM =
-          T.let(
-            :km,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        KN =
-          T.let(
-            :kn,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
         KP =
@@ -784,14 +834,9 @@ module BrandDev
             :kw,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
-        KY =
+        KG =
           T.let(
-            :ky,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        KZ =
-          T.let(
-            :kz,
+            :kg,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
         LA =
@@ -799,24 +844,19 @@ module BrandDev
             :la,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
+        LV =
+          T.let(
+            :lv,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
         LB =
           T.let(
             :lb,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
-        LC =
+        LS =
           T.let(
-            :lc,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        LI =
-          T.let(
-            :li,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        LK =
-          T.let(
-            :lk,
+            :ls,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
         LR =
@@ -824,9 +864,14 @@ module BrandDev
             :lr,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
-        LS =
+        LY =
           T.let(
-            :ls,
+            :ly,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        LI =
+          T.let(
+            :li,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
         LT =
@@ -839,39 +884,9 @@ module BrandDev
             :lu,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
-        LV =
+        MO =
           T.let(
-            :lv,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        LY =
-          T.let(
-            :ly,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        MA =
-          T.let(
-            :ma,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        MC =
-          T.let(
-            :mc,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        MD =
-          T.let(
-            :md,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        MG =
-          T.let(
-            :mg,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        MH =
-          T.let(
-            :mh,
+            :mo,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
         MK =
@@ -879,29 +894,39 @@ module BrandDev
             :mk,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
+        MG =
+          T.let(
+            :mg,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        MW =
+          T.let(
+            :mw,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        MY =
+          T.let(
+            :my,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        MV =
+          T.let(
+            :mv,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
         ML =
           T.let(
             :ml,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
-        MM =
+        MT =
           T.let(
-            :mm,
+            :mt,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
-        MN =
+        MH =
           T.let(
-            :mn,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        MO =
-          T.let(
-            :mo,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        MP =
-          T.let(
-            :mp,
+            :mh,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
         MQ =
@@ -914,29 +939,14 @@ module BrandDev
             :mr,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
-        MS =
-          T.let(
-            :ms,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        MT =
-          T.let(
-            :mt,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
         MU =
           T.let(
             :mu,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
-        MV =
+        YT =
           T.let(
-            :mv,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        MW =
-          T.let(
-            :mw,
+            :yt,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
         MX =
@@ -944,9 +954,34 @@ module BrandDev
             :mx,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
-        MY =
+        FM =
           T.let(
-            :my,
+            :fm,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        MD =
+          T.let(
+            :md,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        MC =
+          T.let(
+            :mc,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        MN =
+          T.let(
+            :mn,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        MS =
+          T.let(
+            :ms,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        MA =
+          T.let(
+            :ma,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
         MZ =
@@ -954,49 +989,14 @@ module BrandDev
             :mz,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
+        MM =
+          T.let(
+            :mm,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
         NA =
           T.let(
             :na,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        NC =
-          T.let(
-            :nc,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        NE =
-          T.let(
-            :ne,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        NF =
-          T.let(
-            :nf,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        NG =
-          T.let(
-            :ng,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        NI =
-          T.let(
-            :ni,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        NL =
-          T.let(
-            :nl,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        NO =
-          T.let(
-            :no,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        NP =
-          T.let(
-            :np,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
         NR =
@@ -1004,9 +1004,24 @@ module BrandDev
             :nr,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
-        NU =
+        NP =
           T.let(
-            :nu,
+            :np,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        NL =
+          T.let(
+            :nl,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        AN =
+          T.let(
+            :an,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        NC =
+          T.let(
+            :nc,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
         NZ =
@@ -1014,34 +1029,44 @@ module BrandDev
             :nz,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
+        NI =
+          T.let(
+            :ni,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        NE =
+          T.let(
+            :ne,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        NG =
+          T.let(
+            :ng,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        NU =
+          T.let(
+            :nu,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        NF =
+          T.let(
+            :nf,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        MP =
+          T.let(
+            :mp,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        NO =
+          T.let(
+            :no,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
         OM =
           T.let(
             :om,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        PA =
-          T.let(
-            :pa,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        PE =
-          T.let(
-            :pe,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        PF =
-          T.let(
-            :pf,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        PG =
-          T.let(
-            :pg,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        PH =
-          T.let(
-            :ph,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
         PK =
@@ -1049,24 +1074,9 @@ module BrandDev
             :pk,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
-        PL =
+        PW =
           T.let(
-            :pl,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        PM =
-          T.let(
-            :pm,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        PN =
-          T.let(
-            :pn,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        PR =
-          T.let(
-            :pr,
+            :pw,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
         PS =
@@ -1074,19 +1084,49 @@ module BrandDev
             :ps,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
-        PT =
+        PA =
           T.let(
-            :pt,
+            :pa,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
-        PW =
+        PG =
           T.let(
-            :pw,
+            :pg,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
         PY =
           T.let(
             :py,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        PE =
+          T.let(
+            :pe,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        PH =
+          T.let(
+            :ph,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        PN =
+          T.let(
+            :pn,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        PL =
+          T.let(
+            :pl,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        PT =
+          T.let(
+            :pt,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        PR =
+          T.let(
+            :pr,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
         QA =
@@ -1104,11 +1144,6 @@ module BrandDev
             :ro,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
-        RS =
-          T.let(
-            :rs,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
         RU =
           T.let(
             :ru,
@@ -1119,59 +1154,34 @@ module BrandDev
             :rw,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
-        SA =
-          T.let(
-            :sa,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        SB =
-          T.let(
-            :sb,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        SC =
-          T.let(
-            :sc,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        SD =
-          T.let(
-            :sd,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        SE =
-          T.let(
-            :se,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        SG =
-          T.let(
-            :sg,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
         SH =
           T.let(
             :sh,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
-        SI =
+        KN =
           T.let(
-            :si,
+            :kn,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
-        SJ =
+        LC =
           T.let(
-            :sj,
+            :lc,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
-        SK =
+        PM =
           T.let(
-            :sk,
+            :pm,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
-        SL =
+        VC =
           T.let(
-            :sl,
+            :vc,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        WS =
+          T.let(
+            :ws,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
         SM =
@@ -1179,9 +1189,54 @@ module BrandDev
             :sm,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
+        ST =
+          T.let(
+            :st,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        SA =
+          T.let(
+            :sa,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
         SN =
           T.let(
             :sn,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        RS =
+          T.let(
+            :rs,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        SC =
+          T.let(
+            :sc,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        SL =
+          T.let(
+            :sl,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        SG =
+          T.let(
+            :sg,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        SK =
+          T.let(
+            :sk,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        SI =
+          T.let(
+            :si,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        SB =
+          T.let(
+            :sb,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
         SO =
@@ -1189,24 +1244,39 @@ module BrandDev
             :so,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
+        ZA =
+          T.let(
+            :za,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        GS =
+          T.let(
+            :gs,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        ES =
+          T.let(
+            :es,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        LK =
+          T.let(
+            :lk,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        SD =
+          T.let(
+            :sd,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
         SR =
           T.let(
             :sr,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
-        ST =
+        SJ =
           T.let(
-            :st,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        SV =
-          T.let(
-            :sv,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        SY =
-          T.let(
-            :sy,
+            :sj,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
         SZ =
@@ -1214,74 +1284,19 @@ module BrandDev
             :sz,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
-        TC =
+        SE =
           T.let(
-            :tc,
+            :se,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
-        TD =
+        CH =
           T.let(
-            :td,
+            :ch,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
-        TF =
+        SY =
           T.let(
-            :tf,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        TG =
-          T.let(
-            :tg,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        TH =
-          T.let(
-            :th,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        TJ =
-          T.let(
-            :tj,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        TK =
-          T.let(
-            :tk,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        TL =
-          T.let(
-            :tl,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        TM =
-          T.let(
-            :tm,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        TN =
-          T.let(
-            :tn,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        TO =
-          T.let(
-            :to,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        TR =
-          T.let(
-            :tr,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        TT =
-          T.let(
-            :tt,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        TV =
-          T.let(
-            :tv,
+            :sy,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
         TW =
@@ -1289,14 +1304,69 @@ module BrandDev
             :tw,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
+        TJ =
+          T.let(
+            :tj,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
         TZ =
           T.let(
             :tz,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
-        UA =
+        TH =
           T.let(
-            :ua,
+            :th,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        TL =
+          T.let(
+            :tl,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        TG =
+          T.let(
+            :tg,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        TK =
+          T.let(
+            :tk,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        TO =
+          T.let(
+            :to,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        TT =
+          T.let(
+            :tt,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        TN =
+          T.let(
+            :tn,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        TR =
+          T.let(
+            :tr,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        TM =
+          T.let(
+            :tm,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        TC =
+          T.let(
+            :tc,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        TV =
+          T.let(
+            :tv,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
         UG =
@@ -1304,14 +1374,29 @@ module BrandDev
             :ug,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
-        UM =
+        UA =
           T.let(
-            :um,
+            :ua,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        AE =
+          T.let(
+            :ae,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        GB =
+          T.let(
+            :gb,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
         US =
           T.let(
             :us,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        UM =
+          T.let(
+            :um,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
         UY =
@@ -1324,19 +1409,19 @@ module BrandDev
             :uz,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
-        VA =
+        VU =
           T.let(
-            :va,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        VC =
-          T.let(
-            :vc,
+            :vu,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
         VE =
           T.let(
             :ve,
+            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
+          )
+        VN =
+          T.let(
+            :vn,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
         VG =
@@ -1349,39 +1434,19 @@ module BrandDev
             :vi,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
-        VN =
-          T.let(
-            :vn,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        VU =
-          T.let(
-            :vu,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
         WF =
           T.let(
             :wf,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
-        WS =
+        EH =
           T.let(
-            :ws,
+            :eh,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
         YE =
           T.let(
             :ye,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        YT =
-          T.let(
-            :yt,
-            BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
-          )
-        ZA =
-          T.let(
-            :za,
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::TaggedSymbol
           )
         ZM =
@@ -1406,7 +1471,7 @@ module BrandDev
         end
       end
 
-      # Optional parameter to force the language of the retrieved brand data.
+      # Language to force for the retrieved brand data.
       module ForceLanguage
         extend BrandDev::Internal::Type::Enum
 
@@ -2028,6 +2093,130 @@ module BrandDev
           )
         end
         def self.values
+        end
+      end
+
+      # When set to true, the API will perform an additional verification steps to
+      # ensure the identified brand matches the transaction with high confidence.
+      module HighConfidenceOnly
+        extend BrandDev::Internal::Type::Union
+
+        Variants =
+          T.type_alias do
+            T.any(
+              T::Boolean,
+              BrandDev::BrandIdentifyFromTransactionParams::HighConfidenceOnly::TaggedSymbol
+            )
+          end
+
+        sig do
+          override.returns(
+            T::Array[
+              BrandDev::BrandIdentifyFromTransactionParams::HighConfidenceOnly::Variants
+            ]
+          )
+        end
+        def self.variants
+        end
+
+        TaggedSymbol =
+          T.type_alias do
+            T.all(
+              Symbol,
+              BrandDev::BrandIdentifyFromTransactionParams::HighConfidenceOnly
+            )
+          end
+        OrSymbol = T.type_alias { T.any(Symbol, String) }
+
+        TRUE =
+          T.let(
+            :true,
+            BrandDev::BrandIdentifyFromTransactionParams::HighConfidenceOnly::TaggedSymbol
+          )
+        FALSE =
+          T.let(
+            :false,
+            BrandDev::BrandIdentifyFromTransactionParams::HighConfidenceOnly::TaggedSymbol
+          )
+      end
+
+      # Optional parameter to optimize the API call for maximum speed. When set to true,
+      # the API will skip time-consuming operations for faster response at the cost of
+      # less comprehensive data.
+      module MaxSpeed
+        extend BrandDev::Internal::Type::Union
+
+        Variants =
+          T.type_alias do
+            T.any(
+              T::Boolean,
+              BrandDev::BrandIdentifyFromTransactionParams::MaxSpeed::TaggedSymbol
+            )
+          end
+
+        sig do
+          override.returns(
+            T::Array[
+              BrandDev::BrandIdentifyFromTransactionParams::MaxSpeed::Variants
+            ]
+          )
+        end
+        def self.variants
+        end
+
+        TaggedSymbol =
+          T.type_alias do
+            T.all(
+              Symbol,
+              BrandDev::BrandIdentifyFromTransactionParams::MaxSpeed
+            )
+          end
+        OrSymbol = T.type_alias { T.any(Symbol, String) }
+
+        TRUE =
+          T.let(
+            :true,
+            BrandDev::BrandIdentifyFromTransactionParams::MaxSpeed::TaggedSymbol
+          )
+        FALSE =
+          T.let(
+            :false,
+            BrandDev::BrandIdentifyFromTransactionParams::MaxSpeed::TaggedSymbol
+          )
+      end
+
+      # Optional Merchant Category Code (MCC) to help identify the business
+      # category/industry.
+      module Mcc
+        extend BrandDev::Internal::Type::Union
+
+        Variants = T.type_alias { T.any(String, Float) }
+
+        sig do
+          override.returns(
+            T::Array[
+              BrandDev::BrandIdentifyFromTransactionParams::Mcc::Variants
+            ]
+          )
+        end
+        def self.variants
+        end
+      end
+
+      # Optional phone number from the transaction to help verify brand match.
+      module Phone
+        extend BrandDev::Internal::Type::Union
+
+        Variants = T.type_alias { T.any(String, Float) }
+
+        sig do
+          override.returns(
+            T::Array[
+              BrandDev::BrandIdentifyFromTransactionParams::Phone::Variants
+            ]
+          )
+        end
+        def self.variants
         end
       end
     end

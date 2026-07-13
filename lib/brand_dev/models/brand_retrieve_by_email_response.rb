@@ -113,8 +113,7 @@ module BrandDev
         optional :phone, String
 
         # @!attribute primary_language
-        #   The primary language of the brand's website content. Detected from the HTML lang
-        #   tag, page content analysis, or social media descriptions.
+        #   Language to force for the retrieved brand data.
         #
         #   @return [Symbol, BrandDev::Models::BrandRetrieveByEmailResponse::Brand::PrimaryLanguage, nil]
         optional :primary_language,
@@ -175,7 +174,7 @@ module BrandDev
         #
         #   @param phone [String] Company phone number
         #
-        #   @param primary_language [Symbol, BrandDev::Models::BrandRetrieveByEmailResponse::Brand::PrimaryLanguage, nil] The primary language of the brand's website content. Detected from the HTML lang
+        #   @param primary_language [Symbol, BrandDev::Models::BrandRetrieveByEmailResponse::Brand::PrimaryLanguage, nil] Language to force for the retrieved brand data.
         #
         #   @param slogan [String] The brand's slogan
         #
@@ -468,7 +467,6 @@ module BrandDev
               STREAMING_PLATFORMS_VIDEO_MUSIC_AUDIO = :"Streaming Platforms (Video, Music, Audio)"
               GAMING_INTERACTIVE_ENTERTAINMENT = :"Gaming & Interactive Entertainment"
               CREATOR_ECONOMY_INFLUENCER_PLATFORMS = :"Creator Economy & Influencer Platforms"
-              ADVERTISING_ADTECH_MEDIA_BUYING = :"Advertising, Adtech & Media Buying"
               FILM_TV_PRODUCTION_STUDIOS = :"Film, TV & Production Studios"
               EVENTS_VENUES_LIVE_ENTERTAINMENT = :"Events, Venues & Live Entertainment"
               VIRTUAL_WORLDS_METAVERSE_EXPERIENCES = :"Virtual Worlds & Metaverse Experiences"
@@ -529,6 +527,7 @@ module BrandDev
               STREETWEAR_EMERGING_LUXURY = :"Streetwear & Emerging Luxury"
               COUTURE_MADE_TO_MEASURE = :"Couture & Made-to-Measure"
               NEWS_PUBLISHING_JOURNALISM = :"News Publishing & Journalism"
+              ADVERTISING_ADTECH_MEDIA_BUYING = :"Advertising, Adtech & Media Buying"
               DIGITAL_MEDIA_CONTENT_PLATFORMS = :"Digital Media & Content Platforms"
               BROADCASTING_TV_RADIO = :"Broadcasting (TV & Radio)"
               PODCASTING_AUDIO_MEDIA = :"Podcasting & Audio Media"
@@ -826,8 +825,7 @@ module BrandDev
           end
         end
 
-        # The primary language of the brand's website content. Detected from the HTML lang
-        # tag, page content analysis, or social media descriptions.
+        # Language to force for the retrieved brand data.
         #
         # @see BrandDev::Models::BrandRetrieveByEmailResponse::Brand#primary_language
         module PrimaryLanguage

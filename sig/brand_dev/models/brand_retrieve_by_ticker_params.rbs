@@ -3,9 +3,9 @@ module BrandDev
     type brand_retrieve_by_ticker_params =
       {
         ticker: String,
-        force_language: BrandDev::Models::BrandRetrieveByTickerParams::force_language,
-        max_age_ms: Integer,
-        max_speed: bool,
+        force_language: BrandDev::Models::BrandRetrieveByTickerParams::force_language?,
+        max_age_ms: Integer?,
+        max_speed: BrandDev::Models::BrandRetrieveByTickerParams::max_speed,
         tags: ::Array[String],
         ticker_exchange: BrandDev::Models::BrandRetrieveByTickerParams::ticker_exchange,
         timeout_ms: Integer
@@ -18,19 +18,15 @@ module BrandDev
 
       attr_accessor ticker: String
 
-      attr_reader force_language: BrandDev::Models::BrandRetrieveByTickerParams::force_language?
+      attr_accessor force_language: BrandDev::Models::BrandRetrieveByTickerParams::force_language?
 
-      def force_language=: (
-        BrandDev::Models::BrandRetrieveByTickerParams::force_language
-      ) -> BrandDev::Models::BrandRetrieveByTickerParams::force_language
+      attr_accessor max_age_ms: Integer?
 
-      attr_reader max_age_ms: Integer?
+      attr_reader max_speed: BrandDev::Models::BrandRetrieveByTickerParams::max_speed?
 
-      def max_age_ms=: (Integer) -> Integer
-
-      attr_reader max_speed: bool?
-
-      def max_speed=: (bool) -> bool
+      def max_speed=: (
+        BrandDev::Models::BrandRetrieveByTickerParams::max_speed
+      ) -> BrandDev::Models::BrandRetrieveByTickerParams::max_speed
 
       attr_reader tags: ::Array[String]?
 
@@ -48,9 +44,9 @@ module BrandDev
 
       def initialize: (
         ticker: String,
-        ?force_language: BrandDev::Models::BrandRetrieveByTickerParams::force_language,
-        ?max_age_ms: Integer,
-        ?max_speed: bool,
+        ?force_language: BrandDev::Models::BrandRetrieveByTickerParams::force_language?,
+        ?max_age_ms: Integer?,
+        ?max_speed: BrandDev::Models::BrandRetrieveByTickerParams::max_speed,
         ?tags: ::Array[String],
         ?ticker_exchange: BrandDev::Models::BrandRetrieveByTickerParams::ticker_exchange,
         ?timeout_ms: Integer,
@@ -59,9 +55,9 @@ module BrandDev
 
       def to_hash: -> {
         ticker: String,
-        force_language: BrandDev::Models::BrandRetrieveByTickerParams::force_language,
-        max_age_ms: Integer,
-        max_speed: bool,
+        force_language: BrandDev::Models::BrandRetrieveByTickerParams::force_language?,
+        max_age_ms: Integer?,
+        max_speed: BrandDev::Models::BrandRetrieveByTickerParams::max_speed,
         tags: ::Array[String],
         ticker_exchange: BrandDev::Models::BrandRetrieveByTickerParams::ticker_exchange,
         timeout_ms: Integer,
@@ -315,6 +311,17 @@ module BrandDev
         ZULU: :zulu
 
         def self?.values: -> ::Array[BrandDev::Models::BrandRetrieveByTickerParams::force_language]
+      end
+
+      type max_speed = bool | :true | :false
+
+      module MaxSpeed
+        extend BrandDev::Internal::Type::Union
+
+        def self?.variants: -> ::Array[BrandDev::Models::BrandRetrieveByTickerParams::max_speed]
+
+        TRUE: :true
+        FALSE: :false
       end
 
       type ticker_exchange =

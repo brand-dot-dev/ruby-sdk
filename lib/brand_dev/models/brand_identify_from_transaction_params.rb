@@ -20,45 +20,48 @@ module BrandDev
       optional :city, String
 
       # @!attribute country_gl
-      #   Optional country code (GL parameter) to specify the country. This affects the
-      #   geographic location used for search queries.
+      #   Two-letter ISO 3166-1 alpha-2 country code (GL parameter) used to localize
+      #   search.
       #
       #   @return [Symbol, BrandDev::Models::BrandIdentifyFromTransactionParams::CountryGl, nil]
       optional :country_gl, enum: -> { BrandDev::BrandIdentifyFromTransactionParams::CountryGl }
 
       # @!attribute force_language
-      #   Optional parameter to force the language of the retrieved brand data.
+      #   Language to force for the retrieved brand data.
       #
       #   @return [Symbol, BrandDev::Models::BrandIdentifyFromTransactionParams::ForceLanguage, nil]
-      optional :force_language, enum: -> { BrandDev::BrandIdentifyFromTransactionParams::ForceLanguage }
+      optional :force_language,
+               enum: -> { BrandDev::BrandIdentifyFromTransactionParams::ForceLanguage },
+               nil?: true
 
       # @!attribute high_confidence_only
       #   When set to true, the API will perform an additional verification steps to
       #   ensure the identified brand matches the transaction with high confidence.
       #
-      #   @return [Boolean, nil]
-      optional :high_confidence_only, BrandDev::Internal::Type::Boolean
+      #   @return [Boolean, Symbol, BrandDev::Models::BrandIdentifyFromTransactionParams::HighConfidenceOnly, nil]
+      optional :high_confidence_only,
+               union: -> { BrandDev::BrandIdentifyFromTransactionParams::HighConfidenceOnly }
 
       # @!attribute max_speed
       #   Optional parameter to optimize the API call for maximum speed. When set to true,
       #   the API will skip time-consuming operations for faster response at the cost of
       #   less comprehensive data.
       #
-      #   @return [Boolean, nil]
-      optional :max_speed, BrandDev::Internal::Type::Boolean
+      #   @return [Boolean, Symbol, BrandDev::Models::BrandIdentifyFromTransactionParams::MaxSpeed, nil]
+      optional :max_speed, union: -> { BrandDev::BrandIdentifyFromTransactionParams::MaxSpeed }
 
       # @!attribute mcc
       #   Optional Merchant Category Code (MCC) to help identify the business
       #   category/industry.
       #
-      #   @return [String, nil]
-      optional :mcc, String
+      #   @return [String, Float, nil]
+      optional :mcc, union: -> { BrandDev::BrandIdentifyFromTransactionParams::Mcc }
 
       # @!attribute phone
       #   Optional phone number from the transaction to help verify brand match.
       #
-      #   @return [Float, nil]
-      optional :phone, Float
+      #   @return [String, Float, nil]
+      optional :phone, union: -> { BrandDev::BrandIdentifyFromTransactionParams::Phone }
 
       # @!attribute tags
       #   Optional comma-separated caller-defined tags for tracking this request. Tags are
@@ -84,17 +87,17 @@ module BrandDev
       #
       #   @param city [String] Optional city name to prioritize when searching for the brand.
       #
-      #   @param country_gl [Symbol, BrandDev::Models::BrandIdentifyFromTransactionParams::CountryGl] Optional country code (GL parameter) to specify the country. This affects the ge
+      #   @param country_gl [Symbol, BrandDev::Models::BrandIdentifyFromTransactionParams::CountryGl] Two-letter ISO 3166-1 alpha-2 country code (GL parameter) used to localize searc
       #
-      #   @param force_language [Symbol, BrandDev::Models::BrandIdentifyFromTransactionParams::ForceLanguage] Optional parameter to force the language of the retrieved brand data.
+      #   @param force_language [Symbol, BrandDev::Models::BrandIdentifyFromTransactionParams::ForceLanguage, nil] Language to force for the retrieved brand data.
       #
-      #   @param high_confidence_only [Boolean] When set to true, the API will perform an additional verification steps to ensur
+      #   @param high_confidence_only [Boolean, Symbol, BrandDev::Models::BrandIdentifyFromTransactionParams::HighConfidenceOnly] When set to true, the API will perform an additional verification steps to ensur
       #
-      #   @param max_speed [Boolean] Optional parameter to optimize the API call for maximum speed. When set to true,
+      #   @param max_speed [Boolean, Symbol, BrandDev::Models::BrandIdentifyFromTransactionParams::MaxSpeed] Optional parameter to optimize the API call for maximum speed. When set to true,
       #
-      #   @param mcc [String] Optional Merchant Category Code (MCC) to help identify the business category/ind
+      #   @param mcc [String, Float] Optional Merchant Category Code (MCC) to help identify the business category/ind
       #
-      #   @param phone [Float] Optional phone number from the transaction to help verify brand match.
+      #   @param phone [String, Float] Optional phone number from the transaction to help verify brand match.
       #
       #   @param tags [Array<String>] Optional comma-separated caller-defined tags for tracking this request. Tags are
       #
@@ -102,248 +105,248 @@ module BrandDev
       #
       #   @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}]
 
-      # Optional country code (GL parameter) to specify the country. This affects the
-      # geographic location used for search queries.
+      # Two-letter ISO 3166-1 alpha-2 country code (GL parameter) used to localize
+      # search.
       module CountryGl
         extend BrandDev::Internal::Type::Enum
 
-        AD = :ad
-        AE = :ae
         AF = :af
-        AG = :ag
-        AI = :ai
         AL = :al
-        AM = :am
-        AN = :an
-        AO = :ao
-        AQ = :aq
-        AR = :ar
+        DZ = :dz
         AS = :as
-        AT = :at
-        AU = :au
+        AD = :ad
+        AO = :ao
+        AI = :ai
+        AQ = :aq
+        AG = :ag
+        AR = :ar
+        AM = :am
         AW = :aw
+        AU = :au
+        AT = :at
         AZ = :az
-        BA = :ba
-        BB = :bb
-        BD = :bd
-        BE = :be
-        BF = :bf
-        BG = :bg
+        BS = :bs
         BH = :bh
-        BI = :bi
+        BD = :bd
+        BB = :bb
+        BY = :by
+        BE = :be
+        BZ = :bz
         BJ = :bj
         BM = :bm
-        BN = :bn
-        BO = :bo
-        BR = :br
-        BS = :bs
         BT = :bt
-        BV = :bv
+        BO = :bo
+        BA = :ba
         BW = :bw
-        BY = :by
-        BZ = :bz
-        CA = :ca
-        CC = :cc
-        CD = :cd
-        CF = :cf
-        CG = :cg
-        CH = :ch
-        CI = :ci
-        CK = :ck
-        CL = :cl
+        BV = :bv
+        BR = :br
+        IO = :io
+        BN = :bn
+        BG = :bg
+        BF = :bf
+        BI = :bi
+        KH = :kh
         CM = :cm
-        CN = :cn
-        CO = :co
-        CR = :cr
-        CU = :cu
+        CA = :ca
         CV = :cv
+        KY = :ky
+        CF = :cf
+        TD = :td
+        CL = :cl
+        CN = :cn
         CX = :cx
+        CC = :cc
+        CO = :co
+        KM = :km
+        CG = :cg
+        CD = :cd
+        CK = :ck
+        CR = :cr
+        CI = :ci
+        HR = :hr
+        CU = :cu
         CY = :cy
         CZ = :cz
-        DE = :de
-        DJ = :dj
         DK = :dk
+        DJ = :dj
         DM = :dm
         DO = :do
-        DZ = :dz
         EC = :ec
-        EE = :ee
         EG = :eg
-        EH = :eh
+        SV = :sv
+        GQ = :gq
         ER = :er
-        ES = :es
+        EE = :ee
         ET = :et
-        FI = :fi
-        FJ = :fj
         FK = :fk
-        FM = :fm
         FO = :fo
+        FJ = :fj
+        FI = :fi
         FR = :fr
-        GA = :ga
-        GB = :gb
-        GD = :gd
-        GE = :ge
         GF = :gf
+        PF = :pf
+        TF = :tf
+        GA = :ga
+        GM = :gm
+        GE = :ge
+        DE = :de
         GH = :gh
         GI = :gi
-        GL = :gl
-        GM = :gm
-        GN = :gn
-        GP = :gp
-        GQ = :gq
         GR = :gr
-        GS = :gs
-        GT = :gt
+        GL = :gl
+        GD = :gd
+        GP = :gp
         GU = :gu
+        GT = :gt
+        GN = :gn
         GW = :gw
         GY = :gy
-        HK = :hk
-        HM = :hm
-        HN = :hn
-        HR = :hr
         HT = :ht
+        HM = :hm
+        VA = :va
+        HN = :hn
+        HK = :hk
         HU = :hu
+        IS = :is
+        IN = :in
         ID = :id
+        IR = :ir
+        IQ = :iq
         IE = :ie
         IL = :il
-        IN = :in
-        IO = :io
-        IQ = :iq
-        IR = :ir
-        IS = :is
         IT = :it
         JM = :jm
-        JO = :jo
         JP = :jp
+        JO = :jo
+        KZ = :kz
         KE = :ke
-        KG = :kg
-        KH = :kh
         KI = :ki
-        KM = :km
-        KN = :kn
         KP = :kp
         KR = :kr
         KW = :kw
-        KY = :ky
-        KZ = :kz
+        KG = :kg
         LA = :la
+        LV = :lv
         LB = :lb
-        LC = :lc
-        LI = :li
-        LK = :lk
-        LR = :lr
         LS = :ls
+        LR = :lr
+        LY = :ly
+        LI = :li
         LT = :lt
         LU = :lu
-        LV = :lv
-        LY = :ly
-        MA = :ma
-        MC = :mc
-        MD = :md
-        MG = :mg
-        MH = :mh
-        MK = :mk
-        ML = :ml
-        MM = :mm
-        MN = :mn
         MO = :mo
-        MP = :mp
+        MK = :mk
+        MG = :mg
+        MW = :mw
+        MY = :my
+        MV = :mv
+        ML = :ml
+        MT = :mt
+        MH = :mh
         MQ = :mq
         MR = :mr
-        MS = :ms
-        MT = :mt
         MU = :mu
-        MV = :mv
-        MW = :mw
+        YT = :yt
         MX = :mx
-        MY = :my
+        FM = :fm
+        MD = :md
+        MC = :mc
+        MN = :mn
+        MS = :ms
+        MA = :ma
         MZ = :mz
+        MM = :mm
         NA = :na
-        NC = :nc
-        NE = :ne
-        NF = :nf
-        NG = :ng
-        NI = :ni
-        NL = :nl
-        NO = :no
-        NP = :np
         NR = :nr
-        NU = :nu
+        NP = :np
+        NL = :nl
+        AN = :an
+        NC = :nc
         NZ = :nz
+        NI = :ni
+        NE = :ne
+        NG = :ng
+        NU = :nu
+        NF = :nf
+        MP = :mp
+        NO = :no
         OM = :om
-        PA = :pa
-        PE = :pe
-        PF = :pf
-        PG = :pg
-        PH = :ph
         PK = :pk
-        PL = :pl
-        PM = :pm
-        PN = :pn
-        PR = :pr
-        PS = :ps
-        PT = :pt
         PW = :pw
+        PS = :ps
+        PA = :pa
+        PG = :pg
         PY = :py
+        PE = :pe
+        PH = :ph
+        PN = :pn
+        PL = :pl
+        PT = :pt
+        PR = :pr
         QA = :qa
         RE = :re
         RO = :ro
-        RS = :rs
         RU = :ru
         RW = :rw
-        SA = :sa
-        SB = :sb
-        SC = :sc
-        SD = :sd
-        SE = :se
-        SG = :sg
         SH = :sh
-        SI = :si
-        SJ = :sj
-        SK = :sk
-        SL = :sl
+        KN = :kn
+        LC = :lc
+        PM = :pm
+        VC = :vc
+        WS = :ws
         SM = :sm
-        SN = :sn
-        SO = :so
-        SR = :sr
         ST = :st
-        SV = :sv
-        SY = :sy
+        SA = :sa
+        SN = :sn
+        RS = :rs
+        SC = :sc
+        SL = :sl
+        SG = :sg
+        SK = :sk
+        SI = :si
+        SB = :sb
+        SO = :so
+        ZA = :za
+        GS = :gs
+        ES = :es
+        LK = :lk
+        SD = :sd
+        SR = :sr
+        SJ = :sj
         SZ = :sz
-        TC = :tc
-        TD = :td
-        TF = :tf
-        TG = :tg
-        TH = :th
-        TJ = :tj
-        TK = :tk
-        TL = :tl
-        TM = :tm
-        TN = :tn
-        TO = :to
-        TR = :tr
-        TT = :tt
-        TV = :tv
+        SE = :se
+        CH = :ch
+        SY = :sy
         TW = :tw
+        TJ = :tj
         TZ = :tz
-        UA = :ua
+        TH = :th
+        TL = :tl
+        TG = :tg
+        TK = :tk
+        TO = :to
+        TT = :tt
+        TN = :tn
+        TR = :tr
+        TM = :tm
+        TC = :tc
+        TV = :tv
         UG = :ug
-        UM = :um
+        UA = :ua
+        AE = :ae
+        GB = :gb
         US = :us
+        UM = :um
         UY = :uy
         UZ = :uz
-        VA = :va
-        VC = :vc
+        VU = :vu
         VE = :ve
+        VN = :vn
         VG = :vg
         VI = :vi
-        VN = :vn
-        VU = :vu
         WF = :wf
-        WS = :ws
+        EH = :eh
         YE = :ye
-        YT = :yt
-        ZA = :za
         ZM = :zm
         ZW = :zw
 
@@ -351,7 +354,7 @@ module BrandDev
         #   @return [Array<Symbol>]
       end
 
-      # Optional parameter to force the language of the retrieved brand data.
+      # Language to force for the retrieved brand data.
       module ForceLanguage
         extend BrandDev::Internal::Type::Enum
 
@@ -478,6 +481,84 @@ module BrandDev
 
         # @!method self.values
         #   @return [Array<Symbol>]
+      end
+
+      # When set to true, the API will perform an additional verification steps to
+      # ensure the identified brand matches the transaction with high confidence.
+      module HighConfidenceOnly
+        extend BrandDev::Internal::Type::Union
+
+        variant BrandDev::Internal::Type::Boolean
+
+        variant const: -> { BrandDev::Models::BrandIdentifyFromTransactionParams::HighConfidenceOnly::TRUE }
+
+        variant const: -> { BrandDev::Models::BrandIdentifyFromTransactionParams::HighConfidenceOnly::FALSE }
+
+        # @!method self.variants
+        #   @return [Array(Boolean, Symbol)]
+
+        define_sorbet_constant!(:Variants) do
+          T.type_alias { T.any(T::Boolean, BrandDev::BrandIdentifyFromTransactionParams::HighConfidenceOnly::TaggedSymbol) }
+        end
+
+        # @!group
+
+        TRUE = :true
+        FALSE = :false
+
+        # @!endgroup
+      end
+
+      # Optional parameter to optimize the API call for maximum speed. When set to true,
+      # the API will skip time-consuming operations for faster response at the cost of
+      # less comprehensive data.
+      module MaxSpeed
+        extend BrandDev::Internal::Type::Union
+
+        variant BrandDev::Internal::Type::Boolean
+
+        variant const: -> { BrandDev::Models::BrandIdentifyFromTransactionParams::MaxSpeed::TRUE }
+
+        variant const: -> { BrandDev::Models::BrandIdentifyFromTransactionParams::MaxSpeed::FALSE }
+
+        # @!method self.variants
+        #   @return [Array(Boolean, Symbol)]
+
+        define_sorbet_constant!(:Variants) do
+          T.type_alias { T.any(T::Boolean, BrandDev::BrandIdentifyFromTransactionParams::MaxSpeed::TaggedSymbol) }
+        end
+
+        # @!group
+
+        TRUE = :true
+        FALSE = :false
+
+        # @!endgroup
+      end
+
+      # Optional Merchant Category Code (MCC) to help identify the business
+      # category/industry.
+      module Mcc
+        extend BrandDev::Internal::Type::Union
+
+        variant String
+
+        variant Float
+
+        # @!method self.variants
+        #   @return [Array(String, Float)]
+      end
+
+      # Optional phone number from the transaction to help verify brand match.
+      module Phone
+        extend BrandDev::Internal::Type::Union
+
+        variant String
+
+        variant Float
+
+        # @!method self.variants
+        #   @return [Array(String, Float)]
       end
     end
   end

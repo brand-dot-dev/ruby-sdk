@@ -9,17 +9,23 @@ module BrandDev
       # Retrieve logos, backdrops, colors, industry, description, and more from any
       # domain
       #
-      # @overload retrieve(domain:, force_language: nil, max_age_ms: nil, max_speed: nil, tags: nil, timeout_ms: nil, request_options: {})
+      # @overload retrieve(domain: nil, force_language: nil, max_age_ms: nil, max_speed: nil, name: nil, tags: nil, ticker: nil, ticker_exchange: nil, timeout_ms: nil, request_options: {})
       #
       # @param domain [String] Domain name to retrieve brand data for (e.g., 'example.com', 'google.com'). Cann
       #
-      # @param force_language [Symbol, BrandDev::Models::BrandRetrieveParams::ForceLanguage] Optional parameter to force the language of the retrieved brand data.
+      # @param force_language [Symbol, BrandDev::Models::BrandRetrieveParams::ForceLanguage, nil] Language to force for the retrieved brand data.
       #
-      # @param max_age_ms [Integer] Maximum age in milliseconds for cached brand data before the API performs a hard
+      # @param max_age_ms [Integer, nil] Maximum age in milliseconds for cached brand data before the API performs a hard
       #
-      # @param max_speed [Boolean] Optional parameter to optimize the API call for maximum speed. When set to true,
+      # @param max_speed [Boolean, Symbol, BrandDev::Models::BrandRetrieveParams::MaxSpeed] Optional parameter to optimize the API call for maximum speed. When set to true,
+      #
+      # @param name [String] Company name to retrieve brand data for (e.g., 'Apple Inc'). Cannot be used with
       #
       # @param tags [Array<String>] Optional comma-separated caller-defined tags for tracking this request. Tags are
+      #
+      # @param ticker [String] Stock ticker symbol to retrieve brand data for (e.g., 'AAPL'). Cannot be used wi
+      #
+      # @param ticker_exchange [Symbol, BrandDev::Models::BrandRetrieveParams::TickerExchange] Stock exchange code.
       #
       # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #
@@ -28,7 +34,7 @@ module BrandDev
       # @return [BrandDev::Models::BrandRetrieveResponse]
       #
       # @see BrandDev::Models::BrandRetrieveParams
-      def retrieve(params)
+      def retrieve(params = {})
         parsed, options = BrandDev::BrandRetrieveParams.dump_request(params)
         query = BrandDev::Internal::Util.encode_query_params(parsed)
         @client.request(
@@ -142,17 +148,17 @@ module BrandDev
       #
       # @param city [String] Optional city name to prioritize when searching for the brand.
       #
-      # @param country_gl [Symbol, BrandDev::Models::BrandIdentifyFromTransactionParams::CountryGl] Optional country code (GL parameter) to specify the country. This affects the ge
+      # @param country_gl [Symbol, BrandDev::Models::BrandIdentifyFromTransactionParams::CountryGl] Two-letter ISO 3166-1 alpha-2 country code (GL parameter) used to localize searc
       #
-      # @param force_language [Symbol, BrandDev::Models::BrandIdentifyFromTransactionParams::ForceLanguage] Optional parameter to force the language of the retrieved brand data.
+      # @param force_language [Symbol, BrandDev::Models::BrandIdentifyFromTransactionParams::ForceLanguage, nil] Language to force for the retrieved brand data.
       #
-      # @param high_confidence_only [Boolean] When set to true, the API will perform an additional verification steps to ensur
+      # @param high_confidence_only [Boolean, Symbol, BrandDev::Models::BrandIdentifyFromTransactionParams::HighConfidenceOnly] When set to true, the API will perform an additional verification steps to ensur
       #
-      # @param max_speed [Boolean] Optional parameter to optimize the API call for maximum speed. When set to true,
+      # @param max_speed [Boolean, Symbol, BrandDev::Models::BrandIdentifyFromTransactionParams::MaxSpeed] Optional parameter to optimize the API call for maximum speed. When set to true,
       #
-      # @param mcc [String] Optional Merchant Category Code (MCC) to help identify the business category/ind
+      # @param mcc [String, Float] Optional Merchant Category Code (MCC) to help identify the business category/ind
       #
-      # @param phone [Float] Optional phone number from the transaction to help verify brand match.
+      # @param phone [String, Float] Optional phone number from the transaction to help verify brand match.
       #
       # @param tags [Array<String>] Optional comma-separated caller-defined tags for tracking this request. Tags are
       #
@@ -248,11 +254,11 @@ module BrandDev
       #
       # @param email [String] Email address to retrieve brand data for (e.g., 'contact@example.com'). The doma
       #
-      # @param force_language [Symbol, BrandDev::Models::BrandRetrieveByEmailParams::ForceLanguage] Optional parameter to force the language of the retrieved brand data.
+      # @param force_language [Symbol, BrandDev::Models::BrandRetrieveByEmailParams::ForceLanguage, nil] Language to force for the retrieved brand data.
       #
-      # @param max_age_ms [Integer] Maximum age in milliseconds for cached brand data before the API performs a hard
+      # @param max_age_ms [Integer, nil] Maximum age in milliseconds for cached brand data before the API performs a hard
       #
-      # @param max_speed [Boolean] Optional parameter to optimize the API call for maximum speed. When set to true,
+      # @param max_speed [Boolean, Symbol, BrandDev::Models::BrandRetrieveByEmailParams::MaxSpeed] Optional parameter to optimize the API call for maximum speed. When set to true,
       #
       # @param tags [Array<String>] Optional comma-separated caller-defined tags for tracking this request. Tags are
       #
@@ -285,11 +291,11 @@ module BrandDev
       #
       # @param isin [String] ISIN (International Securities Identification Number) to retrieve brand data for
       #
-      # @param force_language [Symbol, BrandDev::Models::BrandRetrieveByIsinParams::ForceLanguage] Optional parameter to force the language of the retrieved brand data.
+      # @param force_language [Symbol, BrandDev::Models::BrandRetrieveByIsinParams::ForceLanguage, nil] Language to force for the retrieved brand data.
       #
-      # @param max_age_ms [Integer] Maximum age in milliseconds for cached brand data before the API performs a hard
+      # @param max_age_ms [Integer, nil] Maximum age in milliseconds for cached brand data before the API performs a hard
       #
-      # @param max_speed [Boolean] Optional parameter to optimize the API call for maximum speed. When set to true,
+      # @param max_speed [Boolean, Symbol, BrandDev::Models::BrandRetrieveByIsinParams::MaxSpeed] Optional parameter to optimize the API call for maximum speed. When set to true,
       #
       # @param tags [Array<String>] Optional comma-separated caller-defined tags for tracking this request. Tags are
       #
@@ -321,13 +327,13 @@ module BrandDev
       #
       # @param name [String] Company name to retrieve brand data for (e.g., 'Apple Inc', 'Microsoft Corporati
       #
-      # @param country_gl [Symbol, BrandDev::Models::BrandRetrieveByNameParams::CountryGl] Optional country code hint (GL parameter) to specify the country for the company
+      # @param country_gl [Symbol, BrandDev::Models::BrandRetrieveByNameParams::CountryGl] Two-letter ISO 3166-1 alpha-2 country code (GL parameter) used to localize searc
       #
-      # @param force_language [Symbol, BrandDev::Models::BrandRetrieveByNameParams::ForceLanguage] Optional parameter to force the language of the retrieved brand data.
+      # @param force_language [Symbol, BrandDev::Models::BrandRetrieveByNameParams::ForceLanguage, nil] Language to force for the retrieved brand data.
       #
-      # @param max_age_ms [Integer] Maximum age in milliseconds for cached brand data before the API performs a hard
+      # @param max_age_ms [Integer, nil] Maximum age in milliseconds for cached brand data before the API performs a hard
       #
-      # @param max_speed [Boolean] Optional parameter to optimize the API call for maximum speed. When set to true,
+      # @param max_speed [Boolean, Symbol, BrandDev::Models::BrandRetrieveByNameParams::MaxSpeed] Optional parameter to optimize the API call for maximum speed. When set to true,
       #
       # @param tags [Array<String>] Optional comma-separated caller-defined tags for tracking this request. Tags are
       #
@@ -359,15 +365,15 @@ module BrandDev
       #
       # @param ticker [String] Stock ticker symbol to retrieve brand data for (e.g., 'AAPL', 'GOOGL', 'BRK.A').
       #
-      # @param force_language [Symbol, BrandDev::Models::BrandRetrieveByTickerParams::ForceLanguage] Optional parameter to force the language of the retrieved brand data.
+      # @param force_language [Symbol, BrandDev::Models::BrandRetrieveByTickerParams::ForceLanguage, nil] Language to force for the retrieved brand data.
       #
-      # @param max_age_ms [Integer] Maximum age in milliseconds for cached brand data before the API performs a hard
+      # @param max_age_ms [Integer, nil] Maximum age in milliseconds for cached brand data before the API performs a hard
       #
-      # @param max_speed [Boolean] Optional parameter to optimize the API call for maximum speed. When set to true,
+      # @param max_speed [Boolean, Symbol, BrandDev::Models::BrandRetrieveByTickerParams::MaxSpeed] Optional parameter to optimize the API call for maximum speed. When set to true,
       #
       # @param tags [Array<String>] Optional comma-separated caller-defined tags for tracking this request. Tags are
       #
-      # @param ticker_exchange [Symbol, BrandDev::Models::BrandRetrieveByTickerParams::TickerExchange] Optional stock exchange for the ticker. Defaults to NASDAQ if not specified.
+      # @param ticker_exchange [Symbol, BrandDev::Models::BrandRetrieveByTickerParams::TickerExchange] Stock exchange code.
       #
       # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #
@@ -395,13 +401,15 @@ module BrandDev
       # information: domain, title, colors, logos, and backdrops. Optimized for faster
       # responses and reduced data transfer.
       #
-      # @overload retrieve_simplified(domain:, max_age_ms: nil, tags: nil, timeout_ms: nil, request_options: {})
+      # @overload retrieve_simplified(domain:, max_age_ms: nil, tags: nil, theme: nil, timeout_ms: nil, request_options: {})
       #
       # @param domain [String] Domain name to retrieve simplified brand data for
       #
-      # @param max_age_ms [Integer] Maximum age in milliseconds for cached brand data before the API performs a hard
+      # @param max_age_ms [Integer, nil] Maximum age in milliseconds for cached brand data before the API performs a hard
       #
       # @param tags [Array<String>] Optional comma-separated caller-defined tags for tracking this request. Tags are
+      #
+      # @param theme [Symbol, BrandDev::Models::BrandRetrieveSimplifiedParams::Theme] Optional theme preference used when selecting brand assets.
       #
       # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #
@@ -431,29 +439,29 @@ module BrandDev
       #
       # @param url [String] Full URL to scrape (must include http:// or https:// protocol)
       #
-      # @param country [Symbol, BrandDev::Models::BrandWebScrapeHTMLParams::Country] Two-letter ISO 3166-1 alpha-2 country code for the website request location. Whe
+      # @param country [Symbol, BrandDev::Models::BrandWebScrapeHTMLParams::Country] Two-letter ISO 3166-1 alpha-2 country code identifying a supported Context.dev r
       #
-      # @param exclude_selectors [Array<String>] CSS selectors to remove from the result. Applied after includeSelectors. Exclusi
+      # @param exclude_selectors [Array<String>, nil] CSS selectors to remove from the result. Applied after includeSelectors. Exclusi
       #
       # @param headers [Hash{Symbol=>String}] Optional outbound HTTP headers forwarded only to the target URL, sent as deep-ob
       #
-      # @param include_frames [Boolean] When true, iframes are rendered inline into the returned HTML.
+      # @param include_frames [Boolean, Symbol, BrandDev::Models::BrandWebScrapeHTMLParams::IncludeFrames] When true, iframes are rendered inline into the returned HTML.
       #
-      # @param include_selectors [Array<String>] CSS selectors. When provided, only matching subtrees (and their descendants) are
+      # @param include_selectors [Array<String>, nil] CSS selectors. When provided, only matching subtrees (and their descendants) are
       #
-      # @param max_age_ms [Integer] Return a cached result if a prior scrape for the same parameters exists and is y
+      # @param max_age_ms [Integer, nil] Return a cached result if a prior scrape for the same parameters exists and is y
       #
       # @param pdf [BrandDev::Models::BrandWebScrapeHTMLParams::Pdf] PDF parsing controls. Use start/end to limit text extraction and embedded-image
       #
-      # @param settle_animations [Boolean] When true, waits briefly for CSS and transition animations to settle before extr
+      # @param settle_animations [Boolean, Symbol, BrandDev::Models::BrandWebScrapeHTMLParams::SettleAnimations] When true, waits briefly for CSS and transition animations to settle before extr
       #
       # @param tags [Array<String>] Optional comma-separated caller-defined tags for tracking this request. Tags are
       #
       # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #
-      # @param use_main_content_only [Boolean] When true, return only the page's main content in the HTML response, excluding h
+      # @param use_main_content_only [Boolean, Symbol, BrandDev::Models::BrandWebScrapeHTMLParams::UseMainContentOnly] When true, return only the page's main content in the HTML response, excluding h
       #
-      # @param wait_for_ms [Integer] Optional browser wait time in milliseconds after initial page load. Min: 0. Max:
+      # @param wait_for_ms [Integer, nil] Optional browser wait time in milliseconds after initial page load. Min: 0. Max:
       #
       # @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}, nil]
       #
@@ -493,19 +501,19 @@ module BrandDev
       #
       # @param url [String] Page URL to inspect. Must include http:// or https://.
       #
-      # @param dedupe [Boolean] When true, visually duplicate images are removed: every image is loaded and perc
+      # @param dedupe [Boolean, Symbol, BrandDev::Models::BrandWebScrapeImagesParams::Dedupe] When true, visually duplicate images are removed: every image is loaded and perc
       #
-      # @param enrichment [BrandDev::Models::BrandWebScrapeImagesParams::Enrichment] Optional per-image processing, sent as deep-object query params such as enrichme
+      # @param enrichment [BrandDev::Models::BrandWebScrapeImagesParams::Enrichment, nil] Optional per-image processing, sent as deep-object query params such as enrichme
       #
       # @param headers [Hash{Symbol=>String}] Optional outbound HTTP headers forwarded only to the target URL, sent as deep-ob
       #
-      # @param max_age_ms [Integer] Reuse a cached result this many milliseconds old or newer. Default: 86400000 (1
+      # @param max_age_ms [Integer, nil] Reuse a cached result this many milliseconds old or newer. Default: 86400000 (1
       #
       # @param tags [Array<String>] Optional comma-separated caller-defined tags for tracking this request. Tags are
       #
       # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #
-      # @param wait_for_ms [Integer] Optional browser wait time in milliseconds after initial page load before collec
+      # @param wait_for_ms [Integer, nil] Optional browser wait time in milliseconds after initial page load before collec
       #
       # @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}, nil]
       #
@@ -552,35 +560,35 @@ module BrandDev
       #
       # @param url [String] Full URL to scrape into LLM usable Markdown (must include http:// or https:// pr
       #
-      # @param country [Symbol, BrandDev::Models::BrandWebScrapeMdParams::Country] Two-letter ISO 3166-1 alpha-2 country code for the website request location. Whe
+      # @param country [Symbol, BrandDev::Models::BrandWebScrapeMdParams::Country] Two-letter ISO 3166-1 alpha-2 country code identifying a supported Context.dev r
       #
-      # @param exclude_selectors [Array<String>] CSS selectors to remove before conversion to Markdown. Applied after includeSele
+      # @param exclude_selectors [Array<String>, nil] CSS selectors to remove before conversion to Markdown. Applied after includeSele
       #
       # @param headers [Hash{Symbol=>String}] Optional outbound HTTP headers forwarded only to the target URL, sent as deep-ob
       #
-      # @param include_frames [Boolean] When true, the contents of iframes are rendered to Markdown.
+      # @param include_frames [Boolean, Symbol, BrandDev::Models::BrandWebScrapeMdParams::IncludeFrames] When true, the contents of iframes are rendered to Markdown.
       #
-      # @param include_images [Boolean] Include image references in Markdown output
+      # @param include_images [Boolean, Symbol, BrandDev::Models::BrandWebScrapeMdParams::IncludeImages] Include image references in Markdown output
       #
-      # @param include_links [Boolean] Preserve hyperlinks in Markdown output
+      # @param include_links [Boolean, Symbol, BrandDev::Models::BrandWebScrapeMdParams::IncludeLinks] Preserve hyperlinks in Markdown output
       #
-      # @param include_selectors [Array<String>] CSS selectors. When provided, only matching HTML subtrees (and their descendants
+      # @param include_selectors [Array<String>, nil] CSS selectors. When provided, only matching HTML subtrees (and their descendants
       #
-      # @param max_age_ms [Integer] Return a cached result if a prior scrape for the same parameters exists and is y
+      # @param max_age_ms [Integer, nil] Return a cached result if a prior scrape for the same parameters exists and is y
       #
       # @param pdf [BrandDev::Models::BrandWebScrapeMdParams::Pdf] PDF parsing controls. Use start/end to limit text extraction and embedded-image
       #
-      # @param settle_animations [Boolean] When true, waits briefly for CSS and transition animations to settle before conv
+      # @param settle_animations [Boolean, Symbol, BrandDev::Models::BrandWebScrapeMdParams::SettleAnimations] When true, waits briefly for CSS and transition animations to settle before conv
       #
-      # @param shorten_base64_images [Boolean] Shorten base64-encoded image data in the Markdown output
+      # @param shorten_base64_images [Boolean, Symbol, BrandDev::Models::BrandWebScrapeMdParams::ShortenBase64Images] Shorten base64-encoded image data in the Markdown output
       #
       # @param tags [Array<String>] Optional comma-separated caller-defined tags for tracking this request. Tags are
       #
       # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #
-      # @param use_main_content_only [Boolean] Extract only the main content of the page, excluding headers, footers, sidebars,
+      # @param use_main_content_only [Boolean, Symbol, BrandDev::Models::BrandWebScrapeMdParams::UseMainContentOnly] Extract only the main content of the page, excluding headers, footers, sidebars,
       #
-      # @param wait_for_ms [Integer] Optional browser wait time in milliseconds after initial page load before conver
+      # @param wait_for_ms [Integer, nil] Optional browser wait time in milliseconds after initial page load before conver
       #
       # @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}, nil]
       #
@@ -616,13 +624,15 @@ module BrandDev
       #
       # Crawl an entire website's sitemap and return all discovered page URLs.
       #
-      # @overload web_scrape_sitemap(domain:, headers: nil, max_links: nil, tags: nil, timeout_ms: nil, url_regex: nil, request_options: {})
+      # @overload web_scrape_sitemap(domain:, headers: nil, max_links: nil, sitemap_url: nil, tags: nil, timeout_ms: nil, url_regex: nil, request_options: {})
       #
       # @param domain [String] Domain to build a sitemap for
       #
       # @param headers [Hash{Symbol=>String}] Optional outbound HTTP headers forwarded only to the target URL, sent as deep-ob
       #
       # @param max_links [Integer] Maximum number of links to return from the sitemap crawl. Defaults to 10,000. Mi
+      #
+      # @param sitemap_url [String] Optional explicit sitemap URL. When provided, exactly this sitemap is crawled in
       #
       # @param tags [Array<String>] Optional comma-separated caller-defined tags for tracking this request. Tags are
       #
@@ -641,7 +651,12 @@ module BrandDev
         @client.request(
           method: :get,
           path: "web/scrape/sitemap",
-          query: query.transform_keys(max_links: "maxLinks", timeout_ms: "timeoutMS", url_regex: "urlRegex"),
+          query: query.transform_keys(
+            max_links: "maxLinks",
+            sitemap_url: "sitemapUrl",
+            timeout_ms: "timeoutMS",
+            url_regex: "urlRegex"
+          ),
           model: BrandDev::Models::BrandWebScrapeSitemapResponse,
           options: options
         )

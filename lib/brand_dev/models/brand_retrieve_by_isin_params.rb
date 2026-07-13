@@ -16,10 +16,10 @@ module BrandDev
       required :isin, String
 
       # @!attribute force_language
-      #   Optional parameter to force the language of the retrieved brand data.
+      #   Language to force for the retrieved brand data.
       #
       #   @return [Symbol, BrandDev::Models::BrandRetrieveByIsinParams::ForceLanguage, nil]
-      optional :force_language, enum: -> { BrandDev::BrandRetrieveByIsinParams::ForceLanguage }
+      optional :force_language, enum: -> { BrandDev::BrandRetrieveByIsinParams::ForceLanguage }, nil?: true
 
       # @!attribute max_age_ms
       #   Maximum age in milliseconds for cached brand data before the API performs a hard
@@ -28,15 +28,15 @@ module BrandDev
       #   year.
       #
       #   @return [Integer, nil]
-      optional :max_age_ms, Integer
+      optional :max_age_ms, Integer, nil?: true
 
       # @!attribute max_speed
       #   Optional parameter to optimize the API call for maximum speed. When set to true,
       #   the API will skip time-consuming operations for faster response at the cost of
       #   less comprehensive data.
       #
-      #   @return [Boolean, nil]
-      optional :max_speed, BrandDev::Internal::Type::Boolean
+      #   @return [Boolean, Symbol, BrandDev::Models::BrandRetrieveByIsinParams::MaxSpeed, nil]
+      optional :max_speed, union: -> { BrandDev::BrandRetrieveByIsinParams::MaxSpeed }
 
       # @!attribute tags
       #   Optional comma-separated caller-defined tags for tracking this request. Tags are
@@ -60,11 +60,11 @@ module BrandDev
       #
       #   @param isin [String] ISIN (International Securities Identification Number) to retrieve brand data for
       #
-      #   @param force_language [Symbol, BrandDev::Models::BrandRetrieveByIsinParams::ForceLanguage] Optional parameter to force the language of the retrieved brand data.
+      #   @param force_language [Symbol, BrandDev::Models::BrandRetrieveByIsinParams::ForceLanguage, nil] Language to force for the retrieved brand data.
       #
-      #   @param max_age_ms [Integer] Maximum age in milliseconds for cached brand data before the API performs a hard
+      #   @param max_age_ms [Integer, nil] Maximum age in milliseconds for cached brand data before the API performs a hard
       #
-      #   @param max_speed [Boolean] Optional parameter to optimize the API call for maximum speed. When set to true,
+      #   @param max_speed [Boolean, Symbol, BrandDev::Models::BrandRetrieveByIsinParams::MaxSpeed] Optional parameter to optimize the API call for maximum speed. When set to true,
       #
       #   @param tags [Array<String>] Optional comma-separated caller-defined tags for tracking this request. Tags are
       #
@@ -72,7 +72,7 @@ module BrandDev
       #
       #   @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}]
 
-      # Optional parameter to force the language of the retrieved brand data.
+      # Language to force for the retrieved brand data.
       module ForceLanguage
         extend BrandDev::Internal::Type::Enum
 
@@ -199,6 +199,33 @@ module BrandDev
 
         # @!method self.values
         #   @return [Array<Symbol>]
+      end
+
+      # Optional parameter to optimize the API call for maximum speed. When set to true,
+      # the API will skip time-consuming operations for faster response at the cost of
+      # less comprehensive data.
+      module MaxSpeed
+        extend BrandDev::Internal::Type::Union
+
+        variant BrandDev::Internal::Type::Boolean
+
+        variant const: -> { BrandDev::Models::BrandRetrieveByIsinParams::MaxSpeed::TRUE }
+
+        variant const: -> { BrandDev::Models::BrandRetrieveByIsinParams::MaxSpeed::FALSE }
+
+        # @!method self.variants
+        #   @return [Array(Boolean, Symbol)]
+
+        define_sorbet_constant!(:Variants) do
+          T.type_alias { T.any(T::Boolean, BrandDev::BrandRetrieveByIsinParams::MaxSpeed::TaggedSymbol) }
+        end
+
+        # @!group
+
+        TRUE = :true
+        FALSE = :false
+
+        # @!endgroup
       end
     end
   end

@@ -5,6 +5,7 @@ module BrandDev
         domain: String,
         headers: ::Hash[Symbol, String],
         max_links: Integer,
+        sitemap_url: String,
         tags: ::Array[String],
         timeout_ms: Integer,
         url_regex: String
@@ -25,6 +26,10 @@ module BrandDev
 
       def max_links=: (Integer) -> Integer
 
+      attr_reader sitemap_url: String?
+
+      def sitemap_url=: (String) -> String
+
       attr_reader tags: ::Array[String]?
 
       def tags=: (::Array[String]) -> ::Array[String]
@@ -41,6 +46,7 @@ module BrandDev
         domain: String,
         ?headers: ::Hash[Symbol, String],
         ?max_links: Integer,
+        ?sitemap_url: String,
         ?tags: ::Array[String],
         ?timeout_ms: Integer,
         ?url_regex: String,
@@ -51,6 +57,7 @@ module BrandDev
         domain: String,
         headers: ::Hash[Symbol, String],
         max_links: Integer,
+        sitemap_url: String,
         tags: ::Array[String],
         timeout_ms: Integer,
         url_regex: String,
