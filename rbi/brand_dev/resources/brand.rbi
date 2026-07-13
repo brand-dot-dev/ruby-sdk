@@ -9,10 +9,18 @@ module BrandDev
         params(
           domain: String,
           force_language:
-            BrandDev::BrandRetrieveParams::ForceLanguage::OrSymbol,
-          max_age_ms: Integer,
-          max_speed: T::Boolean,
+            T.nilable(BrandDev::BrandRetrieveParams::ForceLanguage::OrSymbol),
+          max_age_ms: T.nilable(Integer),
+          max_speed:
+            T.any(
+              T::Boolean,
+              BrandDev::BrandRetrieveParams::MaxSpeed::OrSymbol
+            ),
+          name: String,
           tags: T::Array[String],
+          ticker: String,
+          ticker_exchange:
+            BrandDev::BrandRetrieveParams::TickerExchange::OrSymbol,
           timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(BrandDev::Models::BrandRetrieveResponse)
@@ -20,8 +28,8 @@ module BrandDev
       def retrieve(
         # Domain name to retrieve brand data for (e.g., 'example.com', 'google.com').
         # Cannot be used with name or ticker parameters.
-        domain:,
-        # Optional parameter to force the language of the retrieved brand data.
+        domain: nil,
+        # Language to force for the retrieved brand data.
         force_language: nil,
         # Maximum age in milliseconds for cached brand data before the API performs a hard
         # refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
@@ -32,10 +40,18 @@ module BrandDev
         # the API will skip time-consuming operations for faster response at the cost of
         # less comprehensive data. Works with all three lookup methods.
         max_speed: nil,
+        # Company name to retrieve brand data for (e.g., 'Apple Inc'). Cannot be used with
+        # domain or ticker parameters.
+        name: nil,
         # Optional comma-separated caller-defined tags for tracking this request. Tags are
         # recorded on the request's usage log and can be used to filter usage on the
         # dashboard usage page. Up to 20 tags, each 1-50 characters.
         tags: nil,
+        # Stock ticker symbol to retrieve brand data for (e.g., 'AAPL'). Cannot be used
+        # with domain or name parameters.
+        ticker: nil,
+        # Stock exchange code.
+        ticker_exchange: nil,
         # Optional timeout in milliseconds for the request. If the request takes longer
         # than this value, it will be aborted with a 408 status code. Maximum allowed
         # value is 300000ms (5 minutes).
@@ -132,11 +148,21 @@ module BrandDev
           country_gl:
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::OrSymbol,
           force_language:
-            BrandDev::BrandIdentifyFromTransactionParams::ForceLanguage::OrSymbol,
-          high_confidence_only: T::Boolean,
-          max_speed: T::Boolean,
-          mcc: String,
-          phone: Float,
+            T.nilable(
+              BrandDev::BrandIdentifyFromTransactionParams::ForceLanguage::OrSymbol
+            ),
+          high_confidence_only:
+            T.any(
+              T::Boolean,
+              BrandDev::BrandIdentifyFromTransactionParams::HighConfidenceOnly::OrSymbol
+            ),
+          max_speed:
+            T.any(
+              T::Boolean,
+              BrandDev::BrandIdentifyFromTransactionParams::MaxSpeed::OrSymbol
+            ),
+          mcc: BrandDev::BrandIdentifyFromTransactionParams::Mcc::Variants,
+          phone: BrandDev::BrandIdentifyFromTransactionParams::Phone::Variants,
           tags: T::Array[String],
           timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
@@ -147,10 +173,10 @@ module BrandDev
         transaction_info:,
         # Optional city name to prioritize when searching for the brand.
         city: nil,
-        # Optional country code (GL parameter) to specify the country. This affects the
-        # geographic location used for search queries.
+        # Two-letter ISO 3166-1 alpha-2 country code (GL parameter) used to localize
+        # search.
         country_gl: nil,
-        # Optional parameter to force the language of the retrieved brand data.
+        # Language to force for the retrieved brand data.
         force_language: nil,
         # When set to true, the API will perform an additional verification steps to
         # ensure the identified brand matches the transaction with high confidence.
@@ -237,9 +263,15 @@ module BrandDev
         params(
           email: String,
           force_language:
-            BrandDev::BrandRetrieveByEmailParams::ForceLanguage::OrSymbol,
-          max_age_ms: Integer,
-          max_speed: T::Boolean,
+            T.nilable(
+              BrandDev::BrandRetrieveByEmailParams::ForceLanguage::OrSymbol
+            ),
+          max_age_ms: T.nilable(Integer),
+          max_speed:
+            T.any(
+              T::Boolean,
+              BrandDev::BrandRetrieveByEmailParams::MaxSpeed::OrSymbol
+            ),
           tags: T::Array[String],
           timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
@@ -250,7 +282,7 @@ module BrandDev
         # domain will be extracted from the email. Free email providers (gmail.com,
         # yahoo.com, etc.) and disposable email addresses are not allowed.
         email:,
-        # Optional parameter to force the language of the retrieved brand data.
+        # Language to force for the retrieved brand data.
         force_language: nil,
         # Maximum age in milliseconds for cached brand data before the API performs a hard
         # refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
@@ -279,9 +311,15 @@ module BrandDev
         params(
           isin: String,
           force_language:
-            BrandDev::BrandRetrieveByIsinParams::ForceLanguage::OrSymbol,
-          max_age_ms: Integer,
-          max_speed: T::Boolean,
+            T.nilable(
+              BrandDev::BrandRetrieveByIsinParams::ForceLanguage::OrSymbol
+            ),
+          max_age_ms: T.nilable(Integer),
+          max_speed:
+            T.any(
+              T::Boolean,
+              BrandDev::BrandRetrieveByIsinParams::MaxSpeed::OrSymbol
+            ),
           tags: T::Array[String],
           timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
@@ -292,7 +330,7 @@ module BrandDev
         # (e.g., 'AU000000IMD5', 'US0378331005'). Must be exactly 12 characters: 2 letters
         # followed by 9 alphanumeric characters and ending with a digit.
         isin:,
-        # Optional parameter to force the language of the retrieved brand data.
+        # Language to force for the retrieved brand data.
         force_language: nil,
         # Maximum age in milliseconds for cached brand data before the API performs a hard
         # refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
@@ -321,9 +359,15 @@ module BrandDev
           name: String,
           country_gl: BrandDev::BrandRetrieveByNameParams::CountryGl::OrSymbol,
           force_language:
-            BrandDev::BrandRetrieveByNameParams::ForceLanguage::OrSymbol,
-          max_age_ms: Integer,
-          max_speed: T::Boolean,
+            T.nilable(
+              BrandDev::BrandRetrieveByNameParams::ForceLanguage::OrSymbol
+            ),
+          max_age_ms: T.nilable(Integer),
+          max_speed:
+            T.any(
+              T::Boolean,
+              BrandDev::BrandRetrieveByNameParams::MaxSpeed::OrSymbol
+            ),
           tags: T::Array[String],
           timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
@@ -333,10 +377,10 @@ module BrandDev
         # Company name to retrieve brand data for (e.g., 'Apple Inc', 'Microsoft
         # Corporation'). Must be 3-30 characters.
         name:,
-        # Optional country code hint (GL parameter) to specify the country for the company
-        # name.
+        # Two-letter ISO 3166-1 alpha-2 country code (GL parameter) used to localize
+        # search.
         country_gl: nil,
-        # Optional parameter to force the language of the retrieved brand data.
+        # Language to force for the retrieved brand data.
         force_language: nil,
         # Maximum age in milliseconds for cached brand data before the API performs a hard
         # refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
@@ -364,9 +408,15 @@ module BrandDev
         params(
           ticker: String,
           force_language:
-            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::OrSymbol,
-          max_age_ms: Integer,
-          max_speed: T::Boolean,
+            T.nilable(
+              BrandDev::BrandRetrieveByTickerParams::ForceLanguage::OrSymbol
+            ),
+          max_age_ms: T.nilable(Integer),
+          max_speed:
+            T.any(
+              T::Boolean,
+              BrandDev::BrandRetrieveByTickerParams::MaxSpeed::OrSymbol
+            ),
           tags: T::Array[String],
           ticker_exchange:
             BrandDev::BrandRetrieveByTickerParams::TickerExchange::OrSymbol,
@@ -378,7 +428,7 @@ module BrandDev
         # Stock ticker symbol to retrieve brand data for (e.g., 'AAPL', 'GOOGL', 'BRK.A').
         # Must be 1-15 characters, letters/numbers/dots only.
         ticker:,
-        # Optional parameter to force the language of the retrieved brand data.
+        # Language to force for the retrieved brand data.
         force_language: nil,
         # Maximum age in milliseconds for cached brand data before the API performs a hard
         # refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
@@ -393,7 +443,7 @@ module BrandDev
         # recorded on the request's usage log and can be used to filter usage on the
         # dashboard usage page. Up to 20 tags, each 1-50 characters.
         tags: nil,
-        # Optional stock exchange for the ticker. Defaults to NASDAQ if not specified.
+        # Stock exchange code.
         ticker_exchange: nil,
         # Optional timeout in milliseconds for the request. If the request takes longer
         # than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -409,8 +459,9 @@ module BrandDev
       sig do
         params(
           domain: String,
-          max_age_ms: Integer,
+          max_age_ms: T.nilable(Integer),
           tags: T::Array[String],
+          theme: BrandDev::BrandRetrieveSimplifiedParams::Theme::OrSymbol,
           timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(BrandDev::Models::BrandRetrieveSimplifiedResponse)
@@ -427,6 +478,8 @@ module BrandDev
         # recorded on the request's usage log and can be used to filter usage on the
         # dashboard usage page. Up to 20 tags, each 1-50 characters.
         tags: nil,
+        # Optional theme preference used when selecting brand assets.
+        theme: nil,
         # Optional timeout in milliseconds for the request. If the request takes longer
         # than this value, it will be aborted with a 408 status code. Maximum allowed
         # value is 300000ms (5 minutes).
@@ -440,25 +493,38 @@ module BrandDev
         params(
           url: String,
           country: BrandDev::BrandWebScrapeHTMLParams::Country::OrSymbol,
-          exclude_selectors: T::Array[String],
+          exclude_selectors: T.nilable(T::Array[String]),
           headers: T::Hash[Symbol, String],
-          include_frames: T::Boolean,
-          include_selectors: T::Array[String],
-          max_age_ms: Integer,
+          include_frames:
+            T.any(
+              T::Boolean,
+              BrandDev::BrandWebScrapeHTMLParams::IncludeFrames::OrSymbol
+            ),
+          include_selectors: T.nilable(T::Array[String]),
+          max_age_ms: T.nilable(Integer),
           pdf: BrandDev::BrandWebScrapeHTMLParams::Pdf::OrHash,
-          settle_animations: T::Boolean,
+          settle_animations:
+            T.any(
+              T::Boolean,
+              BrandDev::BrandWebScrapeHTMLParams::SettleAnimations::OrSymbol
+            ),
           tags: T::Array[String],
           timeout_ms: Integer,
-          use_main_content_only: T::Boolean,
-          wait_for_ms: Integer,
+          use_main_content_only:
+            T.any(
+              T::Boolean,
+              BrandDev::BrandWebScrapeHTMLParams::UseMainContentOnly::OrSymbol
+            ),
+          wait_for_ms: T.nilable(Integer),
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(BrandDev::Models::BrandWebScrapeHTMLResponse)
       end
       def web_scrape_html(
         # Full URL to scrape (must include http:// or https:// protocol)
         url:,
-        # Two-letter ISO 3166-1 alpha-2 country code for the website request location.
-        # When provided, Context.dev fetches the target page from that country.
+        # Two-letter ISO 3166-1 alpha-2 country code identifying a supported Context.dev
+        # residential proxy exit location. Must be one of Context.dev's supported
+        # countries. When provided, Context.dev fetches the target page from that country.
         country: nil,
         # CSS selectors to remove from the result. Applied after includeSelectors.
         # Exclusion takes precedence: an element matching both is removed. Examples:
@@ -510,13 +576,18 @@ module BrandDev
       sig do
         params(
           url: String,
-          dedupe: T::Boolean,
-          enrichment: BrandDev::BrandWebScrapeImagesParams::Enrichment::OrHash,
+          dedupe:
+            T.any(
+              T::Boolean,
+              BrandDev::BrandWebScrapeImagesParams::Dedupe::OrSymbol
+            ),
+          enrichment:
+            T.nilable(BrandDev::BrandWebScrapeImagesParams::Enrichment::OrHash),
           headers: T::Hash[Symbol, String],
-          max_age_ms: Integer,
+          max_age_ms: T.nilable(Integer),
           tags: T::Array[String],
           timeout_ms: Integer,
-          wait_for_ms: Integer,
+          wait_for_ms: T.nilable(Integer),
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(BrandDev::Models::BrandWebScrapeImagesResponse)
       end
@@ -573,20 +644,44 @@ module BrandDev
         params(
           url: String,
           country: BrandDev::BrandWebScrapeMdParams::Country::OrSymbol,
-          exclude_selectors: T::Array[String],
+          exclude_selectors: T.nilable(T::Array[String]),
           headers: T::Hash[Symbol, String],
-          include_frames: T::Boolean,
-          include_images: T::Boolean,
-          include_links: T::Boolean,
-          include_selectors: T::Array[String],
-          max_age_ms: Integer,
+          include_frames:
+            T.any(
+              T::Boolean,
+              BrandDev::BrandWebScrapeMdParams::IncludeFrames::OrSymbol
+            ),
+          include_images:
+            T.any(
+              T::Boolean,
+              BrandDev::BrandWebScrapeMdParams::IncludeImages::OrSymbol
+            ),
+          include_links:
+            T.any(
+              T::Boolean,
+              BrandDev::BrandWebScrapeMdParams::IncludeLinks::OrSymbol
+            ),
+          include_selectors: T.nilable(T::Array[String]),
+          max_age_ms: T.nilable(Integer),
           pdf: BrandDev::BrandWebScrapeMdParams::Pdf::OrHash,
-          settle_animations: T::Boolean,
-          shorten_base64_images: T::Boolean,
+          settle_animations:
+            T.any(
+              T::Boolean,
+              BrandDev::BrandWebScrapeMdParams::SettleAnimations::OrSymbol
+            ),
+          shorten_base64_images:
+            T.any(
+              T::Boolean,
+              BrandDev::BrandWebScrapeMdParams::ShortenBase64Images::OrSymbol
+            ),
           tags: T::Array[String],
           timeout_ms: Integer,
-          use_main_content_only: T::Boolean,
-          wait_for_ms: Integer,
+          use_main_content_only:
+            T.any(
+              T::Boolean,
+              BrandDev::BrandWebScrapeMdParams::UseMainContentOnly::OrSymbol
+            ),
+          wait_for_ms: T.nilable(Integer),
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(BrandDev::Models::BrandWebScrapeMdResponse)
       end
@@ -594,8 +689,9 @@ module BrandDev
         # Full URL to scrape into LLM usable Markdown (must include http:// or https://
         # protocol)
         url:,
-        # Two-letter ISO 3166-1 alpha-2 country code for the website request location.
-        # When provided, Context.dev fetches the target page from that country.
+        # Two-letter ISO 3166-1 alpha-2 country code identifying a supported Context.dev
+        # residential proxy exit location. Must be one of Context.dev's supported
+        # countries. When provided, Context.dev fetches the target page from that country.
         country: nil,
         # CSS selectors to remove before conversion to Markdown. Applied after
         # includeSelectors. Exclusion takes precedence: an element matching both is
@@ -652,6 +748,7 @@ module BrandDev
           domain: String,
           headers: T::Hash[Symbol, String],
           max_links: Integer,
+          sitemap_url: String,
           tags: T::Array[String],
           timeout_ms: Integer,
           url_regex: String,
@@ -668,6 +765,9 @@ module BrandDev
         # Maximum number of links to return from the sitemap crawl. Defaults to 10,000.
         # Minimum is 1, maximum is 100,000.
         max_links: nil,
+        # Optional explicit sitemap URL. When provided, exactly this sitemap is crawled
+        # instead of discovering the domain's sitemaps.
+        sitemap_url: nil,
         # Optional comma-separated caller-defined tags for tracking this request. Tags are
         # recorded on the request's usage log and can be used to filter usage on the
         # dashboard usage page. Up to 20 tags, each 1-50 characters.

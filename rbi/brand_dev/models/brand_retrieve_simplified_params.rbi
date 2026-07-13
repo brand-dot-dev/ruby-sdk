@@ -23,10 +23,7 @@ module BrandDev
       # are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
       # year.
       sig { returns(T.nilable(Integer)) }
-      attr_reader :max_age_ms
-
-      sig { params(max_age_ms: Integer).void }
-      attr_writer :max_age_ms
+      attr_accessor :max_age_ms
 
       # Optional comma-separated caller-defined tags for tracking this request. Tags are
       # recorded on the request's usage log and can be used to filter usage on the
@@ -36,6 +33,21 @@ module BrandDev
 
       sig { params(tags: T::Array[String]).void }
       attr_writer :tags
+
+      # Optional theme preference used when selecting brand assets.
+      sig do
+        returns(
+          T.nilable(BrandDev::BrandRetrieveSimplifiedParams::Theme::OrSymbol)
+        )
+      end
+      attr_reader :theme
+
+      sig do
+        params(
+          theme: BrandDev::BrandRetrieveSimplifiedParams::Theme::OrSymbol
+        ).void
+      end
+      attr_writer :theme
 
       # Optional timeout in milliseconds for the request. If the request takes longer
       # than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -49,8 +61,9 @@ module BrandDev
       sig do
         params(
           domain: String,
-          max_age_ms: Integer,
+          max_age_ms: T.nilable(Integer),
           tags: T::Array[String],
+          theme: BrandDev::BrandRetrieveSimplifiedParams::Theme::OrSymbol,
           timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(T.attached_class)
@@ -67,6 +80,8 @@ module BrandDev
         # recorded on the request's usage log and can be used to filter usage on the
         # dashboard usage page. Up to 20 tags, each 1-50 characters.
         tags: nil,
+        # Optional theme preference used when selecting brand assets.
+        theme: nil,
         # Optional timeout in milliseconds for the request. If the request takes longer
         # than this value, it will be aborted with a 408 status code. Maximum allowed
         # value is 300000ms (5 minutes).
@@ -79,14 +94,47 @@ module BrandDev
         override.returns(
           {
             domain: String,
-            max_age_ms: Integer,
+            max_age_ms: T.nilable(Integer),
             tags: T::Array[String],
+            theme: BrandDev::BrandRetrieveSimplifiedParams::Theme::OrSymbol,
             timeout_ms: Integer,
             request_options: BrandDev::RequestOptions
           }
         )
       end
       def to_hash
+      end
+
+      # Optional theme preference used when selecting brand assets.
+      module Theme
+        extend BrandDev::Internal::Type::Enum
+
+        TaggedSymbol =
+          T.type_alias do
+            T.all(Symbol, BrandDev::BrandRetrieveSimplifiedParams::Theme)
+          end
+        OrSymbol = T.type_alias { T.any(Symbol, String) }
+
+        LIGHT =
+          T.let(
+            :light,
+            BrandDev::BrandRetrieveSimplifiedParams::Theme::TaggedSymbol
+          )
+        DARK =
+          T.let(
+            :dark,
+            BrandDev::BrandRetrieveSimplifiedParams::Theme::TaggedSymbol
+          )
+
+        sig do
+          override.returns(
+            T::Array[
+              BrandDev::BrandRetrieveSimplifiedParams::Theme::TaggedSymbol
+            ]
+          )
+        end
+        def self.values
+        end
       end
     end
   end

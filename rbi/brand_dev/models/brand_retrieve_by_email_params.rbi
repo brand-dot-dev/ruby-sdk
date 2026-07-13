@@ -20,7 +20,7 @@ module BrandDev
       sig { returns(String) }
       attr_accessor :email
 
-      # Optional parameter to force the language of the retrieved brand data.
+      # Language to force for the retrieved brand data.
       sig do
         returns(
           T.nilable(
@@ -28,33 +28,39 @@ module BrandDev
           )
         )
       end
-      attr_reader :force_language
-
-      sig do
-        params(
-          force_language:
-            BrandDev::BrandRetrieveByEmailParams::ForceLanguage::OrSymbol
-        ).void
-      end
-      attr_writer :force_language
+      attr_accessor :force_language
 
       # Maximum age in milliseconds for cached brand data before the API performs a hard
       # refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
       # are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
       # year.
       sig { returns(T.nilable(Integer)) }
-      attr_reader :max_age_ms
-
-      sig { params(max_age_ms: Integer).void }
-      attr_writer :max_age_ms
+      attr_accessor :max_age_ms
 
       # Optional parameter to optimize the API call for maximum speed. When set to true,
       # the API will skip time-consuming operations for faster response at the cost of
       # less comprehensive data.
-      sig { returns(T.nilable(T::Boolean)) }
+      sig do
+        returns(
+          T.nilable(
+            T.any(
+              T::Boolean,
+              BrandDev::BrandRetrieveByEmailParams::MaxSpeed::OrSymbol
+            )
+          )
+        )
+      end
       attr_reader :max_speed
 
-      sig { params(max_speed: T::Boolean).void }
+      sig do
+        params(
+          max_speed:
+            T.any(
+              T::Boolean,
+              BrandDev::BrandRetrieveByEmailParams::MaxSpeed::OrSymbol
+            )
+        ).void
+      end
       attr_writer :max_speed
 
       # Optional comma-separated caller-defined tags for tracking this request. Tags are
@@ -79,9 +85,15 @@ module BrandDev
         params(
           email: String,
           force_language:
-            BrandDev::BrandRetrieveByEmailParams::ForceLanguage::OrSymbol,
-          max_age_ms: Integer,
-          max_speed: T::Boolean,
+            T.nilable(
+              BrandDev::BrandRetrieveByEmailParams::ForceLanguage::OrSymbol
+            ),
+          max_age_ms: T.nilable(Integer),
+          max_speed:
+            T.any(
+              T::Boolean,
+              BrandDev::BrandRetrieveByEmailParams::MaxSpeed::OrSymbol
+            ),
           tags: T::Array[String],
           timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
@@ -92,7 +104,7 @@ module BrandDev
         # domain will be extracted from the email. Free email providers (gmail.com,
         # yahoo.com, etc.) and disposable email addresses are not allowed.
         email:,
-        # Optional parameter to force the language of the retrieved brand data.
+        # Language to force for the retrieved brand data.
         force_language: nil,
         # Maximum age in milliseconds for cached brand data before the API performs a hard
         # refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
@@ -120,9 +132,15 @@ module BrandDev
           {
             email: String,
             force_language:
-              BrandDev::BrandRetrieveByEmailParams::ForceLanguage::OrSymbol,
-            max_age_ms: Integer,
-            max_speed: T::Boolean,
+              T.nilable(
+                BrandDev::BrandRetrieveByEmailParams::ForceLanguage::OrSymbol
+              ),
+            max_age_ms: T.nilable(Integer),
+            max_speed:
+              T.any(
+                T::Boolean,
+                BrandDev::BrandRetrieveByEmailParams::MaxSpeed::OrSymbol
+              ),
             tags: T::Array[String],
             timeout_ms: Integer,
             request_options: BrandDev::RequestOptions
@@ -132,7 +150,7 @@ module BrandDev
       def to_hash
       end
 
-      # Optional parameter to force the language of the retrieved brand data.
+      # Language to force for the retrieved brand data.
       module ForceLanguage
         extend BrandDev::Internal::Type::Enum
 
@@ -752,6 +770,46 @@ module BrandDev
         end
         def self.values
         end
+      end
+
+      # Optional parameter to optimize the API call for maximum speed. When set to true,
+      # the API will skip time-consuming operations for faster response at the cost of
+      # less comprehensive data.
+      module MaxSpeed
+        extend BrandDev::Internal::Type::Union
+
+        Variants =
+          T.type_alias do
+            T.any(
+              T::Boolean,
+              BrandDev::BrandRetrieveByEmailParams::MaxSpeed::TaggedSymbol
+            )
+          end
+
+        sig do
+          override.returns(
+            T::Array[BrandDev::BrandRetrieveByEmailParams::MaxSpeed::Variants]
+          )
+        end
+        def self.variants
+        end
+
+        TaggedSymbol =
+          T.type_alias do
+            T.all(Symbol, BrandDev::BrandRetrieveByEmailParams::MaxSpeed)
+          end
+        OrSymbol = T.type_alias { T.any(Symbol, String) }
+
+        TRUE =
+          T.let(
+            :true,
+            BrandDev::BrandRetrieveByEmailParams::MaxSpeed::TaggedSymbol
+          )
+        FALSE =
+          T.let(
+            :false,
+            BrandDev::BrandRetrieveByEmailParams::MaxSpeed::TaggedSymbol
+          )
       end
     end
   end

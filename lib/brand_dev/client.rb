@@ -21,9 +21,6 @@ module BrandDev
     # @return [BrandDev::Resources::Brand]
     attr_reader :brand
 
-    # @return [BrandDev::Resources::Monitors]
-    attr_reader :monitors
-
     # @api private
     #
     # @return [Hash{String=>String}]
@@ -86,7 +83,6 @@ module BrandDev
       )
 
       @brand = BrandDev::Resources::Brand.new(client: self)
-      @monitors = BrandDev::Resources::Monitors.new(client: self)
     end
   end
 end

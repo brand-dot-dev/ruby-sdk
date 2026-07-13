@@ -3,8 +3,9 @@ module BrandDev
     type brand_retrieve_simplified_params =
       {
         domain: String,
-        max_age_ms: Integer,
+        max_age_ms: Integer?,
         tags: ::Array[String],
+        theme: BrandDev::Models::BrandRetrieveSimplifiedParams::theme,
         timeout_ms: Integer
       }
       & BrandDev::Internal::Type::request_parameters
@@ -15,13 +16,17 @@ module BrandDev
 
       attr_accessor domain: String
 
-      attr_reader max_age_ms: Integer?
-
-      def max_age_ms=: (Integer) -> Integer
+      attr_accessor max_age_ms: Integer?
 
       attr_reader tags: ::Array[String]?
 
       def tags=: (::Array[String]) -> ::Array[String]
+
+      attr_reader theme: BrandDev::Models::BrandRetrieveSimplifiedParams::theme?
+
+      def theme=: (
+        BrandDev::Models::BrandRetrieveSimplifiedParams::theme
+      ) -> BrandDev::Models::BrandRetrieveSimplifiedParams::theme
 
       attr_reader timeout_ms: Integer?
 
@@ -29,19 +34,32 @@ module BrandDev
 
       def initialize: (
         domain: String,
-        ?max_age_ms: Integer,
+        ?max_age_ms: Integer?,
         ?tags: ::Array[String],
+        ?theme: BrandDev::Models::BrandRetrieveSimplifiedParams::theme,
         ?timeout_ms: Integer,
         ?request_options: BrandDev::request_opts
       ) -> void
 
       def to_hash: -> {
         domain: String,
-        max_age_ms: Integer,
+        max_age_ms: Integer?,
         tags: ::Array[String],
+        theme: BrandDev::Models::BrandRetrieveSimplifiedParams::theme,
         timeout_ms: Integer,
         request_options: BrandDev::RequestOptions
       }
+
+      type theme = :light | :dark
+
+      module Theme
+        extend BrandDev::Internal::Type::Enum
+
+        LIGHT: :light
+        DARK: :dark
+
+        def self?.values: -> ::Array[BrandDev::Models::BrandRetrieveSimplifiedParams::theme]
+      end
     end
   end
 end

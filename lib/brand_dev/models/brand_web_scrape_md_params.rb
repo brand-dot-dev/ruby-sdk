@@ -15,8 +15,9 @@ module BrandDev
       required :url, String
 
       # @!attribute country
-      #   Two-letter ISO 3166-1 alpha-2 country code for the website request location.
-      #   When provided, Context.dev fetches the target page from that country.
+      #   Two-letter ISO 3166-1 alpha-2 country code identifying a supported Context.dev
+      #   residential proxy exit location. Must be one of Context.dev's supported
+      #   countries. When provided, Context.dev fetches the target page from that country.
       #
       #   @return [Symbol, BrandDev::Models::BrandWebScrapeMdParams::Country, nil]
       optional :country, enum: -> { BrandDev::BrandWebScrapeMdParams::Country }
@@ -27,7 +28,7 @@ module BrandDev
       #   removed. Examples: "nav", "footer", ".ad-banner", "[aria-hidden=true]".
       #
       #   @return [Array<String>, nil]
-      optional :exclude_selectors, BrandDev::Internal::Type::ArrayOf[String]
+      optional :exclude_selectors, BrandDev::Internal::Type::ArrayOf[String], nil?: true
 
       # @!attribute headers
       #   Optional outbound HTTP headers forwarded only to the target URL, sent as
@@ -40,20 +41,20 @@ module BrandDev
       # @!attribute include_frames
       #   When true, the contents of iframes are rendered to Markdown.
       #
-      #   @return [Boolean, nil]
-      optional :include_frames, BrandDev::Internal::Type::Boolean
+      #   @return [Boolean, Symbol, BrandDev::Models::BrandWebScrapeMdParams::IncludeFrames, nil]
+      optional :include_frames, union: -> { BrandDev::BrandWebScrapeMdParams::IncludeFrames }
 
       # @!attribute include_images
       #   Include image references in Markdown output
       #
-      #   @return [Boolean, nil]
-      optional :include_images, BrandDev::Internal::Type::Boolean
+      #   @return [Boolean, Symbol, BrandDev::Models::BrandWebScrapeMdParams::IncludeImages, nil]
+      optional :include_images, union: -> { BrandDev::BrandWebScrapeMdParams::IncludeImages }
 
       # @!attribute include_links
       #   Preserve hyperlinks in Markdown output
       #
-      #   @return [Boolean, nil]
-      optional :include_links, BrandDev::Internal::Type::Boolean
+      #   @return [Boolean, Symbol, BrandDev::Models::BrandWebScrapeMdParams::IncludeLinks, nil]
+      optional :include_links, union: -> { BrandDev::BrandWebScrapeMdParams::IncludeLinks }
 
       # @!attribute include_selectors
       #   CSS selectors. When provided, only matching HTML subtrees (and their
@@ -61,7 +62,7 @@ module BrandDev
       #   document is kept. Examples: "article.main", "#content", "[role=main]".
       #
       #   @return [Array<String>, nil]
-      optional :include_selectors, BrandDev::Internal::Type::ArrayOf[String]
+      optional :include_selectors, BrandDev::Internal::Type::ArrayOf[String], nil?: true
 
       # @!attribute max_age_ms
       #   Return a cached result if a prior scrape for the same parameters exists and is
@@ -69,7 +70,7 @@ module BrandDev
       #   omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
       #
       #   @return [Integer, nil]
-      optional :max_age_ms, Integer
+      optional :max_age_ms, Integer, nil?: true
 
       # @!attribute pdf
       #   PDF parsing controls. Use start/end to limit text extraction and embedded-image
@@ -83,14 +84,14 @@ module BrandDev
       #   converting to Markdown. Defaults to false. This adds a bit of latency in
       #   exchange for more stable output on animated pages.
       #
-      #   @return [Boolean, nil]
-      optional :settle_animations, BrandDev::Internal::Type::Boolean
+      #   @return [Boolean, Symbol, BrandDev::Models::BrandWebScrapeMdParams::SettleAnimations, nil]
+      optional :settle_animations, union: -> { BrandDev::BrandWebScrapeMdParams::SettleAnimations }
 
       # @!attribute shorten_base64_images
       #   Shorten base64-encoded image data in the Markdown output
       #
-      #   @return [Boolean, nil]
-      optional :shorten_base64_images, BrandDev::Internal::Type::Boolean
+      #   @return [Boolean, Symbol, BrandDev::Models::BrandWebScrapeMdParams::ShortenBase64Images, nil]
+      optional :shorten_base64_images, union: -> { BrandDev::BrandWebScrapeMdParams::ShortenBase64Images }
 
       # @!attribute tags
       #   Optional comma-separated caller-defined tags for tracking this request. Tags are
@@ -112,15 +113,15 @@ module BrandDev
       #   Extract only the main content of the page, excluding headers, footers, sidebars,
       #   and navigation
       #
-      #   @return [Boolean, nil]
-      optional :use_main_content_only, BrandDev::Internal::Type::Boolean
+      #   @return [Boolean, Symbol, BrandDev::Models::BrandWebScrapeMdParams::UseMainContentOnly, nil]
+      optional :use_main_content_only, union: -> { BrandDev::BrandWebScrapeMdParams::UseMainContentOnly }
 
       # @!attribute wait_for_ms
       #   Optional browser wait time in milliseconds after initial page load before
       #   converting the page to Markdown. Min: 0. Max: 30000 (30 seconds).
       #
       #   @return [Integer, nil]
-      optional :wait_for_ms, Integer
+      optional :wait_for_ms, Integer, nil?: true
 
       # @!method initialize(url:, country: nil, exclude_selectors: nil, headers: nil, include_frames: nil, include_images: nil, include_links: nil, include_selectors: nil, max_age_ms: nil, pdf: nil, settle_animations: nil, shorten_base64_images: nil, tags: nil, timeout_ms: nil, use_main_content_only: nil, wait_for_ms: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
@@ -128,40 +129,41 @@ module BrandDev
       #
       #   @param url [String] Full URL to scrape into LLM usable Markdown (must include http:// or https:// pr
       #
-      #   @param country [Symbol, BrandDev::Models::BrandWebScrapeMdParams::Country] Two-letter ISO 3166-1 alpha-2 country code for the website request location. Whe
+      #   @param country [Symbol, BrandDev::Models::BrandWebScrapeMdParams::Country] Two-letter ISO 3166-1 alpha-2 country code identifying a supported Context.dev r
       #
-      #   @param exclude_selectors [Array<String>] CSS selectors to remove before conversion to Markdown. Applied after includeSele
+      #   @param exclude_selectors [Array<String>, nil] CSS selectors to remove before conversion to Markdown. Applied after includeSele
       #
       #   @param headers [Hash{Symbol=>String}] Optional outbound HTTP headers forwarded only to the target URL, sent as deep-ob
       #
-      #   @param include_frames [Boolean] When true, the contents of iframes are rendered to Markdown.
+      #   @param include_frames [Boolean, Symbol, BrandDev::Models::BrandWebScrapeMdParams::IncludeFrames] When true, the contents of iframes are rendered to Markdown.
       #
-      #   @param include_images [Boolean] Include image references in Markdown output
+      #   @param include_images [Boolean, Symbol, BrandDev::Models::BrandWebScrapeMdParams::IncludeImages] Include image references in Markdown output
       #
-      #   @param include_links [Boolean] Preserve hyperlinks in Markdown output
+      #   @param include_links [Boolean, Symbol, BrandDev::Models::BrandWebScrapeMdParams::IncludeLinks] Preserve hyperlinks in Markdown output
       #
-      #   @param include_selectors [Array<String>] CSS selectors. When provided, only matching HTML subtrees (and their descendants
+      #   @param include_selectors [Array<String>, nil] CSS selectors. When provided, only matching HTML subtrees (and their descendants
       #
-      #   @param max_age_ms [Integer] Return a cached result if a prior scrape for the same parameters exists and is y
+      #   @param max_age_ms [Integer, nil] Return a cached result if a prior scrape for the same parameters exists and is y
       #
       #   @param pdf [BrandDev::Models::BrandWebScrapeMdParams::Pdf] PDF parsing controls. Use start/end to limit text extraction and embedded-image
       #
-      #   @param settle_animations [Boolean] When true, waits briefly for CSS and transition animations to settle before conv
+      #   @param settle_animations [Boolean, Symbol, BrandDev::Models::BrandWebScrapeMdParams::SettleAnimations] When true, waits briefly for CSS and transition animations to settle before conv
       #
-      #   @param shorten_base64_images [Boolean] Shorten base64-encoded image data in the Markdown output
+      #   @param shorten_base64_images [Boolean, Symbol, BrandDev::Models::BrandWebScrapeMdParams::ShortenBase64Images] Shorten base64-encoded image data in the Markdown output
       #
       #   @param tags [Array<String>] Optional comma-separated caller-defined tags for tracking this request. Tags are
       #
       #   @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #
-      #   @param use_main_content_only [Boolean] Extract only the main content of the page, excluding headers, footers, sidebars,
+      #   @param use_main_content_only [Boolean, Symbol, BrandDev::Models::BrandWebScrapeMdParams::UseMainContentOnly] Extract only the main content of the page, excluding headers, footers, sidebars,
       #
-      #   @param wait_for_ms [Integer] Optional browser wait time in milliseconds after initial page load before conver
+      #   @param wait_for_ms [Integer, nil] Optional browser wait time in milliseconds after initial page load before conver
       #
       #   @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}]
 
-      # Two-letter ISO 3166-1 alpha-2 country code for the website request location.
-      # When provided, Context.dev fetches the target page from that country.
+      # Two-letter ISO 3166-1 alpha-2 country code identifying a supported Context.dev
+      # residential proxy exit location. Must be one of Context.dev's supported
+      # countries. When provided, Context.dev fetches the target page from that country.
       module Country
         extend BrandDev::Internal::Type::Enum
 
@@ -374,6 +376,81 @@ module BrandDev
         #   @return [Array<Symbol>]
       end
 
+      # When true, the contents of iframes are rendered to Markdown.
+      module IncludeFrames
+        extend BrandDev::Internal::Type::Union
+
+        variant BrandDev::Internal::Type::Boolean
+
+        variant const: -> { BrandDev::Models::BrandWebScrapeMdParams::IncludeFrames::TRUE }
+
+        variant const: -> { BrandDev::Models::BrandWebScrapeMdParams::IncludeFrames::FALSE }
+
+        # @!method self.variants
+        #   @return [Array(Boolean, Symbol)]
+
+        define_sorbet_constant!(:Variants) do
+          T.type_alias { T.any(T::Boolean, BrandDev::BrandWebScrapeMdParams::IncludeFrames::TaggedSymbol) }
+        end
+
+        # @!group
+
+        TRUE = :true
+        FALSE = :false
+
+        # @!endgroup
+      end
+
+      # Include image references in Markdown output
+      module IncludeImages
+        extend BrandDev::Internal::Type::Union
+
+        variant BrandDev::Internal::Type::Boolean
+
+        variant const: -> { BrandDev::Models::BrandWebScrapeMdParams::IncludeImages::TRUE }
+
+        variant const: -> { BrandDev::Models::BrandWebScrapeMdParams::IncludeImages::FALSE }
+
+        # @!method self.variants
+        #   @return [Array(Boolean, Symbol)]
+
+        define_sorbet_constant!(:Variants) do
+          T.type_alias { T.any(T::Boolean, BrandDev::BrandWebScrapeMdParams::IncludeImages::TaggedSymbol) }
+        end
+
+        # @!group
+
+        TRUE = :true
+        FALSE = :false
+
+        # @!endgroup
+      end
+
+      # Preserve hyperlinks in Markdown output
+      module IncludeLinks
+        extend BrandDev::Internal::Type::Union
+
+        variant BrandDev::Internal::Type::Boolean
+
+        variant const: -> { BrandDev::Models::BrandWebScrapeMdParams::IncludeLinks::TRUE }
+
+        variant const: -> { BrandDev::Models::BrandWebScrapeMdParams::IncludeLinks::FALSE }
+
+        # @!method self.variants
+        #   @return [Array(Boolean, Symbol)]
+
+        define_sorbet_constant!(:Variants) do
+          T.type_alias { T.any(T::Boolean, BrandDev::BrandWebScrapeMdParams::IncludeLinks::TaggedSymbol) }
+        end
+
+        # @!group
+
+        TRUE = :true
+        FALSE = :false
+
+        # @!endgroup
+      end
+
       class Pdf < BrandDev::Internal::Type::BaseModel
         # @!attribute end_
         #   Last 1-based PDF page to parse. When omitted, parsing ends at the last page.
@@ -387,15 +464,17 @@ module BrandDev
         #   recognized text at each image's position in page reading order while preserving
         #   the PDF text layer. This is separate from automatic scanned-PDF OCR fallback.
         #
-        #   @return [Boolean, nil]
-        optional :ocr, BrandDev::Internal::Type::Boolean
+        #   @return [Boolean, Symbol, BrandDev::Models::BrandWebScrapeMdParams::Pdf::Ocr, nil]
+        optional :ocr, union: -> { BrandDev::BrandWebScrapeMdParams::Pdf::Ocr }
 
         # @!attribute should_parse
         #   When true, PDF URLs are fetched and parsed. When false, PDF URLs are skipped and
         #   a 400 WEBSITE_ACCESS_ERROR is returned.
         #
-        #   @return [Boolean, nil]
-        optional :should_parse, BrandDev::Internal::Type::Boolean, api_name: :shouldParse
+        #   @return [Boolean, Symbol, BrandDev::Models::BrandWebScrapeMdParams::Pdf::ShouldParse, nil]
+        optional :should_parse,
+                 union: -> { BrandDev::BrandWebScrapeMdParams::Pdf::ShouldParse },
+                 api_name: :shouldParse
 
         # @!attribute start
         #   First 1-based PDF page to parse. When omitted, parsing starts at the first page.
@@ -412,11 +491,146 @@ module BrandDev
         #
         #   @param end_ [Integer] Last 1-based PDF page to parse. When omitted, parsing ends at the last page. Mus
         #
-        #   @param ocr [Boolean] When true, detect and OCR images embedded in the selected PDF pages, inserting r
+        #   @param ocr [Boolean, Symbol, BrandDev::Models::BrandWebScrapeMdParams::Pdf::Ocr] When true, detect and OCR images embedded in the selected PDF pages, inserting r
         #
-        #   @param should_parse [Boolean] When true, PDF URLs are fetched and parsed. When false, PDF URLs are skipped and
+        #   @param should_parse [Boolean, Symbol, BrandDev::Models::BrandWebScrapeMdParams::Pdf::ShouldParse] When true, PDF URLs are fetched and parsed. When false, PDF URLs are skipped and
         #
         #   @param start [Integer] First 1-based PDF page to parse. When omitted, parsing starts at the first page.
+
+        # When true, detect and OCR images embedded in the selected PDF pages, inserting
+        # recognized text at each image's position in page reading order while preserving
+        # the PDF text layer. This is separate from automatic scanned-PDF OCR fallback.
+        #
+        # @see BrandDev::Models::BrandWebScrapeMdParams::Pdf#ocr
+        module Ocr
+          extend BrandDev::Internal::Type::Union
+
+          variant BrandDev::Internal::Type::Boolean
+
+          variant const: -> { BrandDev::Models::BrandWebScrapeMdParams::Pdf::Ocr::TRUE }
+
+          variant const: -> { BrandDev::Models::BrandWebScrapeMdParams::Pdf::Ocr::FALSE }
+
+          # @!method self.variants
+          #   @return [Array(Boolean, Symbol)]
+
+          define_sorbet_constant!(:Variants) do
+            T.type_alias { T.any(T::Boolean, BrandDev::BrandWebScrapeMdParams::Pdf::Ocr::TaggedSymbol) }
+          end
+
+          # @!group
+
+          TRUE = :true
+          FALSE = :false
+
+          # @!endgroup
+        end
+
+        # When true, PDF URLs are fetched and parsed. When false, PDF URLs are skipped and
+        # a 400 WEBSITE_ACCESS_ERROR is returned.
+        #
+        # @see BrandDev::Models::BrandWebScrapeMdParams::Pdf#should_parse
+        module ShouldParse
+          extend BrandDev::Internal::Type::Union
+
+          variant BrandDev::Internal::Type::Boolean
+
+          variant const: -> { BrandDev::Models::BrandWebScrapeMdParams::Pdf::ShouldParse::TRUE }
+
+          variant const: -> { BrandDev::Models::BrandWebScrapeMdParams::Pdf::ShouldParse::FALSE }
+
+          # @!method self.variants
+          #   @return [Array(Boolean, Symbol)]
+
+          define_sorbet_constant!(:Variants) do
+            T.type_alias { T.any(T::Boolean, BrandDev::BrandWebScrapeMdParams::Pdf::ShouldParse::TaggedSymbol) }
+          end
+
+          # @!group
+
+          TRUE = :true
+          FALSE = :false
+
+          # @!endgroup
+        end
+      end
+
+      # When true, waits briefly for CSS and transition animations to settle before
+      # converting to Markdown. Defaults to false. This adds a bit of latency in
+      # exchange for more stable output on animated pages.
+      module SettleAnimations
+        extend BrandDev::Internal::Type::Union
+
+        variant BrandDev::Internal::Type::Boolean
+
+        variant const: -> { BrandDev::Models::BrandWebScrapeMdParams::SettleAnimations::TRUE }
+
+        variant const: -> { BrandDev::Models::BrandWebScrapeMdParams::SettleAnimations::FALSE }
+
+        # @!method self.variants
+        #   @return [Array(Boolean, Symbol)]
+
+        define_sorbet_constant!(:Variants) do
+          T.type_alias { T.any(T::Boolean, BrandDev::BrandWebScrapeMdParams::SettleAnimations::TaggedSymbol) }
+        end
+
+        # @!group
+
+        TRUE = :true
+        FALSE = :false
+
+        # @!endgroup
+      end
+
+      # Shorten base64-encoded image data in the Markdown output
+      module ShortenBase64Images
+        extend BrandDev::Internal::Type::Union
+
+        variant BrandDev::Internal::Type::Boolean
+
+        variant const: -> { BrandDev::Models::BrandWebScrapeMdParams::ShortenBase64Images::TRUE }
+
+        variant const: -> { BrandDev::Models::BrandWebScrapeMdParams::ShortenBase64Images::FALSE }
+
+        # @!method self.variants
+        #   @return [Array(Boolean, Symbol)]
+
+        define_sorbet_constant!(:Variants) do
+          T.type_alias { T.any(T::Boolean, BrandDev::BrandWebScrapeMdParams::ShortenBase64Images::TaggedSymbol) }
+        end
+
+        # @!group
+
+        TRUE = :true
+        FALSE = :false
+
+        # @!endgroup
+      end
+
+      # Extract only the main content of the page, excluding headers, footers, sidebars,
+      # and navigation
+      module UseMainContentOnly
+        extend BrandDev::Internal::Type::Union
+
+        variant BrandDev::Internal::Type::Boolean
+
+        variant const: -> { BrandDev::Models::BrandWebScrapeMdParams::UseMainContentOnly::TRUE }
+
+        variant const: -> { BrandDev::Models::BrandWebScrapeMdParams::UseMainContentOnly::FALSE }
+
+        # @!method self.variants
+        #   @return [Array(Boolean, Symbol)]
+
+        define_sorbet_constant!(:Variants) do
+          T.type_alias { T.any(T::Boolean, BrandDev::BrandWebScrapeMdParams::UseMainContentOnly::TaggedSymbol) }
+        end
+
+        # @!group
+
+        TRUE = :true
+        FALSE = :false
+
+        # @!endgroup
       end
     end
   end

@@ -3,9 +3,9 @@ module BrandDev
     type brand_retrieve_by_email_params =
       {
         email: String,
-        force_language: BrandDev::Models::BrandRetrieveByEmailParams::force_language,
-        max_age_ms: Integer,
-        max_speed: bool,
+        force_language: BrandDev::Models::BrandRetrieveByEmailParams::force_language?,
+        max_age_ms: Integer?,
+        max_speed: BrandDev::Models::BrandRetrieveByEmailParams::max_speed,
         tags: ::Array[String],
         timeout_ms: Integer
       }
@@ -17,19 +17,15 @@ module BrandDev
 
       attr_accessor email: String
 
-      attr_reader force_language: BrandDev::Models::BrandRetrieveByEmailParams::force_language?
+      attr_accessor force_language: BrandDev::Models::BrandRetrieveByEmailParams::force_language?
 
-      def force_language=: (
-        BrandDev::Models::BrandRetrieveByEmailParams::force_language
-      ) -> BrandDev::Models::BrandRetrieveByEmailParams::force_language
+      attr_accessor max_age_ms: Integer?
 
-      attr_reader max_age_ms: Integer?
+      attr_reader max_speed: BrandDev::Models::BrandRetrieveByEmailParams::max_speed?
 
-      def max_age_ms=: (Integer) -> Integer
-
-      attr_reader max_speed: bool?
-
-      def max_speed=: (bool) -> bool
+      def max_speed=: (
+        BrandDev::Models::BrandRetrieveByEmailParams::max_speed
+      ) -> BrandDev::Models::BrandRetrieveByEmailParams::max_speed
 
       attr_reader tags: ::Array[String]?
 
@@ -41,9 +37,9 @@ module BrandDev
 
       def initialize: (
         email: String,
-        ?force_language: BrandDev::Models::BrandRetrieveByEmailParams::force_language,
-        ?max_age_ms: Integer,
-        ?max_speed: bool,
+        ?force_language: BrandDev::Models::BrandRetrieveByEmailParams::force_language?,
+        ?max_age_ms: Integer?,
+        ?max_speed: BrandDev::Models::BrandRetrieveByEmailParams::max_speed,
         ?tags: ::Array[String],
         ?timeout_ms: Integer,
         ?request_options: BrandDev::request_opts
@@ -51,9 +47,9 @@ module BrandDev
 
       def to_hash: -> {
         email: String,
-        force_language: BrandDev::Models::BrandRetrieveByEmailParams::force_language,
-        max_age_ms: Integer,
-        max_speed: bool,
+        force_language: BrandDev::Models::BrandRetrieveByEmailParams::force_language?,
+        max_age_ms: Integer?,
+        max_speed: BrandDev::Models::BrandRetrieveByEmailParams::max_speed,
         tags: ::Array[String],
         timeout_ms: Integer,
         request_options: BrandDev::RequestOptions
@@ -306,6 +302,17 @@ module BrandDev
         ZULU: :zulu
 
         def self?.values: -> ::Array[BrandDev::Models::BrandRetrieveByEmailParams::force_language]
+      end
+
+      type max_speed = bool | :true | :false
+
+      module MaxSpeed
+        extend BrandDev::Internal::Type::Union
+
+        def self?.variants: -> ::Array[BrandDev::Models::BrandRetrieveByEmailParams::max_speed]
+
+        TRUE: :true
+        FALSE: :false
       end
     end
   end

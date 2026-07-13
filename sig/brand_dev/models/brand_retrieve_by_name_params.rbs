@@ -4,9 +4,9 @@ module BrandDev
       {
         name: String,
         country_gl: BrandDev::Models::BrandRetrieveByNameParams::country_gl,
-        force_language: BrandDev::Models::BrandRetrieveByNameParams::force_language,
-        max_age_ms: Integer,
-        max_speed: bool,
+        force_language: BrandDev::Models::BrandRetrieveByNameParams::force_language?,
+        max_age_ms: Integer?,
+        max_speed: BrandDev::Models::BrandRetrieveByNameParams::max_speed,
         tags: ::Array[String],
         timeout_ms: Integer
       }
@@ -24,19 +24,15 @@ module BrandDev
         BrandDev::Models::BrandRetrieveByNameParams::country_gl
       ) -> BrandDev::Models::BrandRetrieveByNameParams::country_gl
 
-      attr_reader force_language: BrandDev::Models::BrandRetrieveByNameParams::force_language?
+      attr_accessor force_language: BrandDev::Models::BrandRetrieveByNameParams::force_language?
 
-      def force_language=: (
-        BrandDev::Models::BrandRetrieveByNameParams::force_language
-      ) -> BrandDev::Models::BrandRetrieveByNameParams::force_language
+      attr_accessor max_age_ms: Integer?
 
-      attr_reader max_age_ms: Integer?
+      attr_reader max_speed: BrandDev::Models::BrandRetrieveByNameParams::max_speed?
 
-      def max_age_ms=: (Integer) -> Integer
-
-      attr_reader max_speed: bool?
-
-      def max_speed=: (bool) -> bool
+      def max_speed=: (
+        BrandDev::Models::BrandRetrieveByNameParams::max_speed
+      ) -> BrandDev::Models::BrandRetrieveByNameParams::max_speed
 
       attr_reader tags: ::Array[String]?
 
@@ -49,9 +45,9 @@ module BrandDev
       def initialize: (
         name: String,
         ?country_gl: BrandDev::Models::BrandRetrieveByNameParams::country_gl,
-        ?force_language: BrandDev::Models::BrandRetrieveByNameParams::force_language,
-        ?max_age_ms: Integer,
-        ?max_speed: bool,
+        ?force_language: BrandDev::Models::BrandRetrieveByNameParams::force_language?,
+        ?max_age_ms: Integer?,
+        ?max_speed: BrandDev::Models::BrandRetrieveByNameParams::max_speed,
         ?tags: ::Array[String],
         ?timeout_ms: Integer,
         ?request_options: BrandDev::request_opts
@@ -60,495 +56,495 @@ module BrandDev
       def to_hash: -> {
         name: String,
         country_gl: BrandDev::Models::BrandRetrieveByNameParams::country_gl,
-        force_language: BrandDev::Models::BrandRetrieveByNameParams::force_language,
-        max_age_ms: Integer,
-        max_speed: bool,
+        force_language: BrandDev::Models::BrandRetrieveByNameParams::force_language?,
+        max_age_ms: Integer?,
+        max_speed: BrandDev::Models::BrandRetrieveByNameParams::max_speed,
         tags: ::Array[String],
         timeout_ms: Integer,
         request_options: BrandDev::RequestOptions
       }
 
       type country_gl =
-        :ad
-        | :ae
-        | :af
-        | :ag
-        | :ai
+        :af
         | :al
-        | :am
-        | :an
-        | :ao
-        | :aq
-        | :ar
+        | :dz
         | :as
-        | :at
-        | :au
+        | :ad
+        | :ao
+        | :ai
+        | :aq
+        | :ag
+        | :ar
+        | :am
         | :aw
+        | :au
+        | :at
         | :az
-        | :ba
-        | :bb
-        | :bd
-        | :be
-        | :bf
-        | :bg
+        | :bs
         | :bh
-        | :bi
+        | :bd
+        | :bb
+        | :by
+        | :be
+        | :bz
         | :bj
         | :bm
-        | :bn
-        | :bo
-        | :br
-        | :bs
         | :bt
-        | :bv
+        | :bo
+        | :ba
         | :bw
-        | :by
-        | :bz
-        | :ca
-        | :cc
-        | :cd
-        | :cf
-        | :cg
-        | :ch
-        | :ci
-        | :ck
-        | :cl
+        | :bv
+        | :br
+        | :io
+        | :bn
+        | :bg
+        | :bf
+        | :bi
+        | :kh
         | :cm
-        | :cn
-        | :co
-        | :cr
-        | :cu
+        | :ca
         | :cv
+        | :ky
+        | :cf
+        | :td
+        | :cl
+        | :cn
         | :cx
+        | :cc
+        | :co
+        | :km
+        | :cg
+        | :cd
+        | :ck
+        | :cr
+        | :ci
+        | :hr
+        | :cu
         | :cy
         | :cz
-        | :de
-        | :dj
         | :dk
+        | :dj
         | :dm
         | :do
-        | :dz
         | :ec
-        | :ee
         | :eg
-        | :eh
+        | :sv
+        | :gq
         | :er
-        | :es
+        | :ee
         | :et
-        | :fi
-        | :fj
         | :fk
-        | :fm
         | :fo
+        | :fj
+        | :fi
         | :fr
-        | :ga
-        | :gb
-        | :gd
-        | :ge
         | :gf
+        | :pf
+        | :tf
+        | :ga
+        | :gm
+        | :ge
+        | :de
         | :gh
         | :gi
-        | :gl
-        | :gm
-        | :gn
-        | :gp
-        | :gq
         | :gr
-        | :gs
-        | :gt
+        | :gl
+        | :gd
+        | :gp
         | :gu
+        | :gt
+        | :gn
         | :gw
         | :gy
-        | :hk
-        | :hm
-        | :hn
-        | :hr
         | :ht
+        | :hm
+        | :va
+        | :hn
+        | :hk
         | :hu
+        | :is
+        | :in
         | :id
+        | :ir
+        | :iq
         | :ie
         | :il
-        | :in
-        | :io
-        | :iq
-        | :ir
-        | :is
         | :it
         | :jm
-        | :jo
         | :jp
+        | :jo
+        | :kz
         | :ke
-        | :kg
-        | :kh
         | :ki
-        | :km
-        | :kn
         | :kp
         | :kr
         | :kw
-        | :ky
-        | :kz
+        | :kg
         | :la
+        | :lv
         | :lb
-        | :lc
-        | :li
-        | :lk
-        | :lr
         | :ls
+        | :lr
+        | :ly
+        | :li
         | :lt
         | :lu
-        | :lv
-        | :ly
-        | :ma
-        | :mc
-        | :md
-        | :mg
-        | :mh
-        | :mk
-        | :ml
-        | :mm
-        | :mn
         | :mo
-        | :mp
+        | :mk
+        | :mg
+        | :mw
+        | :my
+        | :mv
+        | :ml
+        | :mt
+        | :mh
         | :mq
         | :mr
-        | :ms
-        | :mt
         | :mu
-        | :mv
-        | :mw
+        | :yt
         | :mx
-        | :my
+        | :fm
+        | :md
+        | :mc
+        | :mn
+        | :ms
+        | :ma
         | :mz
+        | :mm
         | :na
-        | :nc
-        | :ne
-        | :nf
-        | :ng
-        | :ni
-        | :nl
-        | :no
-        | :np
         | :nr
-        | :nu
+        | :np
+        | :nl
+        | :an
+        | :nc
         | :nz
+        | :ni
+        | :ne
+        | :ng
+        | :nu
+        | :nf
+        | :mp
+        | :no
         | :om
-        | :pa
-        | :pe
-        | :pf
-        | :pg
-        | :ph
         | :pk
-        | :pl
-        | :pm
-        | :pn
-        | :pr
-        | :ps
-        | :pt
         | :pw
+        | :ps
+        | :pa
+        | :pg
         | :py
+        | :pe
+        | :ph
+        | :pn
+        | :pl
+        | :pt
+        | :pr
         | :qa
         | :re
         | :ro
-        | :rs
         | :ru
         | :rw
-        | :sa
-        | :sb
-        | :sc
-        | :sd
-        | :se
-        | :sg
         | :sh
-        | :si
-        | :sj
-        | :sk
-        | :sl
+        | :kn
+        | :lc
+        | :pm
+        | :vc
+        | :ws
         | :sm
-        | :sn
-        | :so
-        | :sr
         | :st
-        | :sv
-        | :sy
+        | :sa
+        | :sn
+        | :rs
+        | :sc
+        | :sl
+        | :sg
+        | :sk
+        | :si
+        | :sb
+        | :so
+        | :za
+        | :gs
+        | :es
+        | :lk
+        | :sd
+        | :sr
+        | :sj
         | :sz
-        | :tc
-        | :td
-        | :tf
-        | :tg
-        | :th
-        | :tj
-        | :tk
-        | :tl
-        | :tm
-        | :tn
-        | :to
-        | :tr
-        | :tt
-        | :tv
+        | :se
+        | :ch
+        | :sy
         | :tw
+        | :tj
         | :tz
-        | :ua
+        | :th
+        | :tl
+        | :tg
+        | :tk
+        | :to
+        | :tt
+        | :tn
+        | :tr
+        | :tm
+        | :tc
+        | :tv
         | :ug
-        | :um
+        | :ua
+        | :ae
+        | :gb
         | :us
+        | :um
         | :uy
         | :uz
-        | :va
-        | :vc
+        | :vu
         | :ve
+        | :vn
         | :vg
         | :vi
-        | :vn
-        | :vu
         | :wf
-        | :ws
+        | :eh
         | :ye
-        | :yt
-        | :za
         | :zm
         | :zw
 
       module CountryGl
         extend BrandDev::Internal::Type::Enum
 
-        AD: :ad
-        AE: :ae
         AF: :af
-        AG: :ag
-        AI: :ai
         AL: :al
-        AM: :am
-        AN: :an
-        AO: :ao
-        AQ: :aq
-        AR: :ar
+        DZ: :dz
         AS: :as
-        AT: :at
-        AU: :au
+        AD: :ad
+        AO: :ao
+        AI: :ai
+        AQ: :aq
+        AG: :ag
+        AR: :ar
+        AM: :am
         AW: :aw
+        AU: :au
+        AT: :at
         AZ: :az
-        BA: :ba
-        BB: :bb
-        BD: :bd
-        BE: :be
-        BF: :bf
-        BG: :bg
+        BS: :bs
         BH: :bh
-        BI: :bi
+        BD: :bd
+        BB: :bb
+        BY: :by
+        BE: :be
+        BZ: :bz
         BJ: :bj
         BM: :bm
-        BN: :bn
-        BO: :bo
-        BR: :br
-        BS: :bs
         BT: :bt
-        BV: :bv
+        BO: :bo
+        BA: :ba
         BW: :bw
-        BY: :by
-        BZ: :bz
-        CA: :ca
-        CC: :cc
-        CD: :cd
-        CF: :cf
-        CG: :cg
-        CH: :ch
-        CI: :ci
-        CK: :ck
-        CL: :cl
+        BV: :bv
+        BR: :br
+        IO: :io
+        BN: :bn
+        BG: :bg
+        BF: :bf
+        BI: :bi
+        KH: :kh
         CM: :cm
-        CN: :cn
-        CO: :co
-        CR: :cr
-        CU: :cu
+        CA: :ca
         CV: :cv
+        KY: :ky
+        CF: :cf
+        TD: :td
+        CL: :cl
+        CN: :cn
         CX: :cx
+        CC: :cc
+        CO: :co
+        KM: :km
+        CG: :cg
+        CD: :cd
+        CK: :ck
+        CR: :cr
+        CI: :ci
+        HR: :hr
+        CU: :cu
         CY: :cy
         CZ: :cz
-        DE: :de
-        DJ: :dj
         DK: :dk
+        DJ: :dj
         DM: :dm
         DO: :do
-        DZ: :dz
         EC: :ec
-        EE: :ee
         EG: :eg
-        EH: :eh
+        SV: :sv
+        GQ: :gq
         ER: :er
-        ES: :es
+        EE: :ee
         ET: :et
-        FI: :fi
-        FJ: :fj
         FK: :fk
-        FM: :fm
         FO: :fo
+        FJ: :fj
+        FI: :fi
         FR: :fr
-        GA: :ga
-        GB: :gb
-        GD: :gd
-        GE: :ge
         GF: :gf
+        PF: :pf
+        TF: :tf
+        GA: :ga
+        GM: :gm
+        GE: :ge
+        DE: :de
         GH: :gh
         GI: :gi
-        GL: :gl
-        GM: :gm
-        GN: :gn
-        GP: :gp
-        GQ: :gq
         GR: :gr
-        GS: :gs
-        GT: :gt
+        GL: :gl
+        GD: :gd
+        GP: :gp
         GU: :gu
+        GT: :gt
+        GN: :gn
         GW: :gw
         GY: :gy
-        HK: :hk
-        HM: :hm
-        HN: :hn
-        HR: :hr
         HT: :ht
+        HM: :hm
+        VA: :va
+        HN: :hn
+        HK: :hk
         HU: :hu
+        IS: :is
+        IN: :in
         ID: :id
+        IR: :ir
+        IQ: :iq
         IE: :ie
         IL: :il
-        IN: :in
-        IO: :io
-        IQ: :iq
-        IR: :ir
-        IS: :is
         IT: :it
         JM: :jm
-        JO: :jo
         JP: :jp
+        JO: :jo
+        KZ: :kz
         KE: :ke
-        KG: :kg
-        KH: :kh
         KI: :ki
-        KM: :km
-        KN: :kn
         KP: :kp
         KR: :kr
         KW: :kw
-        KY: :ky
-        KZ: :kz
+        KG: :kg
         LA: :la
+        LV: :lv
         LB: :lb
-        LC: :lc
-        LI: :li
-        LK: :lk
-        LR: :lr
         LS: :ls
+        LR: :lr
+        LY: :ly
+        LI: :li
         LT: :lt
         LU: :lu
-        LV: :lv
-        LY: :ly
-        MA: :ma
-        MC: :mc
-        MD: :md
-        MG: :mg
-        MH: :mh
-        MK: :mk
-        ML: :ml
-        MM: :mm
-        MN: :mn
         MO: :mo
-        MP: :mp
+        MK: :mk
+        MG: :mg
+        MW: :mw
+        MY: :my
+        MV: :mv
+        ML: :ml
+        MT: :mt
+        MH: :mh
         MQ: :mq
         MR: :mr
-        MS: :ms
-        MT: :mt
         MU: :mu
-        MV: :mv
-        MW: :mw
+        YT: :yt
         MX: :mx
-        MY: :my
+        FM: :fm
+        MD: :md
+        MC: :mc
+        MN: :mn
+        MS: :ms
+        MA: :ma
         MZ: :mz
+        MM: :mm
         NA: :na
-        NC: :nc
-        NE: :ne
-        NF: :nf
-        NG: :ng
-        NI: :ni
-        NL: :nl
-        NO: :no
-        NP: :np
         NR: :nr
-        NU: :nu
+        NP: :np
+        NL: :nl
+        AN: :an
+        NC: :nc
         NZ: :nz
+        NI: :ni
+        NE: :ne
+        NG: :ng
+        NU: :nu
+        NF: :nf
+        MP: :mp
+        NO: :no
         OM: :om
-        PA: :pa
-        PE: :pe
-        PF: :pf
-        PG: :pg
-        PH: :ph
         PK: :pk
-        PL: :pl
-        PM: :pm
-        PN: :pn
-        PR: :pr
-        PS: :ps
-        PT: :pt
         PW: :pw
+        PS: :ps
+        PA: :pa
+        PG: :pg
         PY: :py
+        PE: :pe
+        PH: :ph
+        PN: :pn
+        PL: :pl
+        PT: :pt
+        PR: :pr
         QA: :qa
         RE: :re
         RO: :ro
-        RS: :rs
         RU: :ru
         RW: :rw
-        SA: :sa
-        SB: :sb
-        SC: :sc
-        SD: :sd
-        SE: :se
-        SG: :sg
         SH: :sh
-        SI: :si
-        SJ: :sj
-        SK: :sk
-        SL: :sl
+        KN: :kn
+        LC: :lc
+        PM: :pm
+        VC: :vc
+        WS: :ws
         SM: :sm
-        SN: :sn
-        SO: :so
-        SR: :sr
         ST: :st
-        SV: :sv
-        SY: :sy
+        SA: :sa
+        SN: :sn
+        RS: :rs
+        SC: :sc
+        SL: :sl
+        SG: :sg
+        SK: :sk
+        SI: :si
+        SB: :sb
+        SO: :so
+        ZA: :za
+        GS: :gs
+        ES: :es
+        LK: :lk
+        SD: :sd
+        SR: :sr
+        SJ: :sj
         SZ: :sz
-        TC: :tc
-        TD: :td
-        TF: :tf
-        TG: :tg
-        TH: :th
-        TJ: :tj
-        TK: :tk
-        TL: :tl
-        TM: :tm
-        TN: :tn
-        TO: :to
-        TR: :tr
-        TT: :tt
-        TV: :tv
+        SE: :se
+        CH: :ch
+        SY: :sy
         TW: :tw
+        TJ: :tj
         TZ: :tz
-        UA: :ua
+        TH: :th
+        TL: :tl
+        TG: :tg
+        TK: :tk
+        TO: :to
+        TT: :tt
+        TN: :tn
+        TR: :tr
+        TM: :tm
+        TC: :tc
+        TV: :tv
         UG: :ug
-        UM: :um
+        UA: :ua
+        AE: :ae
+        GB: :gb
         US: :us
+        UM: :um
         UY: :uy
         UZ: :uz
-        VA: :va
-        VC: :vc
+        VU: :vu
         VE: :ve
+        VN: :vn
         VG: :vg
         VI: :vi
-        VN: :vn
-        VU: :vu
         WF: :wf
-        WS: :ws
+        EH: :eh
         YE: :ye
-        YT: :yt
-        ZA: :za
         ZM: :zm
         ZW: :zw
 
@@ -802,6 +798,17 @@ module BrandDev
         ZULU: :zulu
 
         def self?.values: -> ::Array[BrandDev::Models::BrandRetrieveByNameParams::force_language]
+      end
+
+      type max_speed = bool | :true | :false
+
+      module MaxSpeed
+        extend BrandDev::Internal::Type::Union
+
+        def self?.variants: -> ::Array[BrandDev::Models::BrandRetrieveByNameParams::max_speed]
+
+        TRUE: :true
+        FALSE: :false
       end
     end
   end

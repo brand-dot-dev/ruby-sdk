@@ -35,6 +35,14 @@ module BrandDev
       sig { params(max_links: Integer).void }
       attr_writer :max_links
 
+      # Optional explicit sitemap URL. When provided, exactly this sitemap is crawled
+      # instead of discovering the domain's sitemaps.
+      sig { returns(T.nilable(String)) }
+      attr_reader :sitemap_url
+
+      sig { params(sitemap_url: String).void }
+      attr_writer :sitemap_url
+
       # Optional comma-separated caller-defined tags for tracking this request. Tags are
       # recorded on the request's usage log and can be used to filter usage on the
       # dashboard usage page. Up to 20 tags, each 1-50 characters.
@@ -66,6 +74,7 @@ module BrandDev
           domain: String,
           headers: T::Hash[Symbol, String],
           max_links: Integer,
+          sitemap_url: String,
           tags: T::Array[String],
           timeout_ms: Integer,
           url_regex: String,
@@ -82,6 +91,9 @@ module BrandDev
         # Maximum number of links to return from the sitemap crawl. Defaults to 10,000.
         # Minimum is 1, maximum is 100,000.
         max_links: nil,
+        # Optional explicit sitemap URL. When provided, exactly this sitemap is crawled
+        # instead of discovering the domain's sitemaps.
+        sitemap_url: nil,
         # Optional comma-separated caller-defined tags for tracking this request. Tags are
         # recorded on the request's usage log and can be used to filter usage on the
         # dashboard usage page. Up to 20 tags, each 1-50 characters.
@@ -103,6 +115,7 @@ module BrandDev
             domain: String,
             headers: T::Hash[Symbol, String],
             max_links: Integer,
+            sitemap_url: String,
             tags: T::Array[String],
             timeout_ms: Integer,
             url_regex: String,

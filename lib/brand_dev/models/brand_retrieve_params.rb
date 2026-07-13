@@ -11,14 +11,14 @@ module BrandDev
       #   Domain name to retrieve brand data for (e.g., 'example.com', 'google.com').
       #   Cannot be used with name or ticker parameters.
       #
-      #   @return [String]
-      required :domain, String
+      #   @return [String, nil]
+      optional :domain, String
 
       # @!attribute force_language
-      #   Optional parameter to force the language of the retrieved brand data.
+      #   Language to force for the retrieved brand data.
       #
       #   @return [Symbol, BrandDev::Models::BrandRetrieveParams::ForceLanguage, nil]
-      optional :force_language, enum: -> { BrandDev::BrandRetrieveParams::ForceLanguage }
+      optional :force_language, enum: -> { BrandDev::BrandRetrieveParams::ForceLanguage }, nil?: true
 
       # @!attribute max_age_ms
       #   Maximum age in milliseconds for cached brand data before the API performs a hard
@@ -27,15 +27,22 @@ module BrandDev
       #   year.
       #
       #   @return [Integer, nil]
-      optional :max_age_ms, Integer
+      optional :max_age_ms, Integer, nil?: true
 
       # @!attribute max_speed
       #   Optional parameter to optimize the API call for maximum speed. When set to true,
       #   the API will skip time-consuming operations for faster response at the cost of
       #   less comprehensive data. Works with all three lookup methods.
       #
-      #   @return [Boolean, nil]
-      optional :max_speed, BrandDev::Internal::Type::Boolean
+      #   @return [Boolean, Symbol, BrandDev::Models::BrandRetrieveParams::MaxSpeed, nil]
+      optional :max_speed, union: -> { BrandDev::BrandRetrieveParams::MaxSpeed }
+
+      # @!attribute name
+      #   Company name to retrieve brand data for (e.g., 'Apple Inc'). Cannot be used with
+      #   domain or ticker parameters.
+      #
+      #   @return [String, nil]
+      optional :name, String
 
       # @!attribute tags
       #   Optional comma-separated caller-defined tags for tracking this request. Tags are
@@ -45,6 +52,19 @@ module BrandDev
       #   @return [Array<String>, nil]
       optional :tags, BrandDev::Internal::Type::ArrayOf[String]
 
+      # @!attribute ticker
+      #   Stock ticker symbol to retrieve brand data for (e.g., 'AAPL'). Cannot be used
+      #   with domain or name parameters.
+      #
+      #   @return [String, nil]
+      optional :ticker, String
+
+      # @!attribute ticker_exchange
+      #   Stock exchange code.
+      #
+      #   @return [Symbol, BrandDev::Models::BrandRetrieveParams::TickerExchange, nil]
+      optional :ticker_exchange, enum: -> { BrandDev::BrandRetrieveParams::TickerExchange }
+
       # @!attribute timeout_ms
       #   Optional timeout in milliseconds for the request. If the request takes longer
       #   than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -53,25 +73,31 @@ module BrandDev
       #   @return [Integer, nil]
       optional :timeout_ms, Integer
 
-      # @!method initialize(domain:, force_language: nil, max_age_ms: nil, max_speed: nil, tags: nil, timeout_ms: nil, request_options: {})
+      # @!method initialize(domain: nil, force_language: nil, max_age_ms: nil, max_speed: nil, name: nil, tags: nil, ticker: nil, ticker_exchange: nil, timeout_ms: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
       #   {BrandDev::Models::BrandRetrieveParams} for more details.
       #
       #   @param domain [String] Domain name to retrieve brand data for (e.g., 'example.com', 'google.com'). Cann
       #
-      #   @param force_language [Symbol, BrandDev::Models::BrandRetrieveParams::ForceLanguage] Optional parameter to force the language of the retrieved brand data.
+      #   @param force_language [Symbol, BrandDev::Models::BrandRetrieveParams::ForceLanguage, nil] Language to force for the retrieved brand data.
       #
-      #   @param max_age_ms [Integer] Maximum age in milliseconds for cached brand data before the API performs a hard
+      #   @param max_age_ms [Integer, nil] Maximum age in milliseconds for cached brand data before the API performs a hard
       #
-      #   @param max_speed [Boolean] Optional parameter to optimize the API call for maximum speed. When set to true,
+      #   @param max_speed [Boolean, Symbol, BrandDev::Models::BrandRetrieveParams::MaxSpeed] Optional parameter to optimize the API call for maximum speed. When set to true,
+      #
+      #   @param name [String] Company name to retrieve brand data for (e.g., 'Apple Inc'). Cannot be used with
       #
       #   @param tags [Array<String>] Optional comma-separated caller-defined tags for tracking this request. Tags are
+      #
+      #   @param ticker [String] Stock ticker symbol to retrieve brand data for (e.g., 'AAPL'). Cannot be used wi
+      #
+      #   @param ticker_exchange [Symbol, BrandDev::Models::BrandRetrieveParams::TickerExchange] Stock exchange code.
       #
       #   @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #
       #   @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}]
 
-      # Optional parameter to force the language of the retrieved brand data.
+      # Language to force for the retrieved brand data.
       module ForceLanguage
         extend BrandDev::Internal::Type::Enum
 
@@ -195,6 +221,114 @@ module BrandDev
         YIDDISH = :yiddish
         YORUBA = :yoruba
         ZULU = :zulu
+
+        # @!method self.values
+        #   @return [Array<Symbol>]
+      end
+
+      # Optional parameter to optimize the API call for maximum speed. When set to true,
+      # the API will skip time-consuming operations for faster response at the cost of
+      # less comprehensive data. Works with all three lookup methods.
+      module MaxSpeed
+        extend BrandDev::Internal::Type::Union
+
+        variant BrandDev::Internal::Type::Boolean
+
+        variant const: -> { BrandDev::Models::BrandRetrieveParams::MaxSpeed::TRUE }
+
+        variant const: -> { BrandDev::Models::BrandRetrieveParams::MaxSpeed::FALSE }
+
+        # @!method self.variants
+        #   @return [Array(Boolean, Symbol)]
+
+        define_sorbet_constant!(:Variants) do
+          T.type_alias { T.any(T::Boolean, BrandDev::BrandRetrieveParams::MaxSpeed::TaggedSymbol) }
+        end
+
+        # @!group
+
+        TRUE = :true
+        FALSE = :false
+
+        # @!endgroup
+      end
+
+      # Stock exchange code.
+      module TickerExchange
+        extend BrandDev::Internal::Type::Enum
+
+        AMEX = :AMEX
+        AMS = :AMS
+        AQS = :AQS
+        ASX = :ASX
+        ATH = :ATH
+        BER = :BER
+        BME = :BME
+        BRU = :BRU
+        BSE = :BSE
+        BUD = :BUD
+        BUE = :BUE
+        BVC = :BVC
+        CBOE = :CBOE
+        CNQ = :CNQ
+        CPH = :CPH
+        DFM = :DFM
+        DOH = :DOH
+        DUB = :DUB
+        DUS = :DUS
+        DXE = :DXE
+        EGX = :EGX
+        FSX = :FSX
+        HAM = :HAM
+        HEL = :HEL
+        HKSE = :HKSE
+        HOSE = :HOSE
+        ICE = :ICE
+        IOB = :IOB
+        IST = :IST
+        JKT = :JKT
+        JNB = :JNB
+        JPX = :JPX
+        KLS = :KLS
+        KOE = :KOE
+        KSC = :KSC
+        KUW = :KUW
+        LIS = :LIS
+        LSE = :LSE
+        MCX = :MCX
+        MEX = :MEX
+        MIL = :MIL
+        MUN = :MUN
+        NASDAQ = :NASDAQ
+        NEO = :NEO
+        NSE = :NSE
+        NYSE = :NYSE
+        NZE = :NZE
+        OSL = :OSL
+        OTC = :OTC
+        PAR = :PAR
+        PNK = :PNK
+        PRA = :PRA
+        RIS = :RIS
+        SAO = :SAO
+        SAU = :SAU
+        SES = :SES
+        SET = :SET
+        SGO = :SGO
+        SHH = :SHH
+        SHZ = :SHZ
+        SIX = :SIX
+        STO = :STO
+        STU = :STU
+        TAI = :TAI
+        TAL = :TAL
+        TLV = :TLV
+        TSX = :TSX
+        TSXV = :TSXV
+        TWO = :TWO
+        VIE = :VIE
+        WSE = :WSE
+        XETRA = :XETRA
 
         # @!method self.values
         #   @return [Array<Symbol>]
