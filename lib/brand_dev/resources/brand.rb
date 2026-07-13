@@ -9,7 +9,7 @@ module BrandDev
       # Retrieve logos, backdrops, colors, industry, description, and more from any
       # domain
       #
-      # @overload retrieve(domain:, force_language: nil, max_age_ms: nil, max_speed: nil, timeout_ms: nil, request_options: {})
+      # @overload retrieve(domain:, force_language: nil, max_age_ms: nil, max_speed: nil, tags: nil, timeout_ms: nil, request_options: {})
       #
       # @param domain [String] Domain name to retrieve brand data for (e.g., 'example.com', 'google.com'). Cann
       #
@@ -18,6 +18,8 @@ module BrandDev
       # @param max_age_ms [Integer] Maximum age in milliseconds for cached brand data before the API performs a hard
       #
       # @param max_speed [Boolean] Optional parameter to optimize the API call for maximum speed. When set to true,
+      #
+      # @param tags [Array<String>] Optional comma-separated caller-defined tags for tracking this request. Tags are
       #
       # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #
@@ -44,11 +46,13 @@ module BrandDev
       # Given a single URL, determines if it is a product page and extracts the product
       # information.
       #
-      # @overload ai_product(url:, max_age_ms: nil, timeout_ms: nil, request_options: {})
+      # @overload ai_product(url:, max_age_ms: nil, tags: nil, timeout_ms: nil, request_options: {})
       #
       # @param url [String] The product page URL to extract product data from.
       #
       # @param max_age_ms [Integer] Return a cached result if a prior scrape for the same parameters exists and is y
+      #
+      # @param tags [Array<String>] Optional caller-defined tags for tracking this request. Tags are recorded on the
       #
       # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #
@@ -98,13 +102,15 @@ module BrandDev
       # the website and extract the requested information based on the provided data
       # points.
       #
-      # @overload ai_query(data_to_extract:, domain:, specific_pages: nil, timeout_ms: nil, request_options: {})
+      # @overload ai_query(data_to_extract:, domain:, specific_pages: nil, tags: nil, timeout_ms: nil, request_options: {})
       #
       # @param data_to_extract [Array<BrandDev::Models::BrandAIQueryParams::DataToExtract>] Array of data points to extract from the website
       #
       # @param domain [String] The domain name to analyze
       #
       # @param specific_pages [BrandDev::Models::BrandAIQueryParams::SpecificPages] Optional object specifying which pages to analyze
+      #
+      # @param tags [Array<String>] Optional caller-defined tags for tracking this request. Tags are recorded on the
       #
       # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #
@@ -130,7 +136,7 @@ module BrandDev
       # Endpoint specially designed for platforms that want to identify transaction data
       # by the transaction title.
       #
-      # @overload identify_from_transaction(transaction_info:, city: nil, country_gl: nil, force_language: nil, high_confidence_only: nil, max_speed: nil, mcc: nil, phone: nil, timeout_ms: nil, request_options: {})
+      # @overload identify_from_transaction(transaction_info:, city: nil, country_gl: nil, force_language: nil, high_confidence_only: nil, max_speed: nil, mcc: nil, phone: nil, tags: nil, timeout_ms: nil, request_options: {})
       #
       # @param transaction_info [String] Transaction information to identify the brand
       #
@@ -147,6 +153,8 @@ module BrandDev
       # @param mcc [String] Optional Merchant Category Code (MCC) to help identify the business category/ind
       #
       # @param phone [Float] Optional phone number from the transaction to help verify brand match.
+      #
+      # @param tags [Array<String>] Optional comma-separated caller-defined tags for tracking this request. Tags are
       #
       # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #
@@ -173,9 +181,11 @@ module BrandDev
       # Signal that you may fetch brand data for a particular domain soon to improve
       # latency.
       #
-      # @overload prefetch(domain:, timeout_ms: nil, request_options: {})
+      # @overload prefetch(domain:, tags: nil, timeout_ms: nil, request_options: {})
       #
       # @param domain [String] Domain name to prefetch brand data for
+      #
+      # @param tags [Array<String>] Optional caller-defined tags for tracking this request. Tags are recorded on the
       #
       # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #
@@ -203,9 +213,11 @@ module BrandDev
       # validates that it's not a disposable or free email provider, and queues the
       # domain for prefetching.
       #
-      # @overload prefetch_by_email(email:, timeout_ms: nil, request_options: {})
+      # @overload prefetch_by_email(email:, tags: nil, timeout_ms: nil, request_options: {})
       #
       # @param email [String] Email address to prefetch brand data for. The domain will be extracted from the
+      #
+      # @param tags [Array<String>] Optional caller-defined tags for tracking this request. Tags are recorded on the
       #
       # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #
@@ -232,7 +244,7 @@ module BrandDev
       # free email addresses. Disposable and free email addresses (like gmail.com,
       # yahoo.com) will throw a 422 error.
       #
-      # @overload retrieve_by_email(email:, force_language: nil, max_age_ms: nil, max_speed: nil, timeout_ms: nil, request_options: {})
+      # @overload retrieve_by_email(email:, force_language: nil, max_age_ms: nil, max_speed: nil, tags: nil, timeout_ms: nil, request_options: {})
       #
       # @param email [String] Email address to retrieve brand data for (e.g., 'contact@example.com'). The doma
       #
@@ -241,6 +253,8 @@ module BrandDev
       # @param max_age_ms [Integer] Maximum age in milliseconds for cached brand data before the API performs a hard
       #
       # @param max_speed [Boolean] Optional parameter to optimize the API call for maximum speed. When set to true,
+      #
+      # @param tags [Array<String>] Optional comma-separated caller-defined tags for tracking this request. Tags are
       #
       # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #
@@ -267,7 +281,7 @@ module BrandDev
       # Retrieve brand information using an ISIN (International Securities
       # Identification Number).
       #
-      # @overload retrieve_by_isin(isin:, force_language: nil, max_age_ms: nil, max_speed: nil, timeout_ms: nil, request_options: {})
+      # @overload retrieve_by_isin(isin:, force_language: nil, max_age_ms: nil, max_speed: nil, tags: nil, timeout_ms: nil, request_options: {})
       #
       # @param isin [String] ISIN (International Securities Identification Number) to retrieve brand data for
       #
@@ -276,6 +290,8 @@ module BrandDev
       # @param max_age_ms [Integer] Maximum age in milliseconds for cached brand data before the API performs a hard
       #
       # @param max_speed [Boolean] Optional parameter to optimize the API call for maximum speed. When set to true,
+      #
+      # @param tags [Array<String>] Optional comma-separated caller-defined tags for tracking this request. Tags are
       #
       # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #
@@ -301,7 +317,7 @@ module BrandDev
       #
       # Retrieve brand information using a company name.
       #
-      # @overload retrieve_by_name(name:, country_gl: nil, force_language: nil, max_age_ms: nil, max_speed: nil, timeout_ms: nil, request_options: {})
+      # @overload retrieve_by_name(name:, country_gl: nil, force_language: nil, max_age_ms: nil, max_speed: nil, tags: nil, timeout_ms: nil, request_options: {})
       #
       # @param name [String] Company name to retrieve brand data for (e.g., 'Apple Inc', 'Microsoft Corporati
       #
@@ -312,6 +328,8 @@ module BrandDev
       # @param max_age_ms [Integer] Maximum age in milliseconds for cached brand data before the API performs a hard
       #
       # @param max_speed [Boolean] Optional parameter to optimize the API call for maximum speed. When set to true,
+      #
+      # @param tags [Array<String>] Optional comma-separated caller-defined tags for tracking this request. Tags are
       #
       # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #
@@ -337,7 +355,7 @@ module BrandDev
       #
       # Retrieve brand information using a stock ticker symbol.
       #
-      # @overload retrieve_by_ticker(ticker:, force_language: nil, max_age_ms: nil, max_speed: nil, ticker_exchange: nil, timeout_ms: nil, request_options: {})
+      # @overload retrieve_by_ticker(ticker:, force_language: nil, max_age_ms: nil, max_speed: nil, tags: nil, ticker_exchange: nil, timeout_ms: nil, request_options: {})
       #
       # @param ticker [String] Stock ticker symbol to retrieve brand data for (e.g., 'AAPL', 'GOOGL', 'BRK.A').
       #
@@ -346,6 +364,8 @@ module BrandDev
       # @param max_age_ms [Integer] Maximum age in milliseconds for cached brand data before the API performs a hard
       #
       # @param max_speed [Boolean] Optional parameter to optimize the API call for maximum speed. When set to true,
+      #
+      # @param tags [Array<String>] Optional comma-separated caller-defined tags for tracking this request. Tags are
       #
       # @param ticker_exchange [Symbol, BrandDev::Models::BrandRetrieveByTickerParams::TickerExchange] Optional stock exchange for the ticker. Defaults to NASDAQ if not specified.
       #
@@ -375,11 +395,13 @@ module BrandDev
       # information: domain, title, colors, logos, and backdrops. Optimized for faster
       # responses and reduced data transfer.
       #
-      # @overload retrieve_simplified(domain:, max_age_ms: nil, timeout_ms: nil, request_options: {})
+      # @overload retrieve_simplified(domain:, max_age_ms: nil, tags: nil, timeout_ms: nil, request_options: {})
       #
       # @param domain [String] Domain name to retrieve simplified brand data for
       #
       # @param max_age_ms [Integer] Maximum age in milliseconds for cached brand data before the API performs a hard
+      #
+      # @param tags [Array<String>] Optional comma-separated caller-defined tags for tracking this request. Tags are
       #
       # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #
@@ -405,7 +427,7 @@ module BrandDev
       #
       # Scrapes the given URL and returns the raw HTML content of the page.
       #
-      # @overload web_scrape_html(url:, country: nil, exclude_selectors: nil, headers: nil, include_frames: nil, include_selectors: nil, max_age_ms: nil, pdf: nil, settle_animations: nil, timeout_ms: nil, use_main_content_only: nil, wait_for_ms: nil, request_options: {})
+      # @overload web_scrape_html(url:, country: nil, exclude_selectors: nil, headers: nil, include_frames: nil, include_selectors: nil, max_age_ms: nil, pdf: nil, settle_animations: nil, tags: nil, timeout_ms: nil, use_main_content_only: nil, wait_for_ms: nil, request_options: {})
       #
       # @param url [String] Full URL to scrape (must include http:// or https:// protocol)
       #
@@ -424,6 +446,8 @@ module BrandDev
       # @param pdf [BrandDev::Models::BrandWebScrapeHTMLParams::Pdf] PDF parsing controls. Use start/end to limit text extraction and embedded-image
       #
       # @param settle_animations [Boolean] When true, waits briefly for CSS and transition animations to settle before extr
+      #
+      # @param tags [Array<String>] Optional comma-separated caller-defined tags for tracking this request. Tags are
       #
       # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #
@@ -465,7 +489,7 @@ module BrandDev
       # embeds. The base request costs 1 credit. When enrichment is enabled, the entire
       # call costs 5 credits.
       #
-      # @overload web_scrape_images(url:, dedupe: nil, enrichment: nil, headers: nil, max_age_ms: nil, timeout_ms: nil, wait_for_ms: nil, request_options: {})
+      # @overload web_scrape_images(url:, dedupe: nil, enrichment: nil, headers: nil, max_age_ms: nil, tags: nil, timeout_ms: nil, wait_for_ms: nil, request_options: {})
       #
       # @param url [String] Page URL to inspect. Must include http:// or https://.
       #
@@ -476,6 +500,8 @@ module BrandDev
       # @param headers [Hash{Symbol=>String}] Optional outbound HTTP headers forwarded only to the target URL, sent as deep-ob
       #
       # @param max_age_ms [Integer] Reuse a cached result this many milliseconds old or newer. Default: 86400000 (1
+      #
+      # @param tags [Array<String>] Optional comma-separated caller-defined tags for tracking this request. Tags are
       #
       # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #
@@ -522,7 +548,7 @@ module BrandDev
       # | 429         | No             | Per-minute rate limit exceeded; honor Retry-After                                        |
       # | 500         | No             | Internal error                                                                           |
       #
-      # @overload web_scrape_md(url:, country: nil, exclude_selectors: nil, headers: nil, include_frames: nil, include_images: nil, include_links: nil, include_selectors: nil, max_age_ms: nil, pdf: nil, settle_animations: nil, shorten_base64_images: nil, timeout_ms: nil, use_main_content_only: nil, wait_for_ms: nil, request_options: {})
+      # @overload web_scrape_md(url:, country: nil, exclude_selectors: nil, headers: nil, include_frames: nil, include_images: nil, include_links: nil, include_selectors: nil, max_age_ms: nil, pdf: nil, settle_animations: nil, shorten_base64_images: nil, tags: nil, timeout_ms: nil, use_main_content_only: nil, wait_for_ms: nil, request_options: {})
       #
       # @param url [String] Full URL to scrape into LLM usable Markdown (must include http:// or https:// pr
       #
@@ -547,6 +573,8 @@ module BrandDev
       # @param settle_animations [Boolean] When true, waits briefly for CSS and transition animations to settle before conv
       #
       # @param shorten_base64_images [Boolean] Shorten base64-encoded image data in the Markdown output
+      #
+      # @param tags [Array<String>] Optional comma-separated caller-defined tags for tracking this request. Tags are
       #
       # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #
@@ -588,13 +616,15 @@ module BrandDev
       #
       # Crawl an entire website's sitemap and return all discovered page URLs.
       #
-      # @overload web_scrape_sitemap(domain:, headers: nil, max_links: nil, timeout_ms: nil, url_regex: nil, request_options: {})
+      # @overload web_scrape_sitemap(domain:, headers: nil, max_links: nil, tags: nil, timeout_ms: nil, url_regex: nil, request_options: {})
       #
       # @param domain [String] Domain to build a sitemap for
       #
       # @param headers [Hash{Symbol=>String}] Optional outbound HTTP headers forwarded only to the target URL, sent as deep-ob
       #
       # @param max_links [Integer] Maximum number of links to return from the sitemap crawl. Defaults to 10,000. Mi
+      #
+      # @param tags [Array<String>] Optional comma-separated caller-defined tags for tracking this request. Tags are
       #
       # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #

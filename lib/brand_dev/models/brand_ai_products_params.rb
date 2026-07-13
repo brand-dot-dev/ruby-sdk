@@ -44,6 +44,14 @@ module BrandDev
           #   @return [Integer, nil]
           optional :max_products, Integer, api_name: :maxProducts
 
+          # @!attribute tags
+          #   Optional caller-defined tags for tracking this request. Tags are recorded on the
+          #   request's usage log and can be used to filter usage on the dashboard usage page.
+          #   Up to 20 tags, each 1-50 characters.
+          #
+          #   @return [Array<String>, nil]
+          optional :tags, BrandDev::Internal::Type::ArrayOf[String]
+
           # @!attribute timeout_ms
           #   Optional timeout in milliseconds for the request. If the request takes longer
           #   than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -52,7 +60,7 @@ module BrandDev
           #   @return [Integer, nil]
           optional :timeout_ms, Integer, api_name: :timeoutMS
 
-          # @!method initialize(domain:, max_age_ms: nil, max_products: nil, timeout_ms: nil)
+          # @!method initialize(domain:, max_age_ms: nil, max_products: nil, tags: nil, timeout_ms: nil)
           #   Some parameter documentations has been truncated, see
           #   {BrandDev::Models::BrandAIProductsParams::Body::ByDomain} for more details.
           #
@@ -61,6 +69,8 @@ module BrandDev
           #   @param max_age_ms [Integer] Return a cached result if a prior scrape for the same parameters exists and is y
           #
           #   @param max_products [Integer] Maximum number of products to extract.
+          #
+          #   @param tags [Array<String>] Optional caller-defined tags for tracking this request. Tags are recorded on the
           #
           #   @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
         end
@@ -87,6 +97,14 @@ module BrandDev
           #   @return [Integer, nil]
           optional :max_products, Integer, api_name: :maxProducts
 
+          # @!attribute tags
+          #   Optional caller-defined tags for tracking this request. Tags are recorded on the
+          #   request's usage log and can be used to filter usage on the dashboard usage page.
+          #   Up to 20 tags, each 1-50 characters.
+          #
+          #   @return [Array<String>, nil]
+          optional :tags, BrandDev::Internal::Type::ArrayOf[String]
+
           # @!attribute timeout_ms
           #   Optional timeout in milliseconds for the request. If the request takes longer
           #   than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -95,7 +113,7 @@ module BrandDev
           #   @return [Integer, nil]
           optional :timeout_ms, Integer, api_name: :timeoutMS
 
-          # @!method initialize(direct_url:, max_age_ms: nil, max_products: nil, timeout_ms: nil)
+          # @!method initialize(direct_url:, max_age_ms: nil, max_products: nil, tags: nil, timeout_ms: nil)
           #   Some parameter documentations has been truncated, see
           #   {BrandDev::Models::BrandAIProductsParams::Body::ByDirectURL} for more details.
           #
@@ -104,6 +122,8 @@ module BrandDev
           #   @param max_age_ms [Integer] Return a cached result if a prior scrape for the same parameters exists and is y
           #
           #   @param max_products [Integer] Maximum number of products to extract.
+          #
+          #   @param tags [Array<String>] Optional caller-defined tags for tracking this request. Tags are recorded on the
           #
           #   @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
         end

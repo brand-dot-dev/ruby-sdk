@@ -6,6 +6,7 @@ module BrandDev
         force_language: BrandDev::Models::BrandRetrieveParams::force_language,
         max_age_ms: Integer,
         max_speed: bool,
+        tags: ::Array[String],
         timeout_ms: Integer
       }
       & BrandDev::Internal::Type::request_parameters
@@ -30,6 +31,10 @@ module BrandDev
 
       def max_speed=: (bool) -> bool
 
+      attr_reader tags: ::Array[String]?
+
+      def tags=: (::Array[String]) -> ::Array[String]
+
       attr_reader timeout_ms: Integer?
 
       def timeout_ms=: (Integer) -> Integer
@@ -39,6 +44,7 @@ module BrandDev
         ?force_language: BrandDev::Models::BrandRetrieveParams::force_language,
         ?max_age_ms: Integer,
         ?max_speed: bool,
+        ?tags: ::Array[String],
         ?timeout_ms: Integer,
         ?request_options: BrandDev::request_opts
       ) -> void
@@ -48,6 +54,7 @@ module BrandDev
         force_language: BrandDev::Models::BrandRetrieveParams::force_language,
         max_age_ms: Integer,
         max_speed: bool,
+        tags: ::Array[String],
         timeout_ms: Integer,
         request_options: BrandDev::RequestOptions
       }

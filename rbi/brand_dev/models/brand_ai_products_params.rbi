@@ -89,6 +89,15 @@ module BrandDev
           sig { params(max_products: Integer).void }
           attr_writer :max_products
 
+          # Optional caller-defined tags for tracking this request. Tags are recorded on the
+          # request's usage log and can be used to filter usage on the dashboard usage page.
+          # Up to 20 tags, each 1-50 characters.
+          sig { returns(T.nilable(T::Array[String])) }
+          attr_reader :tags
+
+          sig { params(tags: T::Array[String]).void }
+          attr_writer :tags
+
           # Optional timeout in milliseconds for the request. If the request takes longer
           # than this value, it will be aborted with a 408 status code. Maximum allowed
           # value is 300000ms (5 minutes).
@@ -103,6 +112,7 @@ module BrandDev
               domain: String,
               max_age_ms: Integer,
               max_products: Integer,
+              tags: T::Array[String],
               timeout_ms: Integer
             ).returns(T.attached_class)
           end
@@ -115,6 +125,10 @@ module BrandDev
             max_age_ms: nil,
             # Maximum number of products to extract.
             max_products: nil,
+            # Optional caller-defined tags for tracking this request. Tags are recorded on the
+            # request's usage log and can be used to filter usage on the dashboard usage page.
+            # Up to 20 tags, each 1-50 characters.
+            tags: nil,
             # Optional timeout in milliseconds for the request. If the request takes longer
             # than this value, it will be aborted with a 408 status code. Maximum allowed
             # value is 300000ms (5 minutes).
@@ -128,6 +142,7 @@ module BrandDev
                 domain: String,
                 max_age_ms: Integer,
                 max_products: Integer,
+                tags: T::Array[String],
                 timeout_ms: Integer
               }
             )
@@ -166,6 +181,15 @@ module BrandDev
           sig { params(max_products: Integer).void }
           attr_writer :max_products
 
+          # Optional caller-defined tags for tracking this request. Tags are recorded on the
+          # request's usage log and can be used to filter usage on the dashboard usage page.
+          # Up to 20 tags, each 1-50 characters.
+          sig { returns(T.nilable(T::Array[String])) }
+          attr_reader :tags
+
+          sig { params(tags: T::Array[String]).void }
+          attr_writer :tags
+
           # Optional timeout in milliseconds for the request. If the request takes longer
           # than this value, it will be aborted with a 408 status code. Maximum allowed
           # value is 300000ms (5 minutes).
@@ -180,6 +204,7 @@ module BrandDev
               direct_url: String,
               max_age_ms: Integer,
               max_products: Integer,
+              tags: T::Array[String],
               timeout_ms: Integer
             ).returns(T.attached_class)
           end
@@ -193,6 +218,10 @@ module BrandDev
             max_age_ms: nil,
             # Maximum number of products to extract.
             max_products: nil,
+            # Optional caller-defined tags for tracking this request. Tags are recorded on the
+            # request's usage log and can be used to filter usage on the dashboard usage page.
+            # Up to 20 tags, each 1-50 characters.
+            tags: nil,
             # Optional timeout in milliseconds for the request. If the request takes longer
             # than this value, it will be aborted with a 408 status code. Maximum allowed
             # value is 300000ms (5 minutes).
@@ -206,6 +235,7 @@ module BrandDev
                 direct_url: String,
                 max_age_ms: Integer,
                 max_products: Integer,
+                tags: T::Array[String],
                 timeout_ms: Integer
               }
             )

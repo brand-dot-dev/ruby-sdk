@@ -5,6 +5,7 @@ module BrandDev
         data_to_extract: ::Array[BrandDev::BrandAIQueryParams::DataToExtract],
         domain: String,
         specific_pages: BrandDev::BrandAIQueryParams::SpecificPages,
+        tags: ::Array[String],
         timeout_ms: Integer
       }
       & BrandDev::Internal::Type::request_parameters
@@ -23,6 +24,10 @@ module BrandDev
         BrandDev::BrandAIQueryParams::SpecificPages
       ) -> BrandDev::BrandAIQueryParams::SpecificPages
 
+      attr_reader tags: ::Array[String]?
+
+      def tags=: (::Array[String]) -> ::Array[String]
+
       attr_reader timeout_ms: Integer?
 
       def timeout_ms=: (Integer) -> Integer
@@ -31,6 +36,7 @@ module BrandDev
         data_to_extract: ::Array[BrandDev::BrandAIQueryParams::DataToExtract],
         domain: String,
         ?specific_pages: BrandDev::BrandAIQueryParams::SpecificPages,
+        ?tags: ::Array[String],
         ?timeout_ms: Integer,
         ?request_options: BrandDev::request_opts
       ) -> void
@@ -39,6 +45,7 @@ module BrandDev
         data_to_extract: ::Array[BrandDev::BrandAIQueryParams::DataToExtract],
         domain: String,
         specific_pages: BrandDev::BrandAIQueryParams::SpecificPages,
+        tags: ::Array[String],
         timeout_ms: Integer,
         request_options: BrandDev::RequestOptions
       }

@@ -56,6 +56,15 @@ module BrandDev
       sig { params(max_speed: T::Boolean).void }
       attr_writer :max_speed
 
+      # Optional comma-separated caller-defined tags for tracking this request. Tags are
+      # recorded on the request's usage log and can be used to filter usage on the
+      # dashboard usage page. Up to 20 tags, each 1-50 characters.
+      sig { returns(T.nilable(T::Array[String])) }
+      attr_reader :tags
+
+      sig { params(tags: T::Array[String]).void }
+      attr_writer :tags
+
       # Optional stock exchange for the ticker. Defaults to NASDAQ if not specified.
       sig do
         returns(
@@ -90,6 +99,7 @@ module BrandDev
             BrandDev::BrandRetrieveByTickerParams::ForceLanguage::OrSymbol,
           max_age_ms: Integer,
           max_speed: T::Boolean,
+          tags: T::Array[String],
           ticker_exchange:
             BrandDev::BrandRetrieveByTickerParams::TickerExchange::OrSymbol,
           timeout_ms: Integer,
@@ -111,6 +121,10 @@ module BrandDev
         # the API will skip time-consuming operations for faster response at the cost of
         # less comprehensive data.
         max_speed: nil,
+        # Optional comma-separated caller-defined tags for tracking this request. Tags are
+        # recorded on the request's usage log and can be used to filter usage on the
+        # dashboard usage page. Up to 20 tags, each 1-50 characters.
+        tags: nil,
         # Optional stock exchange for the ticker. Defaults to NASDAQ if not specified.
         ticker_exchange: nil,
         # Optional timeout in milliseconds for the request. If the request takes longer
@@ -129,6 +143,7 @@ module BrandDev
               BrandDev::BrandRetrieveByTickerParams::ForceLanguage::OrSymbol,
             max_age_ms: Integer,
             max_speed: T::Boolean,
+            tags: T::Array[String],
             ticker_exchange:
               BrandDev::BrandRetrieveByTickerParams::TickerExchange::OrSymbol,
             timeout_ms: Integer,

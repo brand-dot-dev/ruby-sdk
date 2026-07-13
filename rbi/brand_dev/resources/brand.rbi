@@ -12,6 +12,7 @@ module BrandDev
             BrandDev::BrandRetrieveParams::ForceLanguage::OrSymbol,
           max_age_ms: Integer,
           max_speed: T::Boolean,
+          tags: T::Array[String],
           timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(BrandDev::Models::BrandRetrieveResponse)
@@ -31,6 +32,10 @@ module BrandDev
         # the API will skip time-consuming operations for faster response at the cost of
         # less comprehensive data. Works with all three lookup methods.
         max_speed: nil,
+        # Optional comma-separated caller-defined tags for tracking this request. Tags are
+        # recorded on the request's usage log and can be used to filter usage on the
+        # dashboard usage page. Up to 20 tags, each 1-50 characters.
+        tags: nil,
         # Optional timeout in milliseconds for the request. If the request takes longer
         # than this value, it will be aborted with a 408 status code. Maximum allowed
         # value is 300000ms (5 minutes).
@@ -45,6 +50,7 @@ module BrandDev
         params(
           url: String,
           max_age_ms: Integer,
+          tags: T::Array[String],
           timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(BrandDev::Models::BrandAIProductResponse)
@@ -56,6 +62,10 @@ module BrandDev
         # younger than this many milliseconds. Defaults to 7 days (604800000 ms) when
         # omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
         max_age_ms: nil,
+        # Optional caller-defined tags for tracking this request. Tags are recorded on the
+        # request's usage log and can be used to filter usage on the dashboard usage page.
+        # Up to 20 tags, each 1-50 characters.
+        tags: nil,
         # Optional timeout in milliseconds for the request. If the request takes longer
         # than this value, it will be aborted with a 408 status code. Maximum allowed
         # value is 300000ms (5 minutes).
@@ -89,6 +99,7 @@ module BrandDev
             T::Array[BrandDev::BrandAIQueryParams::DataToExtract::OrHash],
           domain: String,
           specific_pages: BrandDev::BrandAIQueryParams::SpecificPages::OrHash,
+          tags: T::Array[String],
           timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(BrandDev::Models::BrandAIQueryResponse)
@@ -100,6 +111,10 @@ module BrandDev
         domain:,
         # Optional object specifying which pages to analyze
         specific_pages: nil,
+        # Optional caller-defined tags for tracking this request. Tags are recorded on the
+        # request's usage log and can be used to filter usage on the dashboard usage page.
+        # Up to 20 tags, each 1-50 characters.
+        tags: nil,
         # Optional timeout in milliseconds for the request. If the request takes longer
         # than this value, it will be aborted with a 408 status code. Maximum allowed
         # value is 300000ms (5 minutes).
@@ -122,6 +137,7 @@ module BrandDev
           max_speed: T::Boolean,
           mcc: String,
           phone: Float,
+          tags: T::Array[String],
           timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(BrandDev::Models::BrandIdentifyFromTransactionResponse)
@@ -148,6 +164,10 @@ module BrandDev
         mcc: nil,
         # Optional phone number from the transaction to help verify brand match.
         phone: nil,
+        # Optional comma-separated caller-defined tags for tracking this request. Tags are
+        # recorded on the request's usage log and can be used to filter usage on the
+        # dashboard usage page. Up to 20 tags, each 1-50 characters.
+        tags: nil,
         # Optional timeout in milliseconds for the request. If the request takes longer
         # than this value, it will be aborted with a 408 status code. Maximum allowed
         # value is 300000ms (5 minutes).
@@ -161,6 +181,7 @@ module BrandDev
       sig do
         params(
           domain: String,
+          tags: T::Array[String],
           timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(BrandDev::Models::BrandPrefetchResponse)
@@ -168,6 +189,10 @@ module BrandDev
       def prefetch(
         # Domain name to prefetch brand data for
         domain:,
+        # Optional caller-defined tags for tracking this request. Tags are recorded on the
+        # request's usage log and can be used to filter usage on the dashboard usage page.
+        # Up to 20 tags, each 1-50 characters.
+        tags: nil,
         # Optional timeout in milliseconds for the request. If the request takes longer
         # than this value, it will be aborted with a 408 status code. Maximum allowed
         # value is 300000ms (5 minutes).
@@ -183,6 +208,7 @@ module BrandDev
       sig do
         params(
           email: String,
+          tags: T::Array[String],
           timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(BrandDev::Models::BrandPrefetchByEmailResponse)
@@ -192,6 +218,10 @@ module BrandDev
         # email. Free email providers (gmail.com, yahoo.com, etc.) and disposable email
         # addresses are not allowed.
         email:,
+        # Optional caller-defined tags for tracking this request. Tags are recorded on the
+        # request's usage log and can be used to filter usage on the dashboard usage page.
+        # Up to 20 tags, each 1-50 characters.
+        tags: nil,
         # Optional timeout in milliseconds for the request. If the request takes longer
         # than this value, it will be aborted with a 408 status code. Maximum allowed
         # value is 300000ms (5 minutes).
@@ -210,6 +240,7 @@ module BrandDev
             BrandDev::BrandRetrieveByEmailParams::ForceLanguage::OrSymbol,
           max_age_ms: Integer,
           max_speed: T::Boolean,
+          tags: T::Array[String],
           timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(BrandDev::Models::BrandRetrieveByEmailResponse)
@@ -230,6 +261,10 @@ module BrandDev
         # the API will skip time-consuming operations for faster response at the cost of
         # less comprehensive data.
         max_speed: nil,
+        # Optional comma-separated caller-defined tags for tracking this request. Tags are
+        # recorded on the request's usage log and can be used to filter usage on the
+        # dashboard usage page. Up to 20 tags, each 1-50 characters.
+        tags: nil,
         # Optional timeout in milliseconds for the request. If the request takes longer
         # than this value, it will be aborted with a 408 status code. Maximum allowed
         # value is 300000ms (5 minutes).
@@ -247,6 +282,7 @@ module BrandDev
             BrandDev::BrandRetrieveByIsinParams::ForceLanguage::OrSymbol,
           max_age_ms: Integer,
           max_speed: T::Boolean,
+          tags: T::Array[String],
           timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(BrandDev::Models::BrandRetrieveByIsinResponse)
@@ -267,6 +303,10 @@ module BrandDev
         # the API will skip time-consuming operations for faster response at the cost of
         # less comprehensive data.
         max_speed: nil,
+        # Optional comma-separated caller-defined tags for tracking this request. Tags are
+        # recorded on the request's usage log and can be used to filter usage on the
+        # dashboard usage page. Up to 20 tags, each 1-50 characters.
+        tags: nil,
         # Optional timeout in milliseconds for the request. If the request takes longer
         # than this value, it will be aborted with a 408 status code. Maximum allowed
         # value is 300000ms (5 minutes).
@@ -284,6 +324,7 @@ module BrandDev
             BrandDev::BrandRetrieveByNameParams::ForceLanguage::OrSymbol,
           max_age_ms: Integer,
           max_speed: T::Boolean,
+          tags: T::Array[String],
           timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(BrandDev::Models::BrandRetrieveByNameResponse)
@@ -306,6 +347,10 @@ module BrandDev
         # the API will skip time-consuming operations for faster response at the cost of
         # less comprehensive data.
         max_speed: nil,
+        # Optional comma-separated caller-defined tags for tracking this request. Tags are
+        # recorded on the request's usage log and can be used to filter usage on the
+        # dashboard usage page. Up to 20 tags, each 1-50 characters.
+        tags: nil,
         # Optional timeout in milliseconds for the request. If the request takes longer
         # than this value, it will be aborted with a 408 status code. Maximum allowed
         # value is 300000ms (5 minutes).
@@ -322,6 +367,7 @@ module BrandDev
             BrandDev::BrandRetrieveByTickerParams::ForceLanguage::OrSymbol,
           max_age_ms: Integer,
           max_speed: T::Boolean,
+          tags: T::Array[String],
           ticker_exchange:
             BrandDev::BrandRetrieveByTickerParams::TickerExchange::OrSymbol,
           timeout_ms: Integer,
@@ -343,6 +389,10 @@ module BrandDev
         # the API will skip time-consuming operations for faster response at the cost of
         # less comprehensive data.
         max_speed: nil,
+        # Optional comma-separated caller-defined tags for tracking this request. Tags are
+        # recorded on the request's usage log and can be used to filter usage on the
+        # dashboard usage page. Up to 20 tags, each 1-50 characters.
+        tags: nil,
         # Optional stock exchange for the ticker. Defaults to NASDAQ if not specified.
         ticker_exchange: nil,
         # Optional timeout in milliseconds for the request. If the request takes longer
@@ -360,6 +410,7 @@ module BrandDev
         params(
           domain: String,
           max_age_ms: Integer,
+          tags: T::Array[String],
           timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(BrandDev::Models::BrandRetrieveSimplifiedResponse)
@@ -372,6 +423,10 @@ module BrandDev
         # are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
         # year.
         max_age_ms: nil,
+        # Optional comma-separated caller-defined tags for tracking this request. Tags are
+        # recorded on the request's usage log and can be used to filter usage on the
+        # dashboard usage page. Up to 20 tags, each 1-50 characters.
+        tags: nil,
         # Optional timeout in milliseconds for the request. If the request takes longer
         # than this value, it will be aborted with a 408 status code. Maximum allowed
         # value is 300000ms (5 minutes).
@@ -392,6 +447,7 @@ module BrandDev
           max_age_ms: Integer,
           pdf: BrandDev::BrandWebScrapeHTMLParams::Pdf::OrHash,
           settle_animations: T::Boolean,
+          tags: T::Array[String],
           timeout_ms: Integer,
           use_main_content_only: T::Boolean,
           wait_for_ms: Integer,
@@ -429,6 +485,10 @@ module BrandDev
         # extracting HTML. Defaults to false. This adds a bit of latency in exchange for
         # more stable output on animated pages.
         settle_animations: nil,
+        # Optional comma-separated caller-defined tags for tracking this request. Tags are
+        # recorded on the request's usage log and can be used to filter usage on the
+        # dashboard usage page. Up to 20 tags, each 1-50 characters.
+        tags: nil,
         # Optional timeout in milliseconds for the request. If the request takes longer
         # than this value, it will be aborted with a 408 status code. Maximum allowed
         # value is 300000ms (5 minutes).
@@ -454,6 +514,7 @@ module BrandDev
           enrichment: BrandDev::BrandWebScrapeImagesParams::Enrichment::OrHash,
           headers: T::Hash[Symbol, String],
           max_age_ms: Integer,
+          tags: T::Array[String],
           timeout_ms: Integer,
           wait_for_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
@@ -477,6 +538,10 @@ module BrandDev
         # Reuse a cached result this many milliseconds old or newer. Default: 86400000 (1
         # day). Set to 0 to bypass cache. Maximum: 2592000000 (30 days).
         max_age_ms: nil,
+        # Optional comma-separated caller-defined tags for tracking this request. Tags are
+        # recorded on the request's usage log and can be used to filter usage on the
+        # dashboard usage page. Up to 20 tags, each 1-50 characters.
+        tags: nil,
         # Optional timeout in milliseconds for the request. If the request takes longer
         # than this value, it will be aborted with a 408 status code. Maximum allowed
         # value is 300000ms (5 minutes).
@@ -518,6 +583,7 @@ module BrandDev
           pdf: BrandDev::BrandWebScrapeMdParams::Pdf::OrHash,
           settle_animations: T::Boolean,
           shorten_base64_images: T::Boolean,
+          tags: T::Array[String],
           timeout_ms: Integer,
           use_main_content_only: T::Boolean,
           wait_for_ms: Integer,
@@ -562,6 +628,10 @@ module BrandDev
         settle_animations: nil,
         # Shorten base64-encoded image data in the Markdown output
         shorten_base64_images: nil,
+        # Optional comma-separated caller-defined tags for tracking this request. Tags are
+        # recorded on the request's usage log and can be used to filter usage on the
+        # dashboard usage page. Up to 20 tags, each 1-50 characters.
+        tags: nil,
         # Optional timeout in milliseconds for the request. If the request takes longer
         # than this value, it will be aborted with a 408 status code. Maximum allowed
         # value is 300000ms (5 minutes).
@@ -582,6 +652,7 @@ module BrandDev
           domain: String,
           headers: T::Hash[Symbol, String],
           max_links: Integer,
+          tags: T::Array[String],
           timeout_ms: Integer,
           url_regex: String,
           request_options: BrandDev::RequestOptions::OrHash
@@ -597,6 +668,10 @@ module BrandDev
         # Maximum number of links to return from the sitemap crawl. Defaults to 10,000.
         # Minimum is 1, maximum is 100,000.
         max_links: nil,
+        # Optional comma-separated caller-defined tags for tracking this request. Tags are
+        # recorded on the request's usage log and can be used to filter usage on the
+        # dashboard usage page. Up to 20 tags, each 1-50 characters.
+        tags: nil,
         # Optional timeout in milliseconds for the request. If the request takes longer
         # than this value, it will be aborted with a 408 status code. Maximum allowed
         # value is 300000ms (5 minutes).

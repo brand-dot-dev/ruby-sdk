@@ -11,6 +11,7 @@ module BrandDev
         max_age_ms: Integer,
         pdf: BrandDev::BrandWebScrapeHTMLParams::Pdf,
         settle_animations: bool,
+        tags: ::Array[String],
         timeout_ms: Integer,
         use_main_content_only: bool,
         wait_for_ms: Integer
@@ -59,6 +60,10 @@ module BrandDev
 
       def settle_animations=: (bool) -> bool
 
+      attr_reader tags: ::Array[String]?
+
+      def tags=: (::Array[String]) -> ::Array[String]
+
       attr_reader timeout_ms: Integer?
 
       def timeout_ms=: (Integer) -> Integer
@@ -81,6 +86,7 @@ module BrandDev
         ?max_age_ms: Integer,
         ?pdf: BrandDev::BrandWebScrapeHTMLParams::Pdf,
         ?settle_animations: bool,
+        ?tags: ::Array[String],
         ?timeout_ms: Integer,
         ?use_main_content_only: bool,
         ?wait_for_ms: Integer,
@@ -97,6 +103,7 @@ module BrandDev
         max_age_ms: Integer,
         pdf: BrandDev::BrandWebScrapeHTMLParams::Pdf,
         settle_animations: bool,
+        tags: ::Array[String],
         timeout_ms: Integer,
         use_main_content_only: bool,
         wait_for_ms: Integer,
