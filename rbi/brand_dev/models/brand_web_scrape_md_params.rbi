@@ -111,6 +111,15 @@ module BrandDev
       sig { params(shorten_base64_images: T::Boolean).void }
       attr_writer :shorten_base64_images
 
+      # Optional comma-separated caller-defined tags for tracking this request. Tags are
+      # recorded on the request's usage log and can be used to filter usage on the
+      # dashboard usage page. Up to 20 tags, each 1-50 characters.
+      sig { returns(T.nilable(T::Array[String])) }
+      attr_reader :tags
+
+      sig { params(tags: T::Array[String]).void }
+      attr_writer :tags
+
       # Optional timeout in milliseconds for the request. If the request takes longer
       # than this value, it will be aborted with a 408 status code. Maximum allowed
       # value is 300000ms (5 minutes).
@@ -150,6 +159,7 @@ module BrandDev
           pdf: BrandDev::BrandWebScrapeMdParams::Pdf::OrHash,
           settle_animations: T::Boolean,
           shorten_base64_images: T::Boolean,
+          tags: T::Array[String],
           timeout_ms: Integer,
           use_main_content_only: T::Boolean,
           wait_for_ms: Integer,
@@ -194,6 +204,10 @@ module BrandDev
         settle_animations: nil,
         # Shorten base64-encoded image data in the Markdown output
         shorten_base64_images: nil,
+        # Optional comma-separated caller-defined tags for tracking this request. Tags are
+        # recorded on the request's usage log and can be used to filter usage on the
+        # dashboard usage page. Up to 20 tags, each 1-50 characters.
+        tags: nil,
         # Optional timeout in milliseconds for the request. If the request takes longer
         # than this value, it will be aborted with a 408 status code. Maximum allowed
         # value is 300000ms (5 minutes).
@@ -223,6 +237,7 @@ module BrandDev
             pdf: BrandDev::BrandWebScrapeMdParams::Pdf,
             settle_animations: T::Boolean,
             shorten_base64_images: T::Boolean,
+            tags: T::Array[String],
             timeout_ms: Integer,
             use_main_content_only: T::Boolean,
             wait_for_ms: Integer,

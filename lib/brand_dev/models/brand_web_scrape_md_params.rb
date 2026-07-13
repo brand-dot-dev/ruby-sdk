@@ -92,6 +92,14 @@ module BrandDev
       #   @return [Boolean, nil]
       optional :shorten_base64_images, BrandDev::Internal::Type::Boolean
 
+      # @!attribute tags
+      #   Optional comma-separated caller-defined tags for tracking this request. Tags are
+      #   recorded on the request's usage log and can be used to filter usage on the
+      #   dashboard usage page. Up to 20 tags, each 1-50 characters.
+      #
+      #   @return [Array<String>, nil]
+      optional :tags, BrandDev::Internal::Type::ArrayOf[String]
+
       # @!attribute timeout_ms
       #   Optional timeout in milliseconds for the request. If the request takes longer
       #   than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -114,7 +122,7 @@ module BrandDev
       #   @return [Integer, nil]
       optional :wait_for_ms, Integer
 
-      # @!method initialize(url:, country: nil, exclude_selectors: nil, headers: nil, include_frames: nil, include_images: nil, include_links: nil, include_selectors: nil, max_age_ms: nil, pdf: nil, settle_animations: nil, shorten_base64_images: nil, timeout_ms: nil, use_main_content_only: nil, wait_for_ms: nil, request_options: {})
+      # @!method initialize(url:, country: nil, exclude_selectors: nil, headers: nil, include_frames: nil, include_images: nil, include_links: nil, include_selectors: nil, max_age_ms: nil, pdf: nil, settle_animations: nil, shorten_base64_images: nil, tags: nil, timeout_ms: nil, use_main_content_only: nil, wait_for_ms: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
       #   {BrandDev::Models::BrandWebScrapeMdParams} for more details.
       #
@@ -141,6 +149,8 @@ module BrandDev
       #   @param settle_animations [Boolean] When true, waits briefly for CSS and transition animations to settle before conv
       #
       #   @param shorten_base64_images [Boolean] Shorten base64-encoded image data in the Markdown output
+      #
+      #   @param tags [Array<String>] Optional comma-separated caller-defined tags for tracking this request. Tags are
       #
       #   @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #

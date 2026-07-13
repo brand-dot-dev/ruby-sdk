@@ -32,6 +32,7 @@ module BrandDev
             domain: String,
             max_age_ms: Integer,
             max_products: Integer,
+            tags: ::Array[String],
             timeout_ms: Integer
           }
 
@@ -46,6 +47,10 @@ module BrandDev
 
           def max_products=: (Integer) -> Integer
 
+          attr_reader tags: ::Array[String]?
+
+          def tags=: (::Array[String]) -> ::Array[String]
+
           attr_reader timeout_ms: Integer?
 
           def timeout_ms=: (Integer) -> Integer
@@ -54,6 +59,7 @@ module BrandDev
             domain: String,
             ?max_age_ms: Integer,
             ?max_products: Integer,
+            ?tags: ::Array[String],
             ?timeout_ms: Integer
           ) -> void
 
@@ -61,6 +67,7 @@ module BrandDev
             domain: String,
             max_age_ms: Integer,
             max_products: Integer,
+            tags: ::Array[String],
             timeout_ms: Integer
           }
         end
@@ -70,6 +77,7 @@ module BrandDev
             direct_url: String,
             max_age_ms: Integer,
             max_products: Integer,
+            tags: ::Array[String],
             timeout_ms: Integer
           }
 
@@ -84,6 +92,10 @@ module BrandDev
 
           def max_products=: (Integer) -> Integer
 
+          attr_reader tags: ::Array[String]?
+
+          def tags=: (::Array[String]) -> ::Array[String]
+
           attr_reader timeout_ms: Integer?
 
           def timeout_ms=: (Integer) -> Integer
@@ -92,6 +104,7 @@ module BrandDev
             direct_url: String,
             ?max_age_ms: Integer,
             ?max_products: Integer,
+            ?tags: ::Array[String],
             ?timeout_ms: Integer
           ) -> void
 
@@ -99,6 +112,7 @@ module BrandDev
             direct_url: String,
             max_age_ms: Integer,
             max_products: Integer,
+            tags: ::Array[String],
             timeout_ms: Integer
           }
         end

@@ -14,6 +14,7 @@ module BrandDev
         pdf: BrandDev::BrandWebScrapeMdParams::Pdf,
         settle_animations: bool,
         :shorten_base64_images => bool,
+        tags: ::Array[String],
         timeout_ms: Integer,
         use_main_content_only: bool,
         wait_for_ms: Integer
@@ -74,6 +75,10 @@ module BrandDev
 
       def shorten_base64_images=: (bool) -> bool
 
+      attr_reader tags: ::Array[String]?
+
+      def tags=: (::Array[String]) -> ::Array[String]
+
       attr_reader timeout_ms: Integer?
 
       def timeout_ms=: (Integer) -> Integer
@@ -99,6 +104,7 @@ module BrandDev
         ?pdf: BrandDev::BrandWebScrapeMdParams::Pdf,
         ?settle_animations: bool,
         ?shorten_base64_images: bool,
+        ?tags: ::Array[String],
         ?timeout_ms: Integer,
         ?use_main_content_only: bool,
         ?wait_for_ms: Integer,
@@ -118,6 +124,7 @@ module BrandDev
         pdf: BrandDev::BrandWebScrapeMdParams::Pdf,
         settle_animations: bool,
         :shorten_base64_images => bool,
+        tags: ::Array[String],
         timeout_ms: Integer,
         use_main_content_only: bool,
         wait_for_ms: Integer,

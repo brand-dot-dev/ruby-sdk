@@ -44,6 +44,14 @@ module BrandDev
       #   @return [Integer, nil]
       optional :max_age_ms, Integer
 
+      # @!attribute tags
+      #   Optional comma-separated caller-defined tags for tracking this request. Tags are
+      #   recorded on the request's usage log and can be used to filter usage on the
+      #   dashboard usage page. Up to 20 tags, each 1-50 characters.
+      #
+      #   @return [Array<String>, nil]
+      optional :tags, BrandDev::Internal::Type::ArrayOf[String]
+
       # @!attribute timeout_ms
       #   Optional timeout in milliseconds for the request. If the request takes longer
       #   than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -59,7 +67,7 @@ module BrandDev
       #   @return [Integer, nil]
       optional :wait_for_ms, Integer
 
-      # @!method initialize(url:, dedupe: nil, enrichment: nil, headers: nil, max_age_ms: nil, timeout_ms: nil, wait_for_ms: nil, request_options: {})
+      # @!method initialize(url:, dedupe: nil, enrichment: nil, headers: nil, max_age_ms: nil, tags: nil, timeout_ms: nil, wait_for_ms: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
       #   {BrandDev::Models::BrandWebScrapeImagesParams} for more details.
       #
@@ -72,6 +80,8 @@ module BrandDev
       #   @param headers [Hash{Symbol=>String}] Optional outbound HTTP headers forwarded only to the target URL, sent as deep-ob
       #
       #   @param max_age_ms [Integer] Reuse a cached result this many milliseconds old or newer. Default: 86400000 (1
+      #
+      #   @param tags [Array<String>] Optional comma-separated caller-defined tags for tracking this request. Tags are
       #
       #   @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #

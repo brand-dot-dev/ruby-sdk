@@ -60,6 +60,14 @@ module BrandDev
       #   @return [Float, nil]
       optional :phone, Float
 
+      # @!attribute tags
+      #   Optional comma-separated caller-defined tags for tracking this request. Tags are
+      #   recorded on the request's usage log and can be used to filter usage on the
+      #   dashboard usage page. Up to 20 tags, each 1-50 characters.
+      #
+      #   @return [Array<String>, nil]
+      optional :tags, BrandDev::Internal::Type::ArrayOf[String]
+
       # @!attribute timeout_ms
       #   Optional timeout in milliseconds for the request. If the request takes longer
       #   than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -68,7 +76,7 @@ module BrandDev
       #   @return [Integer, nil]
       optional :timeout_ms, Integer
 
-      # @!method initialize(transaction_info:, city: nil, country_gl: nil, force_language: nil, high_confidence_only: nil, max_speed: nil, mcc: nil, phone: nil, timeout_ms: nil, request_options: {})
+      # @!method initialize(transaction_info:, city: nil, country_gl: nil, force_language: nil, high_confidence_only: nil, max_speed: nil, mcc: nil, phone: nil, tags: nil, timeout_ms: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
       #   {BrandDev::Models::BrandIdentifyFromTransactionParams} for more details.
       #
@@ -87,6 +95,8 @@ module BrandDev
       #   @param mcc [String] Optional Merchant Category Code (MCC) to help identify the business category/ind
       #
       #   @param phone [Float] Optional phone number from the transaction to help verify brand match.
+      #
+      #   @param tags [Array<String>] Optional comma-separated caller-defined tags for tracking this request. Tags are
       #
       #   @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #

@@ -15,6 +15,14 @@ module BrandDev
       #   @return [String]
       required :email, String
 
+      # @!attribute tags
+      #   Optional caller-defined tags for tracking this request. Tags are recorded on the
+      #   request's usage log and can be used to filter usage on the dashboard usage page.
+      #   Up to 20 tags, each 1-50 characters.
+      #
+      #   @return [Array<String>, nil]
+      optional :tags, BrandDev::Internal::Type::ArrayOf[String]
+
       # @!attribute timeout_ms
       #   Optional timeout in milliseconds for the request. If the request takes longer
       #   than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -23,11 +31,13 @@ module BrandDev
       #   @return [Integer, nil]
       optional :timeout_ms, Integer, api_name: :timeoutMS
 
-      # @!method initialize(email:, timeout_ms: nil, request_options: {})
+      # @!method initialize(email:, tags: nil, timeout_ms: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
       #   {BrandDev::Models::BrandPrefetchByEmailParams} for more details.
       #
       #   @param email [String] Email address to prefetch brand data for. The domain will be extracted from the
+      #
+      #   @param tags [Array<String>] Optional caller-defined tags for tracking this request. Tags are recorded on the
       #
       #   @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #

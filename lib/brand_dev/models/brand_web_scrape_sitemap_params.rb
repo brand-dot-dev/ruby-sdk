@@ -28,6 +28,14 @@ module BrandDev
       #   @return [Integer, nil]
       optional :max_links, Integer
 
+      # @!attribute tags
+      #   Optional comma-separated caller-defined tags for tracking this request. Tags are
+      #   recorded on the request's usage log and can be used to filter usage on the
+      #   dashboard usage page. Up to 20 tags, each 1-50 characters.
+      #
+      #   @return [Array<String>, nil]
+      optional :tags, BrandDev::Internal::Type::ArrayOf[String]
+
       # @!attribute timeout_ms
       #   Optional timeout in milliseconds for the request. If the request takes longer
       #   than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -43,7 +51,7 @@ module BrandDev
       #   @return [String, nil]
       optional :url_regex, String
 
-      # @!method initialize(domain:, headers: nil, max_links: nil, timeout_ms: nil, url_regex: nil, request_options: {})
+      # @!method initialize(domain:, headers: nil, max_links: nil, tags: nil, timeout_ms: nil, url_regex: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
       #   {BrandDev::Models::BrandWebScrapeSitemapParams} for more details.
       #
@@ -52,6 +60,8 @@ module BrandDev
       #   @param headers [Hash{Symbol=>String}] Optional outbound HTTP headers forwarded only to the target URL, sent as deep-ob
       #
       #   @param max_links [Integer] Maximum number of links to return from the sitemap crawl. Defaults to 10,000. Mi
+      #
+      #   @param tags [Array<String>] Optional comma-separated caller-defined tags for tracking this request. Tags are
       #
       #   @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #

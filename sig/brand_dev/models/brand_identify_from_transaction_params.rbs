@@ -10,6 +10,7 @@ module BrandDev
         max_speed: bool,
         mcc: String,
         phone: Float,
+        tags: ::Array[String],
         timeout_ms: Integer
       }
       & BrandDev::Internal::Type::request_parameters
@@ -52,6 +53,10 @@ module BrandDev
 
       def phone=: (Float) -> Float
 
+      attr_reader tags: ::Array[String]?
+
+      def tags=: (::Array[String]) -> ::Array[String]
+
       attr_reader timeout_ms: Integer?
 
       def timeout_ms=: (Integer) -> Integer
@@ -65,6 +70,7 @@ module BrandDev
         ?max_speed: bool,
         ?mcc: String,
         ?phone: Float,
+        ?tags: ::Array[String],
         ?timeout_ms: Integer,
         ?request_options: BrandDev::request_opts
       ) -> void
@@ -78,6 +84,7 @@ module BrandDev
         max_speed: bool,
         mcc: String,
         phone: Float,
+        tags: ::Array[String],
         timeout_ms: Integer,
         request_options: BrandDev::RequestOptions
       }

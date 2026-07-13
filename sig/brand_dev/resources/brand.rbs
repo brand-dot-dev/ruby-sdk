@@ -6,6 +6,7 @@ module BrandDev
         ?force_language: BrandDev::Models::BrandRetrieveParams::force_language,
         ?max_age_ms: Integer,
         ?max_speed: bool,
+        ?tags: ::Array[String],
         ?timeout_ms: Integer,
         ?request_options: BrandDev::request_opts
       ) -> BrandDev::Models::BrandRetrieveResponse
@@ -13,6 +14,7 @@ module BrandDev
       def ai_product: (
         url: String,
         ?max_age_ms: Integer,
+        ?tags: ::Array[String],
         ?timeout_ms: Integer,
         ?request_options: BrandDev::request_opts
       ) -> BrandDev::Models::BrandAIProductResponse
@@ -26,6 +28,7 @@ module BrandDev
         data_to_extract: ::Array[BrandDev::BrandAIQueryParams::DataToExtract],
         domain: String,
         ?specific_pages: BrandDev::BrandAIQueryParams::SpecificPages,
+        ?tags: ::Array[String],
         ?timeout_ms: Integer,
         ?request_options: BrandDev::request_opts
       ) -> BrandDev::Models::BrandAIQueryResponse
@@ -39,18 +42,21 @@ module BrandDev
         ?max_speed: bool,
         ?mcc: String,
         ?phone: Float,
+        ?tags: ::Array[String],
         ?timeout_ms: Integer,
         ?request_options: BrandDev::request_opts
       ) -> BrandDev::Models::BrandIdentifyFromTransactionResponse
 
       def prefetch: (
         domain: String,
+        ?tags: ::Array[String],
         ?timeout_ms: Integer,
         ?request_options: BrandDev::request_opts
       ) -> BrandDev::Models::BrandPrefetchResponse
 
       def prefetch_by_email: (
         email: String,
+        ?tags: ::Array[String],
         ?timeout_ms: Integer,
         ?request_options: BrandDev::request_opts
       ) -> BrandDev::Models::BrandPrefetchByEmailResponse
@@ -60,6 +66,7 @@ module BrandDev
         ?force_language: BrandDev::Models::BrandRetrieveByEmailParams::force_language,
         ?max_age_ms: Integer,
         ?max_speed: bool,
+        ?tags: ::Array[String],
         ?timeout_ms: Integer,
         ?request_options: BrandDev::request_opts
       ) -> BrandDev::Models::BrandRetrieveByEmailResponse
@@ -69,6 +76,7 @@ module BrandDev
         ?force_language: BrandDev::Models::BrandRetrieveByIsinParams::force_language,
         ?max_age_ms: Integer,
         ?max_speed: bool,
+        ?tags: ::Array[String],
         ?timeout_ms: Integer,
         ?request_options: BrandDev::request_opts
       ) -> BrandDev::Models::BrandRetrieveByIsinResponse
@@ -79,6 +87,7 @@ module BrandDev
         ?force_language: BrandDev::Models::BrandRetrieveByNameParams::force_language,
         ?max_age_ms: Integer,
         ?max_speed: bool,
+        ?tags: ::Array[String],
         ?timeout_ms: Integer,
         ?request_options: BrandDev::request_opts
       ) -> BrandDev::Models::BrandRetrieveByNameResponse
@@ -88,6 +97,7 @@ module BrandDev
         ?force_language: BrandDev::Models::BrandRetrieveByTickerParams::force_language,
         ?max_age_ms: Integer,
         ?max_speed: bool,
+        ?tags: ::Array[String],
         ?ticker_exchange: BrandDev::Models::BrandRetrieveByTickerParams::ticker_exchange,
         ?timeout_ms: Integer,
         ?request_options: BrandDev::request_opts
@@ -96,6 +106,7 @@ module BrandDev
       def retrieve_simplified: (
         domain: String,
         ?max_age_ms: Integer,
+        ?tags: ::Array[String],
         ?timeout_ms: Integer,
         ?request_options: BrandDev::request_opts
       ) -> BrandDev::Models::BrandRetrieveSimplifiedResponse
@@ -110,6 +121,7 @@ module BrandDev
         ?max_age_ms: Integer,
         ?pdf: BrandDev::BrandWebScrapeHTMLParams::Pdf,
         ?settle_animations: bool,
+        ?tags: ::Array[String],
         ?timeout_ms: Integer,
         ?use_main_content_only: bool,
         ?wait_for_ms: Integer,
@@ -122,6 +134,7 @@ module BrandDev
         ?enrichment: BrandDev::BrandWebScrapeImagesParams::Enrichment,
         ?headers: ::Hash[Symbol, String],
         ?max_age_ms: Integer,
+        ?tags: ::Array[String],
         ?timeout_ms: Integer,
         ?wait_for_ms: Integer,
         ?request_options: BrandDev::request_opts
@@ -140,6 +153,7 @@ module BrandDev
         ?pdf: BrandDev::BrandWebScrapeMdParams::Pdf,
         ?settle_animations: bool,
         ?shorten_base64_images: bool,
+        ?tags: ::Array[String],
         ?timeout_ms: Integer,
         ?use_main_content_only: bool,
         ?wait_for_ms: Integer,
@@ -150,6 +164,7 @@ module BrandDev
         domain: String,
         ?headers: ::Hash[Symbol, String],
         ?max_links: Integer,
+        ?tags: ::Array[String],
         ?timeout_ms: Integer,
         ?url_regex: String,
         ?request_options: BrandDev::request_opts

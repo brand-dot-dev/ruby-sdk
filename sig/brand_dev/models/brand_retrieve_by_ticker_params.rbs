@@ -6,6 +6,7 @@ module BrandDev
         force_language: BrandDev::Models::BrandRetrieveByTickerParams::force_language,
         max_age_ms: Integer,
         max_speed: bool,
+        tags: ::Array[String],
         ticker_exchange: BrandDev::Models::BrandRetrieveByTickerParams::ticker_exchange,
         timeout_ms: Integer
       }
@@ -31,6 +32,10 @@ module BrandDev
 
       def max_speed=: (bool) -> bool
 
+      attr_reader tags: ::Array[String]?
+
+      def tags=: (::Array[String]) -> ::Array[String]
+
       attr_reader ticker_exchange: BrandDev::Models::BrandRetrieveByTickerParams::ticker_exchange?
 
       def ticker_exchange=: (
@@ -46,6 +51,7 @@ module BrandDev
         ?force_language: BrandDev::Models::BrandRetrieveByTickerParams::force_language,
         ?max_age_ms: Integer,
         ?max_speed: bool,
+        ?tags: ::Array[String],
         ?ticker_exchange: BrandDev::Models::BrandRetrieveByTickerParams::ticker_exchange,
         ?timeout_ms: Integer,
         ?request_options: BrandDev::request_opts
@@ -56,6 +62,7 @@ module BrandDev
         force_language: BrandDev::Models::BrandRetrieveByTickerParams::force_language,
         max_age_ms: Integer,
         max_speed: bool,
+        tags: ::Array[String],
         ticker_exchange: BrandDev::Models::BrandRetrieveByTickerParams::ticker_exchange,
         timeout_ms: Integer,
         request_options: BrandDev::RequestOptions
