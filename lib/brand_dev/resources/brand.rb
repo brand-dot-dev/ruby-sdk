@@ -58,7 +58,7 @@ module BrandDev
       #
       # @param max_age_ms [Integer] Return a cached result if a prior scrape for the same parameters exists and is y
       #
-      # @param tags [Array<String>] Optional caller-defined tags for tracking this request. Tags are recorded on the
+      # @param tags [Array<String>] Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
       #
       # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #
@@ -116,7 +116,7 @@ module BrandDev
       #
       # @param specific_pages [BrandDev::Models::BrandAIQueryParams::SpecificPages] Optional object specifying which pages to analyze
       #
-      # @param tags [Array<String>] Optional caller-defined tags for tracking this request. Tags are recorded on the
+      # @param tags [Array<String>] Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
       #
       # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #
@@ -191,7 +191,7 @@ module BrandDev
       #
       # @param domain [String] Domain name to prefetch brand data for
       #
-      # @param tags [Array<String>] Optional caller-defined tags for tracking this request. Tags are recorded on the
+      # @param tags [Array<String>] Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
       #
       # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #
@@ -223,7 +223,7 @@ module BrandDev
       #
       # @param email [String] Email address to prefetch brand data for. The domain will be extracted from the
       #
-      # @param tags [Array<String>] Optional caller-defined tags for tracking this request. Tags are recorded on the
+      # @param tags [Array<String>] Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
       #
       # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #
