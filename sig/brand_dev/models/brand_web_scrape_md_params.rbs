@@ -17,7 +17,8 @@ module BrandDev
         tags: ::Array[String],
         timeout_ms: Integer,
         use_main_content_only: BrandDev::Models::BrandWebScrapeMdParams::use_main_content_only,
-        wait_for_ms: Integer?
+        wait_for_ms: Integer?,
+        zdr: BrandDev::Models::BrandWebScrapeMdParams::zdr
       }
       & BrandDev::Internal::Type::request_parameters
 
@@ -95,6 +96,12 @@ module BrandDev
 
       attr_accessor wait_for_ms: Integer?
 
+      attr_reader zdr: BrandDev::Models::BrandWebScrapeMdParams::zdr?
+
+      def zdr=: (
+        BrandDev::Models::BrandWebScrapeMdParams::zdr
+      ) -> BrandDev::Models::BrandWebScrapeMdParams::zdr
+
       def initialize: (
         url: String,
         ?country: BrandDev::Models::BrandWebScrapeMdParams::country,
@@ -112,6 +119,7 @@ module BrandDev
         ?timeout_ms: Integer,
         ?use_main_content_only: BrandDev::Models::BrandWebScrapeMdParams::use_main_content_only,
         ?wait_for_ms: Integer?,
+        ?zdr: BrandDev::Models::BrandWebScrapeMdParams::zdr,
         ?request_options: BrandDev::request_opts
       ) -> void
 
@@ -132,6 +140,7 @@ module BrandDev
         timeout_ms: Integer,
         use_main_content_only: BrandDev::Models::BrandWebScrapeMdParams::use_main_content_only,
         wait_for_ms: Integer?,
+        zdr: BrandDev::Models::BrandWebScrapeMdParams::zdr,
         request_options: BrandDev::RequestOptions
       }
 
@@ -682,6 +691,17 @@ module BrandDev
 
         TRUE: :true
         FALSE: :false
+      end
+
+      type zdr = :enabled | :disabled
+
+      module Zdr
+        extend BrandDev::Internal::Type::Enum
+
+        ENABLED: :enabled
+        DISABLED: :disabled
+
+        def self?.values: -> ::Array[BrandDev::Models::BrandWebScrapeMdParams::zdr]
       end
     end
   end

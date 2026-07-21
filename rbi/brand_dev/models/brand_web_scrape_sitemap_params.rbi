@@ -69,6 +69,20 @@ module BrandDev
       sig { params(url_regex: String).void }
       attr_writer :url_regex
 
+      # Set to enabled to bypass shared caches and omit request and response content
+      # from retained usage logs. Requires zero data retention to be enabled for your
+      # organization (contact support@context.dev), otherwise the request fails with
+      # ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
+      sig do
+        returns(T.nilable(BrandDev::BrandWebScrapeSitemapParams::Zdr::OrSymbol))
+      end
+      attr_reader :zdr
+
+      sig do
+        params(zdr: BrandDev::BrandWebScrapeSitemapParams::Zdr::OrSymbol).void
+      end
+      attr_writer :zdr
+
       sig do
         params(
           domain: String,
@@ -78,6 +92,7 @@ module BrandDev
           tags: T::Array[String],
           timeout_ms: Integer,
           url_regex: String,
+          zdr: BrandDev::BrandWebScrapeSitemapParams::Zdr::OrSymbol,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(T.attached_class)
       end
@@ -105,6 +120,11 @@ module BrandDev
         # Optional RE2-compatible regex pattern. Only URLs matching this pattern are
         # returned and counted against maxLinks.
         url_regex: nil,
+        # Set to enabled to bypass shared caches and omit request and response content
+        # from retained usage logs. Requires zero data retention to be enabled for your
+        # organization (contact support@context.dev), otherwise the request fails with
+        # ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
+        zdr: nil,
         request_options: {}
       )
       end
@@ -119,11 +139,45 @@ module BrandDev
             tags: T::Array[String],
             timeout_ms: Integer,
             url_regex: String,
+            zdr: BrandDev::BrandWebScrapeSitemapParams::Zdr::OrSymbol,
             request_options: BrandDev::RequestOptions
           }
         )
       end
       def to_hash
+      end
+
+      # Set to enabled to bypass shared caches and omit request and response content
+      # from retained usage logs. Requires zero data retention to be enabled for your
+      # organization (contact support@context.dev), otherwise the request fails with
+      # ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
+      module Zdr
+        extend BrandDev::Internal::Type::Enum
+
+        TaggedSymbol =
+          T.type_alias do
+            T.all(Symbol, BrandDev::BrandWebScrapeSitemapParams::Zdr)
+          end
+        OrSymbol = T.type_alias { T.any(Symbol, String) }
+
+        ENABLED =
+          T.let(
+            :enabled,
+            BrandDev::BrandWebScrapeSitemapParams::Zdr::TaggedSymbol
+          )
+        DISABLED =
+          T.let(
+            :disabled,
+            BrandDev::BrandWebScrapeSitemapParams::Zdr::TaggedSymbol
+          )
+
+        sig do
+          override.returns(
+            T::Array[BrandDev::BrandWebScrapeSitemapParams::Zdr::TaggedSymbol]
+          )
+        end
+        def self.values
+        end
       end
     end
   end

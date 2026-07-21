@@ -129,6 +129,7 @@ module BrandDev
         ?timeout_ms: Integer,
         ?use_main_content_only: BrandDev::Models::BrandWebScrapeHTMLParams::use_main_content_only,
         ?wait_for_ms: Integer?,
+        ?zdr: BrandDev::Models::BrandWebScrapeHTMLParams::zdr,
         ?request_options: BrandDev::request_opts
       ) -> BrandDev::Models::BrandWebScrapeHTMLResponse
 
@@ -161,6 +162,7 @@ module BrandDev
         ?timeout_ms: Integer,
         ?use_main_content_only: BrandDev::Models::BrandWebScrapeMdParams::use_main_content_only,
         ?wait_for_ms: Integer?,
+        ?zdr: BrandDev::Models::BrandWebScrapeMdParams::zdr,
         ?request_options: BrandDev::request_opts
       ) -> BrandDev::Models::BrandWebScrapeMdResponse
 
@@ -172,6 +174,7 @@ module BrandDev
         ?tags: ::Array[String],
         ?timeout_ms: Integer,
         ?url_regex: String,
+        ?zdr: BrandDev::Models::BrandWebScrapeSitemapParams::zdr,
         ?request_options: BrandDev::request_opts
       ) -> BrandDev::Models::BrandWebScrapeSitemapResponse
 

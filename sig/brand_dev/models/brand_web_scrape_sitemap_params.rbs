@@ -8,7 +8,8 @@ module BrandDev
         sitemap_url: String,
         tags: ::Array[String],
         timeout_ms: Integer,
-        url_regex: String
+        url_regex: String,
+        zdr: BrandDev::Models::BrandWebScrapeSitemapParams::zdr
       }
       & BrandDev::Internal::Type::request_parameters
 
@@ -42,6 +43,12 @@ module BrandDev
 
       def url_regex=: (String) -> String
 
+      attr_reader zdr: BrandDev::Models::BrandWebScrapeSitemapParams::zdr?
+
+      def zdr=: (
+        BrandDev::Models::BrandWebScrapeSitemapParams::zdr
+      ) -> BrandDev::Models::BrandWebScrapeSitemapParams::zdr
+
       def initialize: (
         domain: String,
         ?headers: ::Hash[Symbol, String],
@@ -50,6 +57,7 @@ module BrandDev
         ?tags: ::Array[String],
         ?timeout_ms: Integer,
         ?url_regex: String,
+        ?zdr: BrandDev::Models::BrandWebScrapeSitemapParams::zdr,
         ?request_options: BrandDev::request_opts
       ) -> void
 
@@ -61,8 +69,20 @@ module BrandDev
         tags: ::Array[String],
         timeout_ms: Integer,
         url_regex: String,
+        zdr: BrandDev::Models::BrandWebScrapeSitemapParams::zdr,
         request_options: BrandDev::RequestOptions
       }
+
+      type zdr = :enabled | :disabled
+
+      module Zdr
+        extend BrandDev::Internal::Type::Enum
+
+        ENABLED: :enabled
+        DISABLED: :disabled
+
+        def self?.values: -> ::Array[BrandDev::Models::BrandWebScrapeSitemapParams::zdr]
+      end
     end
   end
 end

@@ -508,6 +508,7 @@ module BrandDev
               BrandDev::BrandWebScrapeHTMLParams::UseMainContentOnly::OrSymbol
             ),
           wait_for_ms: T.nilable(Integer),
+          zdr: BrandDev::BrandWebScrapeHTMLParams::Zdr::OrSymbol,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(BrandDev::Models::BrandWebScrapeHTMLResponse)
       end
@@ -557,6 +558,11 @@ module BrandDev
         # Optional browser wait time in milliseconds after initial page load. Min: 0. Max:
         # 30000 (30 seconds).
         wait_for_ms: nil,
+        # Set to enabled to bypass shared caches and omit request and response content
+        # from retained usage logs. Requires zero data retention to be enabled for your
+        # organization (contact support@context.dev), otherwise the request fails with
+        # ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
+        zdr: nil,
         request_options: {}
       )
       end
@@ -674,6 +680,7 @@ module BrandDev
               BrandDev::BrandWebScrapeMdParams::UseMainContentOnly::OrSymbol
             ),
           wait_for_ms: T.nilable(Integer),
+          zdr: BrandDev::BrandWebScrapeMdParams::Zdr::OrSymbol,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(BrandDev::Models::BrandWebScrapeMdResponse)
       end
@@ -730,6 +737,11 @@ module BrandDev
         # Optional browser wait time in milliseconds after initial page load before
         # converting the page to Markdown. Min: 0. Max: 30000 (30 seconds).
         wait_for_ms: nil,
+        # Set to enabled to bypass shared caches and omit request and response content
+        # from retained usage logs. Requires zero data retention to be enabled for your
+        # organization (contact support@context.dev), otherwise the request fails with
+        # ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
+        zdr: nil,
         request_options: {}
       )
       end
@@ -744,6 +756,7 @@ module BrandDev
           tags: T::Array[String],
           timeout_ms: Integer,
           url_regex: String,
+          zdr: BrandDev::BrandWebScrapeSitemapParams::Zdr::OrSymbol,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(BrandDev::Models::BrandWebScrapeSitemapResponse)
       end
@@ -771,6 +784,11 @@ module BrandDev
         # Optional RE2-compatible regex pattern. Only URLs matching this pattern are
         # returned and counted against maxLinks.
         url_regex: nil,
+        # Set to enabled to bypass shared caches and omit request and response content
+        # from retained usage logs. Requires zero data retention to be enabled for your
+        # organization (contact support@context.dev), otherwise the request fails with
+        # ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
+        zdr: nil,
         request_options: {}
       )
       end
