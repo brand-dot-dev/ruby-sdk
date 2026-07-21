@@ -123,7 +123,16 @@ module BrandDev
       #   @return [Integer, nil]
       optional :wait_for_ms, Integer, nil?: true
 
-      # @!method initialize(url:, country: nil, exclude_selectors: nil, headers: nil, include_frames: nil, include_images: nil, include_links: nil, include_selectors: nil, max_age_ms: nil, pdf: nil, settle_animations: nil, shorten_base64_images: nil, tags: nil, timeout_ms: nil, use_main_content_only: nil, wait_for_ms: nil, request_options: {})
+      # @!attribute zdr
+      #   Set to enabled to bypass shared caches and omit request and response content
+      #   from retained usage logs. Requires zero data retention to be enabled for your
+      #   organization (contact support@context.dev), otherwise the request fails with
+      #   ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
+      #
+      #   @return [Symbol, BrandDev::Models::BrandWebScrapeMdParams::Zdr, nil]
+      optional :zdr, enum: -> { BrandDev::BrandWebScrapeMdParams::Zdr }
+
+      # @!method initialize(url:, country: nil, exclude_selectors: nil, headers: nil, include_frames: nil, include_images: nil, include_links: nil, include_selectors: nil, max_age_ms: nil, pdf: nil, settle_animations: nil, shorten_base64_images: nil, tags: nil, timeout_ms: nil, use_main_content_only: nil, wait_for_ms: nil, zdr: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
       #   {BrandDev::Models::BrandWebScrapeMdParams} for more details.
       #
@@ -158,6 +167,8 @@ module BrandDev
       #   @param use_main_content_only [Boolean, Symbol, BrandDev::Models::BrandWebScrapeMdParams::UseMainContentOnly] Extract only the main content of the page, excluding headers, footers, sidebars,
       #
       #   @param wait_for_ms [Integer, nil] Optional browser wait time in milliseconds after initial page load before conver
+      #
+      #   @param zdr [Symbol, BrandDev::Models::BrandWebScrapeMdParams::Zdr] Set to enabled to bypass shared caches and omit request and response content fro
       #
       #   @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}]
 
@@ -631,6 +642,20 @@ module BrandDev
         FALSE = :false
 
         # @!endgroup
+      end
+
+      # Set to enabled to bypass shared caches and omit request and response content
+      # from retained usage logs. Requires zero data retention to be enabled for your
+      # organization (contact support@context.dev), otherwise the request fails with
+      # ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
+      module Zdr
+        extend BrandDev::Internal::Type::Enum
+
+        ENABLED = :enabled
+        DISABLED = :disabled
+
+        # @!method self.values
+        #   @return [Array<Symbol>]
       end
     end
   end

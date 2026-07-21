@@ -236,6 +236,18 @@ module BrandDev
       sig { returns(T.nilable(Integer)) }
       attr_accessor :wait_for_ms
 
+      # Set to enabled to bypass shared caches and omit request and response content
+      # from retained usage logs. Requires zero data retention to be enabled for your
+      # organization (contact support@context.dev), otherwise the request fails with
+      # ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
+      sig do
+        returns(T.nilable(BrandDev::BrandWebScrapeMdParams::Zdr::OrSymbol))
+      end
+      attr_reader :zdr
+
+      sig { params(zdr: BrandDev::BrandWebScrapeMdParams::Zdr::OrSymbol).void }
+      attr_writer :zdr
+
       sig do
         params(
           url: String,
@@ -278,6 +290,7 @@ module BrandDev
               BrandDev::BrandWebScrapeMdParams::UseMainContentOnly::OrSymbol
             ),
           wait_for_ms: T.nilable(Integer),
+          zdr: BrandDev::BrandWebScrapeMdParams::Zdr::OrSymbol,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(T.attached_class)
       end
@@ -334,6 +347,11 @@ module BrandDev
         # Optional browser wait time in milliseconds after initial page load before
         # converting the page to Markdown. Min: 0. Max: 30000 (30 seconds).
         wait_for_ms: nil,
+        # Set to enabled to bypass shared caches and omit request and response content
+        # from retained usage logs. Requires zero data retention to be enabled for your
+        # organization (contact support@context.dev), otherwise the request fails with
+        # ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
+        zdr: nil,
         request_options: {}
       )
       end
@@ -381,6 +399,7 @@ module BrandDev
                 BrandDev::BrandWebScrapeMdParams::UseMainContentOnly::OrSymbol
               ),
             wait_for_ms: T.nilable(Integer),
+            zdr: BrandDev::BrandWebScrapeMdParams::Zdr::OrSymbol,
             request_options: BrandDev::RequestOptions
           }
         )
@@ -1061,6 +1080,31 @@ module BrandDev
             :false,
             BrandDev::BrandWebScrapeMdParams::UseMainContentOnly::TaggedSymbol
           )
+      end
+
+      # Set to enabled to bypass shared caches and omit request and response content
+      # from retained usage logs. Requires zero data retention to be enabled for your
+      # organization (contact support@context.dev), otherwise the request fails with
+      # ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
+      module Zdr
+        extend BrandDev::Internal::Type::Enum
+
+        TaggedSymbol =
+          T.type_alias { T.all(Symbol, BrandDev::BrandWebScrapeMdParams::Zdr) }
+        OrSymbol = T.type_alias { T.any(Symbol, String) }
+
+        ENABLED =
+          T.let(:enabled, BrandDev::BrandWebScrapeMdParams::Zdr::TaggedSymbol)
+        DISABLED =
+          T.let(:disabled, BrandDev::BrandWebScrapeMdParams::Zdr::TaggedSymbol)
+
+        sig do
+          override.returns(
+            T::Array[BrandDev::BrandWebScrapeMdParams::Zdr::TaggedSymbol]
+          )
+        end
+        def self.values
+        end
       end
     end
   end

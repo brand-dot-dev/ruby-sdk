@@ -58,7 +58,16 @@ module BrandDev
       #   @return [String, nil]
       optional :url_regex, String
 
-      # @!method initialize(domain:, headers: nil, max_links: nil, sitemap_url: nil, tags: nil, timeout_ms: nil, url_regex: nil, request_options: {})
+      # @!attribute zdr
+      #   Set to enabled to bypass shared caches and omit request and response content
+      #   from retained usage logs. Requires zero data retention to be enabled for your
+      #   organization (contact support@context.dev), otherwise the request fails with
+      #   ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
+      #
+      #   @return [Symbol, BrandDev::Models::BrandWebScrapeSitemapParams::Zdr, nil]
+      optional :zdr, enum: -> { BrandDev::BrandWebScrapeSitemapParams::Zdr }
+
+      # @!method initialize(domain:, headers: nil, max_links: nil, sitemap_url: nil, tags: nil, timeout_ms: nil, url_regex: nil, zdr: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
       #   {BrandDev::Models::BrandWebScrapeSitemapParams} for more details.
       #
@@ -76,7 +85,23 @@ module BrandDev
       #
       #   @param url_regex [String] Optional RE2-compatible regex pattern. Only URLs matching this pattern are retur
       #
+      #   @param zdr [Symbol, BrandDev::Models::BrandWebScrapeSitemapParams::Zdr] Set to enabled to bypass shared caches and omit request and response content fro
+      #
       #   @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}]
+
+      # Set to enabled to bypass shared caches and omit request and response content
+      # from retained usage logs. Requires zero data retention to be enabled for your
+      # organization (contact support@context.dev), otherwise the request fails with
+      # ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
+      module Zdr
+        extend BrandDev::Internal::Type::Enum
+
+        ENABLED = :enabled
+        DISABLED = :disabled
+
+        # @!method self.values
+        #   @return [Array<Symbol>]
+      end
     end
   end
 end
