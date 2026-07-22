@@ -3,6 +3,7 @@ module BrandDev
     type brand_web_scrape_html_params =
       {
         url: String,
+        actions: ::Array[BrandDev::Models::BrandWebScrapeHTMLParams::action]?,
         country: BrandDev::Models::BrandWebScrapeHTMLParams::country,
         exclude_selectors: ::Array[String]?,
         headers: ::Hash[Symbol, String],
@@ -24,6 +25,8 @@ module BrandDev
       include BrandDev::Internal::Type::RequestParameters
 
       attr_accessor url: String
+
+      attr_accessor actions: ::Array[BrandDev::Models::BrandWebScrapeHTMLParams::action]?
 
       attr_reader country: BrandDev::Models::BrandWebScrapeHTMLParams::country?
 
@@ -83,6 +86,7 @@ module BrandDev
 
       def initialize: (
         url: String,
+        ?actions: ::Array[BrandDev::Models::BrandWebScrapeHTMLParams::action]?,
         ?country: BrandDev::Models::BrandWebScrapeHTMLParams::country,
         ?exclude_selectors: ::Array[String]?,
         ?headers: ::Hash[Symbol, String],
@@ -101,6 +105,7 @@ module BrandDev
 
       def to_hash: -> {
         url: String,
+        actions: ::Array[BrandDev::Models::BrandWebScrapeHTMLParams::action]?,
         country: BrandDev::Models::BrandWebScrapeHTMLParams::country,
         exclude_selectors: ::Array[String]?,
         headers: ::Hash[Symbol, String],
@@ -116,6 +121,40 @@ module BrandDev
         zdr: BrandDev::Models::BrandWebScrapeHTMLParams::zdr,
         request_options: BrandDev::RequestOptions
       }
+
+      type action =
+        BrandDev::BrandWebScrapeHTMLParams::Action::Wait
+        | BrandDev::BrandWebScrapeHTMLParams::Action::Perform
+
+      module Action
+        extend BrandDev::Internal::Type::Union
+
+        type wait = { do_: :wait, time_ms: Integer }
+
+        class Wait < BrandDev::Internal::Type::BaseModel
+          attr_accessor do_: :wait
+
+          attr_accessor time_ms: Integer
+
+          def initialize: (time_ms: Integer, ?do_: :wait) -> void
+
+          def to_hash: -> { do_: :wait, time_ms: Integer }
+        end
+
+        type perform = { action: String, do_: :perform }
+
+        class Perform < BrandDev::Internal::Type::BaseModel
+          attr_accessor action: String
+
+          attr_accessor do_: :perform
+
+          def initialize: (action: String, ?do_: :perform) -> void
+
+          def to_hash: -> { action: String, do_: :perform }
+        end
+
+        def self?.variants: -> ::Array[BrandDev::Models::BrandWebScrapeHTMLParams::action]
+      end
 
       type country =
         :ad

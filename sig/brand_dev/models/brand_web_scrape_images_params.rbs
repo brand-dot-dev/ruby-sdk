@@ -3,6 +3,7 @@ module BrandDev
     type brand_web_scrape_images_params =
       {
         url: String,
+        actions: ::Array[BrandDev::Models::BrandWebScrapeImagesParams::action]?,
         dedupe: BrandDev::Models::BrandWebScrapeImagesParams::dedupe,
         enrichment: BrandDev::BrandWebScrapeImagesParams::Enrichment?,
         headers: ::Hash[Symbol, String],
@@ -18,6 +19,8 @@ module BrandDev
       include BrandDev::Internal::Type::RequestParameters
 
       attr_accessor url: String
+
+      attr_accessor actions: ::Array[BrandDev::Models::BrandWebScrapeImagesParams::action]?
 
       attr_reader dedupe: BrandDev::Models::BrandWebScrapeImagesParams::dedupe?
 
@@ -45,6 +48,7 @@ module BrandDev
 
       def initialize: (
         url: String,
+        ?actions: ::Array[BrandDev::Models::BrandWebScrapeImagesParams::action]?,
         ?dedupe: BrandDev::Models::BrandWebScrapeImagesParams::dedupe,
         ?enrichment: BrandDev::BrandWebScrapeImagesParams::Enrichment?,
         ?headers: ::Hash[Symbol, String],
@@ -57,6 +61,7 @@ module BrandDev
 
       def to_hash: -> {
         url: String,
+        actions: ::Array[BrandDev::Models::BrandWebScrapeImagesParams::action]?,
         dedupe: BrandDev::Models::BrandWebScrapeImagesParams::dedupe,
         enrichment: BrandDev::BrandWebScrapeImagesParams::Enrichment?,
         headers: ::Hash[Symbol, String],
@@ -66,6 +71,40 @@ module BrandDev
         wait_for_ms: Integer?,
         request_options: BrandDev::RequestOptions
       }
+
+      type action =
+        BrandDev::BrandWebScrapeImagesParams::Action::Wait
+        | BrandDev::BrandWebScrapeImagesParams::Action::Perform
+
+      module Action
+        extend BrandDev::Internal::Type::Union
+
+        type wait = { do_: :wait, time_ms: Integer }
+
+        class Wait < BrandDev::Internal::Type::BaseModel
+          attr_accessor do_: :wait
+
+          attr_accessor time_ms: Integer
+
+          def initialize: (time_ms: Integer, ?do_: :wait) -> void
+
+          def to_hash: -> { do_: :wait, time_ms: Integer }
+        end
+
+        type perform = { action: String, do_: :perform }
+
+        class Perform < BrandDev::Internal::Type::BaseModel
+          attr_accessor action: String
+
+          attr_accessor do_: :perform
+
+          def initialize: (action: String, ?do_: :perform) -> void
+
+          def to_hash: -> { action: String, do_: :perform }
+        end
+
+        def self?.variants: -> ::Array[BrandDev::Models::BrandWebScrapeImagesParams::action]
+      end
 
       type dedupe = bool | :true | :false
 

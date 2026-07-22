@@ -13,6 +13,16 @@ module BrandDev
       #   @return [String]
       required :url, String
 
+      # @!attribute actions
+      #   Optional browser actions executed in array order after the page loads and before
+      #   content is captured. Requires a paid plan. Send a JSON array in the query
+      #   parameter. Maximum: 5 actions.
+      #
+      #   @return [Array<BrandDev::Models::BrandWebScrapeHTMLParams::Action::Wait, BrandDev::Models::BrandWebScrapeHTMLParams::Action::Perform>, nil]
+      optional :actions,
+               -> { BrandDev::Internal::Type::ArrayOf[union: BrandDev::BrandWebScrapeHTMLParams::Action] },
+               nil?: true
+
       # @!attribute country
       #   Two-letter ISO 3166-1 alpha-2 country code identifying a supported Context.dev
       #   residential proxy exit location. Must be one of Context.dev's supported
@@ -113,11 +123,13 @@ module BrandDev
       #   @return [Symbol, BrandDev::Models::BrandWebScrapeHTMLParams::Zdr, nil]
       optional :zdr, enum: -> { BrandDev::BrandWebScrapeHTMLParams::Zdr }
 
-      # @!method initialize(url:, country: nil, exclude_selectors: nil, headers: nil, include_frames: nil, include_selectors: nil, max_age_ms: nil, pdf: nil, settle_animations: nil, tags: nil, timeout_ms: nil, use_main_content_only: nil, wait_for_ms: nil, zdr: nil, request_options: {})
+      # @!method initialize(url:, actions: nil, country: nil, exclude_selectors: nil, headers: nil, include_frames: nil, include_selectors: nil, max_age_ms: nil, pdf: nil, settle_animations: nil, tags: nil, timeout_ms: nil, use_main_content_only: nil, wait_for_ms: nil, zdr: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
       #   {BrandDev::Models::BrandWebScrapeHTMLParams} for more details.
       #
       #   @param url [String] Full URL to scrape (must include http:// or https:// protocol)
+      #
+      #   @param actions [Array<BrandDev::Models::BrandWebScrapeHTMLParams::Action::Wait, BrandDev::Models::BrandWebScrapeHTMLParams::Action::Perform>, nil] Optional browser actions executed in array order after the page loads and before
       #
       #   @param country [Symbol, BrandDev::Models::BrandWebScrapeHTMLParams::Country] Two-letter ISO 3166-1 alpha-2 country code identifying a supported Context.dev r
       #
@@ -146,6 +158,59 @@ module BrandDev
       #   @param zdr [Symbol, BrandDev::Models::BrandWebScrapeHTMLParams::Zdr] Set to enabled to bypass shared caches and omit request and response content fro
       #
       #   @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}]
+
+      # Browser action discriminated by `do`. Each variant exposes only its applicable
+      # fields.
+      module Action
+        extend BrandDev::Internal::Type::Union
+
+        discriminator :do
+
+        # Pause for a fixed number of milliseconds before continuing to the next action.
+        variant :wait, -> { BrandDev::BrandWebScrapeHTMLParams::Action::Wait }
+
+        # Resolve and perform one natural-language browser action.
+        variant :perform, -> { BrandDev::BrandWebScrapeHTMLParams::Action::Perform }
+
+        class Wait < BrandDev::Internal::Type::BaseModel
+          # @!attribute do_
+          #
+          #   @return [Symbol, :wait]
+          required :do_, const: :wait, api_name: :do
+
+          # @!attribute time_ms
+          #
+          #   @return [Integer]
+          required :time_ms, Integer, api_name: :timeMs
+
+          # @!method initialize(time_ms:, do_: :wait)
+          #   Pause for a fixed number of milliseconds before continuing to the next action.
+          #
+          #   @param time_ms [Integer]
+          #   @param do_ [Symbol, :wait]
+        end
+
+        class Perform < BrandDev::Internal::Type::BaseModel
+          # @!attribute action
+          #
+          #   @return [String]
+          required :action, String
+
+          # @!attribute do_
+          #
+          #   @return [Symbol, :perform]
+          required :do_, const: :perform, api_name: :do
+
+          # @!method initialize(action:, do_: :perform)
+          #   Resolve and perform one natural-language browser action.
+          #
+          #   @param action [String]
+          #   @param do_ [Symbol, :perform]
+        end
+
+        # @!method self.variants
+        #   @return [Array(BrandDev::Models::BrandWebScrapeHTMLParams::Action::Wait, BrandDev::Models::BrandWebScrapeHTMLParams::Action::Perform)]
+      end
 
       # Two-letter ISO 3166-1 alpha-2 country code identifying a supported Context.dev
       # residential proxy exit location. Must be one of Context.dev's supported

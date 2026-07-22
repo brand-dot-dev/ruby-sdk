@@ -433,11 +433,14 @@ module BrandDev
       # Some parameter documentations has been truncated, see
       # {BrandDev::Models::BrandWebScrapeHTMLParams} for more details.
       #
-      # Scrapes the given URL and returns the raw HTML content of the page.
+      # Scrapes the given URL and returns the raw HTML content of the page. The base
+      # request costs 1 credit; requests with browser actions cost 2 credits.
       #
-      # @overload web_scrape_html(url:, country: nil, exclude_selectors: nil, headers: nil, include_frames: nil, include_selectors: nil, max_age_ms: nil, pdf: nil, settle_animations: nil, tags: nil, timeout_ms: nil, use_main_content_only: nil, wait_for_ms: nil, zdr: nil, request_options: {})
+      # @overload web_scrape_html(url:, actions: nil, country: nil, exclude_selectors: nil, headers: nil, include_frames: nil, include_selectors: nil, max_age_ms: nil, pdf: nil, settle_animations: nil, tags: nil, timeout_ms: nil, use_main_content_only: nil, wait_for_ms: nil, zdr: nil, request_options: {})
       #
       # @param url [String] Full URL to scrape (must include http:// or https:// protocol)
+      #
+      # @param actions [Array<BrandDev::Models::BrandWebScrapeHTMLParams::Action::Wait, BrandDev::Models::BrandWebScrapeHTMLParams::Action::Perform>, nil] Optional browser actions executed in array order after the page loads and before
       #
       # @param country [Symbol, BrandDev::Models::BrandWebScrapeHTMLParams::Country] Two-letter ISO 3166-1 alpha-2 country code identifying a supported Context.dev r
       #
@@ -496,12 +499,15 @@ module BrandDev
       #
       # Extract image assets from a web page, including standard URLs, inline SVGs, data
       # URIs, responsive image sources, metadata, CSS backgrounds, video posters, and
-      # embeds. The base request costs 1 credit. When enrichment is enabled, the entire
-      # call costs 5 credits.
+      # embeds. The base request costs 1 credit, or 2 credits with browser actions. When
+      # enrichment is enabled, the entire call costs 5 credits, including requests that
+      # also use actions.
       #
-      # @overload web_scrape_images(url:, dedupe: nil, enrichment: nil, headers: nil, max_age_ms: nil, tags: nil, timeout_ms: nil, wait_for_ms: nil, request_options: {})
+      # @overload web_scrape_images(url:, actions: nil, dedupe: nil, enrichment: nil, headers: nil, max_age_ms: nil, tags: nil, timeout_ms: nil, wait_for_ms: nil, request_options: {})
       #
       # @param url [String] Page URL to inspect. Must include http:// or https://.
+      #
+      # @param actions [Array<BrandDev::Models::BrandWebScrapeImagesParams::Action::Wait, BrandDev::Models::BrandWebScrapeImagesParams::Action::Perform>, nil] Optional browser actions executed in array order after the page loads and before
       #
       # @param dedupe [Boolean, Symbol, BrandDev::Models::BrandWebScrapeImagesParams::Dedupe] When true, visually duplicate images are removed: every image is loaded and perc
       #
@@ -547,20 +553,22 @@ module BrandDev
       #
       # ### Billing & errors
       #
-      # | HTTP status | Billed?        | Meaning                                                                                  |
-      # | ----------- | -------------- | ---------------------------------------------------------------------------------------- |
-      # | 200         | Yes — 1 credit | Successful scrape, including a zero-length result when includeSelectors matched nothing  |
-      # | 400         | No             | Invalid input, skipped PDF, or the page could not be scraped                             |
-      # | 401 / 403   | No             | Invalid/disabled key, insufficient permissions, or credits exhausted; inspect error_code |
-      # | 404         | No             | Target page returned or fingerprinted as not found                                       |
-      # | 408         | No             | Request timed out                                                                        |
-      # | 415         | No             | Unsupported content type                                                                 |
-      # | 429         | No             | Per-minute rate limit exceeded; honor Retry-After                                        |
-      # | 500         | No             | Internal error                                                                           |
+      # | HTTP status | Billed?                                   | Meaning                                                                                  |
+      # | ----------- | ----------------------------------------- | ---------------------------------------------------------------------------------------- |
+      # | 200         | Yes — 1 credit, or 2 credits with actions | Successful scrape, including a zero-length result when includeSelectors matched nothing  |
+      # | 400         | No                                        | Invalid input, skipped PDF, or the page could not be scraped                             |
+      # | 401 / 403   | No                                        | Invalid/disabled key, insufficient permissions, or credits exhausted; inspect error_code |
+      # | 404         | No                                        | Target page returned or fingerprinted as not found                                       |
+      # | 408         | No                                        | Request timed out                                                                        |
+      # | 415         | No                                        | Unsupported content type                                                                 |
+      # | 429         | No                                        | Per-minute rate limit exceeded; honor Retry-After                                        |
+      # | 500         | No                                        | Internal error                                                                           |
       #
-      # @overload web_scrape_md(url:, country: nil, exclude_selectors: nil, headers: nil, include_frames: nil, include_images: nil, include_links: nil, include_selectors: nil, max_age_ms: nil, pdf: nil, settle_animations: nil, shorten_base64_images: nil, tags: nil, timeout_ms: nil, use_main_content_only: nil, wait_for_ms: nil, zdr: nil, request_options: {})
+      # @overload web_scrape_md(url:, actions: nil, country: nil, exclude_selectors: nil, headers: nil, include_frames: nil, include_images: nil, include_links: nil, include_selectors: nil, max_age_ms: nil, pdf: nil, settle_animations: nil, shorten_base64_images: nil, tags: nil, timeout_ms: nil, use_main_content_only: nil, wait_for_ms: nil, zdr: nil, request_options: {})
       #
       # @param url [String] Full URL to scrape into LLM usable Markdown (must include http:// or https:// pr
+      #
+      # @param actions [Array<BrandDev::Models::BrandWebScrapeMdParams::Action::Wait, BrandDev::Models::BrandWebScrapeMdParams::Action::Perform>, nil] Optional browser actions executed in array order after the page loads and before
       #
       # @param country [Symbol, BrandDev::Models::BrandWebScrapeMdParams::Country] Two-letter ISO 3166-1 alpha-2 country code identifying a supported Context.dev r
       #
