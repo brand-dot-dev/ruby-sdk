@@ -16,6 +16,9 @@ module BrandDev
     sig { returns(BrandDev::Resources::Brand) }
     attr_reader :brand
 
+    sig { returns(BrandDev::Resources::Monitors) }
+    attr_reader :monitors
+
     # @api private
     sig { override.returns(T::Hash[String, String]) }
     private def auth_headers
