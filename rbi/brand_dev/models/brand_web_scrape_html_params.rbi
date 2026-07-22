@@ -15,6 +15,23 @@ module BrandDev
       sig { returns(String) }
       attr_accessor :url
 
+      # Optional browser actions executed in array order after the page loads and before
+      # content is captured. Requires a paid plan. Send a JSON array in the query
+      # parameter. Maximum: 5 actions.
+      sig do
+        returns(
+          T.nilable(
+            T::Array[
+              T.any(
+                BrandDev::BrandWebScrapeHTMLParams::Action::Wait,
+                BrandDev::BrandWebScrapeHTMLParams::Action::Perform
+              )
+            ]
+          )
+        )
+      end
+      attr_accessor :actions
+
       # Two-letter ISO 3166-1 alpha-2 country code identifying a supported Context.dev
       # residential proxy exit location. Must be one of Context.dev's supported
       # countries. When provided, Context.dev fetches the target page from that country.
@@ -182,6 +199,15 @@ module BrandDev
       sig do
         params(
           url: String,
+          actions:
+            T.nilable(
+              T::Array[
+                T.any(
+                  BrandDev::BrandWebScrapeHTMLParams::Action::Wait::OrHash,
+                  BrandDev::BrandWebScrapeHTMLParams::Action::Perform::OrHash
+                )
+              ]
+            ),
           country: BrandDev::BrandWebScrapeHTMLParams::Country::OrSymbol,
           exclude_selectors: T.nilable(T::Array[String]),
           headers: T::Hash[Symbol, String],
@@ -213,6 +239,10 @@ module BrandDev
       def self.new(
         # Full URL to scrape (must include http:// or https:// protocol)
         url:,
+        # Optional browser actions executed in array order after the page loads and before
+        # content is captured. Requires a paid plan. Send a JSON array in the query
+        # parameter. Maximum: 5 actions.
+        actions: nil,
         # Two-letter ISO 3166-1 alpha-2 country code identifying a supported Context.dev
         # residential proxy exit location. Must be one of Context.dev's supported
         # countries. When provided, Context.dev fetches the target page from that country.
@@ -269,6 +299,15 @@ module BrandDev
         override.returns(
           {
             url: String,
+            actions:
+              T.nilable(
+                T::Array[
+                  T.any(
+                    BrandDev::BrandWebScrapeHTMLParams::Action::Wait,
+                    BrandDev::BrandWebScrapeHTMLParams::Action::Perform
+                  )
+                ]
+              ),
             country: BrandDev::BrandWebScrapeHTMLParams::Country::OrSymbol,
             exclude_selectors: T.nilable(T::Array[String]),
             headers: T::Hash[Symbol, String],
@@ -299,6 +338,80 @@ module BrandDev
         )
       end
       def to_hash
+      end
+
+      # Browser action discriminated by `do`. Each variant exposes only its applicable
+      # fields.
+      module Action
+        extend BrandDev::Internal::Type::Union
+
+        Variants =
+          T.type_alias do
+            T.any(
+              BrandDev::BrandWebScrapeHTMLParams::Action::Wait,
+              BrandDev::BrandWebScrapeHTMLParams::Action::Perform
+            )
+          end
+
+        class Wait < BrandDev::Internal::Type::BaseModel
+          OrHash =
+            T.type_alias do
+              T.any(
+                BrandDev::BrandWebScrapeHTMLParams::Action::Wait,
+                BrandDev::Internal::AnyHash
+              )
+            end
+
+          sig { returns(Symbol) }
+          attr_accessor :do_
+
+          sig { returns(Integer) }
+          attr_accessor :time_ms
+
+          # Pause for a fixed number of milliseconds before continuing to the next action.
+          sig do
+            params(time_ms: Integer, do_: Symbol).returns(T.attached_class)
+          end
+          def self.new(time_ms:, do_: :wait)
+          end
+
+          sig { override.returns({ do_: Symbol, time_ms: Integer }) }
+          def to_hash
+          end
+        end
+
+        class Perform < BrandDev::Internal::Type::BaseModel
+          OrHash =
+            T.type_alias do
+              T.any(
+                BrandDev::BrandWebScrapeHTMLParams::Action::Perform,
+                BrandDev::Internal::AnyHash
+              )
+            end
+
+          sig { returns(String) }
+          attr_accessor :action
+
+          sig { returns(Symbol) }
+          attr_accessor :do_
+
+          # Resolve and perform one natural-language browser action.
+          sig { params(action: String, do_: Symbol).returns(T.attached_class) }
+          def self.new(action:, do_: :perform)
+          end
+
+          sig { override.returns({ action: String, do_: Symbol }) }
+          def to_hash
+          end
+        end
+
+        sig do
+          override.returns(
+            T::Array[BrandDev::BrandWebScrapeHTMLParams::Action::Variants]
+          )
+        end
+        def self.variants
+        end
       end
 
       # Two-letter ISO 3166-1 alpha-2 country code identifying a supported Context.dev
