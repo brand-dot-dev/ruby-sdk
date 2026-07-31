@@ -1,0 +1,105 @@
+module BrandDev
+  module Models
+    type brand_screenshot_response =
+      {
+        code: Integer,
+        domain: String,
+        height: Integer,
+        key_metadata: BrandDev::Models::BrandScreenshotResponse::KeyMetadata,
+        screenshot: String,
+        screenshot_type: BrandDev::Models::BrandScreenshotResponse::screenshot_type,
+        status: String,
+        width: Integer
+      }
+
+    class BrandScreenshotResponse < BrandDev::Internal::Type::BaseModel
+      attr_reader code: Integer?
+
+      def code=: (Integer) -> Integer
+
+      attr_reader domain: String?
+
+      def domain=: (String) -> String
+
+      attr_reader height: Integer?
+
+      def height=: (Integer) -> Integer
+
+      attr_reader key_metadata: BrandDev::Models::BrandScreenshotResponse::KeyMetadata?
+
+      def key_metadata=: (
+        BrandDev::Models::BrandScreenshotResponse::KeyMetadata
+      ) -> BrandDev::Models::BrandScreenshotResponse::KeyMetadata
+
+      attr_reader screenshot: String?
+
+      def screenshot=: (String) -> String
+
+      attr_reader screenshot_type: BrandDev::Models::BrandScreenshotResponse::screenshot_type?
+
+      def screenshot_type=: (
+        BrandDev::Models::BrandScreenshotResponse::screenshot_type
+      ) -> BrandDev::Models::BrandScreenshotResponse::screenshot_type
+
+      attr_reader status: String?
+
+      def status=: (String) -> String
+
+      attr_reader width: Integer?
+
+      def width=: (Integer) -> Integer
+
+      def initialize: (
+        ?code: Integer,
+        ?domain: String,
+        ?height: Integer,
+        ?key_metadata: BrandDev::Models::BrandScreenshotResponse::KeyMetadata,
+        ?screenshot: String,
+        ?screenshot_type: BrandDev::Models::BrandScreenshotResponse::screenshot_type,
+        ?status: String,
+        ?width: Integer
+      ) -> void
+
+      def to_hash: -> {
+        code: Integer,
+        domain: String,
+        height: Integer,
+        key_metadata: BrandDev::Models::BrandScreenshotResponse::KeyMetadata,
+        screenshot: String,
+        screenshot_type: BrandDev::Models::BrandScreenshotResponse::screenshot_type,
+        status: String,
+        width: Integer
+      }
+
+      type key_metadata =
+        { credits_consumed: Integer, credits_remaining: Integer }
+
+      class KeyMetadata < BrandDev::Internal::Type::BaseModel
+        attr_accessor credits_consumed: Integer
+
+        attr_accessor credits_remaining: Integer
+
+        def initialize: (
+          credits_consumed: Integer,
+          credits_remaining: Integer
+        ) -> void
+
+        def to_hash: -> {
+          credits_consumed: Integer,
+          credits_remaining: Integer
+        }
+      end
+
+      type screenshot_type = :viewport | :fullPage
+
+      module ScreenshotType
+        extend BrandDev::Internal::Type::Enum
+
+        VIEWPORT: :viewport
+        FULL_PAGE: :fullPage
+
+        def self?.values: -> ::Array[BrandDev::Models::BrandScreenshotResponse::screenshot_type]
+      end
+    end
+  end
+end

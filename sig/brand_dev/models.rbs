@@ -5,6 +5,8 @@ module BrandDev
 
   class BrandAIQueryParams = BrandDev::Models::BrandAIQueryParams
 
+  class BrandFontsParams = BrandDev::Models::BrandFontsParams
+
   class BrandIdentifyFromTransactionParams = BrandDev::Models::BrandIdentifyFromTransactionParams
 
   class BrandPrefetchByEmailParams = BrandDev::Models::BrandPrefetchByEmailParams
@@ -19,9 +21,15 @@ module BrandDev
 
   class BrandRetrieveByTickerParams = BrandDev::Models::BrandRetrieveByTickerParams
 
+  class BrandRetrieveNaicsParams = BrandDev::Models::BrandRetrieveNaicsParams
+
   class BrandRetrieveParams = BrandDev::Models::BrandRetrieveParams
 
   class BrandRetrieveSimplifiedParams = BrandDev::Models::BrandRetrieveSimplifiedParams
+
+  class BrandScreenshotParams = BrandDev::Models::BrandScreenshotParams
+
+  class BrandStyleguideParams = BrandDev::Models::BrandStyleguideParams
 
   class BrandWebScrapeHTMLParams = BrandDev::Models::BrandWebScrapeHTMLParams
 

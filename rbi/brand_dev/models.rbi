@@ -7,6 +7,8 @@ module BrandDev
 
   BrandAIQueryParams = BrandDev::Models::BrandAIQueryParams
 
+  BrandFontsParams = BrandDev::Models::BrandFontsParams
+
   BrandIdentifyFromTransactionParams =
     BrandDev::Models::BrandIdentifyFromTransactionParams
 
@@ -22,10 +24,16 @@ module BrandDev
 
   BrandRetrieveByTickerParams = BrandDev::Models::BrandRetrieveByTickerParams
 
+  BrandRetrieveNaicsParams = BrandDev::Models::BrandRetrieveNaicsParams
+
   BrandRetrieveParams = BrandDev::Models::BrandRetrieveParams
 
   BrandRetrieveSimplifiedParams =
     BrandDev::Models::BrandRetrieveSimplifiedParams
+
+  BrandScreenshotParams = BrandDev::Models::BrandScreenshotParams
+
+  BrandStyleguideParams = BrandDev::Models::BrandStyleguideParams
 
   BrandWebScrapeHTMLParams = BrandDev::Models::BrandWebScrapeHTMLParams
 

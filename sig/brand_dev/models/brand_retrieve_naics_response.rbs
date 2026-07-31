@@ -1,0 +1,112 @@
+module BrandDev
+  module Models
+    type brand_retrieve_naics_response =
+      {
+        codes: ::Array[BrandDev::Models::BrandRetrieveNaicsResponse::Code],
+        domain: String,
+        key_metadata: BrandDev::Models::BrandRetrieveNaicsResponse::KeyMetadata,
+        status: String,
+        type: String
+      }
+
+    class BrandRetrieveNaicsResponse < BrandDev::Internal::Type::BaseModel
+      attr_reader codes: ::Array[BrandDev::Models::BrandRetrieveNaicsResponse::Code]?
+
+      def codes=: (
+        ::Array[BrandDev::Models::BrandRetrieveNaicsResponse::Code]
+      ) -> ::Array[BrandDev::Models::BrandRetrieveNaicsResponse::Code]
+
+      attr_reader domain: String?
+
+      def domain=: (String) -> String
+
+      attr_reader key_metadata: BrandDev::Models::BrandRetrieveNaicsResponse::KeyMetadata?
+
+      def key_metadata=: (
+        BrandDev::Models::BrandRetrieveNaicsResponse::KeyMetadata
+      ) -> BrandDev::Models::BrandRetrieveNaicsResponse::KeyMetadata
+
+      attr_reader status: String?
+
+      def status=: (String) -> String
+
+      attr_reader type: String?
+
+      def type=: (String) -> String
+
+      def initialize: (
+        ?codes: ::Array[BrandDev::Models::BrandRetrieveNaicsResponse::Code],
+        ?domain: String,
+        ?key_metadata: BrandDev::Models::BrandRetrieveNaicsResponse::KeyMetadata,
+        ?status: String,
+        ?type: String
+      ) -> void
+
+      def to_hash: -> {
+        codes: ::Array[BrandDev::Models::BrandRetrieveNaicsResponse::Code],
+        domain: String,
+        key_metadata: BrandDev::Models::BrandRetrieveNaicsResponse::KeyMetadata,
+        status: String,
+        type: String
+      }
+
+      type code =
+        {
+          code: String,
+          confidence: BrandDev::Models::BrandRetrieveNaicsResponse::Code::confidence,
+          name: String
+        }
+
+      class Code < BrandDev::Internal::Type::BaseModel
+        attr_accessor code: String
+
+        attr_accessor confidence: BrandDev::Models::BrandRetrieveNaicsResponse::Code::confidence
+
+        attr_accessor name: String
+
+        def initialize: (
+          code: String,
+          confidence: BrandDev::Models::BrandRetrieveNaicsResponse::Code::confidence,
+          name: String
+        ) -> void
+
+        def to_hash: -> {
+          code: String,
+          confidence: BrandDev::Models::BrandRetrieveNaicsResponse::Code::confidence,
+          name: String
+        }
+
+        type confidence = :high | :medium | :low
+
+        module Confidence
+          extend BrandDev::Internal::Type::Enum
+
+          HIGH: :high
+          MEDIUM: :medium
+          LOW: :low
+
+          def self?.values: -> ::Array[BrandDev::Models::BrandRetrieveNaicsResponse::Code::confidence]
+        end
+      end
+
+      type key_metadata =
+        { credits_consumed: Integer, credits_remaining: Integer }
+
+      class KeyMetadata < BrandDev::Internal::Type::BaseModel
+        attr_accessor credits_consumed: Integer
+
+        attr_accessor credits_remaining: Integer
+
+        def initialize: (
+          credits_consumed: Integer,
+          credits_remaining: Integer
+        ) -> void
+
+        def to_hash: -> {
+          credits_consumed: Integer,
+          credits_remaining: Integer
+        }
+      end
+    end
+  end
+end

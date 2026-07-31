@@ -89,6 +89,27 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
     end
   end
 
+  def test_fonts
+    skip("Mock server tests are disabled")
+
+    response = @brand_dev.brand.fonts
+
+    assert_pattern do
+      response => BrandDev::Models::BrandFontsResponse
+    end
+
+    assert_pattern do
+      response => {
+        code: Integer,
+        domain: String,
+        fonts: ^(BrandDev::Internal::Type::ArrayOf[BrandDev::Models::BrandFontsResponse::Font]),
+        status: String,
+        font_links: ^(BrandDev::Internal::Type::HashOf[BrandDev::Models::BrandFontsResponse::FontLink]) | nil,
+        key_metadata: BrandDev::Models::BrandFontsResponse::KeyMetadata | nil
+      }
+    end
+  end
+
   def test_identify_from_transaction_required_params
     skip("Mock server tests are disabled")
 
@@ -222,6 +243,26 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
     end
   end
 
+  def test_retrieve_naics_required_params
+    skip("Mock server tests are disabled")
+
+    response = @brand_dev.brand.retrieve_naics(input: "xxxx")
+
+    assert_pattern do
+      response => BrandDev::Models::BrandRetrieveNaicsResponse
+    end
+
+    assert_pattern do
+      response => {
+        codes: ^(BrandDev::Internal::Type::ArrayOf[BrandDev::Models::BrandRetrieveNaicsResponse::Code]) | nil,
+        domain: String | nil,
+        key_metadata: BrandDev::Models::BrandRetrieveNaicsResponse::KeyMetadata | nil,
+        status: String | nil,
+        type: String | nil
+      }
+    end
+  end
+
   def test_retrieve_simplified_required_params
     skip("Mock server tests are disabled")
 
@@ -237,6 +278,49 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
         code: Integer | nil,
         key_metadata: BrandDev::Models::BrandRetrieveSimplifiedResponse::KeyMetadata | nil,
         status: String | nil
+      }
+    end
+  end
+
+  def test_screenshot
+    skip("Mock server tests are disabled")
+
+    response = @brand_dev.brand.screenshot
+
+    assert_pattern do
+      response => BrandDev::Models::BrandScreenshotResponse
+    end
+
+    assert_pattern do
+      response => {
+        code: Integer | nil,
+        domain: String | nil,
+        height: Integer | nil,
+        key_metadata: BrandDev::Models::BrandScreenshotResponse::KeyMetadata | nil,
+        screenshot: String | nil,
+        screenshot_type: BrandDev::Models::BrandScreenshotResponse::ScreenshotType | nil,
+        status: String | nil,
+        width: Integer | nil
+      }
+    end
+  end
+
+  def test_styleguide
+    skip("Mock server tests are disabled")
+
+    response = @brand_dev.brand.styleguide
+
+    assert_pattern do
+      response => BrandDev::Models::BrandStyleguideResponse
+    end
+
+    assert_pattern do
+      response => {
+        code: Integer | nil,
+        domain: String | nil,
+        key_metadata: BrandDev::Models::BrandStyleguideResponse::KeyMetadata | nil,
+        status: String | nil,
+        styleguide: BrandDev::Models::BrandStyleguideResponse::Styleguide | nil
       }
     end
   end
