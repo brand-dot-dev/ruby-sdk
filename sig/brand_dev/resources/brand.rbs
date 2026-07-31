@@ -36,6 +36,15 @@ module BrandDev
         ?request_options: BrandDev::request_opts
       ) -> BrandDev::Models::BrandAIQueryResponse
 
+      def fonts: (
+        ?direct_url: String,
+        ?domain: String,
+        ?max_age_ms: Integer?,
+        ?tags: ::Array[String],
+        ?timeout_ms: Integer,
+        ?request_options: BrandDev::request_opts
+      ) -> BrandDev::Models::BrandFontsResponse
+
       def identify_from_transaction: (
         transaction_info: String,
         ?city: String,
@@ -106,6 +115,15 @@ module BrandDev
         ?request_options: BrandDev::request_opts
       ) -> BrandDev::Models::BrandRetrieveByTickerResponse
 
+      def retrieve_naics: (
+        input: String,
+        ?max_results: Integer,
+        ?min_results: Integer,
+        ?tags: ::Array[String],
+        ?timeout_ms: Integer,
+        ?request_options: BrandDev::request_opts
+      ) -> BrandDev::Models::BrandRetrieveNaicsResponse
+
       def retrieve_simplified: (
         domain: String,
         ?max_age_ms: Integer?,
@@ -114,6 +132,34 @@ module BrandDev
         ?timeout_ms: Integer,
         ?request_options: BrandDev::request_opts
       ) -> BrandDev::Models::BrandRetrieveSimplifiedResponse
+
+      def screenshot: (
+        ?color_scheme: BrandDev::Models::BrandScreenshotParams::color_scheme,
+        ?country: BrandDev::Models::BrandScreenshotParams::country,
+        ?direct_url: String,
+        ?domain: String,
+        ?full_screenshot: BrandDev::Models::BrandScreenshotParams::full_screenshot,
+        ?handle_cookie_popup: BrandDev::Models::BrandScreenshotParams::handle_cookie_popup,
+        ?max_age_ms: Integer?,
+        ?page: BrandDev::Models::BrandScreenshotParams::page,
+        ?scroll_offset: Integer?,
+        ?tags: ::Array[String],
+        ?timeout_ms: Integer,
+        ?viewport: BrandDev::BrandScreenshotParams::Viewport,
+        ?wait_for_ms: Integer?,
+        ?zdr: BrandDev::Models::BrandScreenshotParams::zdr,
+        ?request_options: BrandDev::request_opts
+      ) -> BrandDev::Models::BrandScreenshotResponse
+
+      def styleguide: (
+        ?color_scheme: BrandDev::Models::BrandStyleguideParams::color_scheme,
+        ?direct_url: String,
+        ?domain: String,
+        ?max_age_ms: Integer?,
+        ?tags: ::Array[String],
+        ?timeout_ms: Integer,
+        ?request_options: BrandDev::request_opts
+      ) -> BrandDev::Models::BrandStyleguideResponse
 
       def web_scrape_html: (
         url: String,

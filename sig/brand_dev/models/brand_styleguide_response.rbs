@@ -1,0 +1,973 @@
+module BrandDev
+  module Models
+    type brand_styleguide_response =
+      {
+        code: Integer,
+        domain: String,
+        key_metadata: BrandDev::Models::BrandStyleguideResponse::KeyMetadata,
+        status: String,
+        styleguide: BrandDev::Models::BrandStyleguideResponse::Styleguide
+      }
+
+    class BrandStyleguideResponse < BrandDev::Internal::Type::BaseModel
+      attr_reader code: Integer?
+
+      def code=: (Integer) -> Integer
+
+      attr_reader domain: String?
+
+      def domain=: (String) -> String
+
+      attr_reader key_metadata: BrandDev::Models::BrandStyleguideResponse::KeyMetadata?
+
+      def key_metadata=: (
+        BrandDev::Models::BrandStyleguideResponse::KeyMetadata
+      ) -> BrandDev::Models::BrandStyleguideResponse::KeyMetadata
+
+      attr_reader status: String?
+
+      def status=: (String) -> String
+
+      attr_reader styleguide: BrandDev::Models::BrandStyleguideResponse::Styleguide?
+
+      def styleguide=: (
+        BrandDev::Models::BrandStyleguideResponse::Styleguide
+      ) -> BrandDev::Models::BrandStyleguideResponse::Styleguide
+
+      def initialize: (
+        ?code: Integer,
+        ?domain: String,
+        ?key_metadata: BrandDev::Models::BrandStyleguideResponse::KeyMetadata,
+        ?status: String,
+        ?styleguide: BrandDev::Models::BrandStyleguideResponse::Styleguide
+      ) -> void
+
+      def to_hash: -> {
+        code: Integer,
+        domain: String,
+        key_metadata: BrandDev::Models::BrandStyleguideResponse::KeyMetadata,
+        status: String,
+        styleguide: BrandDev::Models::BrandStyleguideResponse::Styleguide
+      }
+
+      type key_metadata =
+        { credits_consumed: Integer, credits_remaining: Integer }
+
+      class KeyMetadata < BrandDev::Internal::Type::BaseModel
+        attr_accessor credits_consumed: Integer
+
+        attr_accessor credits_remaining: Integer
+
+        def initialize: (
+          credits_consumed: Integer,
+          credits_remaining: Integer
+        ) -> void
+
+        def to_hash: -> {
+          credits_consumed: Integer,
+          credits_remaining: Integer
+        }
+      end
+
+      type styleguide =
+        {
+          colors: BrandDev::Models::BrandStyleguideResponse::Styleguide::Colors,
+          components: BrandDev::Models::BrandStyleguideResponse::Styleguide::Components,
+          element_spacing: BrandDev::Models::BrandStyleguideResponse::Styleguide::ElementSpacing,
+          font_links: ::Hash[Symbol, BrandDev::Models::BrandStyleguideResponse::Styleguide::FontLink],
+          mode: BrandDev::Models::BrandStyleguideResponse::Styleguide::mode,
+          shadows: BrandDev::Models::BrandStyleguideResponse::Styleguide::Shadows,
+          typography: BrandDev::Models::BrandStyleguideResponse::Styleguide::Typography
+        }
+
+      class Styleguide < BrandDev::Internal::Type::BaseModel
+        attr_accessor colors: BrandDev::Models::BrandStyleguideResponse::Styleguide::Colors
+
+        attr_accessor components: BrandDev::Models::BrandStyleguideResponse::Styleguide::Components
+
+        attr_accessor element_spacing: BrandDev::Models::BrandStyleguideResponse::Styleguide::ElementSpacing
+
+        attr_accessor font_links: ::Hash[Symbol, BrandDev::Models::BrandStyleguideResponse::Styleguide::FontLink]
+
+        attr_accessor mode: BrandDev::Models::BrandStyleguideResponse::Styleguide::mode
+
+        attr_accessor shadows: BrandDev::Models::BrandStyleguideResponse::Styleguide::Shadows
+
+        attr_accessor typography: BrandDev::Models::BrandStyleguideResponse::Styleguide::Typography
+
+        def initialize: (
+          colors: BrandDev::Models::BrandStyleguideResponse::Styleguide::Colors,
+          components: BrandDev::Models::BrandStyleguideResponse::Styleguide::Components,
+          element_spacing: BrandDev::Models::BrandStyleguideResponse::Styleguide::ElementSpacing,
+          font_links: ::Hash[Symbol, BrandDev::Models::BrandStyleguideResponse::Styleguide::FontLink],
+          mode: BrandDev::Models::BrandStyleguideResponse::Styleguide::mode,
+          shadows: BrandDev::Models::BrandStyleguideResponse::Styleguide::Shadows,
+          typography: BrandDev::Models::BrandStyleguideResponse::Styleguide::Typography
+        ) -> void
+
+        def to_hash: -> {
+          colors: BrandDev::Models::BrandStyleguideResponse::Styleguide::Colors,
+          components: BrandDev::Models::BrandStyleguideResponse::Styleguide::Components,
+          element_spacing: BrandDev::Models::BrandStyleguideResponse::Styleguide::ElementSpacing,
+          font_links: ::Hash[Symbol, BrandDev::Models::BrandStyleguideResponse::Styleguide::FontLink],
+          mode: BrandDev::Models::BrandStyleguideResponse::Styleguide::mode,
+          shadows: BrandDev::Models::BrandStyleguideResponse::Styleguide::Shadows,
+          typography: BrandDev::Models::BrandStyleguideResponse::Styleguide::Typography
+        }
+
+        type colors = { accent: String, background: String, text: String }
+
+        class Colors < BrandDev::Internal::Type::BaseModel
+          attr_accessor accent: String
+
+          attr_accessor background: String
+
+          attr_accessor text: String
+
+          def initialize: (
+            accent: String,
+            background: String,
+            text: String
+          ) -> void
+
+          def to_hash: -> { accent: String, background: String, text: String }
+        end
+
+        type components =
+          {
+            button: BrandDev::Models::BrandStyleguideResponse::Styleguide::Components::Button,
+            card: BrandDev::Models::BrandStyleguideResponse::Styleguide::Components::Card
+          }
+
+        class Components < BrandDev::Internal::Type::BaseModel
+          attr_accessor button: BrandDev::Models::BrandStyleguideResponse::Styleguide::Components::Button
+
+          attr_reader card: BrandDev::Models::BrandStyleguideResponse::Styleguide::Components::Card?
+
+          def card=: (
+            BrandDev::Models::BrandStyleguideResponse::Styleguide::Components::Card
+          ) -> BrandDev::Models::BrandStyleguideResponse::Styleguide::Components::Card
+
+          def initialize: (
+            button: BrandDev::Models::BrandStyleguideResponse::Styleguide::Components::Button,
+            ?card: BrandDev::Models::BrandStyleguideResponse::Styleguide::Components::Card
+          ) -> void
+
+          def to_hash: -> {
+            button: BrandDev::Models::BrandStyleguideResponse::Styleguide::Components::Button,
+            card: BrandDev::Models::BrandStyleguideResponse::Styleguide::Components::Card
+          }
+
+          type button =
+            {
+              link: BrandDev::Models::BrandStyleguideResponse::Styleguide::Components::Button::Link,
+              primary: BrandDev::Models::BrandStyleguideResponse::Styleguide::Components::Button::Primary,
+              secondary: BrandDev::Models::BrandStyleguideResponse::Styleguide::Components::Button::Secondary
+            }
+
+          class Button < BrandDev::Internal::Type::BaseModel
+            attr_reader link: BrandDev::Models::BrandStyleguideResponse::Styleguide::Components::Button::Link?
+
+            def link=: (
+              BrandDev::Models::BrandStyleguideResponse::Styleguide::Components::Button::Link
+            ) -> BrandDev::Models::BrandStyleguideResponse::Styleguide::Components::Button::Link
+
+            attr_reader primary: BrandDev::Models::BrandStyleguideResponse::Styleguide::Components::Button::Primary?
+
+            def primary=: (
+              BrandDev::Models::BrandStyleguideResponse::Styleguide::Components::Button::Primary
+            ) -> BrandDev::Models::BrandStyleguideResponse::Styleguide::Components::Button::Primary
+
+            attr_reader secondary: BrandDev::Models::BrandStyleguideResponse::Styleguide::Components::Button::Secondary?
+
+            def secondary=: (
+              BrandDev::Models::BrandStyleguideResponse::Styleguide::Components::Button::Secondary
+            ) -> BrandDev::Models::BrandStyleguideResponse::Styleguide::Components::Button::Secondary
+
+            def initialize: (
+              ?link: BrandDev::Models::BrandStyleguideResponse::Styleguide::Components::Button::Link,
+              ?primary: BrandDev::Models::BrandStyleguideResponse::Styleguide::Components::Button::Primary,
+              ?secondary: BrandDev::Models::BrandStyleguideResponse::Styleguide::Components::Button::Secondary
+            ) -> void
+
+            def to_hash: -> {
+              link: BrandDev::Models::BrandStyleguideResponse::Styleguide::Components::Button::Link,
+              primary: BrandDev::Models::BrandStyleguideResponse::Styleguide::Components::Button::Primary,
+              secondary: BrandDev::Models::BrandStyleguideResponse::Styleguide::Components::Button::Secondary
+            }
+
+            type link =
+              {
+                background_color: String,
+                border_color: String,
+                border_radius: String,
+                border_style: String,
+                border_width: String,
+                box_shadow: String,
+                color: String,
+                css: String,
+                font_size: String,
+                font_weight: Float,
+                min_height: String,
+                min_width: String,
+                padding: String,
+                text_decoration: String,
+                font_fallbacks: ::Array[String],
+                font_family: String,
+                text_decoration_color: String
+              }
+
+            class Link < BrandDev::Internal::Type::BaseModel
+              attr_accessor background_color: String
+
+              attr_accessor border_color: String
+
+              attr_accessor border_radius: String
+
+              attr_accessor border_style: String
+
+              attr_accessor border_width: String
+
+              attr_accessor box_shadow: String
+
+              attr_accessor color: String
+
+              attr_accessor css: String
+
+              attr_accessor font_size: String
+
+              attr_accessor font_weight: Float
+
+              attr_accessor min_height: String
+
+              attr_accessor min_width: String
+
+              attr_accessor padding: String
+
+              attr_accessor text_decoration: String
+
+              attr_reader font_fallbacks: ::Array[String]?
+
+              def font_fallbacks=: (::Array[String]) -> ::Array[String]
+
+              attr_reader font_family: String?
+
+              def font_family=: (String) -> String
+
+              attr_reader text_decoration_color: String?
+
+              def text_decoration_color=: (String) -> String
+
+              def initialize: (
+                background_color: String,
+                border_color: String,
+                border_radius: String,
+                border_style: String,
+                border_width: String,
+                box_shadow: String,
+                color: String,
+                css: String,
+                font_size: String,
+                font_weight: Float,
+                min_height: String,
+                min_width: String,
+                padding: String,
+                text_decoration: String,
+                ?font_fallbacks: ::Array[String],
+                ?font_family: String,
+                ?text_decoration_color: String
+              ) -> void
+
+              def to_hash: -> {
+                background_color: String,
+                border_color: String,
+                border_radius: String,
+                border_style: String,
+                border_width: String,
+                box_shadow: String,
+                color: String,
+                css: String,
+                font_size: String,
+                font_weight: Float,
+                min_height: String,
+                min_width: String,
+                padding: String,
+                text_decoration: String,
+                font_fallbacks: ::Array[String],
+                font_family: String,
+                text_decoration_color: String
+              }
+            end
+
+            type primary =
+              {
+                background_color: String,
+                border_color: String,
+                border_radius: String,
+                border_style: String,
+                border_width: String,
+                box_shadow: String,
+                color: String,
+                css: String,
+                font_size: String,
+                font_weight: Float,
+                min_height: String,
+                min_width: String,
+                padding: String,
+                text_decoration: String,
+                font_fallbacks: ::Array[String],
+                font_family: String,
+                text_decoration_color: String
+              }
+
+            class Primary < BrandDev::Internal::Type::BaseModel
+              attr_accessor background_color: String
+
+              attr_accessor border_color: String
+
+              attr_accessor border_radius: String
+
+              attr_accessor border_style: String
+
+              attr_accessor border_width: String
+
+              attr_accessor box_shadow: String
+
+              attr_accessor color: String
+
+              attr_accessor css: String
+
+              attr_accessor font_size: String
+
+              attr_accessor font_weight: Float
+
+              attr_accessor min_height: String
+
+              attr_accessor min_width: String
+
+              attr_accessor padding: String
+
+              attr_accessor text_decoration: String
+
+              attr_reader font_fallbacks: ::Array[String]?
+
+              def font_fallbacks=: (::Array[String]) -> ::Array[String]
+
+              attr_reader font_family: String?
+
+              def font_family=: (String) -> String
+
+              attr_reader text_decoration_color: String?
+
+              def text_decoration_color=: (String) -> String
+
+              def initialize: (
+                background_color: String,
+                border_color: String,
+                border_radius: String,
+                border_style: String,
+                border_width: String,
+                box_shadow: String,
+                color: String,
+                css: String,
+                font_size: String,
+                font_weight: Float,
+                min_height: String,
+                min_width: String,
+                padding: String,
+                text_decoration: String,
+                ?font_fallbacks: ::Array[String],
+                ?font_family: String,
+                ?text_decoration_color: String
+              ) -> void
+
+              def to_hash: -> {
+                background_color: String,
+                border_color: String,
+                border_radius: String,
+                border_style: String,
+                border_width: String,
+                box_shadow: String,
+                color: String,
+                css: String,
+                font_size: String,
+                font_weight: Float,
+                min_height: String,
+                min_width: String,
+                padding: String,
+                text_decoration: String,
+                font_fallbacks: ::Array[String],
+                font_family: String,
+                text_decoration_color: String
+              }
+            end
+
+            type secondary =
+              {
+                background_color: String,
+                border_color: String,
+                border_radius: String,
+                border_style: String,
+                border_width: String,
+                box_shadow: String,
+                color: String,
+                css: String,
+                font_size: String,
+                font_weight: Float,
+                min_height: String,
+                min_width: String,
+                padding: String,
+                text_decoration: String,
+                font_fallbacks: ::Array[String],
+                font_family: String,
+                text_decoration_color: String
+              }
+
+            class Secondary < BrandDev::Internal::Type::BaseModel
+              attr_accessor background_color: String
+
+              attr_accessor border_color: String
+
+              attr_accessor border_radius: String
+
+              attr_accessor border_style: String
+
+              attr_accessor border_width: String
+
+              attr_accessor box_shadow: String
+
+              attr_accessor color: String
+
+              attr_accessor css: String
+
+              attr_accessor font_size: String
+
+              attr_accessor font_weight: Float
+
+              attr_accessor min_height: String
+
+              attr_accessor min_width: String
+
+              attr_accessor padding: String
+
+              attr_accessor text_decoration: String
+
+              attr_reader font_fallbacks: ::Array[String]?
+
+              def font_fallbacks=: (::Array[String]) -> ::Array[String]
+
+              attr_reader font_family: String?
+
+              def font_family=: (String) -> String
+
+              attr_reader text_decoration_color: String?
+
+              def text_decoration_color=: (String) -> String
+
+              def initialize: (
+                background_color: String,
+                border_color: String,
+                border_radius: String,
+                border_style: String,
+                border_width: String,
+                box_shadow: String,
+                color: String,
+                css: String,
+                font_size: String,
+                font_weight: Float,
+                min_height: String,
+                min_width: String,
+                padding: String,
+                text_decoration: String,
+                ?font_fallbacks: ::Array[String],
+                ?font_family: String,
+                ?text_decoration_color: String
+              ) -> void
+
+              def to_hash: -> {
+                background_color: String,
+                border_color: String,
+                border_radius: String,
+                border_style: String,
+                border_width: String,
+                box_shadow: String,
+                color: String,
+                css: String,
+                font_size: String,
+                font_weight: Float,
+                min_height: String,
+                min_width: String,
+                padding: String,
+                text_decoration: String,
+                font_fallbacks: ::Array[String],
+                font_family: String,
+                text_decoration_color: String
+              }
+            end
+          end
+
+          type card =
+            {
+              background_color: String,
+              border_color: String,
+              border_radius: String,
+              border_style: String,
+              border_width: String,
+              box_shadow: String,
+              css: String,
+              padding: String,
+              text_color: String
+            }
+
+          class Card < BrandDev::Internal::Type::BaseModel
+            attr_accessor background_color: String
+
+            attr_accessor border_color: String
+
+            attr_accessor border_radius: String
+
+            attr_accessor border_style: String
+
+            attr_accessor border_width: String
+
+            attr_accessor box_shadow: String
+
+            attr_accessor css: String
+
+            attr_accessor padding: String
+
+            attr_accessor text_color: String
+
+            def initialize: (
+              background_color: String,
+              border_color: String,
+              border_radius: String,
+              border_style: String,
+              border_width: String,
+              box_shadow: String,
+              css: String,
+              padding: String,
+              text_color: String
+            ) -> void
+
+            def to_hash: -> {
+              background_color: String,
+              border_color: String,
+              border_radius: String,
+              border_style: String,
+              border_width: String,
+              box_shadow: String,
+              css: String,
+              padding: String,
+              text_color: String
+            }
+          end
+        end
+
+        type element_spacing =
+          { lg: String, md: String, sm: String, xl: String, xs: String }
+
+        class ElementSpacing < BrandDev::Internal::Type::BaseModel
+          attr_accessor lg: String
+
+          attr_accessor md: String
+
+          attr_accessor sm: String
+
+          attr_accessor xl: String
+
+          attr_accessor xs: String
+
+          def initialize: (
+            lg: String,
+            md: String,
+            sm: String,
+            xl: String,
+            xs: String
+          ) -> void
+
+          def to_hash: -> {
+            lg: String,
+            md: String,
+            sm: String,
+            xl: String,
+            xs: String
+          }
+        end
+
+        type font_link =
+          {
+            files: ::Hash[Symbol, String],
+            type: BrandDev::Models::BrandStyleguideResponse::Styleguide::FontLink::type_,
+            category: String,
+            display_name: String
+          }
+
+        class FontLink < BrandDev::Internal::Type::BaseModel
+          attr_accessor files: ::Hash[Symbol, String]
+
+          attr_accessor type: BrandDev::Models::BrandStyleguideResponse::Styleguide::FontLink::type_
+
+          attr_reader category: String?
+
+          def category=: (String) -> String
+
+          attr_reader display_name: String?
+
+          def display_name=: (String) -> String
+
+          def initialize: (
+            files: ::Hash[Symbol, String],
+            type: BrandDev::Models::BrandStyleguideResponse::Styleguide::FontLink::type_,
+            ?category: String,
+            ?display_name: String
+          ) -> void
+
+          def to_hash: -> {
+            files: ::Hash[Symbol, String],
+            type: BrandDev::Models::BrandStyleguideResponse::Styleguide::FontLink::type_,
+            category: String,
+            display_name: String
+          }
+
+          type type_ = :google | :custom
+
+          module Type
+            extend BrandDev::Internal::Type::Enum
+
+            GOOGLE: :google
+            CUSTOM: :custom
+
+            def self?.values: -> ::Array[BrandDev::Models::BrandStyleguideResponse::Styleguide::FontLink::type_]
+          end
+        end
+
+        type mode = :light | :dark
+
+        module Mode
+          extend BrandDev::Internal::Type::Enum
+
+          LIGHT: :light
+          DARK: :dark
+
+          def self?.values: -> ::Array[BrandDev::Models::BrandStyleguideResponse::Styleguide::mode]
+        end
+
+        type shadows =
+          { inner: String, lg: String, md: String, sm: String, xl: String }
+
+        class Shadows < BrandDev::Internal::Type::BaseModel
+          attr_accessor inner: String
+
+          attr_accessor lg: String
+
+          attr_accessor md: String
+
+          attr_accessor sm: String
+
+          attr_accessor xl: String
+
+          def initialize: (
+            inner: String,
+            lg: String,
+            md: String,
+            sm: String,
+            xl: String
+          ) -> void
+
+          def to_hash: -> {
+            inner: String,
+            lg: String,
+            md: String,
+            sm: String,
+            xl: String
+          }
+        end
+
+        type typography =
+          {
+            headings: BrandDev::Models::BrandStyleguideResponse::Styleguide::Typography::Headings,
+            p_: BrandDev::Models::BrandStyleguideResponse::Styleguide::Typography::P
+          }
+
+        class Typography < BrandDev::Internal::Type::BaseModel
+          attr_accessor headings: BrandDev::Models::BrandStyleguideResponse::Styleguide::Typography::Headings
+
+          attr_reader p_: BrandDev::Models::BrandStyleguideResponse::Styleguide::Typography::P?
+
+          def p_=: (
+            BrandDev::Models::BrandStyleguideResponse::Styleguide::Typography::P
+          ) -> BrandDev::Models::BrandStyleguideResponse::Styleguide::Typography::P
+
+          def initialize: (
+            headings: BrandDev::Models::BrandStyleguideResponse::Styleguide::Typography::Headings,
+            ?p_: BrandDev::Models::BrandStyleguideResponse::Styleguide::Typography::P
+          ) -> void
+
+          def to_hash: -> {
+            headings: BrandDev::Models::BrandStyleguideResponse::Styleguide::Typography::Headings,
+            p_: BrandDev::Models::BrandStyleguideResponse::Styleguide::Typography::P
+          }
+
+          type headings =
+            {
+              :h1 => BrandDev::Models::BrandStyleguideResponse::Styleguide::Typography::Headings::H1,
+              :h2 => BrandDev::Models::BrandStyleguideResponse::Styleguide::Typography::Headings::H2,
+              :h3 => BrandDev::Models::BrandStyleguideResponse::Styleguide::Typography::Headings::H3,
+              :h4 => BrandDev::Models::BrandStyleguideResponse::Styleguide::Typography::Headings::H4
+            }
+
+          class Headings < BrandDev::Internal::Type::BaseModel
+            attr_reader h1: BrandDev::Models::BrandStyleguideResponse::Styleguide::Typography::Headings::H1?
+
+            def h1=: (
+              BrandDev::Models::BrandStyleguideResponse::Styleguide::Typography::Headings::H1
+            ) -> BrandDev::Models::BrandStyleguideResponse::Styleguide::Typography::Headings::H1
+
+            attr_reader h2: BrandDev::Models::BrandStyleguideResponse::Styleguide::Typography::Headings::H2?
+
+            def h2=: (
+              BrandDev::Models::BrandStyleguideResponse::Styleguide::Typography::Headings::H2
+            ) -> BrandDev::Models::BrandStyleguideResponse::Styleguide::Typography::Headings::H2
+
+            attr_reader h3: BrandDev::Models::BrandStyleguideResponse::Styleguide::Typography::Headings::H3?
+
+            def h3=: (
+              BrandDev::Models::BrandStyleguideResponse::Styleguide::Typography::Headings::H3
+            ) -> BrandDev::Models::BrandStyleguideResponse::Styleguide::Typography::Headings::H3
+
+            attr_reader h4: BrandDev::Models::BrandStyleguideResponse::Styleguide::Typography::Headings::H4?
+
+            def h4=: (
+              BrandDev::Models::BrandStyleguideResponse::Styleguide::Typography::Headings::H4
+            ) -> BrandDev::Models::BrandStyleguideResponse::Styleguide::Typography::Headings::H4
+
+            def initialize: (
+              ?h1: BrandDev::Models::BrandStyleguideResponse::Styleguide::Typography::Headings::H1,
+              ?h2: BrandDev::Models::BrandStyleguideResponse::Styleguide::Typography::Headings::H2,
+              ?h3: BrandDev::Models::BrandStyleguideResponse::Styleguide::Typography::Headings::H3,
+              ?h4: BrandDev::Models::BrandStyleguideResponse::Styleguide::Typography::Headings::H4
+            ) -> void
+
+            def to_hash: -> {
+              :h1 => BrandDev::Models::BrandStyleguideResponse::Styleguide::Typography::Headings::H1,
+              :h2 => BrandDev::Models::BrandStyleguideResponse::Styleguide::Typography::Headings::H2,
+              :h3 => BrandDev::Models::BrandStyleguideResponse::Styleguide::Typography::Headings::H3,
+              :h4 => BrandDev::Models::BrandStyleguideResponse::Styleguide::Typography::Headings::H4
+            }
+
+            type h1 =
+              {
+                font_fallbacks: ::Array[String],
+                font_family: String,
+                font_size: String,
+                font_weight: Float,
+                letter_spacing: String,
+                line_height: String
+              }
+
+            class H1 < BrandDev::Internal::Type::BaseModel
+              attr_accessor font_fallbacks: ::Array[String]
+
+              attr_accessor font_family: String
+
+              attr_accessor font_size: String
+
+              attr_accessor font_weight: Float
+
+              attr_accessor letter_spacing: String
+
+              attr_accessor line_height: String
+
+              def initialize: (
+                font_fallbacks: ::Array[String],
+                font_family: String,
+                font_size: String,
+                font_weight: Float,
+                letter_spacing: String,
+                line_height: String
+              ) -> void
+
+              def to_hash: -> {
+                font_fallbacks: ::Array[String],
+                font_family: String,
+                font_size: String,
+                font_weight: Float,
+                letter_spacing: String,
+                line_height: String
+              }
+            end
+
+            type h2 =
+              {
+                font_fallbacks: ::Array[String],
+                font_family: String,
+                font_size: String,
+                font_weight: Float,
+                letter_spacing: String,
+                line_height: String
+              }
+
+            class H2 < BrandDev::Internal::Type::BaseModel
+              attr_accessor font_fallbacks: ::Array[String]
+
+              attr_accessor font_family: String
+
+              attr_accessor font_size: String
+
+              attr_accessor font_weight: Float
+
+              attr_accessor letter_spacing: String
+
+              attr_accessor line_height: String
+
+              def initialize: (
+                font_fallbacks: ::Array[String],
+                font_family: String,
+                font_size: String,
+                font_weight: Float,
+                letter_spacing: String,
+                line_height: String
+              ) -> void
+
+              def to_hash: -> {
+                font_fallbacks: ::Array[String],
+                font_family: String,
+                font_size: String,
+                font_weight: Float,
+                letter_spacing: String,
+                line_height: String
+              }
+            end
+
+            type h3 =
+              {
+                font_fallbacks: ::Array[String],
+                font_family: String,
+                font_size: String,
+                font_weight: Float,
+                letter_spacing: String,
+                line_height: String
+              }
+
+            class H3 < BrandDev::Internal::Type::BaseModel
+              attr_accessor font_fallbacks: ::Array[String]
+
+              attr_accessor font_family: String
+
+              attr_accessor font_size: String
+
+              attr_accessor font_weight: Float
+
+              attr_accessor letter_spacing: String
+
+              attr_accessor line_height: String
+
+              def initialize: (
+                font_fallbacks: ::Array[String],
+                font_family: String,
+                font_size: String,
+                font_weight: Float,
+                letter_spacing: String,
+                line_height: String
+              ) -> void
+
+              def to_hash: -> {
+                font_fallbacks: ::Array[String],
+                font_family: String,
+                font_size: String,
+                font_weight: Float,
+                letter_spacing: String,
+                line_height: String
+              }
+            end
+
+            type h4 =
+              {
+                font_fallbacks: ::Array[String],
+                font_family: String,
+                font_size: String,
+                font_weight: Float,
+                letter_spacing: String,
+                line_height: String
+              }
+
+            class H4 < BrandDev::Internal::Type::BaseModel
+              attr_accessor font_fallbacks: ::Array[String]
+
+              attr_accessor font_family: String
+
+              attr_accessor font_size: String
+
+              attr_accessor font_weight: Float
+
+              attr_accessor letter_spacing: String
+
+              attr_accessor line_height: String
+
+              def initialize: (
+                font_fallbacks: ::Array[String],
+                font_family: String,
+                font_size: String,
+                font_weight: Float,
+                letter_spacing: String,
+                line_height: String
+              ) -> void
+
+              def to_hash: -> {
+                font_fallbacks: ::Array[String],
+                font_family: String,
+                font_size: String,
+                font_weight: Float,
+                letter_spacing: String,
+                line_height: String
+              }
+            end
+          end
+
+          type p_ =
+            {
+              font_fallbacks: ::Array[String],
+              font_family: String,
+              font_size: String,
+              font_weight: Float,
+              letter_spacing: String,
+              line_height: String
+            }
+
+          class P < BrandDev::Internal::Type::BaseModel
+            attr_accessor font_fallbacks: ::Array[String]
+
+            attr_accessor font_family: String
+
+            attr_accessor font_size: String
+
+            attr_accessor font_weight: Float
+
+            attr_accessor letter_spacing: String
+
+            attr_accessor line_height: String
+
+            def initialize: (
+              font_fallbacks: ::Array[String],
+              font_family: String,
+              font_size: String,
+              font_weight: Float,
+              letter_spacing: String,
+              line_height: String
+            ) -> void
+
+            def to_hash: -> {
+              font_fallbacks: ::Array[String],
+              font_family: String,
+              font_size: String,
+              font_weight: Float,
+              letter_spacing: String,
+              line_height: String
+            }
+          end
+        end
+      end
+    end
+  end
+end

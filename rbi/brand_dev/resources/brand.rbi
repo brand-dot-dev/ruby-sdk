@@ -135,6 +135,44 @@ module BrandDev
       )
       end
 
+      # Scrape font information from a website including font families, usage
+      # statistics, fallbacks, and element/word counts.
+      sig do
+        params(
+          direct_url: String,
+          domain: String,
+          max_age_ms: T.nilable(Integer),
+          tags: T::Array[String],
+          timeout_ms: Integer,
+          request_options: BrandDev::RequestOptions::OrHash
+        ).returns(BrandDev::Models::BrandFontsResponse)
+      end
+      def fonts(
+        # A specific URL to fetch fonts from directly, bypassing domain resolution (e.g.,
+        # 'https://example.com/design-system'). When provided, fonts are extracted from
+        # this exact URL. You must provide either 'domain' or 'directUrl', but not both.
+        direct_url: nil,
+        # Domain name to extract fonts from (e.g., 'example.com', 'google.com'). The
+        # domain will be automatically normalized and validated. You must provide either
+        # 'domain' or 'directUrl', but not both.
+        domain: nil,
+        # Maximum age in milliseconds for cached brand data before the API performs a hard
+        # refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
+        # are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
+        # year.
+        max_age_ms: nil,
+        # Optional comma-separated caller-defined tags for tracking this request. Tags are
+        # recorded on the request's usage log and can be used to filter usage on the
+        # dashboard usage page. Up to 20 tags, each 1-50 characters.
+        tags: nil,
+        # Optional timeout in milliseconds for the request. If the request takes longer
+        # than this value, it will be aborted with a 408 status code. Maximum allowed
+        # value is 300000ms (5 minutes).
+        timeout_ms: nil,
+        request_options: {}
+      )
+      end
+
       # Endpoint specially designed for platforms that want to identify transaction data
       # by the transaction title.
       sig do
@@ -445,6 +483,39 @@ module BrandDev
       )
       end
 
+      # Classify any brand into 2022 NAICS industry codes from its domain or name.
+      sig do
+        params(
+          input: String,
+          max_results: Integer,
+          min_results: Integer,
+          tags: T::Array[String],
+          timeout_ms: Integer,
+          request_options: BrandDev::RequestOptions::OrHash
+        ).returns(BrandDev::Models::BrandRetrieveNaicsResponse)
+      end
+      def retrieve_naics(
+        # Brand domain or title to retrieve NAICS code for. If a valid domain is provided,
+        # it will be used for classification, otherwise, we will search for the brand
+        # using the provided title.
+        input:,
+        # Maximum number of NAICS codes to return. Must be between 1 and 10. Defaults
+        # to 5.
+        max_results: nil,
+        # Minimum number of NAICS codes to return. Must be at least 1. Defaults to 1.
+        min_results: nil,
+        # Optional comma-separated caller-defined tags for tracking this request. Tags are
+        # recorded on the request's usage log and can be used to filter usage on the
+        # dashboard usage page. Up to 20 tags, each 1-50 characters.
+        tags: nil,
+        # Optional timeout in milliseconds for the request. If the request takes longer
+        # than this value, it will be aborted with a 408 status code. Maximum allowed
+        # value is 300000ms (5 minutes).
+        timeout_ms: nil,
+        request_options: {}
+      )
+      end
+
       # Returns a simplified version of brand data containing only essential
       # information: domain, title, colors, logos, and backdrops. Optimized for faster
       # responses and reduced data transfer.
@@ -472,6 +543,138 @@ module BrandDev
         tags: nil,
         # Optional theme preference used when selecting brand assets.
         theme: nil,
+        # Optional timeout in milliseconds for the request. If the request takes longer
+        # than this value, it will be aborted with a 408 status code. Maximum allowed
+        # value is 300000ms (5 minutes).
+        timeout_ms: nil,
+        request_options: {}
+      )
+      end
+
+      # Capture a screenshot of a website.
+      sig do
+        params(
+          color_scheme: BrandDev::BrandScreenshotParams::ColorScheme::OrSymbol,
+          country: BrandDev::BrandScreenshotParams::Country::OrSymbol,
+          direct_url: String,
+          domain: String,
+          full_screenshot:
+            BrandDev::BrandScreenshotParams::FullScreenshot::OrSymbol,
+          handle_cookie_popup:
+            T.any(
+              T::Boolean,
+              BrandDev::BrandScreenshotParams::HandleCookiePopup::OrSymbol
+            ),
+          max_age_ms: T.nilable(Integer),
+          page: BrandDev::BrandScreenshotParams::Page::OrSymbol,
+          scroll_offset: T.nilable(Integer),
+          tags: T::Array[String],
+          timeout_ms: Integer,
+          viewport: BrandDev::BrandScreenshotParams::Viewport::OrHash,
+          wait_for_ms: T.nilable(Integer),
+          zdr: BrandDev::BrandScreenshotParams::Zdr::OrSymbol,
+          request_options: BrandDev::RequestOptions::OrHash
+        ).returns(BrandDev::Models::BrandScreenshotResponse)
+      end
+      def screenshot(
+        # Optional parameter to choose the site's visual theme in the screenshot. Use
+        # 'light' or 'dark' when the site offers both appearances.
+        color_scheme: nil,
+        # Two-letter ISO 3166-1 alpha-2 country code identifying a supported Context.dev
+        # residential proxy exit location. Must be one of Context.dev's supported
+        # countries. When provided, Context.dev fetches the target page from that country.
+        country: nil,
+        # A specific URL to screenshot directly, bypassing domain resolution (e.g.,
+        # 'https://example.com/pricing'). When provided, the screenshot is taken of this
+        # exact URL. You must provide either 'domain' or 'directUrl', but not both.
+        direct_url: nil,
+        # Domain name to take screenshot of (e.g., 'example.com', 'google.com'). The
+        # domain will be automatically normalized and validated. You must provide either
+        # 'domain' or 'directUrl', but not both.
+        domain: nil,
+        # Optional parameter to determine screenshot type. If 'true', takes a full page
+        # screenshot capturing all content. If 'false' or not provided, takes a viewport
+        # screenshot (standard browser view).
+        full_screenshot: nil,
+        # Optional parameter to control cookie/consent popup handling. If 'true', we
+        # dismiss cookie banner before capture. If 'false' or not provided, captures the
+        # page without that step.
+        handle_cookie_popup: nil,
+        # Return a cached screenshot if a prior screenshot for the same parameters exists
+        # and is younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
+        # omitted. Max is 30 days (2592000000 ms). Set to 0 to always capture fresh.
+        max_age_ms: nil,
+        # Optional parameter to specify which page type to screenshot. If provided, the
+        # system will scrape the domain's links and use heuristics to find the most
+        # appropriate URL for the specified page type (30 supported languages). If not
+        # provided, screenshots the main domain landing page. Only applicable when using
+        # 'domain', not 'directUrl'.
+        page: nil,
+        # Optional vertical scroll offset in pixels for capturing a long page in
+        # viewport-sized chunks. When provided, the full page is captured once and the
+        # returned image is the viewport-sized slice that begins at this Y offset (e.g.
+        # request scrollOffset=0, then 1080, then 2160 to walk a 1920x1080 landing page
+        # top to bottom). The final slice may be shorter than the viewport height. Takes
+        # precedence over fullScreenshot. Max: 100000.
+        scroll_offset: nil,
+        # Optional comma-separated caller-defined tags for tracking this request. Tags are
+        # recorded on the request's usage log and can be used to filter usage on the
+        # dashboard usage page. Up to 20 tags, each 1-50 characters.
+        tags: nil,
+        # Optional timeout in milliseconds for the request. If the request takes longer
+        # than this value, it will be aborted with a 408 status code. Maximum allowed
+        # value is 300000ms (5 minutes).
+        timeout_ms: nil,
+        # Optional browser viewport dimensions for the screenshot. Defaults to 1920x1080.
+        viewport: nil,
+        # Optional browser wait time in milliseconds after initial page load before taking
+        # the screenshot. Min: 0. Max: 30000 (30 seconds). Defaults to 3000 ms when
+        # omitted.
+        wait_for_ms: nil,
+        # Set to enabled to bypass shared caches and omit request and response content
+        # from retained usage logs. Requires zero data retention to be enabled for your
+        # organization (contact support@context.dev), otherwise the request fails with
+        # ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
+        zdr: nil,
+        request_options: {}
+      )
+      end
+
+      # Extract a comprehensive design system from a website including colors,
+      # typography, spacing, shadows, and UI components.
+      sig do
+        params(
+          color_scheme: BrandDev::BrandStyleguideParams::ColorScheme::OrSymbol,
+          direct_url: String,
+          domain: String,
+          max_age_ms: T.nilable(Integer),
+          tags: T::Array[String],
+          timeout_ms: Integer,
+          request_options: BrandDev::RequestOptions::OrHash
+        ).returns(BrandDev::Models::BrandStyleguideResponse)
+      end
+      def styleguide(
+        # Optional browser color scheme to emulate for websites that respond to
+        # prefers-color-scheme. This value is part of the styleguide cache key.
+        color_scheme: nil,
+        # A specific URL to fetch the styleguide from directly, bypassing domain
+        # resolution (e.g., 'https://example.com/design-system'). When provided, the
+        # styleguide is extracted from this exact URL. You must provide either 'domain' or
+        # 'directUrl', but not both.
+        direct_url: nil,
+        # Domain name to extract styleguide from (e.g., 'example.com', 'google.com'). The
+        # domain will be automatically normalized and validated. You must provide either
+        # 'domain' or 'directUrl', but not both.
+        domain: nil,
+        # Maximum age in milliseconds for cached brand data before the API performs a hard
+        # refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
+        # are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
+        # year.
+        max_age_ms: nil,
+        # Optional comma-separated caller-defined tags for tracking this request. Tags are
+        # recorded on the request's usage log and can be used to filter usage on the
+        # dashboard usage page. Up to 20 tags, each 1-50 characters.
+        tags: nil,
         # Optional timeout in milliseconds for the request. If the request takes longer
         # than this value, it will be aborted with a 408 status code. Maximum allowed
         # value is 300000ms (5 minutes).

@@ -137,6 +137,45 @@ module BrandDev
       end
 
       # Some parameter documentations has been truncated, see
+      # {BrandDev::Models::BrandFontsParams} for more details.
+      #
+      # Scrape font information from a website including font families, usage
+      # statistics, fallbacks, and element/word counts.
+      #
+      # @overload fonts(direct_url: nil, domain: nil, max_age_ms: nil, tags: nil, timeout_ms: nil, request_options: {})
+      #
+      # @param direct_url [String] A specific URL to fetch fonts from directly, bypassing domain resolution (e.g.,
+      #
+      # @param domain [String] Domain name to extract fonts from (e.g., 'example.com', 'google.com'). The domai
+      #
+      # @param max_age_ms [Integer, nil] Maximum age in milliseconds for cached brand data before the API performs a hard
+      #
+      # @param tags [Array<String>] Optional comma-separated caller-defined tags for tracking this request. Tags are
+      #
+      # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
+      #
+      # @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}, nil]
+      #
+      # @return [BrandDev::Models::BrandFontsResponse]
+      #
+      # @see BrandDev::Models::BrandFontsParams
+      def fonts(params = {})
+        parsed, options = BrandDev::BrandFontsParams.dump_request(params)
+        query = BrandDev::Internal::Util.encode_query_params(parsed)
+        @client.request(
+          method: :get,
+          path: "web/fonts",
+          query: query.transform_keys(
+            direct_url: "directUrl",
+            max_age_ms: "maxAgeMs",
+            timeout_ms: "timeoutMS"
+          ),
+          model: BrandDev::Models::BrandFontsResponse,
+          options: options
+        )
+      end
+
+      # Some parameter documentations has been truncated, see
       # {BrandDev::Models::BrandIdentifyFromTransactionParams} for more details.
       #
       # Endpoint specially designed for platforms that want to identify transaction data
@@ -395,6 +434,44 @@ module BrandDev
       end
 
       # Some parameter documentations has been truncated, see
+      # {BrandDev::Models::BrandRetrieveNaicsParams} for more details.
+      #
+      # Classify any brand into 2022 NAICS industry codes from its domain or name.
+      #
+      # @overload retrieve_naics(input:, max_results: nil, min_results: nil, tags: nil, timeout_ms: nil, request_options: {})
+      #
+      # @param input [String] Brand domain or title to retrieve NAICS code for. If a valid domain is provided,
+      #
+      # @param max_results [Integer] Maximum number of NAICS codes to return. Must be between 1 and 10. Defaults to 5
+      #
+      # @param min_results [Integer] Minimum number of NAICS codes to return. Must be at least 1. Defaults to 1.
+      #
+      # @param tags [Array<String>] Optional comma-separated caller-defined tags for tracking this request. Tags are
+      #
+      # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
+      #
+      # @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}, nil]
+      #
+      # @return [BrandDev::Models::BrandRetrieveNaicsResponse]
+      #
+      # @see BrandDev::Models::BrandRetrieveNaicsParams
+      def retrieve_naics(params)
+        parsed, options = BrandDev::BrandRetrieveNaicsParams.dump_request(params)
+        query = BrandDev::Internal::Util.encode_query_params(parsed)
+        @client.request(
+          method: :get,
+          path: "web/naics",
+          query: query.transform_keys(
+            max_results: "maxResults",
+            min_results: "minResults",
+            timeout_ms: "timeoutMS"
+          ),
+          model: BrandDev::Models::BrandRetrieveNaicsResponse,
+          options: options
+        )
+      end
+
+      # Some parameter documentations has been truncated, see
       # {BrandDev::Models::BrandRetrieveSimplifiedParams} for more details.
       #
       # Returns a simplified version of brand data containing only essential
@@ -426,6 +503,109 @@ module BrandDev
           path: "brand/retrieve-simplified",
           query: query.transform_keys(max_age_ms: "maxAgeMs", timeout_ms: "timeoutMS"),
           model: BrandDev::Models::BrandRetrieveSimplifiedResponse,
+          options: options
+        )
+      end
+
+      # Some parameter documentations has been truncated, see
+      # {BrandDev::Models::BrandScreenshotParams} for more details.
+      #
+      # Capture a screenshot of a website.
+      #
+      # @overload screenshot(color_scheme: nil, country: nil, direct_url: nil, domain: nil, full_screenshot: nil, handle_cookie_popup: nil, max_age_ms: nil, page: nil, scroll_offset: nil, tags: nil, timeout_ms: nil, viewport: nil, wait_for_ms: nil, zdr: nil, request_options: {})
+      #
+      # @param color_scheme [Symbol, BrandDev::Models::BrandScreenshotParams::ColorScheme] Optional parameter to choose the site's visual theme in the screenshot. Use 'lig
+      #
+      # @param country [Symbol, BrandDev::Models::BrandScreenshotParams::Country] Two-letter ISO 3166-1 alpha-2 country code identifying a supported Context.dev r
+      #
+      # @param direct_url [String] A specific URL to screenshot directly, bypassing domain resolution (e.g., 'https
+      #
+      # @param domain [String] Domain name to take screenshot of (e.g., 'example.com', 'google.com'). The domai
+      #
+      # @param full_screenshot [Symbol, BrandDev::Models::BrandScreenshotParams::FullScreenshot] Optional parameter to determine screenshot type. If 'true', takes a full page sc
+      #
+      # @param handle_cookie_popup [Boolean, Symbol, BrandDev::Models::BrandScreenshotParams::HandleCookiePopup] Optional parameter to control cookie/consent popup handling. If 'true', we dismi
+      #
+      # @param max_age_ms [Integer, nil] Return a cached screenshot if a prior screenshot for the same parameters exists
+      #
+      # @param page [Symbol, BrandDev::Models::BrandScreenshotParams::Page] Optional parameter to specify which page type to screenshot. If provided, the sy
+      #
+      # @param scroll_offset [Integer, nil] Optional vertical scroll offset in pixels for capturing a long page in viewport-
+      #
+      # @param tags [Array<String>] Optional comma-separated caller-defined tags for tracking this request. Tags are
+      #
+      # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
+      #
+      # @param viewport [BrandDev::Models::BrandScreenshotParams::Viewport] Optional browser viewport dimensions for the screenshot. Defaults to 1920x1080.
+      #
+      # @param wait_for_ms [Integer, nil] Optional browser wait time in milliseconds after initial page load before taking
+      #
+      # @param zdr [Symbol, BrandDev::Models::BrandScreenshotParams::Zdr] Set to enabled to bypass shared caches and omit request and response content fro
+      #
+      # @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}, nil]
+      #
+      # @return [BrandDev::Models::BrandScreenshotResponse]
+      #
+      # @see BrandDev::Models::BrandScreenshotParams
+      def screenshot(params = {})
+        parsed, options = BrandDev::BrandScreenshotParams.dump_request(params)
+        query = BrandDev::Internal::Util.encode_query_params(parsed)
+        @client.request(
+          method: :get,
+          path: "web/screenshot",
+          query: query.transform_keys(
+            color_scheme: "colorScheme",
+            direct_url: "directUrl",
+            full_screenshot: "fullScreenshot",
+            handle_cookie_popup: "handleCookiePopup",
+            max_age_ms: "maxAgeMs",
+            scroll_offset: "scrollOffset",
+            timeout_ms: "timeoutMS",
+            wait_for_ms: "waitForMs"
+          ),
+          model: BrandDev::Models::BrandScreenshotResponse,
+          options: options
+        )
+      end
+
+      # Some parameter documentations has been truncated, see
+      # {BrandDev::Models::BrandStyleguideParams} for more details.
+      #
+      # Extract a comprehensive design system from a website including colors,
+      # typography, spacing, shadows, and UI components.
+      #
+      # @overload styleguide(color_scheme: nil, direct_url: nil, domain: nil, max_age_ms: nil, tags: nil, timeout_ms: nil, request_options: {})
+      #
+      # @param color_scheme [Symbol, BrandDev::Models::BrandStyleguideParams::ColorScheme] Optional browser color scheme to emulate for websites that respond to prefers-co
+      #
+      # @param direct_url [String] A specific URL to fetch the styleguide from directly, bypassing domain resolutio
+      #
+      # @param domain [String] Domain name to extract styleguide from (e.g., 'example.com', 'google.com'). The
+      #
+      # @param max_age_ms [Integer, nil] Maximum age in milliseconds for cached brand data before the API performs a hard
+      #
+      # @param tags [Array<String>] Optional comma-separated caller-defined tags for tracking this request. Tags are
+      #
+      # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
+      #
+      # @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}, nil]
+      #
+      # @return [BrandDev::Models::BrandStyleguideResponse]
+      #
+      # @see BrandDev::Models::BrandStyleguideParams
+      def styleguide(params = {})
+        parsed, options = BrandDev::BrandStyleguideParams.dump_request(params)
+        query = BrandDev::Internal::Util.encode_query_params(parsed)
+        @client.request(
+          method: :get,
+          path: "web/styleguide",
+          query: query.transform_keys(
+            color_scheme: "colorScheme",
+            direct_url: "directUrl",
+            max_age_ms: "maxAgeMs",
+            timeout_ms: "timeoutMS"
+          ),
+          model: BrandDev::Models::BrandStyleguideResponse,
           options: options
         )
       end
