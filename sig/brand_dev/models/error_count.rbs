@@ -1,0 +1,15 @@
+module BrandDev
+  module Models
+    type error_count = { code: String, count: Integer }
+
+    class ErrorCount < BrandDev::Internal::Type::BaseModel
+      attr_accessor code: String
+
+      attr_accessor count: Integer
+
+      def initialize: (code: String, count: Integer) -> void
+
+      def to_hash: -> { code: String, count: Integer }
+    end
+  end
+end

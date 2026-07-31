@@ -1,0 +1,7 @@
+module BrandDev
+  module Resources
+    class Batch
+      def initialize: (client: BrandDev::Client) -> void
+    end
+  end
+end
