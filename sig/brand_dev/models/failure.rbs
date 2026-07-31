@@ -1,8 +1,8 @@
 module BrandDev
   module Models
-    type error = { code: String, message: String }
+    type failure = { code: String, message: String }
 
-    class Error < BrandDev::Internal::Type::BaseModel
+    class Failure < BrandDev::Internal::Type::BaseModel
       attr_accessor code: String
 
       attr_accessor message: String

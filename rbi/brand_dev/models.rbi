@@ -43,9 +43,13 @@ module BrandDev
 
   BrandWebScrapeSitemapParams = BrandDev::Models::BrandWebScrapeSitemapParams
 
-  Error = BrandDev::Models::Error
+  CrawlControls = BrandDev::Models::CrawlControls
 
-  ErrorCount = BrandDev::Models::ErrorCount
+  Failure = BrandDev::Models::Failure
+
+  Intake = BrandDev::Models::Intake
+
+  PageErrorCount = BrandDev::Models::PageErrorCount
 
   WebhookDelivery = BrandDev::Models::WebhookDelivery
 end

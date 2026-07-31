@@ -2,7 +2,7 @@
 
 module BrandDev
   module Models
-    class ErrorCount < BrandDev::Internal::Type::BaseModel
+    class PageErrorCount < BrandDev::Internal::Type::BaseModel
       # @!attribute code
       #   Error code for these failures.
       #
