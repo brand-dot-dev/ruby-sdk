@@ -1,0 +1,15 @@
+module BrandDev
+  module Models
+    type error = { code: String, message: String }
+
+    class Error < BrandDev::Internal::Type::BaseModel
+      attr_accessor code: String
+
+      attr_accessor message: String
+
+      def initialize: (code: String, message: String) -> void
+
+      def to_hash: -> { code: String, message: String }
+    end
+  end
+end

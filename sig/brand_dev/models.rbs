@@ -31,5 +31,9 @@ module BrandDev
 
   class BrandWebScrapeSitemapParams = BrandDev::Models::BrandWebScrapeSitemapParams
 
+  class Error = BrandDev::Models::Error
+
+  class ErrorCount = BrandDev::Models::ErrorCount
+
   class WebhookDelivery = BrandDev::Models::WebhookDelivery
 end
