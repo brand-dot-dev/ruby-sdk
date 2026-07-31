@@ -2,10 +2,10 @@
 
 module BrandDev
   module Models
-    class ErrorCount < BrandDev::Internal::Type::BaseModel
+    class PageErrorCount < BrandDev::Internal::Type::BaseModel
       OrHash =
         T.type_alias do
-          T.any(BrandDev::ErrorCount, BrandDev::Internal::AnyHash)
+          T.any(BrandDev::PageErrorCount, BrandDev::Internal::AnyHash)
         end
 
       # Error code for these failures.

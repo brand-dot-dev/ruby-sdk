@@ -2,24 +2,25 @@
 
 module BrandDev
   module Models
-    class Error < BrandDev::Internal::Type::BaseModel
+    class Failure < BrandDev::Internal::Type::BaseModel
       OrHash =
-        T.type_alias { T.any(BrandDev::Error, BrandDev::Internal::AnyHash) }
+        T.type_alias { T.any(BrandDev::Failure, BrandDev::Internal::AnyHash) }
 
-      # Batch error code.
+      # Why the batch itself stopped.
       sig { returns(String) }
       attr_accessor :code
 
-      # Batch error message.
+      # Human-readable explanation.
       sig { returns(String) }
       attr_accessor :message
 
-      # Why the batch failed.
+      # A failure of the batch as a whole, distinct from the per-page failures in
+      # `page_errors`.
       sig { params(code: String, message: String).returns(T.attached_class) }
       def self.new(
-        # Batch error code.
+        # Why the batch itself stopped.
         code:,
-        # Batch error message.
+        # Human-readable explanation.
         message:
       )
       end
