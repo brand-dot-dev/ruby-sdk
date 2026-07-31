@@ -257,6 +257,8 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
         success: BrandDev::Models::BrandWebScrapeHTMLResponse::Success,
         type: BrandDev::Models::BrandWebScrapeHTMLResponse::Type,
         url: String,
+        actions_applied: ^(BrandDev::Internal::Type::ArrayOf[BrandDev::Models::BrandWebScrapeHTMLResponse::ActionsApplied]) | nil,
+        actions_html_stale: BrandDev::Internal::Type::Boolean | nil,
         key_metadata: BrandDev::Models::BrandWebScrapeHTMLResponse::KeyMetadata | nil
       }
     end
@@ -297,6 +299,8 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
         metadata: BrandDev::Models::BrandWebScrapeMdResponse::Metadata,
         success: BrandDev::Models::BrandWebScrapeMdResponse::Success,
         url: String,
+        actions_applied: ^(BrandDev::Internal::Type::ArrayOf[BrandDev::Models::BrandWebScrapeMdResponse::ActionsApplied]) | nil,
+        actions_html_stale: BrandDev::Internal::Type::Boolean | nil,
         key_metadata: BrandDev::Models::BrandWebScrapeMdResponse::KeyMetadata | nil
       }
     end
