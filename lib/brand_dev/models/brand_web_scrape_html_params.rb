@@ -24,9 +24,8 @@ module BrandDev
                nil?: true
 
       # @!attribute country
-      #   Two-letter ISO 3166-1 alpha-2 country code identifying a supported Context.dev
-      #   residential proxy exit location. Must be one of Context.dev's supported
-      #   countries. When provided, Context.dev fetches the target page from that country.
+      #   Fetch the target page through a residential proxy in this country (ISO 3166-1
+      #   alpha-2).
       #
       #   @return [Symbol, BrandDev::Models::BrandWebScrapeHTMLParams::Country, nil]
       optional :country, enum: -> { BrandDev::BrandWebScrapeHTMLParams::Country }
@@ -131,7 +130,7 @@ module BrandDev
       #
       #   @param actions [Array<BrandDev::Models::BrandWebScrapeHTMLParams::Action::Wait, BrandDev::Models::BrandWebScrapeHTMLParams::Action::Perform>, nil] Optional browser actions executed in array order after the page loads and before
       #
-      #   @param country [Symbol, BrandDev::Models::BrandWebScrapeHTMLParams::Country] Two-letter ISO 3166-1 alpha-2 country code identifying a supported Context.dev r
+      #   @param country [Symbol, BrandDev::Models::BrandWebScrapeHTMLParams::Country] Fetch the target page through a residential proxy in this country (ISO 3166-1 al
       #
       #   @param exclude_selectors [Array<String>, nil] CSS selectors to remove from the result. Applied after includeSelectors. Exclusi
       #
@@ -212,9 +211,8 @@ module BrandDev
         #   @return [Array(BrandDev::Models::BrandWebScrapeHTMLParams::Action::Wait, BrandDev::Models::BrandWebScrapeHTMLParams::Action::Perform)]
       end
 
-      # Two-letter ISO 3166-1 alpha-2 country code identifying a supported Context.dev
-      # residential proxy exit location. Must be one of Context.dev's supported
-      # countries. When provided, Context.dev fetches the target page from that country.
+      # Fetch the target page through a residential proxy in this country (ISO 3166-1
+      # alpha-2).
       module Country
         extend BrandDev::Internal::Type::Enum
 

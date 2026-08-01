@@ -516,7 +516,7 @@ module BrandDev
       #
       # @param color_scheme [Symbol, BrandDev::Models::BrandScreenshotParams::ColorScheme] Optional parameter to choose the site's visual theme in the screenshot. Use 'lig
       #
-      # @param country [Symbol, BrandDev::Models::BrandScreenshotParams::Country] Two-letter ISO 3166-1 alpha-2 country code identifying a supported Context.dev r
+      # @param country [Symbol, BrandDev::Models::BrandScreenshotParams::Country] Fetch the target page through a residential proxy in this country (ISO 3166-1 al
       #
       # @param direct_url [String] A specific URL to screenshot directly, bypassing domain resolution (e.g., 'https
       #
@@ -622,7 +622,7 @@ module BrandDev
       #
       # @param actions [Array<BrandDev::Models::BrandWebScrapeHTMLParams::Action::Wait, BrandDev::Models::BrandWebScrapeHTMLParams::Action::Perform>, nil] Optional browser actions executed in array order after the page loads and before
       #
-      # @param country [Symbol, BrandDev::Models::BrandWebScrapeHTMLParams::Country] Two-letter ISO 3166-1 alpha-2 country code identifying a supported Context.dev r
+      # @param country [Symbol, BrandDev::Models::BrandWebScrapeHTMLParams::Country] Fetch the target page through a residential proxy in this country (ISO 3166-1 al
       #
       # @param exclude_selectors [Array<String>, nil] CSS selectors to remove from the result. Applied after includeSelectors. Exclusi
       #
@@ -750,7 +750,7 @@ module BrandDev
       #
       # @param actions [Array<BrandDev::Models::BrandWebScrapeMdParams::Action::Wait, BrandDev::Models::BrandWebScrapeMdParams::Action::Perform>, nil] Optional browser actions executed in array order after the page loads and before
       #
-      # @param country [Symbol, BrandDev::Models::BrandWebScrapeMdParams::Country] Two-letter ISO 3166-1 alpha-2 country code identifying a supported Context.dev r
+      # @param country [Symbol, BrandDev::Models::BrandWebScrapeMdParams::Country] Fetch the target page through a residential proxy in this country (ISO 3166-1 al
       #
       # @param exclude_selectors [Array<String>, nil] CSS selectors to remove before conversion to Markdown. Applied after includeSele
       #
