@@ -15,9 +15,8 @@ module BrandDev
       optional :color_scheme, enum: -> { BrandDev::BrandScreenshotParams::ColorScheme }
 
       # @!attribute country
-      #   Two-letter ISO 3166-1 alpha-2 country code identifying a supported Context.dev
-      #   residential proxy exit location. Must be one of Context.dev's supported
-      #   countries. When provided, Context.dev fetches the target page from that country.
+      #   Fetch the target page through a residential proxy in this country (ISO 3166-1
+      #   alpha-2).
       #
       #   @return [Symbol, BrandDev::Models::BrandScreenshotParams::Country, nil]
       optional :country, enum: -> { BrandDev::BrandScreenshotParams::Country }
@@ -128,7 +127,7 @@ module BrandDev
       #
       #   @param color_scheme [Symbol, BrandDev::Models::BrandScreenshotParams::ColorScheme] Optional parameter to choose the site's visual theme in the screenshot. Use 'lig
       #
-      #   @param country [Symbol, BrandDev::Models::BrandScreenshotParams::Country] Two-letter ISO 3166-1 alpha-2 country code identifying a supported Context.dev r
+      #   @param country [Symbol, BrandDev::Models::BrandScreenshotParams::Country] Fetch the target page through a residential proxy in this country (ISO 3166-1 al
       #
       #   @param direct_url [String] A specific URL to screenshot directly, bypassing domain resolution (e.g., 'https
       #
@@ -168,9 +167,8 @@ module BrandDev
         #   @return [Array<Symbol>]
       end
 
-      # Two-letter ISO 3166-1 alpha-2 country code identifying a supported Context.dev
-      # residential proxy exit location. Must be one of Context.dev's supported
-      # countries. When provided, Context.dev fetches the target page from that country.
+      # Fetch the target page through a residential proxy in this country (ISO 3166-1
+      # alpha-2).
       module Country
         extend BrandDev::Internal::Type::Enum
 
