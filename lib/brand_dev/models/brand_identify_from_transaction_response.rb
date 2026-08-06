@@ -81,6 +81,12 @@ module BrandDev
         #   @return [String, nil]
         optional :email, String
 
+        # @!attribute employees
+        #   Employee headcount information for the brand (will be null if unknown)
+        #
+        #   @return [BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Employees, nil]
+        optional :employees, -> { BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Employees }
+
         # @!attribute industries
         #   Industry classification information for the brand
         #
@@ -146,7 +152,7 @@ module BrandDev
         #   @return [String, nil]
         optional :title, String
 
-        # @!method initialize(address: nil, backdrops: nil, colors: nil, description: nil, domain: nil, email: nil, industries: nil, is_nsfw: nil, links: nil, logos: nil, phone: nil, primary_language: nil, slogan: nil, socials: nil, stock: nil, title: nil)
+        # @!method initialize(address: nil, backdrops: nil, colors: nil, description: nil, domain: nil, email: nil, employees: nil, industries: nil, is_nsfw: nil, links: nil, logos: nil, phone: nil, primary_language: nil, slogan: nil, socials: nil, stock: nil, title: nil)
         #   Some parameter documentations has been truncated, see
         #   {BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand} for more
         #   details.
@@ -164,6 +170,8 @@ module BrandDev
         #   @param domain [String] The domain name of the brand
         #
         #   @param email [String] Company email address
+        #
+        #   @param employees [BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Employees] Employee headcount information for the brand (will be null if unknown)
         #
         #   @param industries [BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Industries] Industry classification information for the brand
         #
@@ -342,6 +350,48 @@ module BrandDev
           #   @param hex [String] Color in hexadecimal format
           #
           #   @param name [String] Name of the color
+        end
+
+        # @see BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand#employees
+        class Employees < BrandDev::Internal::Type::BaseModel
+          # @!attribute exact
+          #   Exact employee count when a precise headcount is known
+          #
+          #   @return [Integer, nil]
+          optional :exact, Integer
+
+          # @!attribute range
+          #   Employee count range for the brand (e.g. '11 to 50')
+          #
+          #   @return [Symbol, BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Employees::Range, nil]
+          optional :range,
+                   enum: -> { BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Employees::Range }
+
+          # @!method initialize(exact: nil, range: nil)
+          #   Employee headcount information for the brand (will be null if unknown)
+          #
+          #   @param exact [Integer] Exact employee count when a precise headcount is known
+          #
+          #   @param range [Symbol, BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Employees::Range] Employee count range for the brand (e.g. '11 to 50')
+
+          # Employee count range for the brand (e.g. '11 to 50')
+          #
+          # @see BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Employees#range
+          module Range
+            extend BrandDev::Internal::Type::Enum
+
+            RANGE_1_TO_10 = :"1 to 10"
+            RANGE_11_TO_50 = :"11 to 50"
+            RANGE_51_TO_200 = :"51 to 200"
+            RANGE_201_TO_500 = :"201 to 500"
+            RANGE_501_TO_1000 = :"501 to 1000"
+            RANGE_1001_TO_5000 = :"1001 to 5000"
+            RANGE_5001_TO_10000 = :"5001 to 10000"
+            RANGE_10001 = :"10001+"
+
+            # @!method self.values
+            #   @return [Array<Symbol>]
+          end
         end
 
         # @see BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand#industries
