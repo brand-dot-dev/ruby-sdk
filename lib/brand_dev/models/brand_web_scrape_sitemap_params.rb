@@ -28,6 +28,14 @@ module BrandDev
       #   @return [Integer, nil]
       optional :max_links, Integer
 
+      # @!attribute search
+      #   Optional search phrase. When provided, the crawled sitemap is filtered to the
+      #   pages whose URLs are about that phrase, most relevant first, and the request
+      #   costs 2 credits instead of 1.
+      #
+      #   @return [String, nil]
+      optional :search, String
+
       # @!attribute sitemap_url
       #   Optional explicit sitemap URL. When provided, exactly this sitemap is crawled
       #   instead of discovering the domain's sitemaps.
@@ -67,7 +75,7 @@ module BrandDev
       #   @return [Symbol, BrandDev::Models::BrandWebScrapeSitemapParams::Zdr, nil]
       optional :zdr, enum: -> { BrandDev::BrandWebScrapeSitemapParams::Zdr }
 
-      # @!method initialize(domain:, headers: nil, max_links: nil, sitemap_url: nil, tags: nil, timeout_ms: nil, url_regex: nil, zdr: nil, request_options: {})
+      # @!method initialize(domain:, headers: nil, max_links: nil, search: nil, sitemap_url: nil, tags: nil, timeout_ms: nil, url_regex: nil, zdr: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
       #   {BrandDev::Models::BrandWebScrapeSitemapParams} for more details.
       #
@@ -76,6 +84,8 @@ module BrandDev
       #   @param headers [Hash{Symbol=>String}] Optional outbound HTTP headers forwarded only to the target URL, sent as deep-ob
       #
       #   @param max_links [Integer] Maximum number of links to return from the sitemap crawl. Defaults to 10,000. Mi
+      #
+      #   @param search [String] Optional search phrase. When provided, the crawled sitemap is filtered to the pa
       #
       #   @param sitemap_url [String] Optional explicit sitemap URL. When provided, exactly this sitemap is crawled in
       #

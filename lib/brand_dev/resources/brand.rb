@@ -815,15 +815,21 @@ module BrandDev
       # Some parameter documentations has been truncated, see
       # {BrandDev::Models::BrandWebScrapeSitemapParams} for more details.
       #
-      # Crawl an entire website's sitemap and return all discovered page URLs.
+      # Crawl an entire website's sitemap and return all discovered page URLs. Pass
+      # `search` to have the crawled sitemap filtered down to the pages about a phrase
+      # (for example `pricing and plans` or `api authentication docs`), most relevant
+      # first — a searched crawl scans the whole sitemap and costs 2 credits instead
+      # of 1.
       #
-      # @overload web_scrape_sitemap(domain:, headers: nil, max_links: nil, sitemap_url: nil, tags: nil, timeout_ms: nil, url_regex: nil, zdr: nil, request_options: {})
+      # @overload web_scrape_sitemap(domain:, headers: nil, max_links: nil, search: nil, sitemap_url: nil, tags: nil, timeout_ms: nil, url_regex: nil, zdr: nil, request_options: {})
       #
       # @param domain [String] Domain to build a sitemap for
       #
       # @param headers [Hash{Symbol=>String}] Optional outbound HTTP headers forwarded only to the target URL, sent as deep-ob
       #
       # @param max_links [Integer] Maximum number of links to return from the sitemap crawl. Defaults to 10,000. Mi
+      #
+      # @param search [String] Optional search phrase. When provided, the crawled sitemap is filtered to the pa
       #
       # @param sitemap_url [String] Optional explicit sitemap URL. When provided, exactly this sitemap is crawled in
       #

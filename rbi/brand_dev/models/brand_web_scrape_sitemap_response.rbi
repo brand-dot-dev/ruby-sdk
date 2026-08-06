@@ -34,7 +34,8 @@ module BrandDev
       end
       attr_accessor :success
 
-      # Array of discovered page URLs from the sitemap (max 500)
+      # Discovered page URLs from the sitemap, up to `maxLinks`. When `search` is set
+      # these are only the matching pages, most relevant first.
       sig { returns(T::Array[String]) }
       attr_accessor :urls
 
@@ -75,7 +76,8 @@ module BrandDev
         meta:,
         # Indicates success
         success:,
-        # Array of discovered page URLs from the sitemap (max 500)
+        # Discovered page URLs from the sitemap, up to `maxLinks`. When `search` is set
+        # these are only the matching pages, most relevant first.
         urls:,
         # Metadata about the API key used for the request. Included in every response
         # whenever a valid API key is provided, even when the response status is not 200.
