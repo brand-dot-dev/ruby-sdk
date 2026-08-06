@@ -536,7 +536,7 @@ module BrandDev
         # @!attribute ocr
         #   When true, detect and OCR images embedded in the selected PDF pages, inserting
         #   recognized text at each image's position in page reading order while preserving
-        #   the PDF text layer. This is separate from automatic scanned-PDF OCR fallback.
+        #   the PDF text layer. When false, no OCR runs.
         #
         #   @return [Boolean, Symbol, BrandDev::Models::BrandWebScrapeMdParams::Pdf::Ocr, nil]
         optional :ocr, union: -> { BrandDev::BrandWebScrapeMdParams::Pdf::Ocr }
@@ -573,7 +573,7 @@ module BrandDev
 
         # When true, detect and OCR images embedded in the selected PDF pages, inserting
         # recognized text at each image's position in page reading order while preserving
-        # the PDF text layer. This is separate from automatic scanned-PDF OCR fallback.
+        # the PDF text layer. When false, no OCR runs.
         #
         # @see BrandDev::Models::BrandWebScrapeMdParams::Pdf#ocr
         module Ocr
