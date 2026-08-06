@@ -183,6 +183,24 @@ module BrandDev
         sig { params(email: String).void }
         attr_writer :email
 
+        # Employee headcount information for the brand (will be null if unknown)
+        sig do
+          returns(
+            T.nilable(
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Employees
+            )
+          )
+        end
+        attr_reader :employees
+
+        sig do
+          params(
+            employees:
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Employees::OrHash
+          ).void
+        end
+        attr_writer :employees
+
         # Industry classification information for the brand
         sig do
           returns(
@@ -336,6 +354,8 @@ module BrandDev
             description: String,
             domain: String,
             email: String,
+            employees:
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Employees::OrHash,
             industries:
               BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Industries::OrHash,
             is_nsfw: T::Boolean,
@@ -373,6 +393,8 @@ module BrandDev
           domain: nil,
           # Company email address
           email: nil,
+          # Employee headcount information for the brand (will be null if unknown)
+          employees: nil,
           # Industry classification information for the brand
           industries: nil,
           # Indicates whether the brand content is not safe for work (NSFW)
@@ -413,6 +435,8 @@ module BrandDev
               description: String,
               domain: String,
               email: String,
+              employees:
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Employees,
               industries:
                 BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Industries,
               is_nsfw: T::Boolean,
@@ -768,6 +792,134 @@ module BrandDev
 
           sig { override.returns({ hex: String, name: String }) }
           def to_hash
+          end
+        end
+
+        class Employees < BrandDev::Internal::Type::BaseModel
+          OrHash =
+            T.type_alias do
+              T.any(
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Employees,
+                BrandDev::Internal::AnyHash
+              )
+            end
+
+          # Exact employee count when a precise headcount is known
+          sig { returns(T.nilable(Integer)) }
+          attr_reader :exact
+
+          sig { params(exact: Integer).void }
+          attr_writer :exact
+
+          # Employee count range for the brand (e.g. '11 to 50')
+          sig do
+            returns(
+              T.nilable(
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Employees::Range::TaggedSymbol
+              )
+            )
+          end
+          attr_reader :range
+
+          sig do
+            params(
+              range:
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Employees::Range::OrSymbol
+            ).void
+          end
+          attr_writer :range
+
+          # Employee headcount information for the brand (will be null if unknown)
+          sig do
+            params(
+              exact: Integer,
+              range:
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Employees::Range::OrSymbol
+            ).returns(T.attached_class)
+          end
+          def self.new(
+            # Exact employee count when a precise headcount is known
+            exact: nil,
+            # Employee count range for the brand (e.g. '11 to 50')
+            range: nil
+          )
+          end
+
+          sig do
+            override.returns(
+              {
+                exact: Integer,
+                range:
+                  BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Employees::Range::TaggedSymbol
+              }
+            )
+          end
+          def to_hash
+          end
+
+          # Employee count range for the brand (e.g. '11 to 50')
+          module Range
+            extend BrandDev::Internal::Type::Enum
+
+            TaggedSymbol =
+              T.type_alias do
+                T.all(
+                  Symbol,
+                  BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Employees::Range
+                )
+              end
+            OrSymbol = T.type_alias { T.any(Symbol, String) }
+
+            RANGE_1_TO_10 =
+              T.let(
+                :"1 to 10",
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Employees::Range::TaggedSymbol
+              )
+            RANGE_11_TO_50 =
+              T.let(
+                :"11 to 50",
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Employees::Range::TaggedSymbol
+              )
+            RANGE_51_TO_200 =
+              T.let(
+                :"51 to 200",
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Employees::Range::TaggedSymbol
+              )
+            RANGE_201_TO_500 =
+              T.let(
+                :"201 to 500",
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Employees::Range::TaggedSymbol
+              )
+            RANGE_501_TO_1000 =
+              T.let(
+                :"501 to 1000",
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Employees::Range::TaggedSymbol
+              )
+            RANGE_1001_TO_5000 =
+              T.let(
+                :"1001 to 5000",
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Employees::Range::TaggedSymbol
+              )
+            RANGE_5001_TO_10000 =
+              T.let(
+                :"5001 to 10000",
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Employees::Range::TaggedSymbol
+              )
+            RANGE_10001 =
+              T.let(
+                :"10001+",
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Employees::Range::TaggedSymbol
+              )
+
+            sig do
+              override.returns(
+                T::Array[
+                  BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Employees::Range::TaggedSymbol
+                ]
+              )
+            end
+            def self.values
+            end
           end
         end
 

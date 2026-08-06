@@ -51,6 +51,7 @@ module BrandDev
           description: String,
           domain: String,
           email: String,
+          employees: BrandDev::Models::BrandRetrieveByEmailResponse::Brand::Employees,
           industries: BrandDev::Models::BrandRetrieveByEmailResponse::Brand::Industries,
           is_nsfw: bool,
           links: BrandDev::Models::BrandRetrieveByEmailResponse::Brand::Links,
@@ -93,6 +94,12 @@ module BrandDev
         attr_reader email: String?
 
         def email=: (String) -> String
+
+        attr_reader employees: BrandDev::Models::BrandRetrieveByEmailResponse::Brand::Employees?
+
+        def employees=: (
+          BrandDev::Models::BrandRetrieveByEmailResponse::Brand::Employees
+        ) -> BrandDev::Models::BrandRetrieveByEmailResponse::Brand::Employees
 
         attr_reader industries: BrandDev::Models::BrandRetrieveByEmailResponse::Brand::Industries?
 
@@ -149,6 +156,7 @@ module BrandDev
           ?description: String,
           ?domain: String,
           ?email: String,
+          ?employees: BrandDev::Models::BrandRetrieveByEmailResponse::Brand::Employees,
           ?industries: BrandDev::Models::BrandRetrieveByEmailResponse::Brand::Industries,
           ?is_nsfw: bool,
           ?links: BrandDev::Models::BrandRetrieveByEmailResponse::Brand::Links,
@@ -168,6 +176,7 @@ module BrandDev
           description: String,
           domain: String,
           email: String,
+          employees: BrandDev::Models::BrandRetrieveByEmailResponse::Brand::Employees,
           industries: BrandDev::Models::BrandRetrieveByEmailResponse::Brand::Industries,
           is_nsfw: bool,
           links: BrandDev::Models::BrandRetrieveByEmailResponse::Brand::Links,
@@ -337,6 +346,59 @@ module BrandDev
           def initialize: (?hex: String, ?name: String) -> void
 
           def to_hash: -> { hex: String, name: String }
+        end
+
+        type employees =
+          {
+            exact: Integer,
+            range: BrandDev::Models::BrandRetrieveByEmailResponse::Brand::Employees::range
+          }
+
+        class Employees < BrandDev::Internal::Type::BaseModel
+          attr_reader exact: Integer?
+
+          def exact=: (Integer) -> Integer
+
+          attr_reader range: BrandDev::Models::BrandRetrieveByEmailResponse::Brand::Employees::range?
+
+          def range=: (
+            BrandDev::Models::BrandRetrieveByEmailResponse::Brand::Employees::range
+          ) -> BrandDev::Models::BrandRetrieveByEmailResponse::Brand::Employees::range
+
+          def initialize: (
+            ?exact: Integer,
+            ?range: BrandDev::Models::BrandRetrieveByEmailResponse::Brand::Employees::range
+          ) -> void
+
+          def to_hash: -> {
+            exact: Integer,
+            range: BrandDev::Models::BrandRetrieveByEmailResponse::Brand::Employees::range
+          }
+
+          type range =
+            :"1 to 10"
+            | :"11 to 50"
+            | :"51 to 200"
+            | :"201 to 500"
+            | :"501 to 1000"
+            | :"1001 to 5000"
+            | :"5001 to 10000"
+            | :"10001+"
+
+          module Range
+            extend BrandDev::Internal::Type::Enum
+
+            RANGE_1_TO_10: :"1 to 10"
+            RANGE_11_TO_50: :"11 to 50"
+            RANGE_51_TO_200: :"51 to 200"
+            RANGE_201_TO_500: :"201 to 500"
+            RANGE_501_TO_1000: :"501 to 1000"
+            RANGE_1001_TO_5000: :"1001 to 5000"
+            RANGE_5001_TO_10000: :"5001 to 10000"
+            RANGE_10001: :"10001+"
+
+            def self?.values: -> ::Array[BrandDev::Models::BrandRetrieveByEmailResponse::Brand::Employees::range]
+          end
         end
 
         type industries =
