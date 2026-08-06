@@ -876,7 +876,7 @@ module BrandDev
 
         # When true, detect and OCR images embedded in the selected PDF pages, inserting
         # recognized text at each image's position in page reading order while preserving
-        # the PDF text layer. This is separate from automatic scanned-PDF OCR fallback.
+        # the PDF text layer. When false, no OCR runs.
         sig do
           returns(
             T.nilable(
@@ -956,7 +956,7 @@ module BrandDev
           end_: nil,
           # When true, detect and OCR images embedded in the selected PDF pages, inserting
           # recognized text at each image's position in page reading order while preserving
-          # the PDF text layer. This is separate from automatic scanned-PDF OCR fallback.
+          # the PDF text layer. When false, no OCR runs.
           ocr: nil,
           # When true, PDF URLs are fetched and parsed. When false, PDF URLs are skipped and
           # a 400 PDF_SKIPPED is returned.
@@ -989,7 +989,7 @@ module BrandDev
 
         # When true, detect and OCR images embedded in the selected PDF pages, inserting
         # recognized text at each image's position in page reading order while preserving
-        # the PDF text layer. This is separate from automatic scanned-PDF OCR fallback.
+        # the PDF text layer. When false, no OCR runs.
         module Ocr
           extend BrandDev::Internal::Type::Union
 
