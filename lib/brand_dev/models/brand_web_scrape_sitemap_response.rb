@@ -23,7 +23,8 @@ module BrandDev
       required :success, enum: -> { BrandDev::Models::BrandWebScrapeSitemapResponse::Success }
 
       # @!attribute urls
-      #   Array of discovered page URLs from the sitemap (max 500)
+      #   Discovered page URLs from the sitemap, up to `maxLinks`. When `search` is set
+      #   these are only the matching pages, most relevant first.
       #
       #   @return [Array<String>]
       required :urls, BrandDev::Internal::Type::ArrayOf[String]
@@ -45,7 +46,7 @@ module BrandDev
       #
       #   @param success [Boolean, BrandDev::Models::BrandWebScrapeSitemapResponse::Success] Indicates success
       #
-      #   @param urls [Array<String>] Array of discovered page URLs from the sitemap (max 500)
+      #   @param urls [Array<String>] Discovered page URLs from the sitemap, up to `maxLinks`. When `search` is set th
       #
       #   @param key_metadata [BrandDev::Models::BrandWebScrapeSitemapResponse::KeyMetadata] Metadata about the API key used for the request. Included in every response when
 

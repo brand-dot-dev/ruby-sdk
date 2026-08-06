@@ -988,12 +988,17 @@ module BrandDev
       )
       end
 
-      # Crawl an entire website's sitemap and return all discovered page URLs.
+      # Crawl an entire website's sitemap and return all discovered page URLs. Pass
+      # `search` to have the crawled sitemap filtered down to the pages about a phrase
+      # (for example `pricing and plans` or `api authentication docs`), most relevant
+      # first — a searched crawl scans the whole sitemap and costs 2 credits instead
+      # of 1.
       sig do
         params(
           domain: String,
           headers: T::Hash[Symbol, String],
           max_links: Integer,
+          search: String,
           sitemap_url: String,
           tags: T::Array[String],
           timeout_ms: Integer,
@@ -1012,6 +1017,10 @@ module BrandDev
         # Maximum number of links to return from the sitemap crawl. Defaults to 10,000.
         # Minimum is 1, maximum is 100,000.
         max_links: nil,
+        # Optional search phrase. When provided, the crawled sitemap is filtered to the
+        # pages whose URLs are about that phrase, most relevant first, and the request
+        # costs 2 credits instead of 1.
+        search: nil,
         # Optional explicit sitemap URL. When provided, exactly this sitemap is crawled
         # instead of discovering the domain's sitemaps.
         sitemap_url: nil,
