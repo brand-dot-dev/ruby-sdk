@@ -925,7 +925,7 @@ module BrandDev
         attr_writer :ocr
 
         # When true, PDF URLs are fetched and parsed. When false, PDF URLs are skipped and
-        # a 400 WEBSITE_ACCESS_ERROR is returned.
+        # a 400 PDF_SKIPPED is returned.
         sig do
           returns(
             T.nilable(
@@ -983,7 +983,7 @@ module BrandDev
           # the PDF text layer. This is separate from automatic scanned-PDF OCR fallback.
           ocr: nil,
           # When true, PDF URLs are fetched and parsed. When false, PDF URLs are skipped and
-          # a 400 WEBSITE_ACCESS_ERROR is returned.
+          # a 400 PDF_SKIPPED is returned.
           should_parse: nil,
           # First 1-based PDF page to parse. When omitted, parsing starts at the first page.
           start: nil
@@ -1052,7 +1052,7 @@ module BrandDev
         end
 
         # When true, PDF URLs are fetched and parsed. When false, PDF URLs are skipped and
-        # a 400 WEBSITE_ACCESS_ERROR is returned.
+        # a 400 PDF_SKIPPED is returned.
         module ShouldParse
           extend BrandDev::Internal::Type::Union
 
