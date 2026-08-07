@@ -26,7 +26,7 @@ module BrandDev
       # @!attribute source
       #   Where the crawl started.
       #
-      #   @return [BrandDev::Models::CrawlControls::Source::UnionMember0, BrandDev::Models::CrawlControls::Source::UnionMember1]
+      #   @return [BrandDev::Models::CrawlControls::Source::StartURL, BrandDev::Models::CrawlControls::Source::Sitemap]
       required :source, union: -> { BrandDev::CrawlControls::Source }
 
       # @!attribute url_pattern
@@ -48,7 +48,7 @@ module BrandDev
       #
       #   @param max_pages [Integer] The `maxUrls` submitted with the crawl. A sitemap crawl scrapes only the URLs it
       #
-      #   @param source [BrandDev::Models::CrawlControls::Source::UnionMember0, BrandDev::Models::CrawlControls::Source::UnionMember1] Where the crawl started.
+      #   @param source [BrandDev::Models::CrawlControls::Source::StartURL, BrandDev::Models::CrawlControls::Source::Sitemap] Where the crawl started.
       #
       #   @param url_pattern [String, nil] RE2 pattern URLs had to match to be crawled. Null when the crawl set none.
 
@@ -58,15 +58,17 @@ module BrandDev
       module Source
         extend BrandDev::Internal::Type::Union
 
-        variant -> { BrandDev::CrawlControls::Source::UnionMember0 }
+        # The crawl discovered pages by following links from one URL.
+        variant -> { BrandDev::CrawlControls::Source::StartURL }
 
-        variant -> { BrandDev::CrawlControls::Source::UnionMember1 }
+        # The crawl scraped the pages listed in the domain's sitemap.
+        variant -> { BrandDev::CrawlControls::Source::Sitemap }
 
-        class UnionMember0 < BrandDev::Internal::Type::BaseModel
+        class StartURL < BrandDev::Internal::Type::BaseModel
           # @!attribute type
           #
-          #   @return [Symbol, BrandDev::Models::CrawlControls::Source::UnionMember0::Type]
-          required :type, enum: -> { BrandDev::CrawlControls::Source::UnionMember0::Type }
+          #   @return [Symbol, BrandDev::Models::CrawlControls::Source::StartURL::Type]
+          required :type, enum: -> { BrandDev::CrawlControls::Source::StartURL::Type }
 
           # @!attribute url
           #   Page the crawl started from.
@@ -75,11 +77,13 @@ module BrandDev
           required :url, String
 
           # @!method initialize(type:, url:)
-          #   @param type [Symbol, BrandDev::Models::CrawlControls::Source::UnionMember0::Type]
+          #   The crawl discovered pages by following links from one URL.
+          #
+          #   @param type [Symbol, BrandDev::Models::CrawlControls::Source::StartURL::Type]
           #
           #   @param url [String] Page the crawl started from.
 
-          # @see BrandDev::Models::CrawlControls::Source::UnionMember0#type
+          # @see BrandDev::Models::CrawlControls::Source::StartURL#type
           module Type
             extend BrandDev::Internal::Type::Enum
 
@@ -90,7 +94,7 @@ module BrandDev
           end
         end
 
-        class UnionMember1 < BrandDev::Internal::Type::BaseModel
+        class Sitemap < BrandDev::Internal::Type::BaseModel
           # @!attribute domain
           #   Domain whose sitemap supplied the pages.
           #
@@ -99,15 +103,17 @@ module BrandDev
 
           # @!attribute type
           #
-          #   @return [Symbol, BrandDev::Models::CrawlControls::Source::UnionMember1::Type]
-          required :type, enum: -> { BrandDev::CrawlControls::Source::UnionMember1::Type }
+          #   @return [Symbol, BrandDev::Models::CrawlControls::Source::Sitemap::Type]
+          required :type, enum: -> { BrandDev::CrawlControls::Source::Sitemap::Type }
 
           # @!method initialize(domain:, type:)
+          #   The crawl scraped the pages listed in the domain's sitemap.
+          #
           #   @param domain [String] Domain whose sitemap supplied the pages.
           #
-          #   @param type [Symbol, BrandDev::Models::CrawlControls::Source::UnionMember1::Type]
+          #   @param type [Symbol, BrandDev::Models::CrawlControls::Source::Sitemap::Type]
 
-          # @see BrandDev::Models::CrawlControls::Source::UnionMember1#type
+          # @see BrandDev::Models::CrawlControls::Source::Sitemap#type
           module Type
             extend BrandDev::Internal::Type::Enum
 
@@ -119,7 +125,7 @@ module BrandDev
         end
 
         # @!method self.variants
-        #   @return [Array(BrandDev::Models::CrawlControls::Source::UnionMember0, BrandDev::Models::CrawlControls::Source::UnionMember1)]
+        #   @return [Array(BrandDev::Models::CrawlControls::Source::StartURL, BrandDev::Models::CrawlControls::Source::Sitemap)]
       end
     end
   end
