@@ -37,30 +37,30 @@ module BrandDev
       }
 
       type source =
-        BrandDev::CrawlControls::Source::UnionMember0
-        | BrandDev::CrawlControls::Source::UnionMember1
+        BrandDev::CrawlControls::Source::StartURL
+        | BrandDev::CrawlControls::Source::Sitemap
 
       module Source
         extend BrandDev::Internal::Type::Union
 
-        type union_member0 =
+        type start_url =
           {
-            type: BrandDev::Models::CrawlControls::Source::UnionMember0::type_,
+            type: BrandDev::Models::CrawlControls::Source::StartURL::type_,
             url: String
           }
 
-        class UnionMember0 < BrandDev::Internal::Type::BaseModel
-          attr_accessor type: BrandDev::Models::CrawlControls::Source::UnionMember0::type_
+        class StartURL < BrandDev::Internal::Type::BaseModel
+          attr_accessor type: BrandDev::Models::CrawlControls::Source::StartURL::type_
 
           attr_accessor url: String
 
           def initialize: (
-            type: BrandDev::Models::CrawlControls::Source::UnionMember0::type_,
+            type: BrandDev::Models::CrawlControls::Source::StartURL::type_,
             url: String
           ) -> void
 
           def to_hash: -> {
-            type: BrandDev::Models::CrawlControls::Source::UnionMember0::type_,
+            type: BrandDev::Models::CrawlControls::Source::StartURL::type_,
             url: String
           }
 
@@ -71,29 +71,29 @@ module BrandDev
 
             START_URL: :start_url
 
-            def self?.values: -> ::Array[BrandDev::Models::CrawlControls::Source::UnionMember0::type_]
+            def self?.values: -> ::Array[BrandDev::Models::CrawlControls::Source::StartURL::type_]
           end
         end
 
-        type union_member1 =
+        type sitemap =
           {
             domain: String,
-            type: BrandDev::Models::CrawlControls::Source::UnionMember1::type_
+            type: BrandDev::Models::CrawlControls::Source::Sitemap::type_
           }
 
-        class UnionMember1 < BrandDev::Internal::Type::BaseModel
+        class Sitemap < BrandDev::Internal::Type::BaseModel
           attr_accessor domain: String
 
-          attr_accessor type: BrandDev::Models::CrawlControls::Source::UnionMember1::type_
+          attr_accessor type: BrandDev::Models::CrawlControls::Source::Sitemap::type_
 
           def initialize: (
             domain: String,
-            type: BrandDev::Models::CrawlControls::Source::UnionMember1::type_
+            type: BrandDev::Models::CrawlControls::Source::Sitemap::type_
           ) -> void
 
           def to_hash: -> {
             domain: String,
-            type: BrandDev::Models::CrawlControls::Source::UnionMember1::type_
+            type: BrandDev::Models::CrawlControls::Source::Sitemap::type_
           }
 
           type type_ = :sitemap
@@ -103,7 +103,7 @@ module BrandDev
 
             SITEMAP: :sitemap
 
-            def self?.values: -> ::Array[BrandDev::Models::CrawlControls::Source::UnionMember1::type_]
+            def self?.values: -> ::Array[BrandDev::Models::CrawlControls::Source::Sitemap::type_]
           end
         end
 
