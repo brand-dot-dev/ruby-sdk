@@ -71,6 +71,7 @@ module BrandDev
           canonical_url: String,
           description: String,
           favicon: String,
+          headings: ::Array[BrandDev::Models::BrandWebScrapeMdResponse::Metadata::Heading],
           image: String,
           json_ld: ::Array[::Hash[Symbol, top]],
           keywords: ::Array[String],
@@ -116,6 +117,12 @@ module BrandDev
         attr_reader favicon: String?
 
         def favicon=: (String) -> String
+
+        attr_reader headings: ::Array[BrandDev::Models::BrandWebScrapeMdResponse::Metadata::Heading]?
+
+        def headings=: (
+          ::Array[BrandDev::Models::BrandWebScrapeMdResponse::Metadata::Heading]
+        ) -> ::Array[BrandDev::Models::BrandWebScrapeMdResponse::Metadata::Heading]
 
         attr_reader image: String?
 
@@ -176,6 +183,7 @@ module BrandDev
           ?canonical_url: String,
           ?description: String,
           ?favicon: String,
+          ?headings: ::Array[BrandDev::Models::BrandWebScrapeMdResponse::Metadata::Heading],
           ?image: String,
           ?json_ld: ::Array[::Hash[Symbol, top]],
           ?keywords: ::Array[String],
@@ -198,6 +206,7 @@ module BrandDev
           canonical_url: String,
           description: String,
           favicon: String,
+          headings: ::Array[BrandDev::Models::BrandWebScrapeMdResponse::Metadata::Heading],
           image: String,
           json_ld: ::Array[::Hash[Symbol, top]],
           keywords: ::Array[String],
@@ -252,6 +261,18 @@ module BrandDev
             title: String,
             type: String
           }
+        end
+
+        type heading = { level: Integer, text: String }
+
+        class Heading < BrandDev::Internal::Type::BaseModel
+          attr_accessor level: Integer
+
+          attr_accessor text: String
+
+          def initialize: (level: Integer, text: String) -> void
+
+          def to_hash: -> { level: Integer, text: String }
         end
 
         type open_graph = String | ::Array[String]

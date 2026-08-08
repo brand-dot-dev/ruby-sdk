@@ -259,6 +259,29 @@ module BrandDev
         sig { params(favicon: String).void }
         attr_writer :favicon
 
+        # Page headings (h1–h6) in document order, extracted from the unfiltered document.
+        # Capped at the first 500 headings. Omitted when the page has none.
+        sig do
+          returns(
+            T.nilable(
+              T::Array[
+                BrandDev::Models::BrandWebScrapeHTMLResponse::Metadata::Heading
+              ]
+            )
+          )
+        end
+        attr_reader :headings
+
+        sig do
+          params(
+            headings:
+              T::Array[
+                BrandDev::Models::BrandWebScrapeHTMLResponse::Metadata::Heading::OrHash
+              ]
+          ).void
+        end
+        attr_writer :headings
+
         # Primary resolved preview image from Open Graph, Twitter, or image metadata.
         sig { returns(T.nilable(String)) }
         attr_reader :image
@@ -388,6 +411,10 @@ module BrandDev
             canonical_url: String,
             description: String,
             favicon: String,
+            headings:
+              T::Array[
+                BrandDev::Models::BrandWebScrapeHTMLResponse::Metadata::Heading::OrHash
+              ],
             image: String,
             json_ld: T::Array[T::Hash[Symbol, T.anything]],
             keywords: T::Array[String],
@@ -427,6 +454,9 @@ module BrandDev
           description: nil,
           # Resolved favicon URL, when present.
           favicon: nil,
+          # Page headings (h1–h6) in document order, extracted from the unfiltered document.
+          # Capped at the first 500 headings. Omitted when the page has none.
+          headings: nil,
           # Primary resolved preview image from Open Graph, Twitter, or image metadata.
           image: nil,
           # JSON-LD structured data blocks parsed from the page.
@@ -470,6 +500,10 @@ module BrandDev
               canonical_url: String,
               description: String,
               favicon: String,
+              headings:
+                T::Array[
+                  BrandDev::Models::BrandWebScrapeHTMLResponse::Metadata::Heading
+                ],
               image: String,
               json_ld: T::Array[T::Hash[Symbol, T.anything]],
               keywords: T::Array[String],
@@ -576,6 +610,37 @@ module BrandDev
               { href: String, hreflang: String, title: String, type: String }
             )
           end
+          def to_hash
+          end
+        end
+
+        class Heading < BrandDev::Internal::Type::BaseModel
+          OrHash =
+            T.type_alias do
+              T.any(
+                BrandDev::Models::BrandWebScrapeHTMLResponse::Metadata::Heading,
+                BrandDev::Internal::AnyHash
+              )
+            end
+
+          # Heading level, 1–6 (from h1–h6).
+          sig { returns(Integer) }
+          attr_accessor :level
+
+          # Heading text with whitespace collapsed, truncated to 1000 characters.
+          sig { returns(String) }
+          attr_accessor :text
+
+          sig { params(level: Integer, text: String).returns(T.attached_class) }
+          def self.new(
+            # Heading level, 1–6 (from h1–h6).
+            level:,
+            # Heading text with whitespace collapsed, truncated to 1000 characters.
+            text:
+          )
+          end
+
+          sig { override.returns({ level: Integer, text: String }) }
           def to_hash
           end
         end
