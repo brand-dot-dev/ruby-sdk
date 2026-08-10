@@ -8,6 +8,7 @@ module BrandDev
         exclude_selectors: ::Array[String]?,
         headers: ::Hash[Symbol, String],
         include_frames: BrandDev::Models::BrandWebScrapeMdParams::include_frames,
+        include_html: BrandDev::Models::BrandWebScrapeMdParams::include_html,
         include_images: BrandDev::Models::BrandWebScrapeMdParams::include_images,
         include_links: BrandDev::Models::BrandWebScrapeMdParams::include_links,
         include_selectors: ::Array[String]?,
@@ -48,6 +49,12 @@ module BrandDev
       def include_frames=: (
         BrandDev::Models::BrandWebScrapeMdParams::include_frames
       ) -> BrandDev::Models::BrandWebScrapeMdParams::include_frames
+
+      attr_reader include_html: BrandDev::Models::BrandWebScrapeMdParams::include_html?
+
+      def include_html=: (
+        BrandDev::Models::BrandWebScrapeMdParams::include_html
+      ) -> BrandDev::Models::BrandWebScrapeMdParams::include_html
 
       attr_reader include_images: BrandDev::Models::BrandWebScrapeMdParams::include_images?
 
@@ -112,6 +119,7 @@ module BrandDev
         ?exclude_selectors: ::Array[String]?,
         ?headers: ::Hash[Symbol, String],
         ?include_frames: BrandDev::Models::BrandWebScrapeMdParams::include_frames,
+        ?include_html: BrandDev::Models::BrandWebScrapeMdParams::include_html,
         ?include_images: BrandDev::Models::BrandWebScrapeMdParams::include_images,
         ?include_links: BrandDev::Models::BrandWebScrapeMdParams::include_links,
         ?include_selectors: ::Array[String]?,
@@ -134,6 +142,7 @@ module BrandDev
         exclude_selectors: ::Array[String]?,
         headers: ::Hash[Symbol, String],
         include_frames: BrandDev::Models::BrandWebScrapeMdParams::include_frames,
+        include_html: BrandDev::Models::BrandWebScrapeMdParams::include_html,
         include_images: BrandDev::Models::BrandWebScrapeMdParams::include_images,
         include_links: BrandDev::Models::BrandWebScrapeMdParams::include_links,
         include_selectors: ::Array[String]?,
@@ -606,6 +615,17 @@ module BrandDev
         extend BrandDev::Internal::Type::Union
 
         def self?.variants: -> ::Array[BrandDev::Models::BrandWebScrapeMdParams::include_frames]
+
+        TRUE: :true
+        FALSE: :false
+      end
+
+      type include_html = bool | :true | :false
+
+      module IncludeHTML
+        extend BrandDev::Internal::Type::Union
+
+        def self?.variants: -> ::Array[BrandDev::Models::BrandWebScrapeMdParams::include_html]
 
         TRUE: :true
         FALSE: :false

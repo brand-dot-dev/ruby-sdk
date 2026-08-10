@@ -51,6 +51,14 @@ module BrandDev
       #   @return [Boolean, nil]
       optional :actions_html_stale, BrandDev::Internal::Type::Boolean, api_name: :actionsHtmlStale
 
+      # @!attribute html
+      #   Only present when includeHTML=true: the page HTML the Markdown was converted
+      #   from — the same body the Scrape HTML endpoint returns for the equivalent
+      #   request.
+      #
+      #   @return [String, nil]
+      optional :html, String
+
       # @!attribute key_metadata
       #   Metadata about the API key used for the request. Included in every response
       #   whenever a valid API key is provided, even when the response status is not 200.
@@ -58,7 +66,7 @@ module BrandDev
       #   @return [BrandDev::Models::BrandWebScrapeMdResponse::KeyMetadata, nil]
       optional :key_metadata, -> { BrandDev::Models::BrandWebScrapeMdResponse::KeyMetadata }
 
-      # @!method initialize(content_length:, markdown:, metadata:, success:, url:, actions_applied: nil, actions_html_stale: nil, key_metadata: nil)
+      # @!method initialize(content_length:, markdown:, metadata:, success:, url:, actions_applied: nil, actions_html_stale: nil, html: nil, key_metadata: nil)
       #   Some parameter documentations has been truncated, see
       #   {BrandDev::Models::BrandWebScrapeMdResponse} for more details.
       #
@@ -75,6 +83,8 @@ module BrandDev
       #   @param actions_applied [Array<BrandDev::Models::BrandWebScrapeMdResponse::ActionsApplied>] One verified outcome per requested browser action, in request order.
       #
       #   @param actions_html_stale [Boolean] True when an action was applied but the returned content could not be refreshed
+      #
+      #   @param html [String] Only present when includeHTML=true: the page HTML the Markdown was converted fro
       #
       #   @param key_metadata [BrandDev::Models::BrandWebScrapeMdResponse::KeyMetadata] Metadata about the API key used for the request. Included in every response when
 

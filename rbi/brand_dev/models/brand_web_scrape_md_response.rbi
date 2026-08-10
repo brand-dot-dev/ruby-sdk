@@ -72,6 +72,15 @@ module BrandDev
       sig { params(actions_html_stale: T::Boolean).void }
       attr_writer :actions_html_stale
 
+      # Only present when includeHTML=true: the page HTML the Markdown was converted
+      # from — the same body the Scrape HTML endpoint returns for the equivalent
+      # request.
+      sig { returns(T.nilable(String)) }
+      attr_reader :html
+
+      sig { params(html: String).void }
+      attr_writer :html
+
       # Metadata about the API key used for the request. Included in every response
       # whenever a valid API key is provided, even when the response status is not 200.
       sig do
@@ -103,6 +112,7 @@ module BrandDev
               BrandDev::Models::BrandWebScrapeMdResponse::ActionsApplied::OrHash
             ],
           actions_html_stale: T::Boolean,
+          html: String,
           key_metadata:
             BrandDev::Models::BrandWebScrapeMdResponse::KeyMetadata::OrHash
         ).returns(T.attached_class)
@@ -125,6 +135,10 @@ module BrandDev
         # True when an action was applied but the returned content could not be refreshed
         # afterward.
         actions_html_stale: nil,
+        # Only present when includeHTML=true: the page HTML the Markdown was converted
+        # from — the same body the Scrape HTML endpoint returns for the equivalent
+        # request.
+        html: nil,
         # Metadata about the API key used for the request. Included in every response
         # whenever a valid API key is provided, even when the response status is not 200.
         key_metadata: nil
@@ -145,6 +159,7 @@ module BrandDev
                 BrandDev::Models::BrandWebScrapeMdResponse::ActionsApplied
               ],
             actions_html_stale: T::Boolean,
+            html: String,
             key_metadata:
               BrandDev::Models::BrandWebScrapeMdResponse::KeyMetadata
           }

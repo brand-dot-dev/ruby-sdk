@@ -900,6 +900,11 @@ module BrandDev
               T::Boolean,
               BrandDev::BrandWebScrapeMdParams::IncludeFrames::OrSymbol
             ),
+          include_html:
+            T.any(
+              T::Boolean,
+              BrandDev::BrandWebScrapeMdParams::IncludeHTML::OrSymbol
+            ),
           include_images:
             T.any(
               T::Boolean,
@@ -956,6 +961,10 @@ module BrandDev
         headers: nil,
         # When true, the contents of iframes are rendered to Markdown.
         include_frames: nil,
+        # When true, the response also includes an `html` field with the page HTML the
+        # Markdown was converted from — the same body the Scrape HTML endpoint returns for
+        # the equivalent request.
+        include_html: nil,
         # Include image references in Markdown output
         include_images: nil,
         # Preserve hyperlinks in Markdown output

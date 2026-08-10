@@ -385,6 +385,7 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
         url: String,
         actions_applied: ^(BrandDev::Internal::Type::ArrayOf[BrandDev::Models::BrandWebScrapeMdResponse::ActionsApplied]) | nil,
         actions_html_stale: BrandDev::Internal::Type::Boolean | nil,
+        html: String | nil,
         key_metadata: BrandDev::Models::BrandWebScrapeMdResponse::KeyMetadata | nil
       }
     end
