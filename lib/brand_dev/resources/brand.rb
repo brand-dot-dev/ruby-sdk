@@ -757,7 +757,7 @@ module BrandDev
       # | 429         | No                                        | Per-minute rate limit exceeded; honor Retry-After                                                                                                                                                                                                                                                             |
       # | 500         | No                                        | Internal error                                                                                                                                                                                                                                                                                                |
       #
-      # @overload web_scrape_md(url:, actions: nil, country: nil, exclude_selectors: nil, headers: nil, include_frames: nil, include_images: nil, include_links: nil, include_selectors: nil, max_age_ms: nil, pdf: nil, settle_animations: nil, shorten_base64_images: nil, tags: nil, timeout_ms: nil, use_main_content_only: nil, wait_for_ms: nil, zdr: nil, request_options: {})
+      # @overload web_scrape_md(url:, actions: nil, country: nil, exclude_selectors: nil, headers: nil, include_frames: nil, include_html: nil, include_images: nil, include_links: nil, include_selectors: nil, max_age_ms: nil, pdf: nil, settle_animations: nil, shorten_base64_images: nil, tags: nil, timeout_ms: nil, use_main_content_only: nil, wait_for_ms: nil, zdr: nil, request_options: {})
       #
       # @param url [String] Full URL to scrape into LLM usable Markdown (must include http:// or https:// pr
       #
@@ -770,6 +770,8 @@ module BrandDev
       # @param headers [Hash{Symbol=>String}] Optional outbound HTTP headers forwarded only to the target URL, sent as deep-ob
       #
       # @param include_frames [Boolean, Symbol, BrandDev::Models::BrandWebScrapeMdParams::IncludeFrames] When true, the contents of iframes are rendered to Markdown.
+      #
+      # @param include_html [Boolean, Symbol, BrandDev::Models::BrandWebScrapeMdParams::IncludeHTML] When true, the response also includes an `html` field with the page HTML the Mar
       #
       # @param include_images [Boolean, Symbol, BrandDev::Models::BrandWebScrapeMdParams::IncludeImages] Include image references in Markdown output
       #
@@ -809,6 +811,7 @@ module BrandDev
           query: query.transform_keys(
             exclude_selectors: "excludeSelectors",
             include_frames: "includeFrames",
+            include_html: "includeHTML",
             include_images: "includeImages",
             include_links: "includeLinks",
             include_selectors: "includeSelectors",

@@ -200,6 +200,7 @@ module BrandDev
         ?exclude_selectors: ::Array[String]?,
         ?headers: ::Hash[Symbol, String],
         ?include_frames: BrandDev::Models::BrandWebScrapeMdParams::include_frames,
+        ?include_html: BrandDev::Models::BrandWebScrapeMdParams::include_html,
         ?include_images: BrandDev::Models::BrandWebScrapeMdParams::include_images,
         ?include_links: BrandDev::Models::BrandWebScrapeMdParams::include_links,
         ?include_selectors: ::Array[String]?,

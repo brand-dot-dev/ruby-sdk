@@ -86,6 +86,32 @@ module BrandDev
       end
       attr_writer :include_frames
 
+      # When true, the response also includes an `html` field with the page HTML the
+      # Markdown was converted from — the same body the Scrape HTML endpoint returns for
+      # the equivalent request.
+      sig do
+        returns(
+          T.nilable(
+            T.any(
+              T::Boolean,
+              BrandDev::BrandWebScrapeMdParams::IncludeHTML::OrSymbol
+            )
+          )
+        )
+      end
+      attr_reader :include_html
+
+      sig do
+        params(
+          include_html:
+            T.any(
+              T::Boolean,
+              BrandDev::BrandWebScrapeMdParams::IncludeHTML::OrSymbol
+            )
+        ).void
+      end
+      attr_writer :include_html
+
       # Include image references in Markdown output
       sig do
         returns(
@@ -284,6 +310,11 @@ module BrandDev
               T::Boolean,
               BrandDev::BrandWebScrapeMdParams::IncludeFrames::OrSymbol
             ),
+          include_html:
+            T.any(
+              T::Boolean,
+              BrandDev::BrandWebScrapeMdParams::IncludeHTML::OrSymbol
+            ),
           include_images:
             T.any(
               T::Boolean,
@@ -340,6 +371,10 @@ module BrandDev
         headers: nil,
         # When true, the contents of iframes are rendered to Markdown.
         include_frames: nil,
+        # When true, the response also includes an `html` field with the page HTML the
+        # Markdown was converted from — the same body the Scrape HTML endpoint returns for
+        # the equivalent request.
+        include_html: nil,
         # Include image references in Markdown output
         include_images: nil,
         # Preserve hyperlinks in Markdown output
@@ -404,6 +439,11 @@ module BrandDev
               T.any(
                 T::Boolean,
                 BrandDev::BrandWebScrapeMdParams::IncludeFrames::OrSymbol
+              ),
+            include_html:
+              T.any(
+                T::Boolean,
+                BrandDev::BrandWebScrapeMdParams::IncludeHTML::OrSymbol
               ),
             include_images:
               T.any(
@@ -778,6 +818,46 @@ module BrandDev
           T.let(
             :false,
             BrandDev::BrandWebScrapeMdParams::IncludeFrames::TaggedSymbol
+          )
+      end
+
+      # When true, the response also includes an `html` field with the page HTML the
+      # Markdown was converted from — the same body the Scrape HTML endpoint returns for
+      # the equivalent request.
+      module IncludeHTML
+        extend BrandDev::Internal::Type::Union
+
+        Variants =
+          T.type_alias do
+            T.any(
+              T::Boolean,
+              BrandDev::BrandWebScrapeMdParams::IncludeHTML::TaggedSymbol
+            )
+          end
+
+        sig do
+          override.returns(
+            T::Array[BrandDev::BrandWebScrapeMdParams::IncludeHTML::Variants]
+          )
+        end
+        def self.variants
+        end
+
+        TaggedSymbol =
+          T.type_alias do
+            T.all(Symbol, BrandDev::BrandWebScrapeMdParams::IncludeHTML)
+          end
+        OrSymbol = T.type_alias { T.any(Symbol, String) }
+
+        TRUE =
+          T.let(
+            :true,
+            BrandDev::BrandWebScrapeMdParams::IncludeHTML::TaggedSymbol
+          )
+        FALSE =
+          T.let(
+            :false,
+            BrandDev::BrandWebScrapeMdParams::IncludeHTML::TaggedSymbol
           )
       end
 
