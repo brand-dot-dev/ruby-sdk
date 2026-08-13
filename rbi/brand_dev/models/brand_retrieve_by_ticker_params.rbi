@@ -39,27 +39,10 @@ module BrandDev
       # Optional parameter to optimize the API call for maximum speed. When set to true,
       # the API will skip time-consuming operations for faster response at the cost of
       # less comprehensive data.
-      sig do
-        returns(
-          T.nilable(
-            T.any(
-              T::Boolean,
-              BrandDev::BrandRetrieveByTickerParams::MaxSpeed::OrSymbol
-            )
-          )
-        )
-      end
+      sig { returns(T.nilable(T::Boolean)) }
       attr_reader :max_speed
 
-      sig do
-        params(
-          max_speed:
-            T.any(
-              T::Boolean,
-              BrandDev::BrandRetrieveByTickerParams::MaxSpeed::OrSymbol
-            )
-        ).void
-      end
+      sig { params(max_speed: T::Boolean).void }
       attr_writer :max_speed
 
       # Optional comma-separated caller-defined tags for tracking this request. Tags are
@@ -106,11 +89,7 @@ module BrandDev
               BrandDev::BrandRetrieveByTickerParams::ForceLanguage::OrSymbol
             ),
           max_age_ms: T.nilable(Integer),
-          max_speed:
-            T.any(
-              T::Boolean,
-              BrandDev::BrandRetrieveByTickerParams::MaxSpeed::OrSymbol
-            ),
+          max_speed: T::Boolean,
           tags: T::Array[String],
           ticker_exchange:
             BrandDev::BrandRetrieveByTickerParams::TickerExchange::OrSymbol,
@@ -156,11 +135,7 @@ module BrandDev
                 BrandDev::BrandRetrieveByTickerParams::ForceLanguage::OrSymbol
               ),
             max_age_ms: T.nilable(Integer),
-            max_speed:
-              T.any(
-                T::Boolean,
-                BrandDev::BrandRetrieveByTickerParams::MaxSpeed::OrSymbol
-              ),
+            max_speed: T::Boolean,
             tags: T::Array[String],
             ticker_exchange:
               BrandDev::BrandRetrieveByTickerParams::TickerExchange::OrSymbol,
@@ -792,46 +767,6 @@ module BrandDev
         end
         def self.values
         end
-      end
-
-      # Optional parameter to optimize the API call for maximum speed. When set to true,
-      # the API will skip time-consuming operations for faster response at the cost of
-      # less comprehensive data.
-      module MaxSpeed
-        extend BrandDev::Internal::Type::Union
-
-        Variants =
-          T.type_alias do
-            T.any(
-              T::Boolean,
-              BrandDev::BrandRetrieveByTickerParams::MaxSpeed::TaggedSymbol
-            )
-          end
-
-        sig do
-          override.returns(
-            T::Array[BrandDev::BrandRetrieveByTickerParams::MaxSpeed::Variants]
-          )
-        end
-        def self.variants
-        end
-
-        TaggedSymbol =
-          T.type_alias do
-            T.all(Symbol, BrandDev::BrandRetrieveByTickerParams::MaxSpeed)
-          end
-        OrSymbol = T.type_alias { T.any(Symbol, String) }
-
-        TRUE =
-          T.let(
-            :true,
-            BrandDev::BrandRetrieveByTickerParams::MaxSpeed::TaggedSymbol
-          )
-        FALSE =
-          T.let(
-            :false,
-            BrandDev::BrandRetrieveByTickerParams::MaxSpeed::TaggedSymbol
-          )
       end
 
       # Stock exchange code.

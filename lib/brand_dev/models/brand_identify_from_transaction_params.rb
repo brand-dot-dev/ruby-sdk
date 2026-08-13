@@ -38,17 +38,16 @@ module BrandDev
       #   When set to true, the API will perform an additional verification steps to
       #   ensure the identified brand matches the transaction with high confidence.
       #
-      #   @return [Boolean, Symbol, BrandDev::Models::BrandIdentifyFromTransactionParams::HighConfidenceOnly, nil]
-      optional :high_confidence_only,
-               union: -> { BrandDev::BrandIdentifyFromTransactionParams::HighConfidenceOnly }
+      #   @return [Boolean, nil]
+      optional :high_confidence_only, BrandDev::Internal::Type::Boolean
 
       # @!attribute max_speed
       #   Optional parameter to optimize the API call for maximum speed. When set to true,
       #   the API will skip time-consuming operations for faster response at the cost of
       #   less comprehensive data.
       #
-      #   @return [Boolean, Symbol, BrandDev::Models::BrandIdentifyFromTransactionParams::MaxSpeed, nil]
-      optional :max_speed, union: -> { BrandDev::BrandIdentifyFromTransactionParams::MaxSpeed }
+      #   @return [Boolean, nil]
+      optional :max_speed, BrandDev::Internal::Type::Boolean
 
       # @!attribute mcc
       #   Optional Merchant Category Code (MCC) to help identify the business
@@ -91,9 +90,9 @@ module BrandDev
       #
       #   @param force_language [Symbol, BrandDev::Models::BrandIdentifyFromTransactionParams::ForceLanguage, nil] Language to force for the retrieved brand data.
       #
-      #   @param high_confidence_only [Boolean, Symbol, BrandDev::Models::BrandIdentifyFromTransactionParams::HighConfidenceOnly] When set to true, the API will perform an additional verification steps to ensur
+      #   @param high_confidence_only [Boolean] When set to true, the API will perform an additional verification steps to ensur
       #
-      #   @param max_speed [Boolean, Symbol, BrandDev::Models::BrandIdentifyFromTransactionParams::MaxSpeed] Optional parameter to optimize the API call for maximum speed. When set to true,
+      #   @param max_speed [Boolean] Optional parameter to optimize the API call for maximum speed. When set to true,
       #
       #   @param mcc [String, Float] Optional Merchant Category Code (MCC) to help identify the business category/ind
       #
@@ -481,59 +480,6 @@ module BrandDev
 
         # @!method self.values
         #   @return [Array<Symbol>]
-      end
-
-      # When set to true, the API will perform an additional verification steps to
-      # ensure the identified brand matches the transaction with high confidence.
-      module HighConfidenceOnly
-        extend BrandDev::Internal::Type::Union
-
-        variant BrandDev::Internal::Type::Boolean
-
-        variant const: -> { BrandDev::Models::BrandIdentifyFromTransactionParams::HighConfidenceOnly::TRUE }
-
-        variant const: -> { BrandDev::Models::BrandIdentifyFromTransactionParams::HighConfidenceOnly::FALSE }
-
-        # @!method self.variants
-        #   @return [Array(Boolean, Symbol)]
-
-        define_sorbet_constant!(:Variants) do
-          T.type_alias { T.any(T::Boolean, BrandDev::BrandIdentifyFromTransactionParams::HighConfidenceOnly::TaggedSymbol) }
-        end
-
-        # @!group
-
-        TRUE = :true
-        FALSE = :false
-
-        # @!endgroup
-      end
-
-      # Optional parameter to optimize the API call for maximum speed. When set to true,
-      # the API will skip time-consuming operations for faster response at the cost of
-      # less comprehensive data.
-      module MaxSpeed
-        extend BrandDev::Internal::Type::Union
-
-        variant BrandDev::Internal::Type::Boolean
-
-        variant const: -> { BrandDev::Models::BrandIdentifyFromTransactionParams::MaxSpeed::TRUE }
-
-        variant const: -> { BrandDev::Models::BrandIdentifyFromTransactionParams::MaxSpeed::FALSE }
-
-        # @!method self.variants
-        #   @return [Array(Boolean, Symbol)]
-
-        define_sorbet_constant!(:Variants) do
-          T.type_alias { T.any(T::Boolean, BrandDev::BrandIdentifyFromTransactionParams::MaxSpeed::TaggedSymbol) }
-        end
-
-        # @!group
-
-        TRUE = :true
-        FALSE = :false
-
-        # @!endgroup
       end
 
       # Optional Merchant Category Code (MCC) to help identify the business

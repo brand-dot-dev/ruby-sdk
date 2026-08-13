@@ -6,8 +6,8 @@ module BrandDev
         city: String,
         country_gl: BrandDev::Models::BrandIdentifyFromTransactionParams::country_gl,
         force_language: BrandDev::Models::BrandIdentifyFromTransactionParams::force_language?,
-        high_confidence_only: BrandDev::Models::BrandIdentifyFromTransactionParams::high_confidence_only,
-        max_speed: BrandDev::Models::BrandIdentifyFromTransactionParams::max_speed,
+        high_confidence_only: bool,
+        max_speed: bool,
         mcc: BrandDev::Models::BrandIdentifyFromTransactionParams::mcc,
         phone: BrandDev::Models::BrandIdentifyFromTransactionParams::phone,
         tags: ::Array[String],
@@ -33,17 +33,13 @@ module BrandDev
 
       attr_accessor force_language: BrandDev::Models::BrandIdentifyFromTransactionParams::force_language?
 
-      attr_reader high_confidence_only: BrandDev::Models::BrandIdentifyFromTransactionParams::high_confidence_only?
+      attr_reader high_confidence_only: bool?
 
-      def high_confidence_only=: (
-        BrandDev::Models::BrandIdentifyFromTransactionParams::high_confidence_only
-      ) -> BrandDev::Models::BrandIdentifyFromTransactionParams::high_confidence_only
+      def high_confidence_only=: (bool) -> bool
 
-      attr_reader max_speed: BrandDev::Models::BrandIdentifyFromTransactionParams::max_speed?
+      attr_reader max_speed: bool?
 
-      def max_speed=: (
-        BrandDev::Models::BrandIdentifyFromTransactionParams::max_speed
-      ) -> BrandDev::Models::BrandIdentifyFromTransactionParams::max_speed
+      def max_speed=: (bool) -> bool
 
       attr_reader mcc: BrandDev::Models::BrandIdentifyFromTransactionParams::mcc?
 
@@ -70,8 +66,8 @@ module BrandDev
         ?city: String,
         ?country_gl: BrandDev::Models::BrandIdentifyFromTransactionParams::country_gl,
         ?force_language: BrandDev::Models::BrandIdentifyFromTransactionParams::force_language?,
-        ?high_confidence_only: BrandDev::Models::BrandIdentifyFromTransactionParams::high_confidence_only,
-        ?max_speed: BrandDev::Models::BrandIdentifyFromTransactionParams::max_speed,
+        ?high_confidence_only: bool,
+        ?max_speed: bool,
         ?mcc: BrandDev::Models::BrandIdentifyFromTransactionParams::mcc,
         ?phone: BrandDev::Models::BrandIdentifyFromTransactionParams::phone,
         ?tags: ::Array[String],
@@ -84,8 +80,8 @@ module BrandDev
         city: String,
         country_gl: BrandDev::Models::BrandIdentifyFromTransactionParams::country_gl,
         force_language: BrandDev::Models::BrandIdentifyFromTransactionParams::force_language?,
-        high_confidence_only: BrandDev::Models::BrandIdentifyFromTransactionParams::high_confidence_only,
-        max_speed: BrandDev::Models::BrandIdentifyFromTransactionParams::max_speed,
+        high_confidence_only: bool,
+        max_speed: bool,
         mcc: BrandDev::Models::BrandIdentifyFromTransactionParams::mcc,
         phone: BrandDev::Models::BrandIdentifyFromTransactionParams::phone,
         tags: ::Array[String],
@@ -827,28 +823,6 @@ module BrandDev
         ZULU: :zulu
 
         def self?.values: -> ::Array[BrandDev::Models::BrandIdentifyFromTransactionParams::force_language]
-      end
-
-      type high_confidence_only = bool | :true | :false
-
-      module HighConfidenceOnly
-        extend BrandDev::Internal::Type::Union
-
-        def self?.variants: -> ::Array[BrandDev::Models::BrandIdentifyFromTransactionParams::high_confidence_only]
-
-        TRUE: :true
-        FALSE: :false
-      end
-
-      type max_speed = bool | :true | :false
-
-      module MaxSpeed
-        extend BrandDev::Internal::Type::Union
-
-        def self?.variants: -> ::Array[BrandDev::Models::BrandIdentifyFromTransactionParams::max_speed]
-
-        TRUE: :true
-        FALSE: :false
       end
 
       type mcc = String | Float

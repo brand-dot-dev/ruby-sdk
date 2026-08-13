@@ -55,27 +55,10 @@ module BrandDev
       # Optional parameter to optimize the API call for maximum speed. When set to true,
       # the API will skip time-consuming operations for faster response at the cost of
       # less comprehensive data.
-      sig do
-        returns(
-          T.nilable(
-            T.any(
-              T::Boolean,
-              BrandDev::BrandRetrieveByNameParams::MaxSpeed::OrSymbol
-            )
-          )
-        )
-      end
+      sig { returns(T.nilable(T::Boolean)) }
       attr_reader :max_speed
 
-      sig do
-        params(
-          max_speed:
-            T.any(
-              T::Boolean,
-              BrandDev::BrandRetrieveByNameParams::MaxSpeed::OrSymbol
-            )
-        ).void
-      end
+      sig { params(max_speed: T::Boolean).void }
       attr_writer :max_speed
 
       # Optional comma-separated caller-defined tags for tracking this request. Tags are
@@ -105,11 +88,7 @@ module BrandDev
               BrandDev::BrandRetrieveByNameParams::ForceLanguage::OrSymbol
             ),
           max_age_ms: T.nilable(Integer),
-          max_speed:
-            T.any(
-              T::Boolean,
-              BrandDev::BrandRetrieveByNameParams::MaxSpeed::OrSymbol
-            ),
+          max_speed: T::Boolean,
           tags: T::Array[String],
           timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
@@ -156,11 +135,7 @@ module BrandDev
                 BrandDev::BrandRetrieveByNameParams::ForceLanguage::OrSymbol
               ),
             max_age_ms: T.nilable(Integer),
-            max_speed:
-              T.any(
-                T::Boolean,
-                BrandDev::BrandRetrieveByNameParams::MaxSpeed::OrSymbol
-              ),
+            max_speed: T::Boolean,
             tags: T::Array[String],
             timeout_ms: Integer,
             request_options: BrandDev::RequestOptions
@@ -2008,46 +1983,6 @@ module BrandDev
         end
         def self.values
         end
-      end
-
-      # Optional parameter to optimize the API call for maximum speed. When set to true,
-      # the API will skip time-consuming operations for faster response at the cost of
-      # less comprehensive data.
-      module MaxSpeed
-        extend BrandDev::Internal::Type::Union
-
-        Variants =
-          T.type_alias do
-            T.any(
-              T::Boolean,
-              BrandDev::BrandRetrieveByNameParams::MaxSpeed::TaggedSymbol
-            )
-          end
-
-        sig do
-          override.returns(
-            T::Array[BrandDev::BrandRetrieveByNameParams::MaxSpeed::Variants]
-          )
-        end
-        def self.variants
-        end
-
-        TaggedSymbol =
-          T.type_alias do
-            T.all(Symbol, BrandDev::BrandRetrieveByNameParams::MaxSpeed)
-          end
-        OrSymbol = T.type_alias { T.any(Symbol, String) }
-
-        TRUE =
-          T.let(
-            :true,
-            BrandDev::BrandRetrieveByNameParams::MaxSpeed::TaggedSymbol
-          )
-        FALSE =
-          T.let(
-            :false,
-            BrandDev::BrandRetrieveByNameParams::MaxSpeed::TaggedSymbol
-          )
       end
     end
   end

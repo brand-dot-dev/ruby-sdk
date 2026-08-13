@@ -34,8 +34,8 @@ module BrandDev
       #   the API will skip time-consuming operations for faster response at the cost of
       #   less comprehensive data.
       #
-      #   @return [Boolean, Symbol, BrandDev::Models::BrandRetrieveByTickerParams::MaxSpeed, nil]
-      optional :max_speed, union: -> { BrandDev::BrandRetrieveByTickerParams::MaxSpeed }
+      #   @return [Boolean, nil]
+      optional :max_speed, BrandDev::Internal::Type::Boolean
 
       # @!attribute tags
       #   Optional comma-separated caller-defined tags for tracking this request. Tags are
@@ -69,7 +69,7 @@ module BrandDev
       #
       #   @param max_age_ms [Integer, nil] Maximum age in milliseconds for cached brand data before the API performs a hard
       #
-      #   @param max_speed [Boolean, Symbol, BrandDev::Models::BrandRetrieveByTickerParams::MaxSpeed] Optional parameter to optimize the API call for maximum speed. When set to true,
+      #   @param max_speed [Boolean] Optional parameter to optimize the API call for maximum speed. When set to true,
       #
       #   @param tags [Array<String>] Optional comma-separated caller-defined tags for tracking this request. Tags are
       #
@@ -206,33 +206,6 @@ module BrandDev
 
         # @!method self.values
         #   @return [Array<Symbol>]
-      end
-
-      # Optional parameter to optimize the API call for maximum speed. When set to true,
-      # the API will skip time-consuming operations for faster response at the cost of
-      # less comprehensive data.
-      module MaxSpeed
-        extend BrandDev::Internal::Type::Union
-
-        variant BrandDev::Internal::Type::Boolean
-
-        variant const: -> { BrandDev::Models::BrandRetrieveByTickerParams::MaxSpeed::TRUE }
-
-        variant const: -> { BrandDev::Models::BrandRetrieveByTickerParams::MaxSpeed::FALSE }
-
-        # @!method self.variants
-        #   @return [Array(Boolean, Symbol)]
-
-        define_sorbet_constant!(:Variants) do
-          T.type_alias { T.any(T::Boolean, BrandDev::BrandRetrieveByTickerParams::MaxSpeed::TaggedSymbol) }
-        end
-
-        # @!group
-
-        TRUE = :true
-        FALSE = :false
-
-        # @!endgroup
       end
 
       # Stock exchange code.

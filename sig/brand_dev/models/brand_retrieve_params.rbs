@@ -5,7 +5,7 @@ module BrandDev
         domain: String,
         force_language: BrandDev::Models::BrandRetrieveParams::force_language?,
         max_age_ms: Integer?,
-        max_speed: BrandDev::Models::BrandRetrieveParams::max_speed,
+        max_speed: bool,
         name: String,
         tags: ::Array[String],
         ticker: String,
@@ -26,11 +26,9 @@ module BrandDev
 
       attr_accessor max_age_ms: Integer?
 
-      attr_reader max_speed: BrandDev::Models::BrandRetrieveParams::max_speed?
+      attr_reader max_speed: bool?
 
-      def max_speed=: (
-        BrandDev::Models::BrandRetrieveParams::max_speed
-      ) -> BrandDev::Models::BrandRetrieveParams::max_speed
+      def max_speed=: (bool) -> bool
 
       attr_reader name: String?
 
@@ -58,7 +56,7 @@ module BrandDev
         ?domain: String,
         ?force_language: BrandDev::Models::BrandRetrieveParams::force_language?,
         ?max_age_ms: Integer?,
-        ?max_speed: BrandDev::Models::BrandRetrieveParams::max_speed,
+        ?max_speed: bool,
         ?name: String,
         ?tags: ::Array[String],
         ?ticker: String,
@@ -71,7 +69,7 @@ module BrandDev
         domain: String,
         force_language: BrandDev::Models::BrandRetrieveParams::force_language?,
         max_age_ms: Integer?,
-        max_speed: BrandDev::Models::BrandRetrieveParams::max_speed,
+        max_speed: bool,
         name: String,
         tags: ::Array[String],
         ticker: String,
@@ -327,17 +325,6 @@ module BrandDev
         ZULU: :zulu
 
         def self?.values: -> ::Array[BrandDev::Models::BrandRetrieveParams::force_language]
-      end
-
-      type max_speed = bool | :true | :false
-
-      module MaxSpeed
-        extend BrandDev::Internal::Type::Union
-
-        def self?.variants: -> ::Array[BrandDev::Models::BrandRetrieveParams::max_speed]
-
-        TRUE: :true
-        FALSE: :false
       end
 
       type ticker_exchange =

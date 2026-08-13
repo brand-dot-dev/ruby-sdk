@@ -56,53 +56,19 @@ module BrandDev
 
       # When set to true, the API will perform an additional verification steps to
       # ensure the identified brand matches the transaction with high confidence.
-      sig do
-        returns(
-          T.nilable(
-            T.any(
-              T::Boolean,
-              BrandDev::BrandIdentifyFromTransactionParams::HighConfidenceOnly::OrSymbol
-            )
-          )
-        )
-      end
+      sig { returns(T.nilable(T::Boolean)) }
       attr_reader :high_confidence_only
 
-      sig do
-        params(
-          high_confidence_only:
-            T.any(
-              T::Boolean,
-              BrandDev::BrandIdentifyFromTransactionParams::HighConfidenceOnly::OrSymbol
-            )
-        ).void
-      end
+      sig { params(high_confidence_only: T::Boolean).void }
       attr_writer :high_confidence_only
 
       # Optional parameter to optimize the API call for maximum speed. When set to true,
       # the API will skip time-consuming operations for faster response at the cost of
       # less comprehensive data.
-      sig do
-        returns(
-          T.nilable(
-            T.any(
-              T::Boolean,
-              BrandDev::BrandIdentifyFromTransactionParams::MaxSpeed::OrSymbol
-            )
-          )
-        )
-      end
+      sig { returns(T.nilable(T::Boolean)) }
       attr_reader :max_speed
 
-      sig do
-        params(
-          max_speed:
-            T.any(
-              T::Boolean,
-              BrandDev::BrandIdentifyFromTransactionParams::MaxSpeed::OrSymbol
-            )
-        ).void
-      end
+      sig { params(max_speed: T::Boolean).void }
       attr_writer :max_speed
 
       # Optional Merchant Category Code (MCC) to help identify the business
@@ -166,16 +132,8 @@ module BrandDev
             T.nilable(
               BrandDev::BrandIdentifyFromTransactionParams::ForceLanguage::OrSymbol
             ),
-          high_confidence_only:
-            T.any(
-              T::Boolean,
-              BrandDev::BrandIdentifyFromTransactionParams::HighConfidenceOnly::OrSymbol
-            ),
-          max_speed:
-            T.any(
-              T::Boolean,
-              BrandDev::BrandIdentifyFromTransactionParams::MaxSpeed::OrSymbol
-            ),
+          high_confidence_only: T::Boolean,
+          max_speed: T::Boolean,
           mcc: BrandDev::BrandIdentifyFromTransactionParams::Mcc::Variants,
           phone: BrandDev::BrandIdentifyFromTransactionParams::Phone::Variants,
           tags: T::Array[String],
@@ -228,16 +186,8 @@ module BrandDev
               T.nilable(
                 BrandDev::BrandIdentifyFromTransactionParams::ForceLanguage::OrSymbol
               ),
-            high_confidence_only:
-              T.any(
-                T::Boolean,
-                BrandDev::BrandIdentifyFromTransactionParams::HighConfidenceOnly::OrSymbol
-              ),
-            max_speed:
-              T.any(
-                T::Boolean,
-                BrandDev::BrandIdentifyFromTransactionParams::MaxSpeed::OrSymbol
-              ),
+            high_confidence_only: T::Boolean,
+            max_speed: T::Boolean,
             mcc: BrandDev::BrandIdentifyFromTransactionParams::Mcc::Variants,
             phone:
               BrandDev::BrandIdentifyFromTransactionParams::Phone::Variants,
@@ -2094,95 +2044,6 @@ module BrandDev
         end
         def self.values
         end
-      end
-
-      # When set to true, the API will perform an additional verification steps to
-      # ensure the identified brand matches the transaction with high confidence.
-      module HighConfidenceOnly
-        extend BrandDev::Internal::Type::Union
-
-        Variants =
-          T.type_alias do
-            T.any(
-              T::Boolean,
-              BrandDev::BrandIdentifyFromTransactionParams::HighConfidenceOnly::TaggedSymbol
-            )
-          end
-
-        sig do
-          override.returns(
-            T::Array[
-              BrandDev::BrandIdentifyFromTransactionParams::HighConfidenceOnly::Variants
-            ]
-          )
-        end
-        def self.variants
-        end
-
-        TaggedSymbol =
-          T.type_alias do
-            T.all(
-              Symbol,
-              BrandDev::BrandIdentifyFromTransactionParams::HighConfidenceOnly
-            )
-          end
-        OrSymbol = T.type_alias { T.any(Symbol, String) }
-
-        TRUE =
-          T.let(
-            :true,
-            BrandDev::BrandIdentifyFromTransactionParams::HighConfidenceOnly::TaggedSymbol
-          )
-        FALSE =
-          T.let(
-            :false,
-            BrandDev::BrandIdentifyFromTransactionParams::HighConfidenceOnly::TaggedSymbol
-          )
-      end
-
-      # Optional parameter to optimize the API call for maximum speed. When set to true,
-      # the API will skip time-consuming operations for faster response at the cost of
-      # less comprehensive data.
-      module MaxSpeed
-        extend BrandDev::Internal::Type::Union
-
-        Variants =
-          T.type_alias do
-            T.any(
-              T::Boolean,
-              BrandDev::BrandIdentifyFromTransactionParams::MaxSpeed::TaggedSymbol
-            )
-          end
-
-        sig do
-          override.returns(
-            T::Array[
-              BrandDev::BrandIdentifyFromTransactionParams::MaxSpeed::Variants
-            ]
-          )
-        end
-        def self.variants
-        end
-
-        TaggedSymbol =
-          T.type_alias do
-            T.all(
-              Symbol,
-              BrandDev::BrandIdentifyFromTransactionParams::MaxSpeed
-            )
-          end
-        OrSymbol = T.type_alias { T.any(Symbol, String) }
-
-        TRUE =
-          T.let(
-            :true,
-            BrandDev::BrandIdentifyFromTransactionParams::MaxSpeed::TaggedSymbol
-          )
-        FALSE =
-          T.let(
-            :false,
-            BrandDev::BrandIdentifyFromTransactionParams::MaxSpeed::TaggedSymbol
-          )
       end
 
       # Optional Merchant Category Code (MCC) to help identify the business

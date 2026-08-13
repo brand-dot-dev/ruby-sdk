@@ -4,7 +4,7 @@ module BrandDev
       {
         url: String,
         actions: ::Array[BrandDev::Models::BrandWebScrapeImagesParams::action]?,
-        dedupe: BrandDev::Models::BrandWebScrapeImagesParams::dedupe,
+        dedupe: bool,
         enrichment: BrandDev::BrandWebScrapeImagesParams::Enrichment?,
         headers: ::Hash[Symbol, String],
         max_age_ms: Integer?,
@@ -22,11 +22,9 @@ module BrandDev
 
       attr_accessor actions: ::Array[BrandDev::Models::BrandWebScrapeImagesParams::action]?
 
-      attr_reader dedupe: BrandDev::Models::BrandWebScrapeImagesParams::dedupe?
+      attr_reader dedupe: bool?
 
-      def dedupe=: (
-        BrandDev::Models::BrandWebScrapeImagesParams::dedupe
-      ) -> BrandDev::Models::BrandWebScrapeImagesParams::dedupe
+      def dedupe=: (bool) -> bool
 
       attr_accessor enrichment: BrandDev::BrandWebScrapeImagesParams::Enrichment?
 
@@ -49,7 +47,7 @@ module BrandDev
       def initialize: (
         url: String,
         ?actions: ::Array[BrandDev::Models::BrandWebScrapeImagesParams::action]?,
-        ?dedupe: BrandDev::Models::BrandWebScrapeImagesParams::dedupe,
+        ?dedupe: bool,
         ?enrichment: BrandDev::BrandWebScrapeImagesParams::Enrichment?,
         ?headers: ::Hash[Symbol, String],
         ?max_age_ms: Integer?,
@@ -62,7 +60,7 @@ module BrandDev
       def to_hash: -> {
         url: String,
         actions: ::Array[BrandDev::Models::BrandWebScrapeImagesParams::action]?,
-        dedupe: BrandDev::Models::BrandWebScrapeImagesParams::dedupe,
+        dedupe: bool,
         enrichment: BrandDev::BrandWebScrapeImagesParams::Enrichment?,
         headers: ::Hash[Symbol, String],
         max_age_ms: Integer?,
@@ -106,94 +104,44 @@ module BrandDev
         def self?.variants: -> ::Array[BrandDev::Models::BrandWebScrapeImagesParams::action]
       end
 
-      type dedupe = bool | :true | :false
-
-      module Dedupe
-        extend BrandDev::Internal::Type::Union
-
-        def self?.variants: -> ::Array[BrandDev::Models::BrandWebScrapeImagesParams::dedupe]
-
-        TRUE: :true
-        FALSE: :false
-      end
-
       type enrichment =
         {
-          classification: BrandDev::Models::BrandWebScrapeImagesParams::Enrichment::classification,
-          hosted_url: BrandDev::Models::BrandWebScrapeImagesParams::Enrichment::hosted_url,
+          classification: bool,
+          hosted_url: bool,
           max_time_per_ms: Integer,
-          resolution: BrandDev::Models::BrandWebScrapeImagesParams::Enrichment::resolution
+          resolution: bool
         }
 
       class Enrichment < BrandDev::Internal::Type::BaseModel
-        attr_reader classification: BrandDev::Models::BrandWebScrapeImagesParams::Enrichment::classification?
+        attr_reader classification: bool?
 
-        def classification=: (
-          BrandDev::Models::BrandWebScrapeImagesParams::Enrichment::classification
-        ) -> BrandDev::Models::BrandWebScrapeImagesParams::Enrichment::classification
+        def classification=: (bool) -> bool
 
-        attr_reader hosted_url: BrandDev::Models::BrandWebScrapeImagesParams::Enrichment::hosted_url?
+        attr_reader hosted_url: bool?
 
-        def hosted_url=: (
-          BrandDev::Models::BrandWebScrapeImagesParams::Enrichment::hosted_url
-        ) -> BrandDev::Models::BrandWebScrapeImagesParams::Enrichment::hosted_url
+        def hosted_url=: (bool) -> bool
 
         attr_reader max_time_per_ms: Integer?
 
         def max_time_per_ms=: (Integer) -> Integer
 
-        attr_reader resolution: BrandDev::Models::BrandWebScrapeImagesParams::Enrichment::resolution?
+        attr_reader resolution: bool?
 
-        def resolution=: (
-          BrandDev::Models::BrandWebScrapeImagesParams::Enrichment::resolution
-        ) -> BrandDev::Models::BrandWebScrapeImagesParams::Enrichment::resolution
+        def resolution=: (bool) -> bool
 
         def initialize: (
-          ?classification: BrandDev::Models::BrandWebScrapeImagesParams::Enrichment::classification,
-          ?hosted_url: BrandDev::Models::BrandWebScrapeImagesParams::Enrichment::hosted_url,
+          ?classification: bool,
+          ?hosted_url: bool,
           ?max_time_per_ms: Integer,
-          ?resolution: BrandDev::Models::BrandWebScrapeImagesParams::Enrichment::resolution
+          ?resolution: bool
         ) -> void
 
         def to_hash: -> {
-          classification: BrandDev::Models::BrandWebScrapeImagesParams::Enrichment::classification,
-          hosted_url: BrandDev::Models::BrandWebScrapeImagesParams::Enrichment::hosted_url,
+          classification: bool,
+          hosted_url: bool,
           max_time_per_ms: Integer,
-          resolution: BrandDev::Models::BrandWebScrapeImagesParams::Enrichment::resolution
+          resolution: bool
         }
-
-        type classification = bool | :true | :false
-
-        module Classification
-          extend BrandDev::Internal::Type::Union
-
-          def self?.variants: -> ::Array[BrandDev::Models::BrandWebScrapeImagesParams::Enrichment::classification]
-
-          TRUE: :true
-          FALSE: :false
-        end
-
-        type hosted_url = bool | :true | :false
-
-        module HostedURL
-          extend BrandDev::Internal::Type::Union
-
-          def self?.variants: -> ::Array[BrandDev::Models::BrandWebScrapeImagesParams::Enrichment::hosted_url]
-
-          TRUE: :true
-          FALSE: :false
-        end
-
-        type resolution = bool | :true | :false
-
-        module Resolution
-          extend BrandDev::Internal::Type::Union
-
-          def self?.variants: -> ::Array[BrandDev::Models::BrandWebScrapeImagesParams::Enrichment::resolution]
-
-          TRUE: :true
-          FALSE: :false
-        end
       end
     end
   end
