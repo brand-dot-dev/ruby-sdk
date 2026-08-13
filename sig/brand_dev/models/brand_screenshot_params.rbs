@@ -7,7 +7,7 @@ module BrandDev
         direct_url: String,
         domain: String,
         full_screenshot: BrandDev::Models::BrandScreenshotParams::full_screenshot,
-        handle_cookie_popup: BrandDev::Models::BrandScreenshotParams::handle_cookie_popup,
+        handle_cookie_popup: bool,
         max_age_ms: Integer?,
         page: BrandDev::Models::BrandScreenshotParams::page,
         scroll_offset: Integer?,
@@ -49,11 +49,9 @@ module BrandDev
         BrandDev::Models::BrandScreenshotParams::full_screenshot
       ) -> BrandDev::Models::BrandScreenshotParams::full_screenshot
 
-      attr_reader handle_cookie_popup: BrandDev::Models::BrandScreenshotParams::handle_cookie_popup?
+      attr_reader handle_cookie_popup: bool?
 
-      def handle_cookie_popup=: (
-        BrandDev::Models::BrandScreenshotParams::handle_cookie_popup
-      ) -> BrandDev::Models::BrandScreenshotParams::handle_cookie_popup
+      def handle_cookie_popup=: (bool) -> bool
 
       attr_accessor max_age_ms: Integer?
 
@@ -93,7 +91,7 @@ module BrandDev
         ?direct_url: String,
         ?domain: String,
         ?full_screenshot: BrandDev::Models::BrandScreenshotParams::full_screenshot,
-        ?handle_cookie_popup: BrandDev::Models::BrandScreenshotParams::handle_cookie_popup,
+        ?handle_cookie_popup: bool,
         ?max_age_ms: Integer?,
         ?page: BrandDev::Models::BrandScreenshotParams::page,
         ?scroll_offset: Integer?,
@@ -111,7 +109,7 @@ module BrandDev
         direct_url: String,
         domain: String,
         full_screenshot: BrandDev::Models::BrandScreenshotParams::full_screenshot,
-        handle_cookie_popup: BrandDev::Models::BrandScreenshotParams::handle_cookie_popup,
+        handle_cookie_popup: bool,
         max_age_ms: Integer?,
         page: BrandDev::Models::BrandScreenshotParams::page,
         scroll_offset: Integer?,
@@ -560,17 +558,6 @@ module BrandDev
         FALSE: :false
 
         def self?.values: -> ::Array[BrandDev::Models::BrandScreenshotParams::full_screenshot]
-      end
-
-      type handle_cookie_popup = bool | :true | :false
-
-      module HandleCookiePopup
-        extend BrandDev::Internal::Type::Union
-
-        def self?.variants: -> ::Array[BrandDev::Models::BrandScreenshotParams::handle_cookie_popup]
-
-        TRUE: :true
-        FALSE: :false
       end
 
       type page =

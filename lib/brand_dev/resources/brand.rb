@@ -17,7 +17,7 @@ module BrandDev
       #
       # @param max_age_ms [Integer, nil] Maximum age in milliseconds for cached brand data before the API performs a hard
       #
-      # @param max_speed [Boolean, Symbol, BrandDev::Models::BrandRetrieveParams::MaxSpeed] Optional parameter to optimize the API call for maximum speed. When set to true,
+      # @param max_speed [Boolean] Optional parameter to optimize the API call for maximum speed. When set to true,
       #
       # @param name [String] Company name to retrieve brand data for (e.g., 'Apple Inc'). Cannot be used with
       #
@@ -191,9 +191,9 @@ module BrandDev
       #
       # @param force_language [Symbol, BrandDev::Models::BrandIdentifyFromTransactionParams::ForceLanguage, nil] Language to force for the retrieved brand data.
       #
-      # @param high_confidence_only [Boolean, Symbol, BrandDev::Models::BrandIdentifyFromTransactionParams::HighConfidenceOnly] When set to true, the API will perform an additional verification steps to ensur
+      # @param high_confidence_only [Boolean] When set to true, the API will perform an additional verification steps to ensur
       #
-      # @param max_speed [Boolean, Symbol, BrandDev::Models::BrandIdentifyFromTransactionParams::MaxSpeed] Optional parameter to optimize the API call for maximum speed. When set to true,
+      # @param max_speed [Boolean] Optional parameter to optimize the API call for maximum speed. When set to true,
       #
       # @param mcc [String, Float] Optional Merchant Category Code (MCC) to help identify the business category/ind
       #
@@ -297,7 +297,7 @@ module BrandDev
       #
       # @param max_age_ms [Integer, nil] Maximum age in milliseconds for cached brand data before the API performs a hard
       #
-      # @param max_speed [Boolean, Symbol, BrandDev::Models::BrandRetrieveByEmailParams::MaxSpeed] Optional parameter to optimize the API call for maximum speed. When set to true,
+      # @param max_speed [Boolean] Optional parameter to optimize the API call for maximum speed. When set to true,
       #
       # @param tags [Array<String>] Optional comma-separated caller-defined tags for tracking this request. Tags are
       #
@@ -334,7 +334,7 @@ module BrandDev
       #
       # @param max_age_ms [Integer, nil] Maximum age in milliseconds for cached brand data before the API performs a hard
       #
-      # @param max_speed [Boolean, Symbol, BrandDev::Models::BrandRetrieveByIsinParams::MaxSpeed] Optional parameter to optimize the API call for maximum speed. When set to true,
+      # @param max_speed [Boolean] Optional parameter to optimize the API call for maximum speed. When set to true,
       #
       # @param tags [Array<String>] Optional comma-separated caller-defined tags for tracking this request. Tags are
       #
@@ -372,7 +372,7 @@ module BrandDev
       #
       # @param max_age_ms [Integer, nil] Maximum age in milliseconds for cached brand data before the API performs a hard
       #
-      # @param max_speed [Boolean, Symbol, BrandDev::Models::BrandRetrieveByNameParams::MaxSpeed] Optional parameter to optimize the API call for maximum speed. When set to true,
+      # @param max_speed [Boolean] Optional parameter to optimize the API call for maximum speed. When set to true,
       #
       # @param tags [Array<String>] Optional comma-separated caller-defined tags for tracking this request. Tags are
       #
@@ -408,7 +408,7 @@ module BrandDev
       #
       # @param max_age_ms [Integer, nil] Maximum age in milliseconds for cached brand data before the API performs a hard
       #
-      # @param max_speed [Boolean, Symbol, BrandDev::Models::BrandRetrieveByTickerParams::MaxSpeed] Optional parameter to optimize the API call for maximum speed. When set to true,
+      # @param max_speed [Boolean] Optional parameter to optimize the API call for maximum speed. When set to true,
       #
       # @param tags [Array<String>] Optional comma-separated caller-defined tags for tracking this request. Tags are
       #
@@ -524,7 +524,7 @@ module BrandDev
       #
       # @param full_screenshot [Symbol, BrandDev::Models::BrandScreenshotParams::FullScreenshot] Optional parameter to determine screenshot type. If 'true', takes a full page sc
       #
-      # @param handle_cookie_popup [Boolean, Symbol, BrandDev::Models::BrandScreenshotParams::HandleCookiePopup] Optional parameter to control cookie/consent popup handling. If 'true', we dismi
+      # @param handle_cookie_popup [Boolean] Optional parameter to control cookie/consent popup handling. If 'true', we dismi
       #
       # @param max_age_ms [Integer, nil] Return a cached screenshot if a prior screenshot for the same parameters exists
       #
@@ -628,7 +628,7 @@ module BrandDev
       #
       # @param headers [Hash{Symbol=>String}] Optional outbound HTTP headers forwarded only to the target URL, sent as deep-ob
       #
-      # @param include_frames [Boolean, Symbol, BrandDev::Models::BrandWebScrapeHTMLParams::IncludeFrames] When true, iframes are rendered inline into the returned HTML.
+      # @param include_frames [Boolean] When true, iframes are rendered inline into the returned HTML.
       #
       # @param include_selectors [Array<String>, nil] CSS selectors. When provided, only matching subtrees (and their descendants) are
       #
@@ -636,13 +636,13 @@ module BrandDev
       #
       # @param pdf [BrandDev::Models::BrandWebScrapeHTMLParams::Pdf] PDF parsing controls. Use start/end to limit text extraction and embedded-image
       #
-      # @param settle_animations [Boolean, Symbol, BrandDev::Models::BrandWebScrapeHTMLParams::SettleAnimations] When true, waits briefly for CSS and transition animations to settle before extr
+      # @param settle_animations [Boolean] When true, waits briefly for CSS and transition animations to settle before extr
       #
       # @param tags [Array<String>] Optional comma-separated caller-defined tags for tracking this request. Tags are
       #
       # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #
-      # @param use_main_content_only [Boolean, Symbol, BrandDev::Models::BrandWebScrapeHTMLParams::UseMainContentOnly] When true, return only the page's main content in the HTML response, excluding h
+      # @param use_main_content_only [Boolean] When true, return only the page's main content in the HTML response, excluding h
       #
       # @param wait_for_ms [Integer, nil] Optional browser wait time in milliseconds after initial page load. Min: 0. Max:
       #
@@ -689,7 +689,7 @@ module BrandDev
       #
       # @param actions [Array<BrandDev::Models::BrandWebScrapeImagesParams::Action::Wait, BrandDev::Models::BrandWebScrapeImagesParams::Action::Perform>, nil] Optional browser actions executed in array order after the page loads and before
       #
-      # @param dedupe [Boolean, Symbol, BrandDev::Models::BrandWebScrapeImagesParams::Dedupe] When true, visually duplicate images are removed: every image is loaded and perc
+      # @param dedupe [Boolean] When true, visually duplicate images are removed: every image is loaded and perc
       #
       # @param enrichment [BrandDev::Models::BrandWebScrapeImagesParams::Enrichment, nil] Optional per-image processing, sent as deep-object query params such as enrichme
       #
@@ -769,13 +769,13 @@ module BrandDev
       #
       # @param headers [Hash{Symbol=>String}] Optional outbound HTTP headers forwarded only to the target URL, sent as deep-ob
       #
-      # @param include_frames [Boolean, Symbol, BrandDev::Models::BrandWebScrapeMdParams::IncludeFrames] When true, the contents of iframes are rendered to Markdown.
+      # @param include_frames [Boolean] When true, the contents of iframes are rendered to Markdown.
       #
-      # @param include_html [Boolean, Symbol, BrandDev::Models::BrandWebScrapeMdParams::IncludeHTML] When true, the response also includes an `html` field with the page HTML the Mar
+      # @param include_html [Boolean] When true, the response also includes an `html` field with the page HTML the Mar
       #
-      # @param include_images [Boolean, Symbol, BrandDev::Models::BrandWebScrapeMdParams::IncludeImages] Include image references in Markdown output
+      # @param include_images [Boolean] Include image references in Markdown output
       #
-      # @param include_links [Boolean, Symbol, BrandDev::Models::BrandWebScrapeMdParams::IncludeLinks] Preserve hyperlinks in Markdown output
+      # @param include_links [Boolean] Preserve hyperlinks in Markdown output
       #
       # @param include_selectors [Array<String>, nil] CSS selectors. When provided, only matching HTML subtrees (and their descendants
       #
@@ -783,15 +783,15 @@ module BrandDev
       #
       # @param pdf [BrandDev::Models::BrandWebScrapeMdParams::Pdf] PDF parsing controls. Use start/end to limit text extraction and embedded-image
       #
-      # @param settle_animations [Boolean, Symbol, BrandDev::Models::BrandWebScrapeMdParams::SettleAnimations] When true, waits briefly for CSS and transition animations to settle before conv
+      # @param settle_animations [Boolean] When true, waits briefly for CSS and transition animations to settle before conv
       #
-      # @param shorten_base64_images [Boolean, Symbol, BrandDev::Models::BrandWebScrapeMdParams::ShortenBase64Images] Shorten base64-encoded image data in the Markdown output
+      # @param shorten_base64_images [Boolean] Shorten base64-encoded image data in the Markdown output
       #
       # @param tags [Array<String>] Optional comma-separated caller-defined tags for tracking this request. Tags are
       #
       # @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #
-      # @param use_main_content_only [Boolean, Symbol, BrandDev::Models::BrandWebScrapeMdParams::UseMainContentOnly] Extract only the main content of the page, excluding headers, footers, sidebars,
+      # @param use_main_content_only [Boolean] Extract only the main content of the page, excluding headers, footers, sidebars,
       #
       # @param wait_for_ms [Integer, nil] Optional browser wait time in milliseconds after initial page load before conver
       #

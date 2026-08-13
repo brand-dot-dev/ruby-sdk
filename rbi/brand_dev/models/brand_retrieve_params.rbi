@@ -37,21 +37,10 @@ module BrandDev
       # Optional parameter to optimize the API call for maximum speed. When set to true,
       # the API will skip time-consuming operations for faster response at the cost of
       # less comprehensive data. Works with all three lookup methods.
-      sig do
-        returns(
-          T.nilable(
-            T.any(T::Boolean, BrandDev::BrandRetrieveParams::MaxSpeed::OrSymbol)
-          )
-        )
-      end
+      sig { returns(T.nilable(T::Boolean)) }
       attr_reader :max_speed
 
-      sig do
-        params(
-          max_speed:
-            T.any(T::Boolean, BrandDev::BrandRetrieveParams::MaxSpeed::OrSymbol)
-        ).void
-      end
+      sig { params(max_speed: T::Boolean).void }
       attr_writer :max_speed
 
       # Company name to retrieve brand data for (e.g., 'Apple Inc'). Cannot be used with
@@ -110,11 +99,7 @@ module BrandDev
           force_language:
             T.nilable(BrandDev::BrandRetrieveParams::ForceLanguage::OrSymbol),
           max_age_ms: T.nilable(Integer),
-          max_speed:
-            T.any(
-              T::Boolean,
-              BrandDev::BrandRetrieveParams::MaxSpeed::OrSymbol
-            ),
+          max_speed: T::Boolean,
           name: String,
           tags: T::Array[String],
           ticker: String,
@@ -166,11 +151,7 @@ module BrandDev
             force_language:
               T.nilable(BrandDev::BrandRetrieveParams::ForceLanguage::OrSymbol),
             max_age_ms: T.nilable(Integer),
-            max_speed:
-              T.any(
-                T::Boolean,
-                BrandDev::BrandRetrieveParams::MaxSpeed::OrSymbol
-              ),
+            max_speed: T::Boolean,
             name: String,
             tags: T::Array[String],
             ticker: String,
@@ -802,40 +783,6 @@ module BrandDev
         end
         def self.values
         end
-      end
-
-      # Optional parameter to optimize the API call for maximum speed. When set to true,
-      # the API will skip time-consuming operations for faster response at the cost of
-      # less comprehensive data. Works with all three lookup methods.
-      module MaxSpeed
-        extend BrandDev::Internal::Type::Union
-
-        Variants =
-          T.type_alias do
-            T.any(
-              T::Boolean,
-              BrandDev::BrandRetrieveParams::MaxSpeed::TaggedSymbol
-            )
-          end
-
-        sig do
-          override.returns(
-            T::Array[BrandDev::BrandRetrieveParams::MaxSpeed::Variants]
-          )
-        end
-        def self.variants
-        end
-
-        TaggedSymbol =
-          T.type_alias do
-            T.all(Symbol, BrandDev::BrandRetrieveParams::MaxSpeed)
-          end
-        OrSymbol = T.type_alias { T.any(Symbol, String) }
-
-        TRUE =
-          T.let(:true, BrandDev::BrandRetrieveParams::MaxSpeed::TaggedSymbol)
-        FALSE =
-          T.let(:false, BrandDev::BrandRetrieveParams::MaxSpeed::TaggedSymbol)
       end
 
       # Stock exchange code.

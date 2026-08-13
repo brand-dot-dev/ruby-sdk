@@ -11,11 +11,7 @@ module BrandDev
           force_language:
             T.nilable(BrandDev::BrandRetrieveParams::ForceLanguage::OrSymbol),
           max_age_ms: T.nilable(Integer),
-          max_speed:
-            T.any(
-              T::Boolean,
-              BrandDev::BrandRetrieveParams::MaxSpeed::OrSymbol
-            ),
+          max_speed: T::Boolean,
           name: String,
           tags: T::Array[String],
           ticker: String,
@@ -185,16 +181,8 @@ module BrandDev
             T.nilable(
               BrandDev::BrandIdentifyFromTransactionParams::ForceLanguage::OrSymbol
             ),
-          high_confidence_only:
-            T.any(
-              T::Boolean,
-              BrandDev::BrandIdentifyFromTransactionParams::HighConfidenceOnly::OrSymbol
-            ),
-          max_speed:
-            T.any(
-              T::Boolean,
-              BrandDev::BrandIdentifyFromTransactionParams::MaxSpeed::OrSymbol
-            ),
+          high_confidence_only: T::Boolean,
+          max_speed: T::Boolean,
           mcc: BrandDev::BrandIdentifyFromTransactionParams::Mcc::Variants,
           phone: BrandDev::BrandIdentifyFromTransactionParams::Phone::Variants,
           tags: T::Array[String],
@@ -297,11 +285,7 @@ module BrandDev
               BrandDev::BrandRetrieveByEmailParams::ForceLanguage::OrSymbol
             ),
           max_age_ms: T.nilable(Integer),
-          max_speed:
-            T.any(
-              T::Boolean,
-              BrandDev::BrandRetrieveByEmailParams::MaxSpeed::OrSymbol
-            ),
+          max_speed: T::Boolean,
           tags: T::Array[String],
           timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
@@ -345,11 +329,7 @@ module BrandDev
               BrandDev::BrandRetrieveByIsinParams::ForceLanguage::OrSymbol
             ),
           max_age_ms: T.nilable(Integer),
-          max_speed:
-            T.any(
-              T::Boolean,
-              BrandDev::BrandRetrieveByIsinParams::MaxSpeed::OrSymbol
-            ),
+          max_speed: T::Boolean,
           tags: T::Array[String],
           timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
@@ -393,11 +373,7 @@ module BrandDev
               BrandDev::BrandRetrieveByNameParams::ForceLanguage::OrSymbol
             ),
           max_age_ms: T.nilable(Integer),
-          max_speed:
-            T.any(
-              T::Boolean,
-              BrandDev::BrandRetrieveByNameParams::MaxSpeed::OrSymbol
-            ),
+          max_speed: T::Boolean,
           tags: T::Array[String],
           timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
@@ -442,11 +418,7 @@ module BrandDev
               BrandDev::BrandRetrieveByTickerParams::ForceLanguage::OrSymbol
             ),
           max_age_ms: T.nilable(Integer),
-          max_speed:
-            T.any(
-              T::Boolean,
-              BrandDev::BrandRetrieveByTickerParams::MaxSpeed::OrSymbol
-            ),
+          max_speed: T::Boolean,
           tags: T::Array[String],
           ticker_exchange:
             BrandDev::BrandRetrieveByTickerParams::TickerExchange::OrSymbol,
@@ -560,11 +532,7 @@ module BrandDev
           domain: String,
           full_screenshot:
             BrandDev::BrandScreenshotParams::FullScreenshot::OrSymbol,
-          handle_cookie_popup:
-            T.any(
-              T::Boolean,
-              BrandDev::BrandScreenshotParams::HandleCookiePopup::OrSymbol
-            ),
+          handle_cookie_popup: T::Boolean,
           max_age_ms: T.nilable(Integer),
           page: BrandDev::BrandScreenshotParams::Page::OrSymbol,
           scroll_offset: T.nilable(Integer),
@@ -699,26 +667,14 @@ module BrandDev
           country: BrandDev::BrandWebScrapeHTMLParams::Country::OrSymbol,
           exclude_selectors: T.nilable(T::Array[String]),
           headers: T::Hash[Symbol, String],
-          include_frames:
-            T.any(
-              T::Boolean,
-              BrandDev::BrandWebScrapeHTMLParams::IncludeFrames::OrSymbol
-            ),
+          include_frames: T::Boolean,
           include_selectors: T.nilable(T::Array[String]),
           max_age_ms: T.nilable(Integer),
           pdf: BrandDev::BrandWebScrapeHTMLParams::Pdf::OrHash,
-          settle_animations:
-            T.any(
-              T::Boolean,
-              BrandDev::BrandWebScrapeHTMLParams::SettleAnimations::OrSymbol
-            ),
+          settle_animations: T::Boolean,
           tags: T::Array[String],
           timeout_ms: Integer,
-          use_main_content_only:
-            T.any(
-              T::Boolean,
-              BrandDev::BrandWebScrapeHTMLParams::UseMainContentOnly::OrSymbol
-            ),
+          use_main_content_only: T::Boolean,
           wait_for_ms: T.nilable(Integer),
           zdr: BrandDev::BrandWebScrapeHTMLParams::Zdr::OrSymbol,
           request_options: BrandDev::RequestOptions::OrHash
@@ -799,11 +755,7 @@ module BrandDev
                 )
               ]
             ),
-          dedupe:
-            T.any(
-              T::Boolean,
-              BrandDev::BrandWebScrapeImagesParams::Dedupe::OrSymbol
-            ),
+          dedupe: T::Boolean,
           enrichment:
             T.nilable(BrandDev::BrandWebScrapeImagesParams::Enrichment::OrHash),
           headers: T::Hash[Symbol, String],
@@ -895,46 +847,18 @@ module BrandDev
           country: BrandDev::BrandWebScrapeMdParams::Country::OrSymbol,
           exclude_selectors: T.nilable(T::Array[String]),
           headers: T::Hash[Symbol, String],
-          include_frames:
-            T.any(
-              T::Boolean,
-              BrandDev::BrandWebScrapeMdParams::IncludeFrames::OrSymbol
-            ),
-          include_html:
-            T.any(
-              T::Boolean,
-              BrandDev::BrandWebScrapeMdParams::IncludeHTML::OrSymbol
-            ),
-          include_images:
-            T.any(
-              T::Boolean,
-              BrandDev::BrandWebScrapeMdParams::IncludeImages::OrSymbol
-            ),
-          include_links:
-            T.any(
-              T::Boolean,
-              BrandDev::BrandWebScrapeMdParams::IncludeLinks::OrSymbol
-            ),
+          include_frames: T::Boolean,
+          include_html: T::Boolean,
+          include_images: T::Boolean,
+          include_links: T::Boolean,
           include_selectors: T.nilable(T::Array[String]),
           max_age_ms: T.nilable(Integer),
           pdf: BrandDev::BrandWebScrapeMdParams::Pdf::OrHash,
-          settle_animations:
-            T.any(
-              T::Boolean,
-              BrandDev::BrandWebScrapeMdParams::SettleAnimations::OrSymbol
-            ),
-          shorten_base64_images:
-            T.any(
-              T::Boolean,
-              BrandDev::BrandWebScrapeMdParams::ShortenBase64Images::OrSymbol
-            ),
+          settle_animations: T::Boolean,
+          shorten_base64_images: T::Boolean,
           tags: T::Array[String],
           timeout_ms: Integer,
-          use_main_content_only:
-            T.any(
-              T::Boolean,
-              BrandDev::BrandWebScrapeMdParams::UseMainContentOnly::OrSymbol
-            ),
+          use_main_content_only: T::Boolean,
           wait_for_ms: T.nilable(Integer),
           zdr: BrandDev::BrandWebScrapeMdParams::Zdr::OrSymbol,
           request_options: BrandDev::RequestOptions::OrHash

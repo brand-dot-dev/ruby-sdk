@@ -63,101 +63,33 @@ module BrandDev
       attr_writer :headers
 
       # When true, the contents of iframes are rendered to Markdown.
-      sig do
-        returns(
-          T.nilable(
-            T.any(
-              T::Boolean,
-              BrandDev::BrandWebScrapeMdParams::IncludeFrames::OrSymbol
-            )
-          )
-        )
-      end
+      sig { returns(T.nilable(T::Boolean)) }
       attr_reader :include_frames
 
-      sig do
-        params(
-          include_frames:
-            T.any(
-              T::Boolean,
-              BrandDev::BrandWebScrapeMdParams::IncludeFrames::OrSymbol
-            )
-        ).void
-      end
+      sig { params(include_frames: T::Boolean).void }
       attr_writer :include_frames
 
       # When true, the response also includes an `html` field with the page HTML the
       # Markdown was converted from — the same body the Scrape HTML endpoint returns for
       # the equivalent request.
-      sig do
-        returns(
-          T.nilable(
-            T.any(
-              T::Boolean,
-              BrandDev::BrandWebScrapeMdParams::IncludeHTML::OrSymbol
-            )
-          )
-        )
-      end
+      sig { returns(T.nilable(T::Boolean)) }
       attr_reader :include_html
 
-      sig do
-        params(
-          include_html:
-            T.any(
-              T::Boolean,
-              BrandDev::BrandWebScrapeMdParams::IncludeHTML::OrSymbol
-            )
-        ).void
-      end
+      sig { params(include_html: T::Boolean).void }
       attr_writer :include_html
 
       # Include image references in Markdown output
-      sig do
-        returns(
-          T.nilable(
-            T.any(
-              T::Boolean,
-              BrandDev::BrandWebScrapeMdParams::IncludeImages::OrSymbol
-            )
-          )
-        )
-      end
+      sig { returns(T.nilable(T::Boolean)) }
       attr_reader :include_images
 
-      sig do
-        params(
-          include_images:
-            T.any(
-              T::Boolean,
-              BrandDev::BrandWebScrapeMdParams::IncludeImages::OrSymbol
-            )
-        ).void
-      end
+      sig { params(include_images: T::Boolean).void }
       attr_writer :include_images
 
       # Preserve hyperlinks in Markdown output
-      sig do
-        returns(
-          T.nilable(
-            T.any(
-              T::Boolean,
-              BrandDev::BrandWebScrapeMdParams::IncludeLinks::OrSymbol
-            )
-          )
-        )
-      end
+      sig { returns(T.nilable(T::Boolean)) }
       attr_reader :include_links
 
-      sig do
-        params(
-          include_links:
-            T.any(
-              T::Boolean,
-              BrandDev::BrandWebScrapeMdParams::IncludeLinks::OrSymbol
-            )
-        ).void
-      end
+      sig { params(include_links: T::Boolean).void }
       attr_writer :include_links
 
       # CSS selectors. When provided, only matching HTML subtrees (and their
@@ -183,51 +115,17 @@ module BrandDev
       # When true, waits briefly for CSS and transition animations to settle before
       # converting to Markdown. Defaults to false. This adds a bit of latency in
       # exchange for more stable output on animated pages.
-      sig do
-        returns(
-          T.nilable(
-            T.any(
-              T::Boolean,
-              BrandDev::BrandWebScrapeMdParams::SettleAnimations::OrSymbol
-            )
-          )
-        )
-      end
+      sig { returns(T.nilable(T::Boolean)) }
       attr_reader :settle_animations
 
-      sig do
-        params(
-          settle_animations:
-            T.any(
-              T::Boolean,
-              BrandDev::BrandWebScrapeMdParams::SettleAnimations::OrSymbol
-            )
-        ).void
-      end
+      sig { params(settle_animations: T::Boolean).void }
       attr_writer :settle_animations
 
       # Shorten base64-encoded image data in the Markdown output
-      sig do
-        returns(
-          T.nilable(
-            T.any(
-              T::Boolean,
-              BrandDev::BrandWebScrapeMdParams::ShortenBase64Images::OrSymbol
-            )
-          )
-        )
-      end
+      sig { returns(T.nilable(T::Boolean)) }
       attr_reader :shorten_base64_images
 
-      sig do
-        params(
-          shorten_base64_images:
-            T.any(
-              T::Boolean,
-              BrandDev::BrandWebScrapeMdParams::ShortenBase64Images::OrSymbol
-            )
-        ).void
-      end
+      sig { params(shorten_base64_images: T::Boolean).void }
       attr_writer :shorten_base64_images
 
       # Optional comma-separated caller-defined tags for tracking this request. Tags are
@@ -250,27 +148,10 @@ module BrandDev
 
       # Extract only the main content of the page, excluding headers, footers, sidebars,
       # and navigation
-      sig do
-        returns(
-          T.nilable(
-            T.any(
-              T::Boolean,
-              BrandDev::BrandWebScrapeMdParams::UseMainContentOnly::OrSymbol
-            )
-          )
-        )
-      end
+      sig { returns(T.nilable(T::Boolean)) }
       attr_reader :use_main_content_only
 
-      sig do
-        params(
-          use_main_content_only:
-            T.any(
-              T::Boolean,
-              BrandDev::BrandWebScrapeMdParams::UseMainContentOnly::OrSymbol
-            )
-        ).void
-      end
+      sig { params(use_main_content_only: T::Boolean).void }
       attr_writer :use_main_content_only
 
       # Optional browser wait time in milliseconds after initial page load before
@@ -305,46 +186,18 @@ module BrandDev
           country: BrandDev::BrandWebScrapeMdParams::Country::OrSymbol,
           exclude_selectors: T.nilable(T::Array[String]),
           headers: T::Hash[Symbol, String],
-          include_frames:
-            T.any(
-              T::Boolean,
-              BrandDev::BrandWebScrapeMdParams::IncludeFrames::OrSymbol
-            ),
-          include_html:
-            T.any(
-              T::Boolean,
-              BrandDev::BrandWebScrapeMdParams::IncludeHTML::OrSymbol
-            ),
-          include_images:
-            T.any(
-              T::Boolean,
-              BrandDev::BrandWebScrapeMdParams::IncludeImages::OrSymbol
-            ),
-          include_links:
-            T.any(
-              T::Boolean,
-              BrandDev::BrandWebScrapeMdParams::IncludeLinks::OrSymbol
-            ),
+          include_frames: T::Boolean,
+          include_html: T::Boolean,
+          include_images: T::Boolean,
+          include_links: T::Boolean,
           include_selectors: T.nilable(T::Array[String]),
           max_age_ms: T.nilable(Integer),
           pdf: BrandDev::BrandWebScrapeMdParams::Pdf::OrHash,
-          settle_animations:
-            T.any(
-              T::Boolean,
-              BrandDev::BrandWebScrapeMdParams::SettleAnimations::OrSymbol
-            ),
-          shorten_base64_images:
-            T.any(
-              T::Boolean,
-              BrandDev::BrandWebScrapeMdParams::ShortenBase64Images::OrSymbol
-            ),
+          settle_animations: T::Boolean,
+          shorten_base64_images: T::Boolean,
           tags: T::Array[String],
           timeout_ms: Integer,
-          use_main_content_only:
-            T.any(
-              T::Boolean,
-              BrandDev::BrandWebScrapeMdParams::UseMainContentOnly::OrSymbol
-            ),
+          use_main_content_only: T::Boolean,
           wait_for_ms: T.nilable(Integer),
           zdr: BrandDev::BrandWebScrapeMdParams::Zdr::OrSymbol,
           request_options: BrandDev::RequestOptions::OrHash
@@ -435,46 +288,18 @@ module BrandDev
             country: BrandDev::BrandWebScrapeMdParams::Country::OrSymbol,
             exclude_selectors: T.nilable(T::Array[String]),
             headers: T::Hash[Symbol, String],
-            include_frames:
-              T.any(
-                T::Boolean,
-                BrandDev::BrandWebScrapeMdParams::IncludeFrames::OrSymbol
-              ),
-            include_html:
-              T.any(
-                T::Boolean,
-                BrandDev::BrandWebScrapeMdParams::IncludeHTML::OrSymbol
-              ),
-            include_images:
-              T.any(
-                T::Boolean,
-                BrandDev::BrandWebScrapeMdParams::IncludeImages::OrSymbol
-              ),
-            include_links:
-              T.any(
-                T::Boolean,
-                BrandDev::BrandWebScrapeMdParams::IncludeLinks::OrSymbol
-              ),
+            include_frames: T::Boolean,
+            include_html: T::Boolean,
+            include_images: T::Boolean,
+            include_links: T::Boolean,
             include_selectors: T.nilable(T::Array[String]),
             max_age_ms: T.nilable(Integer),
             pdf: BrandDev::BrandWebScrapeMdParams::Pdf,
-            settle_animations:
-              T.any(
-                T::Boolean,
-                BrandDev::BrandWebScrapeMdParams::SettleAnimations::OrSymbol
-              ),
-            shorten_base64_images:
-              T.any(
-                T::Boolean,
-                BrandDev::BrandWebScrapeMdParams::ShortenBase64Images::OrSymbol
-              ),
+            settle_animations: T::Boolean,
+            shorten_base64_images: T::Boolean,
             tags: T::Array[String],
             timeout_ms: Integer,
-            use_main_content_only:
-              T.any(
-                T::Boolean,
-                BrandDev::BrandWebScrapeMdParams::UseMainContentOnly::OrSymbol
-              ),
+            use_main_content_only: T::Boolean,
             wait_for_ms: T.nilable(Integer),
             zdr: BrandDev::BrandWebScrapeMdParams::Zdr::OrSymbol,
             request_options: BrandDev::RequestOptions
@@ -783,160 +608,6 @@ module BrandDev
         end
       end
 
-      # When true, the contents of iframes are rendered to Markdown.
-      module IncludeFrames
-        extend BrandDev::Internal::Type::Union
-
-        Variants =
-          T.type_alias do
-            T.any(
-              T::Boolean,
-              BrandDev::BrandWebScrapeMdParams::IncludeFrames::TaggedSymbol
-            )
-          end
-
-        sig do
-          override.returns(
-            T::Array[BrandDev::BrandWebScrapeMdParams::IncludeFrames::Variants]
-          )
-        end
-        def self.variants
-        end
-
-        TaggedSymbol =
-          T.type_alias do
-            T.all(Symbol, BrandDev::BrandWebScrapeMdParams::IncludeFrames)
-          end
-        OrSymbol = T.type_alias { T.any(Symbol, String) }
-
-        TRUE =
-          T.let(
-            :true,
-            BrandDev::BrandWebScrapeMdParams::IncludeFrames::TaggedSymbol
-          )
-        FALSE =
-          T.let(
-            :false,
-            BrandDev::BrandWebScrapeMdParams::IncludeFrames::TaggedSymbol
-          )
-      end
-
-      # When true, the response also includes an `html` field with the page HTML the
-      # Markdown was converted from — the same body the Scrape HTML endpoint returns for
-      # the equivalent request.
-      module IncludeHTML
-        extend BrandDev::Internal::Type::Union
-
-        Variants =
-          T.type_alias do
-            T.any(
-              T::Boolean,
-              BrandDev::BrandWebScrapeMdParams::IncludeHTML::TaggedSymbol
-            )
-          end
-
-        sig do
-          override.returns(
-            T::Array[BrandDev::BrandWebScrapeMdParams::IncludeHTML::Variants]
-          )
-        end
-        def self.variants
-        end
-
-        TaggedSymbol =
-          T.type_alias do
-            T.all(Symbol, BrandDev::BrandWebScrapeMdParams::IncludeHTML)
-          end
-        OrSymbol = T.type_alias { T.any(Symbol, String) }
-
-        TRUE =
-          T.let(
-            :true,
-            BrandDev::BrandWebScrapeMdParams::IncludeHTML::TaggedSymbol
-          )
-        FALSE =
-          T.let(
-            :false,
-            BrandDev::BrandWebScrapeMdParams::IncludeHTML::TaggedSymbol
-          )
-      end
-
-      # Include image references in Markdown output
-      module IncludeImages
-        extend BrandDev::Internal::Type::Union
-
-        Variants =
-          T.type_alias do
-            T.any(
-              T::Boolean,
-              BrandDev::BrandWebScrapeMdParams::IncludeImages::TaggedSymbol
-            )
-          end
-
-        sig do
-          override.returns(
-            T::Array[BrandDev::BrandWebScrapeMdParams::IncludeImages::Variants]
-          )
-        end
-        def self.variants
-        end
-
-        TaggedSymbol =
-          T.type_alias do
-            T.all(Symbol, BrandDev::BrandWebScrapeMdParams::IncludeImages)
-          end
-        OrSymbol = T.type_alias { T.any(Symbol, String) }
-
-        TRUE =
-          T.let(
-            :true,
-            BrandDev::BrandWebScrapeMdParams::IncludeImages::TaggedSymbol
-          )
-        FALSE =
-          T.let(
-            :false,
-            BrandDev::BrandWebScrapeMdParams::IncludeImages::TaggedSymbol
-          )
-      end
-
-      # Preserve hyperlinks in Markdown output
-      module IncludeLinks
-        extend BrandDev::Internal::Type::Union
-
-        Variants =
-          T.type_alias do
-            T.any(
-              T::Boolean,
-              BrandDev::BrandWebScrapeMdParams::IncludeLinks::TaggedSymbol
-            )
-          end
-
-        sig do
-          override.returns(
-            T::Array[BrandDev::BrandWebScrapeMdParams::IncludeLinks::Variants]
-          )
-        end
-        def self.variants
-        end
-
-        TaggedSymbol =
-          T.type_alias do
-            T.all(Symbol, BrandDev::BrandWebScrapeMdParams::IncludeLinks)
-          end
-        OrSymbol = T.type_alias { T.any(Symbol, String) }
-
-        TRUE =
-          T.let(
-            :true,
-            BrandDev::BrandWebScrapeMdParams::IncludeLinks::TaggedSymbol
-          )
-        FALSE =
-          T.let(
-            :false,
-            BrandDev::BrandWebScrapeMdParams::IncludeLinks::TaggedSymbol
-          )
-      end
-
       class Pdf < BrandDev::Internal::Type::BaseModel
         OrHash =
           T.type_alias do
@@ -958,52 +629,18 @@ module BrandDev
         # replacing each recovered page's text with the OCR result while pages with a real
         # text layer keep it. Billed at 1 credit per page OCR actually recovered, on top
         # of the base request cost. When false, no OCR runs.
-        sig do
-          returns(
-            T.nilable(
-              T.any(
-                T::Boolean,
-                BrandDev::BrandWebScrapeMdParams::Pdf::Ocr::OrSymbol
-              )
-            )
-          )
-        end
+        sig { returns(T.nilable(T::Boolean)) }
         attr_reader :ocr
 
-        sig do
-          params(
-            ocr:
-              T.any(
-                T::Boolean,
-                BrandDev::BrandWebScrapeMdParams::Pdf::Ocr::OrSymbol
-              )
-          ).void
-        end
+        sig { params(ocr: T::Boolean).void }
         attr_writer :ocr
 
         # When true, PDF URLs are fetched and parsed. When false, PDF URLs are skipped and
         # a 400 PDF_SKIPPED is returned.
-        sig do
-          returns(
-            T.nilable(
-              T.any(
-                T::Boolean,
-                BrandDev::BrandWebScrapeMdParams::Pdf::ShouldParse::OrSymbol
-              )
-            )
-          )
-        end
+        sig { returns(T.nilable(T::Boolean)) }
         attr_reader :should_parse
 
-        sig do
-          params(
-            should_parse:
-              T.any(
-                T::Boolean,
-                BrandDev::BrandWebScrapeMdParams::Pdf::ShouldParse::OrSymbol
-              )
-          ).void
-        end
+        sig { params(should_parse: T::Boolean).void }
         attr_writer :should_parse
 
         # First 1-based PDF page to parse. When omitted, parsing starts at the first page.
@@ -1018,16 +655,8 @@ module BrandDev
         sig do
           params(
             end_: Integer,
-            ocr:
-              T.any(
-                T::Boolean,
-                BrandDev::BrandWebScrapeMdParams::Pdf::Ocr::OrSymbol
-              ),
-            should_parse:
-              T.any(
-                T::Boolean,
-                BrandDev::BrandWebScrapeMdParams::Pdf::ShouldParse::OrSymbol
-              ),
+            ocr: T::Boolean,
+            should_parse: T::Boolean,
             start: Integer
           ).returns(T.attached_class)
         end
@@ -1052,227 +681,14 @@ module BrandDev
           override.returns(
             {
               end_: Integer,
-              ocr:
-                T.any(
-                  T::Boolean,
-                  BrandDev::BrandWebScrapeMdParams::Pdf::Ocr::OrSymbol
-                ),
-              should_parse:
-                T.any(
-                  T::Boolean,
-                  BrandDev::BrandWebScrapeMdParams::Pdf::ShouldParse::OrSymbol
-                ),
+              ocr: T::Boolean,
+              should_parse: T::Boolean,
               start: Integer
             }
           )
         end
         def to_hash
         end
-
-        # When true, OCR the selected PDF pages that have no usable text layer (scans),
-        # replacing each recovered page's text with the OCR result while pages with a real
-        # text layer keep it. Billed at 1 credit per page OCR actually recovered, on top
-        # of the base request cost. When false, no OCR runs.
-        module Ocr
-          extend BrandDev::Internal::Type::Union
-
-          Variants =
-            T.type_alias do
-              T.any(
-                T::Boolean,
-                BrandDev::BrandWebScrapeMdParams::Pdf::Ocr::TaggedSymbol
-              )
-            end
-
-          sig do
-            override.returns(
-              T::Array[BrandDev::BrandWebScrapeMdParams::Pdf::Ocr::Variants]
-            )
-          end
-          def self.variants
-          end
-
-          TaggedSymbol =
-            T.type_alias do
-              T.all(Symbol, BrandDev::BrandWebScrapeMdParams::Pdf::Ocr)
-            end
-          OrSymbol = T.type_alias { T.any(Symbol, String) }
-
-          TRUE =
-            T.let(
-              :true,
-              BrandDev::BrandWebScrapeMdParams::Pdf::Ocr::TaggedSymbol
-            )
-          FALSE =
-            T.let(
-              :false,
-              BrandDev::BrandWebScrapeMdParams::Pdf::Ocr::TaggedSymbol
-            )
-        end
-
-        # When true, PDF URLs are fetched and parsed. When false, PDF URLs are skipped and
-        # a 400 PDF_SKIPPED is returned.
-        module ShouldParse
-          extend BrandDev::Internal::Type::Union
-
-          Variants =
-            T.type_alias do
-              T.any(
-                T::Boolean,
-                BrandDev::BrandWebScrapeMdParams::Pdf::ShouldParse::TaggedSymbol
-              )
-            end
-
-          sig do
-            override.returns(
-              T::Array[
-                BrandDev::BrandWebScrapeMdParams::Pdf::ShouldParse::Variants
-              ]
-            )
-          end
-          def self.variants
-          end
-
-          TaggedSymbol =
-            T.type_alias do
-              T.all(Symbol, BrandDev::BrandWebScrapeMdParams::Pdf::ShouldParse)
-            end
-          OrSymbol = T.type_alias { T.any(Symbol, String) }
-
-          TRUE =
-            T.let(
-              :true,
-              BrandDev::BrandWebScrapeMdParams::Pdf::ShouldParse::TaggedSymbol
-            )
-          FALSE =
-            T.let(
-              :false,
-              BrandDev::BrandWebScrapeMdParams::Pdf::ShouldParse::TaggedSymbol
-            )
-        end
-      end
-
-      # When true, waits briefly for CSS and transition animations to settle before
-      # converting to Markdown. Defaults to false. This adds a bit of latency in
-      # exchange for more stable output on animated pages.
-      module SettleAnimations
-        extend BrandDev::Internal::Type::Union
-
-        Variants =
-          T.type_alias do
-            T.any(
-              T::Boolean,
-              BrandDev::BrandWebScrapeMdParams::SettleAnimations::TaggedSymbol
-            )
-          end
-
-        sig do
-          override.returns(
-            T::Array[
-              BrandDev::BrandWebScrapeMdParams::SettleAnimations::Variants
-            ]
-          )
-        end
-        def self.variants
-        end
-
-        TaggedSymbol =
-          T.type_alias do
-            T.all(Symbol, BrandDev::BrandWebScrapeMdParams::SettleAnimations)
-          end
-        OrSymbol = T.type_alias { T.any(Symbol, String) }
-
-        TRUE =
-          T.let(
-            :true,
-            BrandDev::BrandWebScrapeMdParams::SettleAnimations::TaggedSymbol
-          )
-        FALSE =
-          T.let(
-            :false,
-            BrandDev::BrandWebScrapeMdParams::SettleAnimations::TaggedSymbol
-          )
-      end
-
-      # Shorten base64-encoded image data in the Markdown output
-      module ShortenBase64Images
-        extend BrandDev::Internal::Type::Union
-
-        Variants =
-          T.type_alias do
-            T.any(
-              T::Boolean,
-              BrandDev::BrandWebScrapeMdParams::ShortenBase64Images::TaggedSymbol
-            )
-          end
-
-        sig do
-          override.returns(
-            T::Array[
-              BrandDev::BrandWebScrapeMdParams::ShortenBase64Images::Variants
-            ]
-          )
-        end
-        def self.variants
-        end
-
-        TaggedSymbol =
-          T.type_alias do
-            T.all(Symbol, BrandDev::BrandWebScrapeMdParams::ShortenBase64Images)
-          end
-        OrSymbol = T.type_alias { T.any(Symbol, String) }
-
-        TRUE =
-          T.let(
-            :true,
-            BrandDev::BrandWebScrapeMdParams::ShortenBase64Images::TaggedSymbol
-          )
-        FALSE =
-          T.let(
-            :false,
-            BrandDev::BrandWebScrapeMdParams::ShortenBase64Images::TaggedSymbol
-          )
-      end
-
-      # Extract only the main content of the page, excluding headers, footers, sidebars,
-      # and navigation
-      module UseMainContentOnly
-        extend BrandDev::Internal::Type::Union
-
-        Variants =
-          T.type_alias do
-            T.any(
-              T::Boolean,
-              BrandDev::BrandWebScrapeMdParams::UseMainContentOnly::TaggedSymbol
-            )
-          end
-
-        sig do
-          override.returns(
-            T::Array[
-              BrandDev::BrandWebScrapeMdParams::UseMainContentOnly::Variants
-            ]
-          )
-        end
-        def self.variants
-        end
-
-        TaggedSymbol =
-          T.type_alias do
-            T.all(Symbol, BrandDev::BrandWebScrapeMdParams::UseMainContentOnly)
-          end
-        OrSymbol = T.type_alias { T.any(Symbol, String) }
-
-        TRUE =
-          T.let(
-            :true,
-            BrandDev::BrandWebScrapeMdParams::UseMainContentOnly::TaggedSymbol
-          )
-        FALSE =
-          T.let(
-            :false,
-            BrandDev::BrandWebScrapeMdParams::UseMainContentOnly::TaggedSymbol
-          )
       end
 
       # Set to enabled to bypass shared caches and omit request and response content

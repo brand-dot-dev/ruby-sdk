@@ -5,7 +5,7 @@ module BrandDev
         ticker: String,
         force_language: BrandDev::Models::BrandRetrieveByTickerParams::force_language?,
         max_age_ms: Integer?,
-        max_speed: BrandDev::Models::BrandRetrieveByTickerParams::max_speed,
+        max_speed: bool,
         tags: ::Array[String],
         ticker_exchange: BrandDev::Models::BrandRetrieveByTickerParams::ticker_exchange,
         timeout_ms: Integer
@@ -22,11 +22,9 @@ module BrandDev
 
       attr_accessor max_age_ms: Integer?
 
-      attr_reader max_speed: BrandDev::Models::BrandRetrieveByTickerParams::max_speed?
+      attr_reader max_speed: bool?
 
-      def max_speed=: (
-        BrandDev::Models::BrandRetrieveByTickerParams::max_speed
-      ) -> BrandDev::Models::BrandRetrieveByTickerParams::max_speed
+      def max_speed=: (bool) -> bool
 
       attr_reader tags: ::Array[String]?
 
@@ -46,7 +44,7 @@ module BrandDev
         ticker: String,
         ?force_language: BrandDev::Models::BrandRetrieveByTickerParams::force_language?,
         ?max_age_ms: Integer?,
-        ?max_speed: BrandDev::Models::BrandRetrieveByTickerParams::max_speed,
+        ?max_speed: bool,
         ?tags: ::Array[String],
         ?ticker_exchange: BrandDev::Models::BrandRetrieveByTickerParams::ticker_exchange,
         ?timeout_ms: Integer,
@@ -57,7 +55,7 @@ module BrandDev
         ticker: String,
         force_language: BrandDev::Models::BrandRetrieveByTickerParams::force_language?,
         max_age_ms: Integer?,
-        max_speed: BrandDev::Models::BrandRetrieveByTickerParams::max_speed,
+        max_speed: bool,
         tags: ::Array[String],
         ticker_exchange: BrandDev::Models::BrandRetrieveByTickerParams::ticker_exchange,
         timeout_ms: Integer,
@@ -311,17 +309,6 @@ module BrandDev
         ZULU: :zulu
 
         def self?.values: -> ::Array[BrandDev::Models::BrandRetrieveByTickerParams::force_language]
-      end
-
-      type max_speed = bool | :true | :false
-
-      module MaxSpeed
-        extend BrandDev::Internal::Type::Union
-
-        def self?.variants: -> ::Array[BrandDev::Models::BrandRetrieveByTickerParams::max_speed]
-
-        TRUE: :true
-        FALSE: :false
       end
 
       type ticker_exchange =
