@@ -332,7 +332,12 @@ module BrandDev
           end
         end
 
-        type color = { hex: String, name: String }
+        type color =
+          {
+            hex: String,
+            name: String,
+            source: BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Color::source
+          }
 
         class Color < BrandDev::Internal::Type::BaseModel
           attr_reader hex: String?
@@ -343,9 +348,34 @@ module BrandDev
 
           def name=: (String) -> String
 
-          def initialize: (?hex: String, ?name: String) -> void
+          attr_reader source: BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Color::source?
 
-          def to_hash: -> { hex: String, name: String }
+          def source=: (
+            BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Color::source
+          ) -> BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Color::source
+
+          def initialize: (
+            ?hex: String,
+            ?name: String,
+            ?source: BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Color::source
+          ) -> void
+
+          def to_hash: -> {
+            hex: String,
+            name: String,
+            source: BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Color::source
+          }
+
+          type source = :site | :logo
+
+          module Source
+            extend BrandDev::Internal::Type::Enum
+
+            SITE: :site
+            LOGO: :logo
+
+            def self?.values: -> ::Array[BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Color::source]
+          end
         end
 
         type employees =
