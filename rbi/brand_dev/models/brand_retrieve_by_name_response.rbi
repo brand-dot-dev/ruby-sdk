@@ -781,17 +781,94 @@ module BrandDev
           sig { params(name: String).void }
           attr_writer :name
 
-          sig { params(hex: String, name: String).returns(T.attached_class) }
+          # Where the color was observed: 'site' colors come from the website's own theme
+          # signals (rendered page colors, manifest, theme-color meta), 'logo' colors from
+          # logo image pixels.
+          sig do
+            returns(
+              T.nilable(
+                BrandDev::Models::BrandRetrieveByNameResponse::Brand::Color::Source::TaggedSymbol
+              )
+            )
+          end
+          attr_reader :source
+
+          sig do
+            params(
+              source:
+                BrandDev::Models::BrandRetrieveByNameResponse::Brand::Color::Source::OrSymbol
+            ).void
+          end
+          attr_writer :source
+
+          sig do
+            params(
+              hex: String,
+              name: String,
+              source:
+                BrandDev::Models::BrandRetrieveByNameResponse::Brand::Color::Source::OrSymbol
+            ).returns(T.attached_class)
+          end
           def self.new(
             # Color in hexadecimal format
             hex: nil,
             # Name of the color
-            name: nil
+            name: nil,
+            # Where the color was observed: 'site' colors come from the website's own theme
+            # signals (rendered page colors, manifest, theme-color meta), 'logo' colors from
+            # logo image pixels.
+            source: nil
           )
           end
 
-          sig { override.returns({ hex: String, name: String }) }
+          sig do
+            override.returns(
+              {
+                hex: String,
+                name: String,
+                source:
+                  BrandDev::Models::BrandRetrieveByNameResponse::Brand::Color::Source::TaggedSymbol
+              }
+            )
+          end
           def to_hash
+          end
+
+          # Where the color was observed: 'site' colors come from the website's own theme
+          # signals (rendered page colors, manifest, theme-color meta), 'logo' colors from
+          # logo image pixels.
+          module Source
+            extend BrandDev::Internal::Type::Enum
+
+            TaggedSymbol =
+              T.type_alias do
+                T.all(
+                  Symbol,
+                  BrandDev::Models::BrandRetrieveByNameResponse::Brand::Color::Source
+                )
+              end
+            OrSymbol = T.type_alias { T.any(Symbol, String) }
+
+            SITE =
+              T.let(
+                :site,
+                BrandDev::Models::BrandRetrieveByNameResponse::Brand::Color::Source::TaggedSymbol
+              )
+            LOGO =
+              T.let(
+                :logo,
+                BrandDev::Models::BrandRetrieveByNameResponse::Brand::Color::Source::TaggedSymbol
+              )
+
+            sig do
+              override.returns(
+                T::Array[
+                  BrandDev::Models::BrandRetrieveByNameResponse::Brand::Color::Source::TaggedSymbol
+                ]
+              )
+            end
+            def self.values
+            end
           end
         end
 
