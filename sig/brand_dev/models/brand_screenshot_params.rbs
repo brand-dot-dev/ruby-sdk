@@ -2,6 +2,7 @@ module BrandDev
   module Models
     type brand_screenshot_params =
       {
+        clear_popups: bool,
         color_scheme: BrandDev::Models::BrandScreenshotParams::color_scheme,
         country: BrandDev::Models::BrandScreenshotParams::country,
         direct_url: String,
@@ -22,6 +23,10 @@ module BrandDev
     class BrandScreenshotParams < BrandDev::Internal::Type::BaseModel
       extend BrandDev::Internal::Type::RequestParameters::Converter
       include BrandDev::Internal::Type::RequestParameters
+
+      attr_reader clear_popups: bool?
+
+      def clear_popups=: (bool) -> bool
 
       attr_reader color_scheme: BrandDev::Models::BrandScreenshotParams::color_scheme?
 
@@ -86,6 +91,7 @@ module BrandDev
       ) -> BrandDev::Models::BrandScreenshotParams::zdr
 
       def initialize: (
+        ?clear_popups: bool,
         ?color_scheme: BrandDev::Models::BrandScreenshotParams::color_scheme,
         ?country: BrandDev::Models::BrandScreenshotParams::country,
         ?direct_url: String,
@@ -104,6 +110,7 @@ module BrandDev
       ) -> void
 
       def to_hash: -> {
+        clear_popups: bool,
         color_scheme: BrandDev::Models::BrandScreenshotParams::color_scheme,
         country: BrandDev::Models::BrandScreenshotParams::country,
         direct_url: String,

@@ -134,6 +134,7 @@ module BrandDev
       ) -> BrandDev::Models::BrandRetrieveSimplifiedResponse
 
       def screenshot: (
+        ?clear_popups: bool,
         ?color_scheme: BrandDev::Models::BrandScreenshotParams::color_scheme,
         ?country: BrandDev::Models::BrandScreenshotParams::country,
         ?direct_url: String,
