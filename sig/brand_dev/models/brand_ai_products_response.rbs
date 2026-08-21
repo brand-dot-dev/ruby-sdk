@@ -57,12 +57,15 @@ module BrandDev
           sku: String?,
           tags: ::Array[String],
           target_audience: ::Array[String],
+          availability: BrandDev::Models::BrandAIProductsResponse::Product::availability?,
           billing_frequency: BrandDev::Models::BrandAIProductsResponse::Product::billing_frequency?,
           category: String?,
           currency: String?,
+          dimensions: ::Array[String],
           image_url: String?,
           price: Float?,
           pricing_model: BrandDev::Models::BrandAIProductsResponse::Product::pricing_model?,
+          regular_price: Float?,
           url: String?
         }
 
@@ -81,17 +84,25 @@ module BrandDev
 
         attr_accessor target_audience: ::Array[String]
 
+        attr_accessor availability: BrandDev::Models::BrandAIProductsResponse::Product::availability?
+
         attr_accessor billing_frequency: BrandDev::Models::BrandAIProductsResponse::Product::billing_frequency?
 
         attr_accessor category: String?
 
         attr_accessor currency: String?
 
+        attr_reader dimensions: ::Array[String]?
+
+        def dimensions=: (::Array[String]) -> ::Array[String]
+
         attr_accessor image_url: String?
 
         attr_accessor price: Float?
 
         attr_accessor pricing_model: BrandDev::Models::BrandAIProductsResponse::Product::pricing_model?
+
+        attr_accessor regular_price: Float?
 
         attr_accessor url: String?
 
@@ -103,12 +114,15 @@ module BrandDev
           sku: String?,
           tags: ::Array[String],
           target_audience: ::Array[String],
+          ?availability: BrandDev::Models::BrandAIProductsResponse::Product::availability?,
           ?billing_frequency: BrandDev::Models::BrandAIProductsResponse::Product::billing_frequency?,
           ?category: String?,
           ?currency: String?,
+          ?dimensions: ::Array[String],
           ?image_url: String?,
           ?price: Float?,
           ?pricing_model: BrandDev::Models::BrandAIProductsResponse::Product::pricing_model?,
+          ?regular_price: Float?,
           ?url: String?
         ) -> void
 
@@ -120,14 +134,40 @@ module BrandDev
           sku: String?,
           tags: ::Array[String],
           target_audience: ::Array[String],
+          availability: BrandDev::Models::BrandAIProductsResponse::Product::availability?,
           billing_frequency: BrandDev::Models::BrandAIProductsResponse::Product::billing_frequency?,
           category: String?,
           currency: String?,
+          dimensions: ::Array[String],
           image_url: String?,
           price: Float?,
           pricing_model: BrandDev::Models::BrandAIProductsResponse::Product::pricing_model?,
+          regular_price: Float?,
           url: String?
         }
+
+        type availability =
+          :in_stock
+          | :out_of_stock
+          | :limited_availability
+          | :preorder
+          | :backorder
+          | :made_to_order
+          | :discontinued
+
+        module Availability
+          extend BrandDev::Internal::Type::Enum
+
+          IN_STOCK: :in_stock
+          OUT_OF_STOCK: :out_of_stock
+          LIMITED_AVAILABILITY: :limited_availability
+          PREORDER: :preorder
+          BACKORDER: :backorder
+          MADE_TO_ORDER: :made_to_order
+          DISCONTINUED: :discontinued
+
+          def self?.values: -> ::Array[BrandDev::Models::BrandAIProductsResponse::Product::availability]
+        end
 
         type billing_frequency = :monthly | :yearly | :one_time | :usage_based
 

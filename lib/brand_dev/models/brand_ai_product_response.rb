@@ -123,6 +123,14 @@ module BrandDev
         #   @return [Array<String>]
         required :target_audience, BrandDev::Internal::Type::ArrayOf[String]
 
+        # @!attribute availability
+        #   Normalized stock or ordering availability
+        #
+        #   @return [Symbol, BrandDev::Models::BrandAIProductResponse::Product::Availability, nil]
+        optional :availability,
+                 enum: -> { BrandDev::Models::BrandAIProductResponse::Product::Availability },
+                 nil?: true
+
         # @!attribute billing_frequency
         #   Billing frequency for the product
         #
@@ -142,6 +150,12 @@ module BrandDev
         #
         #   @return [String, nil]
         optional :currency, String, nil?: true
+
+        # @!attribute dimensions
+        #   Dimension statements shown for the product, preserving labels, values, and units
+        #
+        #   @return [Array<String>, nil]
+        optional :dimensions, BrandDev::Internal::Type::ArrayOf[String]
 
         # @!attribute image_url
         #   URL to the product image
@@ -163,13 +177,22 @@ module BrandDev
                  enum: -> { BrandDev::Models::BrandAIProductResponse::Product::PricingModel },
                  nil?: true
 
+        # @!attribute regular_price
+        #   Original or regular price before a displayed discount
+        #
+        #   @return [Float, nil]
+        optional :regular_price, Float, nil?: true
+
         # @!attribute url
         #   URL to the product page
         #
         #   @return [String, nil]
         optional :url, String, nil?: true
 
-        # @!method initialize(description:, features:, images:, name:, sku:, tags:, target_audience:, billing_frequency: nil, category: nil, currency: nil, image_url: nil, price: nil, pricing_model: nil, url: nil)
+        # @!method initialize(description:, features:, images:, name:, sku:, tags:, target_audience:, availability: nil, billing_frequency: nil, category: nil, currency: nil, dimensions: nil, image_url: nil, price: nil, pricing_model: nil, regular_price: nil, url: nil)
+        #   Some parameter documentations has been truncated, see
+        #   {BrandDev::Models::BrandAIProductResponse::Product} for more details.
+        #
         #   The extracted product data, or null if not a product page
         #
         #   @param description [String] Description of the product
@@ -186,11 +209,15 @@ module BrandDev
         #
         #   @param target_audience [Array<String>] Target audience for the product (array of strings)
         #
+        #   @param availability [Symbol, BrandDev::Models::BrandAIProductResponse::Product::Availability, nil] Normalized stock or ordering availability
+        #
         #   @param billing_frequency [Symbol, BrandDev::Models::BrandAIProductResponse::Product::BillingFrequency, nil] Billing frequency for the product
         #
         #   @param category [String, nil] Category of the product
         #
         #   @param currency [String, nil] Currency code for the price (e.g., USD, EUR)
+        #
+        #   @param dimensions [Array<String>] Dimension statements shown for the product, preserving labels, values, and units
         #
         #   @param image_url [String, nil] URL to the product image
         #
@@ -198,7 +225,27 @@ module BrandDev
         #
         #   @param pricing_model [Symbol, BrandDev::Models::BrandAIProductResponse::Product::PricingModel, nil] Pricing model for the product
         #
+        #   @param regular_price [Float, nil] Original or regular price before a displayed discount
+        #
         #   @param url [String, nil] URL to the product page
+
+        # Normalized stock or ordering availability
+        #
+        # @see BrandDev::Models::BrandAIProductResponse::Product#availability
+        module Availability
+          extend BrandDev::Internal::Type::Enum
+
+          IN_STOCK = :in_stock
+          OUT_OF_STOCK = :out_of_stock
+          LIMITED_AVAILABILITY = :limited_availability
+          PREORDER = :preorder
+          BACKORDER = :backorder
+          MADE_TO_ORDER = :made_to_order
+          DISCONTINUED = :discontinued
+
+          # @!method self.values
+          #   @return [Array<Symbol>]
+        end
 
         # Billing frequency for the product
         #
