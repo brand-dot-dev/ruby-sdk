@@ -623,7 +623,7 @@ module BrandDev
       #
       # @param url [String] Full URL to scrape (must include http:// or https:// protocol)
       #
-      # @param actions [Array<BrandDev::Models::BrandWebScrapeHTMLParams::Action::Wait, BrandDev::Models::BrandWebScrapeHTMLParams::Action::Perform>, nil] Optional browser actions executed in array order after the page loads and before
+      # @param actions [Array<BrandDev::Models::BrandWebScrapeHTMLParams::Action::Wait, BrandDev::Models::BrandWebScrapeHTMLParams::Action::Perform, BrandDev::Models::BrandWebScrapeHTMLParams::Action::Scroll>, nil] Optional browser actions executed in array order after the page loads and before
       #
       # @param country [Symbol, BrandDev::Models::BrandWebScrapeHTMLParams::Country] Fetch the target page through a residential proxy in this country (ISO 3166-1 al
       #
@@ -690,7 +690,7 @@ module BrandDev
       #
       # @param url [String] Page URL to inspect. Must include http:// or https://.
       #
-      # @param actions [Array<BrandDev::Models::BrandWebScrapeImagesParams::Action::Wait, BrandDev::Models::BrandWebScrapeImagesParams::Action::Perform>, nil] Optional browser actions executed in array order after the page loads and before
+      # @param actions [Array<BrandDev::Models::BrandWebScrapeImagesParams::Action::Wait, BrandDev::Models::BrandWebScrapeImagesParams::Action::Perform, BrandDev::Models::BrandWebScrapeImagesParams::Action::Scroll>, nil] Optional browser actions executed in array order after the page loads and before
       #
       # @param dedupe [Boolean] When true, visually duplicate images are removed: every image is loaded and perc
       #
@@ -764,7 +764,7 @@ module BrandDev
       #
       # @param url [String] Full URL to scrape into LLM usable Markdown (must include http:// or https:// pr
       #
-      # @param actions [Array<BrandDev::Models::BrandWebScrapeMdParams::Action::Wait, BrandDev::Models::BrandWebScrapeMdParams::Action::Perform>, nil] Optional browser actions executed in array order after the page loads and before
+      # @param actions [Array<BrandDev::Models::BrandWebScrapeMdParams::Action::Wait, BrandDev::Models::BrandWebScrapeMdParams::Action::Perform, BrandDev::Models::BrandWebScrapeMdParams::Action::Scroll>, nil] Optional browser actions executed in array order after the page loads and before
       #
       # @param country [Symbol, BrandDev::Models::BrandWebScrapeMdParams::Country] Fetch the target page through a residential proxy in this country (ISO 3166-1 al
       #

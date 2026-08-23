@@ -5,6 +5,7 @@ module BrandDev
         images: ::Array[BrandDev::Models::BrandWebScrapeImagesResponse::Image],
         success: BrandDev::Models::BrandWebScrapeImagesResponse::success,
         url: String,
+        actions_applied: ::Array[BrandDev::Models::BrandWebScrapeImagesResponse::ActionsApplied],
         key_metadata: BrandDev::Models::BrandWebScrapeImagesResponse::KeyMetadata
       }
 
@@ -14,6 +15,12 @@ module BrandDev
       attr_accessor success: BrandDev::Models::BrandWebScrapeImagesResponse::success
 
       attr_accessor url: String
+
+      attr_reader actions_applied: ::Array[BrandDev::Models::BrandWebScrapeImagesResponse::ActionsApplied]?
+
+      def actions_applied=: (
+        ::Array[BrandDev::Models::BrandWebScrapeImagesResponse::ActionsApplied]
+      ) -> ::Array[BrandDev::Models::BrandWebScrapeImagesResponse::ActionsApplied]
 
       attr_reader key_metadata: BrandDev::Models::BrandWebScrapeImagesResponse::KeyMetadata?
 
@@ -25,6 +32,7 @@ module BrandDev
         images: ::Array[BrandDev::Models::BrandWebScrapeImagesResponse::Image],
         success: BrandDev::Models::BrandWebScrapeImagesResponse::success,
         url: String,
+        ?actions_applied: ::Array[BrandDev::Models::BrandWebScrapeImagesResponse::ActionsApplied],
         ?key_metadata: BrandDev::Models::BrandWebScrapeImagesResponse::KeyMetadata
       ) -> void
 
@@ -32,6 +40,7 @@ module BrandDev
         images: ::Array[BrandDev::Models::BrandWebScrapeImagesResponse::Image],
         success: BrandDev::Models::BrandWebScrapeImagesResponse::success,
         url: String,
+        actions_applied: ::Array[BrandDev::Models::BrandWebScrapeImagesResponse::ActionsApplied],
         key_metadata: BrandDev::Models::BrandWebScrapeImagesResponse::KeyMetadata
       }
 
@@ -197,6 +206,75 @@ module BrandDev
         TRUE: true
 
         def self?.values: -> ::Array[BrandDev::Models::BrandWebScrapeImagesResponse::success]
+      end
+
+      type actions_applied =
+        {
+          instruction: String,
+          status: BrandDev::Models::BrandWebScrapeImagesResponse::ActionsApplied::status,
+          completion_evidence: String,
+          duration_ms: Float,
+          error: String,
+          method_: String,
+          target_description: String
+        }
+
+      class ActionsApplied < BrandDev::Internal::Type::BaseModel
+        attr_accessor instruction: String
+
+        attr_accessor status: BrandDev::Models::BrandWebScrapeImagesResponse::ActionsApplied::status
+
+        attr_reader completion_evidence: String?
+
+        def completion_evidence=: (String) -> String
+
+        attr_reader duration_ms: Float?
+
+        def duration_ms=: (Float) -> Float
+
+        attr_reader error: String?
+
+        def error=: (String) -> String
+
+        attr_reader method_: String?
+
+        def method_=: (String) -> String
+
+        attr_reader target_description: String?
+
+        def target_description=: (String) -> String
+
+        def initialize: (
+          instruction: String,
+          status: BrandDev::Models::BrandWebScrapeImagesResponse::ActionsApplied::status,
+          ?completion_evidence: String,
+          ?duration_ms: Float,
+          ?error: String,
+          ?method_: String,
+          ?target_description: String
+        ) -> void
+
+        def to_hash: -> {
+          instruction: String,
+          status: BrandDev::Models::BrandWebScrapeImagesResponse::ActionsApplied::status,
+          completion_evidence: String,
+          duration_ms: Float,
+          error: String,
+          method_: String,
+          target_description: String
+        }
+
+        type status = :applied | :failed | :skipped
+
+        module Status
+          extend BrandDev::Internal::Type::Enum
+
+          APPLIED: :applied
+          FAILED: :failed
+          SKIPPED: :skipped
+
+          def self?.values: -> ::Array[BrandDev::Models::BrandWebScrapeImagesResponse::ActionsApplied::status]
+        end
       end
 
       type key_metadata =

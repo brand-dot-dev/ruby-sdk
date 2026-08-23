@@ -362,6 +362,7 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
         images: ^(BrandDev::Internal::Type::ArrayOf[BrandDev::Models::BrandWebScrapeImagesResponse::Image]),
         success: BrandDev::Models::BrandWebScrapeImagesResponse::Success,
         url: String,
+        actions_applied: ^(BrandDev::Internal::Type::ArrayOf[BrandDev::Models::BrandWebScrapeImagesResponse::ActionsApplied]) | nil,
         key_metadata: BrandDev::Models::BrandWebScrapeImagesResponse::KeyMetadata | nil
       }
     end

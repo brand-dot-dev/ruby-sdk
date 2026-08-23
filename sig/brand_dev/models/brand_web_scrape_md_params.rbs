@@ -147,6 +147,7 @@ module BrandDev
       type action =
         BrandDev::BrandWebScrapeMdParams::Action::Wait
         | BrandDev::BrandWebScrapeMdParams::Action::Perform
+        | BrandDev::BrandWebScrapeMdParams::Action::Scroll
 
       module Action
         extend BrandDev::Internal::Type::Union
@@ -173,6 +174,79 @@ module BrandDev
           def initialize: (action: String, ?do_: :perform) -> void
 
           def to_hash: -> { action: String, do_: :perform }
+        end
+
+        type scroll =
+          {
+            do_: :scroll,
+            amount: BrandDev::Models::BrandWebScrapeMdParams::Action::Scroll::amount,
+            container: String,
+            direction: BrandDev::Models::BrandWebScrapeMdParams::Action::Scroll::direction,
+            max_scrolls: Integer
+          }
+
+        class Scroll < BrandDev::Internal::Type::BaseModel
+          attr_accessor do_: :scroll
+
+          attr_reader amount: BrandDev::Models::BrandWebScrapeMdParams::Action::Scroll::amount?
+
+          def amount=: (
+            BrandDev::Models::BrandWebScrapeMdParams::Action::Scroll::amount
+          ) -> BrandDev::Models::BrandWebScrapeMdParams::Action::Scroll::amount
+
+          attr_reader container: String?
+
+          def container=: (String) -> String
+
+          attr_reader direction: BrandDev::Models::BrandWebScrapeMdParams::Action::Scroll::direction?
+
+          def direction=: (
+            BrandDev::Models::BrandWebScrapeMdParams::Action::Scroll::direction
+          ) -> BrandDev::Models::BrandWebScrapeMdParams::Action::Scroll::direction
+
+          attr_reader max_scrolls: Integer?
+
+          def max_scrolls=: (Integer) -> Integer
+
+          def initialize: (
+            ?amount: BrandDev::Models::BrandWebScrapeMdParams::Action::Scroll::amount,
+            ?container: String,
+            ?direction: BrandDev::Models::BrandWebScrapeMdParams::Action::Scroll::direction,
+            ?max_scrolls: Integer,
+            ?do_: :scroll
+          ) -> void
+
+          def to_hash: -> {
+            do_: :scroll,
+            amount: BrandDev::Models::BrandWebScrapeMdParams::Action::Scroll::amount,
+            container: String,
+            direction: BrandDev::Models::BrandWebScrapeMdParams::Action::Scroll::direction,
+            max_scrolls: Integer
+          }
+
+          type amount = Integer | :viewport | :max
+
+          module Amount
+            extend BrandDev::Internal::Type::Union
+
+            def self?.variants: -> ::Array[BrandDev::Models::BrandWebScrapeMdParams::Action::Scroll::amount]
+
+            VIEWPORT: :viewport
+            MAX: :max
+          end
+
+          type direction = :up | :down | :left | :right
+
+          module Direction
+            extend BrandDev::Internal::Type::Enum
+
+            UP: :up
+            DOWN: :down
+            LEFT: :left
+            RIGHT: :right
+
+            def self?.values: -> ::Array[BrandDev::Models::BrandWebScrapeMdParams::Action::Scroll::direction]
+          end
         end
 
         def self?.variants: -> ::Array[BrandDev::Models::BrandWebScrapeMdParams::action]

@@ -29,6 +29,28 @@ module BrandDev
       sig { returns(String) }
       attr_accessor :url
 
+      # One verified outcome per requested browser action, in request order.
+      sig do
+        returns(
+          T.nilable(
+            T::Array[
+              BrandDev::Models::BrandWebScrapeImagesResponse::ActionsApplied
+            ]
+          )
+        )
+      end
+      attr_reader :actions_applied
+
+      sig do
+        params(
+          actions_applied:
+            T::Array[
+              BrandDev::Models::BrandWebScrapeImagesResponse::ActionsApplied::OrHash
+            ]
+        ).void
+      end
+      attr_writer :actions_applied
+
       # Metadata about the API key used for the request. Included in every response
       # whenever a valid API key is provided, even when the response status is not 200.
       sig do
@@ -55,6 +77,10 @@ module BrandDev
           success:
             BrandDev::Models::BrandWebScrapeImagesResponse::Success::OrBoolean,
           url: String,
+          actions_applied:
+            T::Array[
+              BrandDev::Models::BrandWebScrapeImagesResponse::ActionsApplied::OrHash
+            ],
           key_metadata:
             BrandDev::Models::BrandWebScrapeImagesResponse::KeyMetadata::OrHash
         ).returns(T.attached_class)
@@ -66,6 +92,8 @@ module BrandDev
         success:,
         # Page URL that was scraped.
         url:,
+        # One verified outcome per requested browser action, in request order.
+        actions_applied: nil,
         # Metadata about the API key used for the request. Included in every response
         # whenever a valid API key is provided, even when the response status is not 200.
         key_metadata: nil
@@ -80,6 +108,10 @@ module BrandDev
             success:
               BrandDev::Models::BrandWebScrapeImagesResponse::Success::TaggedBoolean,
             url: String,
+            actions_applied:
+              T::Array[
+                BrandDev::Models::BrandWebScrapeImagesResponse::ActionsApplied
+              ],
             key_metadata:
               BrandDev::Models::BrandWebScrapeImagesResponse::KeyMetadata
           }
@@ -481,6 +513,143 @@ module BrandDev
           )
         end
         def self.values
+        end
+      end
+
+      class ActionsApplied < BrandDev::Internal::Type::BaseModel
+        OrHash =
+          T.type_alias do
+            T.any(
+              BrandDev::Models::BrandWebScrapeImagesResponse::ActionsApplied,
+              BrandDev::Internal::AnyHash
+            )
+          end
+
+        sig { returns(String) }
+        attr_accessor :instruction
+
+        # Applied means the requested page state was visibly verified. Failed means it was
+        # not verified. Skipped means it was not attempted.
+        sig do
+          returns(
+            BrandDev::Models::BrandWebScrapeImagesResponse::ActionsApplied::Status::TaggedSymbol
+          )
+        end
+        attr_accessor :status
+
+        # Visible page evidence used to verify an applied action.
+        sig { returns(T.nilable(String)) }
+        attr_reader :completion_evidence
+
+        sig { params(completion_evidence: String).void }
+        attr_writer :completion_evidence
+
+        sig { returns(T.nilable(Float)) }
+        attr_reader :duration_ms
+
+        sig { params(duration_ms: Float).void }
+        attr_writer :duration_ms
+
+        sig { returns(T.nilable(String)) }
+        attr_reader :error
+
+        sig { params(error: String).void }
+        attr_writer :error
+
+        sig { returns(T.nilable(String)) }
+        attr_reader :method_
+
+        sig { params(method_: String).void }
+        attr_writer :method_
+
+        sig { returns(T.nilable(String)) }
+        attr_reader :target_description
+
+        sig { params(target_description: String).void }
+        attr_writer :target_description
+
+        sig do
+          params(
+            instruction: String,
+            status:
+              BrandDev::Models::BrandWebScrapeImagesResponse::ActionsApplied::Status::OrSymbol,
+            completion_evidence: String,
+            duration_ms: Float,
+            error: String,
+            method_: String,
+            target_description: String
+          ).returns(T.attached_class)
+        end
+        def self.new(
+          instruction:,
+          # Applied means the requested page state was visibly verified. Failed means it was
+          # not verified. Skipped means it was not attempted.
+          status:,
+          # Visible page evidence used to verify an applied action.
+          completion_evidence: nil,
+          duration_ms: nil,
+          error: nil,
+          method_: nil,
+          target_description: nil
+        )
+        end
+
+        sig do
+          override.returns(
+            {
+              instruction: String,
+              status:
+                BrandDev::Models::BrandWebScrapeImagesResponse::ActionsApplied::Status::TaggedSymbol,
+              completion_evidence: String,
+              duration_ms: Float,
+              error: String,
+              method_: String,
+              target_description: String
+            }
+          )
+        end
+        def to_hash
+        end
+
+        # Applied means the requested page state was visibly verified. Failed means it was
+        # not verified. Skipped means it was not attempted.
+        module Status
+          extend BrandDev::Internal::Type::Enum
+
+          TaggedSymbol =
+            T.type_alias do
+              T.all(
+                Symbol,
+                BrandDev::Models::BrandWebScrapeImagesResponse::ActionsApplied::Status
+              )
+            end
+          OrSymbol = T.type_alias { T.any(Symbol, String) }
+
+          APPLIED =
+            T.let(
+              :applied,
+              BrandDev::Models::BrandWebScrapeImagesResponse::ActionsApplied::Status::TaggedSymbol
+            )
+          FAILED =
+            T.let(
+              :failed,
+              BrandDev::Models::BrandWebScrapeImagesResponse::ActionsApplied::Status::TaggedSymbol
+            )
+          SKIPPED =
+            T.let(
+              :skipped,
+              BrandDev::Models::BrandWebScrapeImagesResponse::ActionsApplied::Status::TaggedSymbol
+            )
+
+          sig do
+            override.returns(
+              T::Array[
+                BrandDev::Models::BrandWebScrapeImagesResponse::ActionsApplied::Status::TaggedSymbol
+              ]
+            )
+          end
+          def self.values
+          end
         end
       end
 

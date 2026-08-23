@@ -18,7 +18,7 @@ module BrandDev
       #   content is captured. Requires a paid plan. Send a JSON array in the query
       #   parameter. Maximum: 5 actions.
       #
-      #   @return [Array<BrandDev::Models::BrandWebScrapeImagesParams::Action::Wait, BrandDev::Models::BrandWebScrapeImagesParams::Action::Perform>, nil]
+      #   @return [Array<BrandDev::Models::BrandWebScrapeImagesParams::Action::Wait, BrandDev::Models::BrandWebScrapeImagesParams::Action::Perform, BrandDev::Models::BrandWebScrapeImagesParams::Action::Scroll>, nil]
       optional :actions,
                -> { BrandDev::Internal::Type::ArrayOf[union: BrandDev::BrandWebScrapeImagesParams::Action] },
                nil?: true
@@ -83,7 +83,7 @@ module BrandDev
       #
       #   @param url [String] Page URL to inspect. Must include http:// or https://.
       #
-      #   @param actions [Array<BrandDev::Models::BrandWebScrapeImagesParams::Action::Wait, BrandDev::Models::BrandWebScrapeImagesParams::Action::Perform>, nil] Optional browser actions executed in array order after the page loads and before
+      #   @param actions [Array<BrandDev::Models::BrandWebScrapeImagesParams::Action::Wait, BrandDev::Models::BrandWebScrapeImagesParams::Action::Perform, BrandDev::Models::BrandWebScrapeImagesParams::Action::Scroll>, nil] Optional browser actions executed in array order after the page loads and before
       #
       #   @param dedupe [Boolean] When true, visually duplicate images are removed: every image is loaded and perc
       #
@@ -113,6 +113,9 @@ module BrandDev
 
         # Resolve and perform one natural-language browser action.
         variant :perform, -> { BrandDev::BrandWebScrapeImagesParams::Action::Perform }
+
+        # Scroll the page or a selected scrollable container, waiting adaptively for content and dimensions to settle after each iteration.
+        variant :scroll, -> { BrandDev::BrandWebScrapeImagesParams::Action::Scroll }
 
         class Wait < BrandDev::Internal::Type::BaseModel
           # @!attribute do_
@@ -150,8 +153,101 @@ module BrandDev
           #   @param do_ [Symbol, :perform]
         end
 
+        class Scroll < BrandDev::Internal::Type::BaseModel
+          # @!attribute do_
+          #
+          #   @return [Symbol, :scroll]
+          required :do_, const: :scroll, api_name: :do
+
+          # @!attribute amount
+          #   Pixels per scroll, one visible viewport, or the current scroll boundary.
+          #   Defaults to viewport.
+          #
+          #   @return [Integer, Symbol, BrandDev::Models::BrandWebScrapeImagesParams::Action::Scroll::Amount, nil]
+          optional :amount, union: -> { BrandDev::BrandWebScrapeImagesParams::Action::Scroll::Amount }
+
+          # @!attribute container
+          #   CSS selector for the first matching scroll container. Defaults to the page.
+          #
+          #   @return [String, nil]
+          optional :container, String
+
+          # @!attribute direction
+          #   Direction to scroll. Defaults to down.
+          #
+          #   @return [Symbol, BrandDev::Models::BrandWebScrapeImagesParams::Action::Scroll::Direction, nil]
+          optional :direction, enum: -> { BrandDev::BrandWebScrapeImagesParams::Action::Scroll::Direction }
+
+          # @!attribute max_scrolls
+          #   Maximum scroll iterations. Stops early when scrolling and scrollable extent stop
+          #   changing. Defaults to 1.
+          #
+          #   @return [Integer, nil]
+          optional :max_scrolls, Integer, api_name: :maxScrolls
+
+          # @!method initialize(amount: nil, container: nil, direction: nil, max_scrolls: nil, do_: :scroll)
+          #   Some parameter documentations has been truncated, see
+          #   {BrandDev::Models::BrandWebScrapeImagesParams::Action::Scroll} for more details.
+          #
+          #   Scroll the page or a selected scrollable container, waiting adaptively for
+          #   content and dimensions to settle after each iteration.
+          #
+          #   @param amount [Integer, Symbol, BrandDev::Models::BrandWebScrapeImagesParams::Action::Scroll::Amount] Pixels per scroll, one visible viewport, or the current scroll boundary. Default
+          #
+          #   @param container [String] CSS selector for the first matching scroll container. Defaults to the page.
+          #
+          #   @param direction [Symbol, BrandDev::Models::BrandWebScrapeImagesParams::Action::Scroll::Direction] Direction to scroll. Defaults to down.
+          #
+          #   @param max_scrolls [Integer] Maximum scroll iterations. Stops early when scrolling and scrollable extent stop
+          #
+          #   @param do_ [Symbol, :scroll]
+
+          # Pixels per scroll, one visible viewport, or the current scroll boundary.
+          # Defaults to viewport.
+          #
+          # @see BrandDev::Models::BrandWebScrapeImagesParams::Action::Scroll#amount
+          module Amount
+            extend BrandDev::Internal::Type::Union
+
+            variant Integer
+
+            variant const: -> { BrandDev::Models::BrandWebScrapeImagesParams::Action::Scroll::Amount::VIEWPORT }
+
+            variant const: -> { BrandDev::Models::BrandWebScrapeImagesParams::Action::Scroll::Amount::MAX }
+
+            # @!method self.variants
+            #   @return [Array(Integer, Symbol)]
+
+            define_sorbet_constant!(:Variants) do
+              T.type_alias { T.any(Integer, BrandDev::BrandWebScrapeImagesParams::Action::Scroll::Amount::TaggedSymbol) }
+            end
+
+            # @!group
+
+            VIEWPORT = :viewport
+            MAX = :max
+
+            # @!endgroup
+          end
+
+          # Direction to scroll. Defaults to down.
+          #
+          # @see BrandDev::Models::BrandWebScrapeImagesParams::Action::Scroll#direction
+          module Direction
+            extend BrandDev::Internal::Type::Enum
+
+            UP = :up
+            DOWN = :down
+            LEFT = :left
+            RIGHT = :right
+
+            # @!method self.values
+            #   @return [Array<Symbol>]
+          end
+        end
+
         # @!method self.variants
-        #   @return [Array(BrandDev::Models::BrandWebScrapeImagesParams::Action::Wait, BrandDev::Models::BrandWebScrapeImagesParams::Action::Perform)]
+        #   @return [Array(BrandDev::Models::BrandWebScrapeImagesParams::Action::Wait, BrandDev::Models::BrandWebScrapeImagesParams::Action::Perform, BrandDev::Models::BrandWebScrapeImagesParams::Action::Scroll)]
       end
 
       class Enrichment < BrandDev::Internal::Type::BaseModel

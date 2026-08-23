@@ -18,7 +18,7 @@ module BrandDev
       #   content is captured. Requires a paid plan. Send a JSON array in the query
       #   parameter. Maximum: 5 actions.
       #
-      #   @return [Array<BrandDev::Models::BrandWebScrapeHTMLParams::Action::Wait, BrandDev::Models::BrandWebScrapeHTMLParams::Action::Perform>, nil]
+      #   @return [Array<BrandDev::Models::BrandWebScrapeHTMLParams::Action::Wait, BrandDev::Models::BrandWebScrapeHTMLParams::Action::Perform, BrandDev::Models::BrandWebScrapeHTMLParams::Action::Scroll>, nil]
       optional :actions,
                -> { BrandDev::Internal::Type::ArrayOf[union: BrandDev::BrandWebScrapeHTMLParams::Action] },
                nil?: true
@@ -128,7 +128,7 @@ module BrandDev
       #
       #   @param url [String] Full URL to scrape (must include http:// or https:// protocol)
       #
-      #   @param actions [Array<BrandDev::Models::BrandWebScrapeHTMLParams::Action::Wait, BrandDev::Models::BrandWebScrapeHTMLParams::Action::Perform>, nil] Optional browser actions executed in array order after the page loads and before
+      #   @param actions [Array<BrandDev::Models::BrandWebScrapeHTMLParams::Action::Wait, BrandDev::Models::BrandWebScrapeHTMLParams::Action::Perform, BrandDev::Models::BrandWebScrapeHTMLParams::Action::Scroll>, nil] Optional browser actions executed in array order after the page loads and before
       #
       #   @param country [Symbol, BrandDev::Models::BrandWebScrapeHTMLParams::Country] Fetch the target page through a residential proxy in this country (ISO 3166-1 al
       #
@@ -171,6 +171,9 @@ module BrandDev
         # Resolve and perform one natural-language browser action.
         variant :perform, -> { BrandDev::BrandWebScrapeHTMLParams::Action::Perform }
 
+        # Scroll the page or a selected scrollable container, waiting adaptively for content and dimensions to settle after each iteration.
+        variant :scroll, -> { BrandDev::BrandWebScrapeHTMLParams::Action::Scroll }
+
         class Wait < BrandDev::Internal::Type::BaseModel
           # @!attribute do_
           #
@@ -207,8 +210,101 @@ module BrandDev
           #   @param do_ [Symbol, :perform]
         end
 
+        class Scroll < BrandDev::Internal::Type::BaseModel
+          # @!attribute do_
+          #
+          #   @return [Symbol, :scroll]
+          required :do_, const: :scroll, api_name: :do
+
+          # @!attribute amount
+          #   Pixels per scroll, one visible viewport, or the current scroll boundary.
+          #   Defaults to viewport.
+          #
+          #   @return [Integer, Symbol, BrandDev::Models::BrandWebScrapeHTMLParams::Action::Scroll::Amount, nil]
+          optional :amount, union: -> { BrandDev::BrandWebScrapeHTMLParams::Action::Scroll::Amount }
+
+          # @!attribute container
+          #   CSS selector for the first matching scroll container. Defaults to the page.
+          #
+          #   @return [String, nil]
+          optional :container, String
+
+          # @!attribute direction
+          #   Direction to scroll. Defaults to down.
+          #
+          #   @return [Symbol, BrandDev::Models::BrandWebScrapeHTMLParams::Action::Scroll::Direction, nil]
+          optional :direction, enum: -> { BrandDev::BrandWebScrapeHTMLParams::Action::Scroll::Direction }
+
+          # @!attribute max_scrolls
+          #   Maximum scroll iterations. Stops early when scrolling and scrollable extent stop
+          #   changing. Defaults to 1.
+          #
+          #   @return [Integer, nil]
+          optional :max_scrolls, Integer, api_name: :maxScrolls
+
+          # @!method initialize(amount: nil, container: nil, direction: nil, max_scrolls: nil, do_: :scroll)
+          #   Some parameter documentations has been truncated, see
+          #   {BrandDev::Models::BrandWebScrapeHTMLParams::Action::Scroll} for more details.
+          #
+          #   Scroll the page or a selected scrollable container, waiting adaptively for
+          #   content and dimensions to settle after each iteration.
+          #
+          #   @param amount [Integer, Symbol, BrandDev::Models::BrandWebScrapeHTMLParams::Action::Scroll::Amount] Pixels per scroll, one visible viewport, or the current scroll boundary. Default
+          #
+          #   @param container [String] CSS selector for the first matching scroll container. Defaults to the page.
+          #
+          #   @param direction [Symbol, BrandDev::Models::BrandWebScrapeHTMLParams::Action::Scroll::Direction] Direction to scroll. Defaults to down.
+          #
+          #   @param max_scrolls [Integer] Maximum scroll iterations. Stops early when scrolling and scrollable extent stop
+          #
+          #   @param do_ [Symbol, :scroll]
+
+          # Pixels per scroll, one visible viewport, or the current scroll boundary.
+          # Defaults to viewport.
+          #
+          # @see BrandDev::Models::BrandWebScrapeHTMLParams::Action::Scroll#amount
+          module Amount
+            extend BrandDev::Internal::Type::Union
+
+            variant Integer
+
+            variant const: -> { BrandDev::Models::BrandWebScrapeHTMLParams::Action::Scroll::Amount::VIEWPORT }
+
+            variant const: -> { BrandDev::Models::BrandWebScrapeHTMLParams::Action::Scroll::Amount::MAX }
+
+            # @!method self.variants
+            #   @return [Array(Integer, Symbol)]
+
+            define_sorbet_constant!(:Variants) do
+              T.type_alias { T.any(Integer, BrandDev::BrandWebScrapeHTMLParams::Action::Scroll::Amount::TaggedSymbol) }
+            end
+
+            # @!group
+
+            VIEWPORT = :viewport
+            MAX = :max
+
+            # @!endgroup
+          end
+
+          # Direction to scroll. Defaults to down.
+          #
+          # @see BrandDev::Models::BrandWebScrapeHTMLParams::Action::Scroll#direction
+          module Direction
+            extend BrandDev::Internal::Type::Enum
+
+            UP = :up
+            DOWN = :down
+            LEFT = :left
+            RIGHT = :right
+
+            # @!method self.values
+            #   @return [Array<Symbol>]
+          end
+        end
+
         # @!method self.variants
-        #   @return [Array(BrandDev::Models::BrandWebScrapeHTMLParams::Action::Wait, BrandDev::Models::BrandWebScrapeHTMLParams::Action::Perform)]
+        #   @return [Array(BrandDev::Models::BrandWebScrapeHTMLParams::Action::Wait, BrandDev::Models::BrandWebScrapeHTMLParams::Action::Perform, BrandDev::Models::BrandWebScrapeHTMLParams::Action::Scroll)]
       end
 
       # Fetch the target page through a residential proxy in this country (ISO 3166-1

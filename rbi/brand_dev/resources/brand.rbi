@@ -667,7 +667,8 @@ module BrandDev
               T::Array[
                 T.any(
                   BrandDev::BrandWebScrapeHTMLParams::Action::Wait::OrHash,
-                  BrandDev::BrandWebScrapeHTMLParams::Action::Perform::OrHash
+                  BrandDev::BrandWebScrapeHTMLParams::Action::Perform::OrHash,
+                  BrandDev::BrandWebScrapeHTMLParams::Action::Scroll::OrHash
                 )
               ]
             ),
@@ -758,7 +759,8 @@ module BrandDev
               T::Array[
                 T.any(
                   BrandDev::BrandWebScrapeImagesParams::Action::Wait::OrHash,
-                  BrandDev::BrandWebScrapeImagesParams::Action::Perform::OrHash
+                  BrandDev::BrandWebScrapeImagesParams::Action::Perform::OrHash,
+                  BrandDev::BrandWebScrapeImagesParams::Action::Scroll::OrHash
                 )
               ]
             ),
@@ -847,7 +849,8 @@ module BrandDev
               T::Array[
                 T.any(
                   BrandDev::BrandWebScrapeMdParams::Action::Wait::OrHash,
-                  BrandDev::BrandWebScrapeMdParams::Action::Perform::OrHash
+                  BrandDev::BrandWebScrapeMdParams::Action::Perform::OrHash,
+                  BrandDev::BrandWebScrapeMdParams::Action::Scroll::OrHash
                 )
               ]
             ),
