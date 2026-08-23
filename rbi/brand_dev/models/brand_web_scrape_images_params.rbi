@@ -27,7 +27,8 @@ module BrandDev
             T::Array[
               T.any(
                 BrandDev::BrandWebScrapeImagesParams::Action::Wait,
-                BrandDev::BrandWebScrapeImagesParams::Action::Perform
+                BrandDev::BrandWebScrapeImagesParams::Action::Perform,
+                BrandDev::BrandWebScrapeImagesParams::Action::Scroll
               )
             ]
           )
@@ -105,7 +106,8 @@ module BrandDev
               T::Array[
                 T.any(
                   BrandDev::BrandWebScrapeImagesParams::Action::Wait::OrHash,
-                  BrandDev::BrandWebScrapeImagesParams::Action::Perform::OrHash
+                  BrandDev::BrandWebScrapeImagesParams::Action::Perform::OrHash,
+                  BrandDev::BrandWebScrapeImagesParams::Action::Scroll::OrHash
                 )
               ]
             ),
@@ -166,7 +168,8 @@ module BrandDev
                 T::Array[
                   T.any(
                     BrandDev::BrandWebScrapeImagesParams::Action::Wait,
-                    BrandDev::BrandWebScrapeImagesParams::Action::Perform
+                    BrandDev::BrandWebScrapeImagesParams::Action::Perform,
+                    BrandDev::BrandWebScrapeImagesParams::Action::Scroll
                   )
                 ]
               ),
@@ -194,7 +197,8 @@ module BrandDev
           T.type_alias do
             T.any(
               BrandDev::BrandWebScrapeImagesParams::Action::Wait,
-              BrandDev::BrandWebScrapeImagesParams::Action::Perform
+              BrandDev::BrandWebScrapeImagesParams::Action::Perform,
+              BrandDev::BrandWebScrapeImagesParams::Action::Scroll
             )
           end
 
@@ -247,6 +251,216 @@ module BrandDev
 
           sig { override.returns({ action: String, do_: Symbol }) }
           def to_hash
+          end
+        end
+
+        class Scroll < BrandDev::Internal::Type::BaseModel
+          OrHash =
+            T.type_alias do
+              T.any(
+                BrandDev::BrandWebScrapeImagesParams::Action::Scroll,
+                BrandDev::Internal::AnyHash
+              )
+            end
+
+          sig { returns(Symbol) }
+          attr_accessor :do_
+
+          # Pixels per scroll, one visible viewport, or the current scroll boundary.
+          # Defaults to viewport.
+          sig do
+            returns(
+              T.nilable(
+                T.any(
+                  Integer,
+                  BrandDev::BrandWebScrapeImagesParams::Action::Scroll::Amount::OrSymbol
+                )
+              )
+            )
+          end
+          attr_reader :amount
+
+          sig do
+            params(
+              amount:
+                T.any(
+                  Integer,
+                  BrandDev::BrandWebScrapeImagesParams::Action::Scroll::Amount::OrSymbol
+                )
+            ).void
+          end
+          attr_writer :amount
+
+          # CSS selector for the first matching scroll container. Defaults to the page.
+          sig { returns(T.nilable(String)) }
+          attr_reader :container
+
+          sig { params(container: String).void }
+          attr_writer :container
+
+          # Direction to scroll. Defaults to down.
+          sig do
+            returns(
+              T.nilable(
+                BrandDev::BrandWebScrapeImagesParams::Action::Scroll::Direction::OrSymbol
+              )
+            )
+          end
+          attr_reader :direction
+
+          sig do
+            params(
+              direction:
+                BrandDev::BrandWebScrapeImagesParams::Action::Scroll::Direction::OrSymbol
+            ).void
+          end
+          attr_writer :direction
+
+          # Maximum scroll iterations. Stops early when scrolling and scrollable extent stop
+          # changing. Defaults to 1.
+          sig { returns(T.nilable(Integer)) }
+          attr_reader :max_scrolls
+
+          sig { params(max_scrolls: Integer).void }
+          attr_writer :max_scrolls
+
+          # Scroll the page or a selected scrollable container, waiting adaptively for
+          # content and dimensions to settle after each iteration.
+          sig do
+            params(
+              amount:
+                T.any(
+                  Integer,
+                  BrandDev::BrandWebScrapeImagesParams::Action::Scroll::Amount::OrSymbol
+                ),
+              container: String,
+              direction:
+                BrandDev::BrandWebScrapeImagesParams::Action::Scroll::Direction::OrSymbol,
+              max_scrolls: Integer,
+              do_: Symbol
+            ).returns(T.attached_class)
+          end
+          def self.new(
+            # Pixels per scroll, one visible viewport, or the current scroll boundary.
+            # Defaults to viewport.
+            amount: nil,
+            # CSS selector for the first matching scroll container. Defaults to the page.
+            container: nil,
+            # Direction to scroll. Defaults to down.
+            direction: nil,
+            # Maximum scroll iterations. Stops early when scrolling and scrollable extent stop
+            # changing. Defaults to 1.
+            max_scrolls: nil,
+            do_: :scroll
+          )
+          end
+
+          sig do
+            override.returns(
+              {
+                do_: Symbol,
+                amount:
+                  T.any(
+                    Integer,
+                    BrandDev::BrandWebScrapeImagesParams::Action::Scroll::Amount::OrSymbol
+                  ),
+                container: String,
+                direction:
+                  BrandDev::BrandWebScrapeImagesParams::Action::Scroll::Direction::OrSymbol,
+                max_scrolls: Integer
+              }
+            )
+          end
+          def to_hash
+          end
+
+          # Pixels per scroll, one visible viewport, or the current scroll boundary.
+          # Defaults to viewport.
+          module Amount
+            extend BrandDev::Internal::Type::Union
+
+            Variants =
+              T.type_alias do
+                T.any(
+                  Integer,
+                  BrandDev::BrandWebScrapeImagesParams::Action::Scroll::Amount::TaggedSymbol
+                )
+              end
+
+            sig do
+              override.returns(
+                T::Array[
+                  BrandDev::BrandWebScrapeImagesParams::Action::Scroll::Amount::Variants
+                ]
+              )
+            end
+            def self.variants
+            end
+
+            TaggedSymbol =
+              T.type_alias do
+                T.all(
+                  Symbol,
+                  BrandDev::BrandWebScrapeImagesParams::Action::Scroll::Amount
+                )
+              end
+            OrSymbol = T.type_alias { T.any(Symbol, String) }
+
+            VIEWPORT =
+              T.let(
+                :viewport,
+                BrandDev::BrandWebScrapeImagesParams::Action::Scroll::Amount::TaggedSymbol
+              )
+            MAX =
+              T.let(
+                :max,
+                BrandDev::BrandWebScrapeImagesParams::Action::Scroll::Amount::TaggedSymbol
+              )
+          end
+
+          # Direction to scroll. Defaults to down.
+          module Direction
+            extend BrandDev::Internal::Type::Enum
+
+            TaggedSymbol =
+              T.type_alias do
+                T.all(
+                  Symbol,
+                  BrandDev::BrandWebScrapeImagesParams::Action::Scroll::Direction
+                )
+              end
+            OrSymbol = T.type_alias { T.any(Symbol, String) }
+
+            UP =
+              T.let(
+                :up,
+                BrandDev::BrandWebScrapeImagesParams::Action::Scroll::Direction::TaggedSymbol
+              )
+            DOWN =
+              T.let(
+                :down,
+                BrandDev::BrandWebScrapeImagesParams::Action::Scroll::Direction::TaggedSymbol
+              )
+            LEFT =
+              T.let(
+                :left,
+                BrandDev::BrandWebScrapeImagesParams::Action::Scroll::Direction::TaggedSymbol
+              )
+            RIGHT =
+              T.let(
+                :right,
+                BrandDev::BrandWebScrapeImagesParams::Action::Scroll::Direction::TaggedSymbol
+              )
+
+            sig do
+              override.returns(
+                T::Array[
+                  BrandDev::BrandWebScrapeImagesParams::Action::Scroll::Direction::TaggedSymbol
+                ]
+              )
+            end
+            def self.values
+            end
           end
         end
 
