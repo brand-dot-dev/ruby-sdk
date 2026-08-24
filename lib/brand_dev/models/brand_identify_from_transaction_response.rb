@@ -106,7 +106,9 @@ module BrandDev
         optional :links, -> { BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Links }
 
         # @!attribute logos
-        #   An array of logos associated with the brand
+        #   An array of logos associated with the brand. When a similarly shaped SVG variant
+        #   exists, it is returned ahead of its raster equivalent; otherwise relevance order
+        #   is preserved
         #
         #   @return [Array<BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Logo>, nil]
         optional :logos,
@@ -179,7 +181,7 @@ module BrandDev
         #
         #   @param links [BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Links] Important website links for the brand
         #
-        #   @param logos [Array<BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Logo>] An array of logos associated with the brand
+        #   @param logos [Array<BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand::Logo>] An array of logos associated with the brand. When a similarly shaped SVG variant
         #
         #   @param phone [String] Company phone number
         #
