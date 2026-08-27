@@ -4,6 +4,14 @@ module BrandDev
   module Models
     # @see BrandDev::Resources::Brand#retrieve_by_isin
     class BrandRetrieveByIsinResponse < BrandDev::Internal::Type::BaseModel
+      # @!attribute cache_metadata
+      #   Cache outcome for this response. Composite responses are hits only when every
+      #   cache-controlled fetch contributing to the output was a hit; age_ms is the
+      #   oldest contributing hit.
+      #
+      #   @return [BrandDev::Models::BrandRetrieveByIsinResponse::CacheMetadata]
+      required :cache_metadata, -> { BrandDev::Models::BrandRetrieveByIsinResponse::CacheMetadata }
+
       # @!attribute brand
       #   Detailed brand information
       #
@@ -16,18 +24,75 @@ module BrandDev
       #   @return [Integer, nil]
       optional :code, Integer
 
+      # @!attribute key_metadata
+      #   Metadata about the API key used for the request. Included in every response
+      #   whenever a valid API key is provided, even when the response status is not 200.
+      #
+      #   @return [BrandDev::Models::BrandRetrieveByIsinResponse::KeyMetadata, nil]
+      optional :key_metadata, -> { BrandDev::Models::BrandRetrieveByIsinResponse::KeyMetadata }
+
       # @!attribute status
       #   Status of the response, e.g., 'ok'
       #
       #   @return [String, nil]
       optional :status, String
 
-      # @!method initialize(brand: nil, code: nil, status: nil)
+      # @!method initialize(cache_metadata:, brand: nil, code: nil, key_metadata: nil, status: nil)
+      #   Some parameter documentations has been truncated, see
+      #   {BrandDev::Models::BrandRetrieveByIsinResponse} for more details.
+      #
+      #   @param cache_metadata [BrandDev::Models::BrandRetrieveByIsinResponse::CacheMetadata] Cache outcome for this response. Composite responses are hits only when every ca
+      #
       #   @param brand [BrandDev::Models::BrandRetrieveByIsinResponse::Brand] Detailed brand information
       #
       #   @param code [Integer] HTTP status code
       #
+      #   @param key_metadata [BrandDev::Models::BrandRetrieveByIsinResponse::KeyMetadata] Metadata about the API key used for the request. Included in every response when
+      #
       #   @param status [String] Status of the response, e.g., 'ok'
+
+      # @see BrandDev::Models::BrandRetrieveByIsinResponse#cache_metadata
+      class CacheMetadata < BrandDev::Internal::Type::BaseModel
+        # @!attribute age_ms
+        #   Age of the cached data in milliseconds. Zero for miss and zdr responses.
+        #
+        #   @return [Integer]
+        required :age_ms, Integer
+
+        # @!attribute status
+        #   Whether the response was served from cache, required fresh work, or honored
+        #   zero-data-retention cache bypass.
+        #
+        #   @return [Symbol, BrandDev::Models::BrandRetrieveByIsinResponse::CacheMetadata::Status]
+        required :status, enum: -> { BrandDev::Models::BrandRetrieveByIsinResponse::CacheMetadata::Status }
+
+        # @!method initialize(age_ms:, status:)
+        #   Some parameter documentations has been truncated, see
+        #   {BrandDev::Models::BrandRetrieveByIsinResponse::CacheMetadata} for more details.
+        #
+        #   Cache outcome for this response. Composite responses are hits only when every
+        #   cache-controlled fetch contributing to the output was a hit; age_ms is the
+        #   oldest contributing hit.
+        #
+        #   @param age_ms [Integer] Age of the cached data in milliseconds. Zero for miss and zdr responses.
+        #
+        #   @param status [Symbol, BrandDev::Models::BrandRetrieveByIsinResponse::CacheMetadata::Status] Whether the response was served from cache, required fresh work, or honored zero
+
+        # Whether the response was served from cache, required fresh work, or honored
+        # zero-data-retention cache bypass.
+        #
+        # @see BrandDev::Models::BrandRetrieveByIsinResponse::CacheMetadata#status
+        module Status
+          extend BrandDev::Internal::Type::Enum
+
+          HIT = :hit
+          MISS = :miss
+          ZDR = :zdr
+
+          # @!method self.values
+          #   @return [Array<Symbol>]
+        end
+      end
 
       # @see BrandDev::Models::BrandRetrieveByIsinResponse#brand
       class Brand < BrandDev::Internal::Type::BaseModel
@@ -69,6 +134,12 @@ module BrandDev
         #   @return [String, nil]
         optional :email, String
 
+        # @!attribute employees
+        #   Employee headcount information for the brand (will be null if unknown)
+        #
+        #   @return [BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Employees, nil]
+        optional :employees, -> { BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Employees }
+
         # @!attribute industries
         #   Industry classification information for the brand
         #
@@ -88,7 +159,9 @@ module BrandDev
         optional :links, -> { BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Links }
 
         # @!attribute logos
-        #   An array of logos associated with the brand
+        #   An array of logos associated with the brand. When a similarly shaped SVG variant
+        #   exists, it is returned ahead of its raster equivalent; otherwise relevance order
+        #   is preserved
         #
         #   @return [Array<BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Logo>, nil]
         optional :logos,
@@ -99,6 +172,14 @@ module BrandDev
         #
         #   @return [String, nil]
         optional :phone, String
+
+        # @!attribute primary_language
+        #   Language to force for the retrieved brand data.
+        #
+        #   @return [Symbol, BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage, nil]
+        optional :primary_language,
+                 enum: -> { BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage },
+                 nil?: true
 
         # @!attribute slogan
         #   The brand's slogan
@@ -126,7 +207,7 @@ module BrandDev
         #   @return [String, nil]
         optional :title, String
 
-        # @!method initialize(address: nil, backdrops: nil, colors: nil, description: nil, domain: nil, email: nil, industries: nil, is_nsfw: nil, links: nil, logos: nil, phone: nil, slogan: nil, socials: nil, stock: nil, title: nil)
+        # @!method initialize(address: nil, backdrops: nil, colors: nil, description: nil, domain: nil, email: nil, employees: nil, industries: nil, is_nsfw: nil, links: nil, logos: nil, phone: nil, primary_language: nil, slogan: nil, socials: nil, stock: nil, title: nil)
         #   Some parameter documentations has been truncated, see
         #   {BrandDev::Models::BrandRetrieveByIsinResponse::Brand} for more details.
         #
@@ -144,15 +225,19 @@ module BrandDev
         #
         #   @param email [String] Company email address
         #
+        #   @param employees [BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Employees] Employee headcount information for the brand (will be null if unknown)
+        #
         #   @param industries [BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Industries] Industry classification information for the brand
         #
         #   @param is_nsfw [Boolean] Indicates whether the brand content is not safe for work (NSFW)
         #
         #   @param links [BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Links] Important website links for the brand
         #
-        #   @param logos [Array<BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Logo>] An array of logos associated with the brand
+        #   @param logos [Array<BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Logo>] An array of logos associated with the brand. When a similarly shaped SVG variant
         #
         #   @param phone [String] Company phone number
+        #
+        #   @param primary_language [Symbol, BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage, nil] Language to force for the retrieved brand data.
         #
         #   @param slogan [String] The brand's slogan
         #
@@ -314,10 +399,79 @@ module BrandDev
           #   @return [String, nil]
           optional :name, String
 
-          # @!method initialize(hex: nil, name: nil)
+          # @!attribute source
+          #   Where the color was observed: 'site' colors come from the website's own theme
+          #   signals (rendered page colors, manifest, theme-color meta), 'logo' colors from
+          #   logo image pixels.
+          #
+          #   @return [Symbol, BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Color::Source, nil]
+          optional :source, enum: -> { BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Color::Source }
+
+          # @!method initialize(hex: nil, name: nil, source: nil)
+          #   Some parameter documentations has been truncated, see
+          #   {BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Color} for more details.
+          #
           #   @param hex [String] Color in hexadecimal format
           #
           #   @param name [String] Name of the color
+          #
+          #   @param source [Symbol, BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Color::Source] Where the color was observed: 'site' colors come from the website's own theme si
+
+          # Where the color was observed: 'site' colors come from the website's own theme
+          # signals (rendered page colors, manifest, theme-color meta), 'logo' colors from
+          # logo image pixels.
+          #
+          # @see BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Color#source
+          module Source
+            extend BrandDev::Internal::Type::Enum
+
+            SITE = :site
+            LOGO = :logo
+
+            # @!method self.values
+            #   @return [Array<Symbol>]
+          end
+        end
+
+        # @see BrandDev::Models::BrandRetrieveByIsinResponse::Brand#employees
+        class Employees < BrandDev::Internal::Type::BaseModel
+          # @!attribute exact
+          #   Exact employee count when a precise headcount is known
+          #
+          #   @return [Integer, nil]
+          optional :exact, Integer
+
+          # @!attribute range
+          #   Employee count range for the brand (e.g. '11 to 50')
+          #
+          #   @return [Symbol, BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Employees::Range, nil]
+          optional :range, enum: -> { BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Employees::Range }
+
+          # @!method initialize(exact: nil, range: nil)
+          #   Employee headcount information for the brand (will be null if unknown)
+          #
+          #   @param exact [Integer] Exact employee count when a precise headcount is known
+          #
+          #   @param range [Symbol, BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Employees::Range] Employee count range for the brand (e.g. '11 to 50')
+
+          # Employee count range for the brand (e.g. '11 to 50')
+          #
+          # @see BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Employees#range
+          module Range
+            extend BrandDev::Internal::Type::Enum
+
+            RANGE_1_TO_10 = :"1 to 10"
+            RANGE_11_TO_50 = :"11 to 50"
+            RANGE_51_TO_200 = :"51 to 200"
+            RANGE_201_TO_500 = :"201 to 500"
+            RANGE_501_TO_1000 = :"501 to 1000"
+            RANGE_1001_TO_5000 = :"1001 to 5000"
+            RANGE_5001_TO_10000 = :"5001 to 10000"
+            RANGE_10001 = :"10001+"
+
+            # @!method self.values
+            #   @return [Array<Symbol>]
+          end
         end
 
         # @see BrandDev::Models::BrandRetrieveByIsinResponse::Brand#industries
@@ -445,7 +599,6 @@ module BrandDev
               STREAMING_PLATFORMS_VIDEO_MUSIC_AUDIO = :"Streaming Platforms (Video, Music, Audio)"
               GAMING_INTERACTIVE_ENTERTAINMENT = :"Gaming & Interactive Entertainment"
               CREATOR_ECONOMY_INFLUENCER_PLATFORMS = :"Creator Economy & Influencer Platforms"
-              ADVERTISING_ADTECH_MEDIA_BUYING = :"Advertising, Adtech & Media Buying"
               FILM_TV_PRODUCTION_STUDIOS = :"Film, TV & Production Studios"
               EVENTS_VENUES_LIVE_ENTERTAINMENT = :"Events, Venues & Live Entertainment"
               VIRTUAL_WORLDS_METAVERSE_EXPERIENCES = :"Virtual Worlds & Metaverse Experiences"
@@ -506,6 +659,7 @@ module BrandDev
               STREETWEAR_EMERGING_LUXURY = :"Streetwear & Emerging Luxury"
               COUTURE_MADE_TO_MEASURE = :"Couture & Made-to-Measure"
               NEWS_PUBLISHING_JOURNALISM = :"News Publishing & Journalism"
+              ADVERTISING_ADTECH_MEDIA_BUYING = :"Advertising, Adtech & Media Buying"
               DIGITAL_MEDIA_CONTENT_PLATFORMS = :"Digital Media & Content Platforms"
               BROADCASTING_TV_RADIO = :"Broadcasting (TV & Radio)"
               PODCASTING_AUDIO_MEDIA = :"Podcasting & Audio Media"
@@ -803,12 +957,143 @@ module BrandDev
           end
         end
 
+        # Language to force for the retrieved brand data.
+        #
+        # @see BrandDev::Models::BrandRetrieveByIsinResponse::Brand#primary_language
+        module PrimaryLanguage
+          extend BrandDev::Internal::Type::Enum
+
+          AFRIKAANS = :afrikaans
+          ALBANIAN = :albanian
+          AMHARIC = :amharic
+          ARABIC = :arabic
+          ARMENIAN = :armenian
+          ASSAMESE = :assamese
+          AYMARA = :aymara
+          AZERI = :azeri
+          BASQUE = :basque
+          BELARUSIAN = :belarusian
+          BENGALI = :bengali
+          BOSNIAN = :bosnian
+          BULGARIAN = :bulgarian
+          BURMESE = :burmese
+          CANTONESE = :cantonese
+          CATALAN = :catalan
+          CEBUANO = :cebuano
+          CHINESE = :chinese
+          CORSICAN = :corsican
+          CROATIAN = :croatian
+          CZECH = :czech
+          DANISH = :danish
+          DUTCH = :dutch
+          ENGLISH = :english
+          ESPERANTO = :esperanto
+          ESTONIAN = :estonian
+          FARSI = :farsi
+          FIJIAN = :fijian
+          FINNISH = :finnish
+          FRENCH = :french
+          GALICIAN = :galician
+          GEORGIAN = :georgian
+          GERMAN = :german
+          GREEK = :greek
+          GUARANI = :guarani
+          GUJARATI = :gujarati
+          HAITIAN_CREOLE = :"haitian-creole"
+          HAUSA = :hausa
+          HAWAIIAN = :hawaiian
+          HEBREW = :hebrew
+          HINDI = :hindi
+          HMONG = :hmong
+          HUNGARIAN = :hungarian
+          ICELANDIC = :icelandic
+          IGBO = :igbo
+          INDONESIAN = :indonesian
+          IRISH = :irish
+          ITALIAN = :italian
+          JAPANESE = :japanese
+          JAVANESE = :javanese
+          KANNADA = :kannada
+          KAZAKH = :kazakh
+          KHMER = :khmer
+          KINYARWANDA = :kinyarwanda
+          KOREAN = :korean
+          KURDISH = :kurdish
+          KYRGYZ = :kyrgyz
+          LAO = :lao
+          LATIN = :latin
+          LATVIAN = :latvian
+          LINGALA = :lingala
+          LITHUANIAN = :lithuanian
+          LUXEMBOURGISH = :luxembourgish
+          MACEDONIAN = :macedonian
+          MALAGASY = :malagasy
+          MALAY = :malay
+          MALAYALAM = :malayalam
+          MALTESE = :maltese
+          MAORI = :maori
+          MARATHI = :marathi
+          MONGOLIAN = :mongolian
+          NEPALI = :nepali
+          NORWEGIAN = :norwegian
+          ODIA = :odia
+          OROMO = :oromo
+          PASHTO = :pashto
+          PIDGIN = :pidgin
+          POLISH = :polish
+          PORTUGUESE = :portuguese
+          PUNJABI = :punjabi
+          QUECHUA = :quechua
+          ROMANIAN = :romanian
+          RUSSIAN = :russian
+          SAMOAN = :samoan
+          SCOTTISH_GAELIC = :"scottish-gaelic"
+          SERBIAN = :serbian
+          SESOTHO = :sesotho
+          SHONA = :shona
+          SINDHI = :sindhi
+          SINHALA = :sinhala
+          SLOVAK = :slovak
+          SLOVENE = :slovene
+          SOMALI = :somali
+          SPANISH = :spanish
+          SUNDANESE = :sundanese
+          SWAHILI = :swahili
+          SWEDISH = :swedish
+          TAGALOG = :tagalog
+          TAJIK = :tajik
+          TAMIL = :tamil
+          TATAR = :tatar
+          TELUGU = :telugu
+          THAI = :thai
+          TIBETAN = :tibetan
+          TIGRINYA = :tigrinya
+          TONGAN = :tongan
+          TSWANA = :tswana
+          TURKISH = :turkish
+          TURKMEN = :turkmen
+          UKRAINIAN = :ukrainian
+          URDU = :urdu
+          UYGHUR = :uyghur
+          UZBEK = :uzbek
+          VIETNAMESE = :vietnamese
+          WELSH = :welsh
+          WOLOF = :wolof
+          XHOSA = :xhosa
+          YIDDISH = :yiddish
+          YORUBA = :yoruba
+          ZULU = :zulu
+
+          # @!method self.values
+          #   @return [Array<Symbol>]
+        end
+
         class Social < BrandDev::Internal::Type::BaseModel
           # @!attribute type
-          #   Type of social media, e.g., 'facebook', 'twitter'
+          #   Type of social media platform
           #
-          #   @return [String, nil]
-          optional :type, String
+          #   @return [Symbol, BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Social::Type, nil]
+          optional :type, enum: -> { BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Social::Type }
 
           # @!attribute url
           #   URL of the social media page
@@ -817,9 +1102,51 @@ module BrandDev
           optional :url, String
 
           # @!method initialize(type: nil, url: nil)
-          #   @param type [String] Type of social media, e.g., 'facebook', 'twitter'
+          #   @param type [Symbol, BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Social::Type] Type of social media platform
           #
           #   @param url [String] URL of the social media page
+
+          # Type of social media platform
+          #
+          # @see BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Social#type
+          module Type
+            extend BrandDev::Internal::Type::Enum
+
+            X = :x
+            FACEBOOK = :facebook
+            INSTAGRAM = :instagram
+            LINKEDIN = :linkedin
+            YOUTUBE = :youtube
+            PINTEREST = :pinterest
+            TIKTOK = :tiktok
+            DRIBBBLE = :dribbble
+            GITHUB = :github
+            BEHANCE = :behance
+            SNAPCHAT = :snapchat
+            WHATSAPP = :whatsapp
+            TELEGRAM = :telegram
+            LINE = :line
+            DISCORD = :discord
+            TWITCH = :twitch
+            VIMEO = :vimeo
+            IMDB = :imdb
+            TUMBLR = :tumblr
+            FLICKR = :flickr
+            GIPHY = :giphy
+            MEDIUM = :medium
+            SPOTIFY = :spotify
+            SOUNDCLOUD = :soundcloud
+            TRIPADVISOR = :tripadvisor
+            YELP = :yelp
+            PRODUCTHUNT = :producthunt
+            REDDIT = :reddit
+            CRUNCHBASE = :crunchbase
+            APPSTORE = :appstore
+            PLAYSTORE = :playstore
+
+            # @!method self.values
+            #   @return [Array<Symbol>]
+          end
         end
 
         # @see BrandDev::Models::BrandRetrieveByIsinResponse::Brand#stock
@@ -844,6 +1171,29 @@ module BrandDev
           #
           #   @param ticker [String] Stock ticker symbol
         end
+      end
+
+      # @see BrandDev::Models::BrandRetrieveByIsinResponse#key_metadata
+      class KeyMetadata < BrandDev::Internal::Type::BaseModel
+        # @!attribute credits_consumed
+        #   The number of credits consumed by this request.
+        #
+        #   @return [Integer]
+        required :credits_consumed, Integer
+
+        # @!attribute credits_remaining
+        #   The number of credits remaining for your organization after this request.
+        #
+        #   @return [Integer]
+        required :credits_remaining, Integer
+
+        # @!method initialize(credits_consumed:, credits_remaining:)
+        #   Metadata about the API key used for the request. Included in every response
+        #   whenever a valid API key is provided, even when the response status is not 200.
+        #
+        #   @param credits_consumed [Integer] The number of credits consumed by this request.
+        #
+        #   @param credits_remaining [Integer] The number of credits remaining for your organization after this request.
       end
     end
   end

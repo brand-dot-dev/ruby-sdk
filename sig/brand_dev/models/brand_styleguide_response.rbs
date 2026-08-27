@@ -2,13 +2,17 @@ module BrandDev
   module Models
     type brand_styleguide_response =
       {
+        cache_metadata: BrandDev::Models::BrandStyleguideResponse::CacheMetadata,
         code: Integer,
         domain: String,
+        key_metadata: BrandDev::Models::BrandStyleguideResponse::KeyMetadata,
         status: String,
         styleguide: BrandDev::Models::BrandStyleguideResponse::Styleguide
       }
 
     class BrandStyleguideResponse < BrandDev::Internal::Type::BaseModel
+      attr_accessor cache_metadata: BrandDev::Models::BrandStyleguideResponse::CacheMetadata
+
       attr_reader code: Integer?
 
       def code=: (Integer) -> Integer
@@ -16,6 +20,12 @@ module BrandDev
       attr_reader domain: String?
 
       def domain=: (String) -> String
+
+      attr_reader key_metadata: BrandDev::Models::BrandStyleguideResponse::KeyMetadata?
+
+      def key_metadata=: (
+        BrandDev::Models::BrandStyleguideResponse::KeyMetadata
+      ) -> BrandDev::Models::BrandStyleguideResponse::KeyMetadata
 
       attr_reader status: String?
 
@@ -28,24 +38,82 @@ module BrandDev
       ) -> BrandDev::Models::BrandStyleguideResponse::Styleguide
 
       def initialize: (
+        cache_metadata: BrandDev::Models::BrandStyleguideResponse::CacheMetadata,
         ?code: Integer,
         ?domain: String,
+        ?key_metadata: BrandDev::Models::BrandStyleguideResponse::KeyMetadata,
         ?status: String,
         ?styleguide: BrandDev::Models::BrandStyleguideResponse::Styleguide
       ) -> void
 
       def to_hash: -> {
+        cache_metadata: BrandDev::Models::BrandStyleguideResponse::CacheMetadata,
         code: Integer,
         domain: String,
+        key_metadata: BrandDev::Models::BrandStyleguideResponse::KeyMetadata,
         status: String,
         styleguide: BrandDev::Models::BrandStyleguideResponse::Styleguide
       }
+
+      type cache_metadata =
+        {
+          age_ms: Integer,
+          status: BrandDev::Models::BrandStyleguideResponse::CacheMetadata::status
+        }
+
+      class CacheMetadata < BrandDev::Internal::Type::BaseModel
+        attr_accessor age_ms: Integer
+
+        attr_accessor status: BrandDev::Models::BrandStyleguideResponse::CacheMetadata::status
+
+        def initialize: (
+          age_ms: Integer,
+          status: BrandDev::Models::BrandStyleguideResponse::CacheMetadata::status
+        ) -> void
+
+        def to_hash: -> {
+          age_ms: Integer,
+          status: BrandDev::Models::BrandStyleguideResponse::CacheMetadata::status
+        }
+
+        type status = :hit | :miss | :zdr
+
+        module Status
+          extend BrandDev::Internal::Type::Enum
+
+          HIT: :hit
+          MISS: :miss
+          ZDR: :zdr
+
+          def self?.values: -> ::Array[BrandDev::Models::BrandStyleguideResponse::CacheMetadata::status]
+        end
+      end
+
+      type key_metadata =
+        { credits_consumed: Integer, credits_remaining: Integer }
+
+      class KeyMetadata < BrandDev::Internal::Type::BaseModel
+        attr_accessor credits_consumed: Integer
+
+        attr_accessor credits_remaining: Integer
+
+        def initialize: (
+          credits_consumed: Integer,
+          credits_remaining: Integer
+        ) -> void
+
+        def to_hash: -> {
+          credits_consumed: Integer,
+          credits_remaining: Integer
+        }
+      end
 
       type styleguide =
         {
           colors: BrandDev::Models::BrandStyleguideResponse::Styleguide::Colors,
           components: BrandDev::Models::BrandStyleguideResponse::Styleguide::Components,
           element_spacing: BrandDev::Models::BrandStyleguideResponse::Styleguide::ElementSpacing,
+          font_links: ::Hash[Symbol, BrandDev::Models::BrandStyleguideResponse::Styleguide::FontLink],
           mode: BrandDev::Models::BrandStyleguideResponse::Styleguide::mode,
           shadows: BrandDev::Models::BrandStyleguideResponse::Styleguide::Shadows,
           typography: BrandDev::Models::BrandStyleguideResponse::Styleguide::Typography
@@ -58,6 +126,8 @@ module BrandDev
 
         attr_accessor element_spacing: BrandDev::Models::BrandStyleguideResponse::Styleguide::ElementSpacing
 
+        attr_accessor font_links: ::Hash[Symbol, BrandDev::Models::BrandStyleguideResponse::Styleguide::FontLink]
+
         attr_accessor mode: BrandDev::Models::BrandStyleguideResponse::Styleguide::mode
 
         attr_accessor shadows: BrandDev::Models::BrandStyleguideResponse::Styleguide::Shadows
@@ -68,6 +138,7 @@ module BrandDev
           colors: BrandDev::Models::BrandStyleguideResponse::Styleguide::Colors,
           components: BrandDev::Models::BrandStyleguideResponse::Styleguide::Components,
           element_spacing: BrandDev::Models::BrandStyleguideResponse::Styleguide::ElementSpacing,
+          font_links: ::Hash[Symbol, BrandDev::Models::BrandStyleguideResponse::Styleguide::FontLink],
           mode: BrandDev::Models::BrandStyleguideResponse::Styleguide::mode,
           shadows: BrandDev::Models::BrandStyleguideResponse::Styleguide::Shadows,
           typography: BrandDev::Models::BrandStyleguideResponse::Styleguide::Typography
@@ -77,6 +148,7 @@ module BrandDev
           colors: BrandDev::Models::BrandStyleguideResponse::Styleguide::Colors,
           components: BrandDev::Models::BrandStyleguideResponse::Styleguide::Components,
           element_spacing: BrandDev::Models::BrandStyleguideResponse::Styleguide::ElementSpacing,
+          font_links: ::Hash[Symbol, BrandDev::Models::BrandStyleguideResponse::Styleguide::FontLink],
           mode: BrandDev::Models::BrandStyleguideResponse::Styleguide::mode,
           shadows: BrandDev::Models::BrandStyleguideResponse::Styleguide::Shadows,
           typography: BrandDev::Models::BrandStyleguideResponse::Styleguide::Typography
@@ -560,6 +632,53 @@ module BrandDev
             xl: String,
             xs: String
           }
+        end
+
+        type font_link =
+          {
+            files: ::Hash[Symbol, String],
+            type: BrandDev::Models::BrandStyleguideResponse::Styleguide::FontLink::type_,
+            category: String,
+            display_name: String
+          }
+
+        class FontLink < BrandDev::Internal::Type::BaseModel
+          attr_accessor files: ::Hash[Symbol, String]
+
+          attr_accessor type: BrandDev::Models::BrandStyleguideResponse::Styleguide::FontLink::type_
+
+          attr_reader category: String?
+
+          def category=: (String) -> String
+
+          attr_reader display_name: String?
+
+          def display_name=: (String) -> String
+
+          def initialize: (
+            files: ::Hash[Symbol, String],
+            type: BrandDev::Models::BrandStyleguideResponse::Styleguide::FontLink::type_,
+            ?category: String,
+            ?display_name: String
+          ) -> void
+
+          def to_hash: -> {
+            files: ::Hash[Symbol, String],
+            type: BrandDev::Models::BrandStyleguideResponse::Styleguide::FontLink::type_,
+            category: String,
+            display_name: String
+          }
+
+          type type_ = :google | :custom
+
+          module Type
+            extend BrandDev::Internal::Type::Enum
+
+            GOOGLE: :google
+            CUSTOM: :custom
+
+            def self?.values: -> ::Array[BrandDev::Models::BrandStyleguideResponse::Styleguide::FontLink::type_]
+          end
         end
 
         type mode = :light | :dark

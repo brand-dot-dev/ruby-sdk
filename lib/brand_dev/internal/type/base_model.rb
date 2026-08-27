@@ -440,9 +440,9 @@ module BrandDev
         # @example
         #   # `brand_retrieve_response` is a `BrandDev::Models::BrandRetrieveResponse`
         #   brand_retrieve_response => {
+        #     cache_metadata: cache_metadata,
         #     brand: brand,
-        #     code: code,
-        #     status: status
+        #     code: code
         #   }
         def deconstruct_keys(keys)
           (keys || self.class.known_fields.keys)

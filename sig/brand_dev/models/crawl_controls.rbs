@@ -1,0 +1,114 @@
+module BrandDev
+  module Models
+    type crawl_controls =
+      {
+        follow_subdomains: bool,
+        max_depth: Integer?,
+        max_pages: Integer,
+        source: BrandDev::Models::CrawlControls::source,
+        url_pattern: String?
+      }
+
+    class CrawlControls < BrandDev::Internal::Type::BaseModel
+      attr_accessor follow_subdomains: bool
+
+      attr_accessor max_depth: Integer?
+
+      attr_accessor max_pages: Integer
+
+      attr_accessor source: BrandDev::Models::CrawlControls::source
+
+      attr_accessor url_pattern: String?
+
+      def initialize: (
+        follow_subdomains: bool,
+        max_depth: Integer?,
+        max_pages: Integer,
+        source: BrandDev::Models::CrawlControls::source,
+        url_pattern: String?
+      ) -> void
+
+      def to_hash: -> {
+        follow_subdomains: bool,
+        max_depth: Integer?,
+        max_pages: Integer,
+        source: BrandDev::Models::CrawlControls::source,
+        url_pattern: String?
+      }
+
+      type source =
+        BrandDev::CrawlControls::Source::StartURL
+        | BrandDev::CrawlControls::Source::Sitemap
+
+      module Source
+        extend BrandDev::Internal::Type::Union
+
+        type start_url =
+          {
+            type: BrandDev::Models::CrawlControls::Source::StartURL::type_,
+            url: String
+          }
+
+        class StartURL < BrandDev::Internal::Type::BaseModel
+          attr_accessor type: BrandDev::Models::CrawlControls::Source::StartURL::type_
+
+          attr_accessor url: String
+
+          def initialize: (
+            type: BrandDev::Models::CrawlControls::Source::StartURL::type_,
+            url: String
+          ) -> void
+
+          def to_hash: -> {
+            type: BrandDev::Models::CrawlControls::Source::StartURL::type_,
+            url: String
+          }
+
+          type type_ = :start_url
+
+          module Type
+            extend BrandDev::Internal::Type::Enum
+
+            START_URL: :start_url
+
+            def self?.values: -> ::Array[BrandDev::Models::CrawlControls::Source::StartURL::type_]
+          end
+        end
+
+        type sitemap =
+          {
+            domain: String,
+            type: BrandDev::Models::CrawlControls::Source::Sitemap::type_
+          }
+
+        class Sitemap < BrandDev::Internal::Type::BaseModel
+          attr_accessor domain: String
+
+          attr_accessor type: BrandDev::Models::CrawlControls::Source::Sitemap::type_
+
+          def initialize: (
+            domain: String,
+            type: BrandDev::Models::CrawlControls::Source::Sitemap::type_
+          ) -> void
+
+          def to_hash: -> {
+            domain: String,
+            type: BrandDev::Models::CrawlControls::Source::Sitemap::type_
+          }
+
+          type type_ = :sitemap
+
+          module Type
+            extend BrandDev::Internal::Type::Enum
+
+            SITEMAP: :sitemap
+
+            def self?.values: -> ::Array[BrandDev::Models::CrawlControls::Source::Sitemap::type_]
+          end
+        end
+
+        def self?.variants: -> ::Array[BrandDev::Models::CrawlControls::source]
+      end
+    end
+  end
+end

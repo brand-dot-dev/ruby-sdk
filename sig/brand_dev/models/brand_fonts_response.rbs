@@ -2,13 +2,18 @@ module BrandDev
   module Models
     type brand_fonts_response =
       {
+        cache_metadata: BrandDev::Models::BrandFontsResponse::CacheMetadata,
         code: Integer,
         domain: String,
         fonts: ::Array[BrandDev::Models::BrandFontsResponse::Font],
-        status: String
+        status: String,
+        font_links: ::Hash[Symbol, BrandDev::Models::BrandFontsResponse::FontLink],
+        key_metadata: BrandDev::Models::BrandFontsResponse::KeyMetadata
       }
 
     class BrandFontsResponse < BrandDev::Internal::Type::BaseModel
+      attr_accessor cache_metadata: BrandDev::Models::BrandFontsResponse::CacheMetadata
+
       attr_accessor code: Integer
 
       attr_accessor domain: String
@@ -17,19 +22,71 @@ module BrandDev
 
       attr_accessor status: String
 
+      attr_reader font_links: ::Hash[Symbol, BrandDev::Models::BrandFontsResponse::FontLink]?
+
+      def font_links=: (
+        ::Hash[Symbol, BrandDev::Models::BrandFontsResponse::FontLink]
+      ) -> ::Hash[Symbol, BrandDev::Models::BrandFontsResponse::FontLink]
+
+      attr_reader key_metadata: BrandDev::Models::BrandFontsResponse::KeyMetadata?
+
+      def key_metadata=: (
+        BrandDev::Models::BrandFontsResponse::KeyMetadata
+      ) -> BrandDev::Models::BrandFontsResponse::KeyMetadata
+
       def initialize: (
+        cache_metadata: BrandDev::Models::BrandFontsResponse::CacheMetadata,
         code: Integer,
         domain: String,
         fonts: ::Array[BrandDev::Models::BrandFontsResponse::Font],
-        status: String
+        status: String,
+        ?font_links: ::Hash[Symbol, BrandDev::Models::BrandFontsResponse::FontLink],
+        ?key_metadata: BrandDev::Models::BrandFontsResponse::KeyMetadata
       ) -> void
 
       def to_hash: -> {
+        cache_metadata: BrandDev::Models::BrandFontsResponse::CacheMetadata,
         code: Integer,
         domain: String,
         fonts: ::Array[BrandDev::Models::BrandFontsResponse::Font],
-        status: String
+        status: String,
+        font_links: ::Hash[Symbol, BrandDev::Models::BrandFontsResponse::FontLink],
+        key_metadata: BrandDev::Models::BrandFontsResponse::KeyMetadata
       }
+
+      type cache_metadata =
+        {
+          age_ms: Integer,
+          status: BrandDev::Models::BrandFontsResponse::CacheMetadata::status
+        }
+
+      class CacheMetadata < BrandDev::Internal::Type::BaseModel
+        attr_accessor age_ms: Integer
+
+        attr_accessor status: BrandDev::Models::BrandFontsResponse::CacheMetadata::status
+
+        def initialize: (
+          age_ms: Integer,
+          status: BrandDev::Models::BrandFontsResponse::CacheMetadata::status
+        ) -> void
+
+        def to_hash: -> {
+          age_ms: Integer,
+          status: BrandDev::Models::BrandFontsResponse::CacheMetadata::status
+        }
+
+        type status = :hit | :miss | :zdr
+
+        module Status
+          extend BrandDev::Internal::Type::Enum
+
+          HIT: :hit
+          MISS: :miss
+          ZDR: :zdr
+
+          def self?.values: -> ::Array[BrandDev::Models::BrandFontsResponse::CacheMetadata::status]
+        end
+      end
 
       type font =
         {
@@ -75,6 +132,72 @@ module BrandDev
           percent_elements: Float,
           percent_words: Float,
           uses: ::Array[String]
+        }
+      end
+
+      type font_link =
+        {
+          files: ::Hash[Symbol, String],
+          type: BrandDev::Models::BrandFontsResponse::FontLink::type_,
+          category: String,
+          display_name: String
+        }
+
+      class FontLink < BrandDev::Internal::Type::BaseModel
+        attr_accessor files: ::Hash[Symbol, String]
+
+        attr_accessor type: BrandDev::Models::BrandFontsResponse::FontLink::type_
+
+        attr_reader category: String?
+
+        def category=: (String) -> String
+
+        attr_reader display_name: String?
+
+        def display_name=: (String) -> String
+
+        def initialize: (
+          files: ::Hash[Symbol, String],
+          type: BrandDev::Models::BrandFontsResponse::FontLink::type_,
+          ?category: String,
+          ?display_name: String
+        ) -> void
+
+        def to_hash: -> {
+          files: ::Hash[Symbol, String],
+          type: BrandDev::Models::BrandFontsResponse::FontLink::type_,
+          category: String,
+          display_name: String
+        }
+
+        type type_ = :google | :custom
+
+        module Type
+          extend BrandDev::Internal::Type::Enum
+
+          GOOGLE: :google
+          CUSTOM: :custom
+
+          def self?.values: -> ::Array[BrandDev::Models::BrandFontsResponse::FontLink::type_]
+        end
+      end
+
+      type key_metadata =
+        { credits_consumed: Integer, credits_remaining: Integer }
+
+      class KeyMetadata < BrandDev::Internal::Type::BaseModel
+        attr_accessor credits_consumed: Integer
+
+        attr_accessor credits_remaining: Integer
+
+        def initialize: (
+          credits_consumed: Integer,
+          credits_remaining: Integer
+        ) -> void
+
+        def to_hash: -> {
+          credits_consumed: Integer,
+          credits_remaining: Integer
         }
       end
     end

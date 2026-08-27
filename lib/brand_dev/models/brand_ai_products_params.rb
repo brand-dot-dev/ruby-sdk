@@ -30,28 +30,47 @@ module BrandDev
           #   @return [String]
           required :domain, String
 
+          # @!attribute max_age_ms
+          #   Return a cached result if a prior scrape for the same parameters exists and is
+          #   younger than this many milliseconds. Defaults to 7 days (604800000 ms) when
+          #   omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
+          #
+          #   @return [Integer, nil]
+          optional :max_age_ms, Integer, api_name: :maxAgeMs
+
           # @!attribute max_products
           #   Maximum number of products to extract.
           #
           #   @return [Integer, nil]
           optional :max_products, Integer, api_name: :maxProducts
 
+          # @!attribute tags
+          #   Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+          #
+          #   @return [Array<String>, nil]
+          optional :tags, BrandDev::Internal::Type::ArrayOf[String]
+
           # @!attribute timeout_ms
-          #   Optional timeout in milliseconds for the request. Maximum allowed value is
-          #   300000ms (5 minutes).
+          #   Optional timeout in milliseconds for the request. If the request takes longer
+          #   than this value, it will be aborted with a 408 status code. Maximum allowed
+          #   value is 300000ms (5 minutes).
           #
           #   @return [Integer, nil]
           optional :timeout_ms, Integer, api_name: :timeoutMS
 
-          # @!method initialize(domain:, max_products: nil, timeout_ms: nil)
+          # @!method initialize(domain:, max_age_ms: nil, max_products: nil, tags: nil, timeout_ms: nil)
           #   Some parameter documentations has been truncated, see
           #   {BrandDev::Models::BrandAIProductsParams::Body::ByDomain} for more details.
           #
           #   @param domain [String] The domain name to analyze.
           #
+          #   @param max_age_ms [Integer] Return a cached result if a prior scrape for the same parameters exists and is y
+          #
           #   @param max_products [Integer] Maximum number of products to extract.
           #
-          #   @param timeout_ms [Integer] Optional timeout in milliseconds for the request. Maximum allowed value is 30000
+          #   @param tags [Array<String>] Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+          #
+          #   @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
         end
 
         class ByDirectURL < BrandDev::Internal::Type::BaseModel
@@ -62,28 +81,47 @@ module BrandDev
           #   @return [String]
           required :direct_url, String, api_name: :directUrl
 
+          # @!attribute max_age_ms
+          #   Return a cached result if a prior scrape for the same parameters exists and is
+          #   younger than this many milliseconds. Defaults to 7 days (604800000 ms) when
+          #   omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
+          #
+          #   @return [Integer, nil]
+          optional :max_age_ms, Integer, api_name: :maxAgeMs
+
           # @!attribute max_products
           #   Maximum number of products to extract.
           #
           #   @return [Integer, nil]
           optional :max_products, Integer, api_name: :maxProducts
 
+          # @!attribute tags
+          #   Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+          #
+          #   @return [Array<String>, nil]
+          optional :tags, BrandDev::Internal::Type::ArrayOf[String]
+
           # @!attribute timeout_ms
-          #   Optional timeout in milliseconds for the request. Maximum allowed value is
-          #   300000ms (5 minutes).
+          #   Optional timeout in milliseconds for the request. If the request takes longer
+          #   than this value, it will be aborted with a 408 status code. Maximum allowed
+          #   value is 300000ms (5 minutes).
           #
           #   @return [Integer, nil]
           optional :timeout_ms, Integer, api_name: :timeoutMS
 
-          # @!method initialize(direct_url:, max_products: nil, timeout_ms: nil)
+          # @!method initialize(direct_url:, max_age_ms: nil, max_products: nil, tags: nil, timeout_ms: nil)
           #   Some parameter documentations has been truncated, see
           #   {BrandDev::Models::BrandAIProductsParams::Body::ByDirectURL} for more details.
           #
           #   @param direct_url [String] A specific URL to use directly as the starting point for extraction without doma
           #
+          #   @param max_age_ms [Integer] Return a cached result if a prior scrape for the same parameters exists and is y
+          #
           #   @param max_products [Integer] Maximum number of products to extract.
           #
-          #   @param timeout_ms [Integer] Optional timeout in milliseconds for the request. Maximum allowed value is 30000
+          #   @param tags [Array<String>] Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+          #
+          #   @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
         end
 
         # @!method self.variants

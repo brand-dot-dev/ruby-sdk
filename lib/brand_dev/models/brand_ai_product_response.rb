@@ -4,11 +4,26 @@ module BrandDev
   module Models
     # @see BrandDev::Resources::Brand#ai_product
     class BrandAIProductResponse < BrandDev::Internal::Type::BaseModel
+      # @!attribute cache_metadata
+      #   Cache outcome for this response. Composite responses are hits only when every
+      #   cache-controlled fetch contributing to the output was a hit; age_ms is the
+      #   oldest contributing hit.
+      #
+      #   @return [BrandDev::Models::BrandAIProductResponse::CacheMetadata]
+      required :cache_metadata, -> { BrandDev::Models::BrandAIProductResponse::CacheMetadata }
+
       # @!attribute is_product_page
       #   Whether the given URL is a product detail page
       #
       #   @return [Boolean, nil]
       optional :is_product_page, BrandDev::Internal::Type::Boolean
+
+      # @!attribute key_metadata
+      #   Metadata about the API key used for the request. Included in every response
+      #   whenever a valid API key is provided, even when the response status is not 200.
+      #
+      #   @return [BrandDev::Models::BrandAIProductResponse::KeyMetadata, nil]
+      optional :key_metadata, -> { BrandDev::Models::BrandAIProductResponse::KeyMetadata }
 
       # @!attribute platform
       #   The detected ecommerce platform, or null if not a product page
@@ -22,12 +37,85 @@ module BrandDev
       #   @return [BrandDev::Models::BrandAIProductResponse::Product, nil]
       optional :product, -> { BrandDev::Models::BrandAIProductResponse::Product }, nil?: true
 
-      # @!method initialize(is_product_page: nil, platform: nil, product: nil)
+      # @!method initialize(cache_metadata:, is_product_page: nil, key_metadata: nil, platform: nil, product: nil)
+      #   Some parameter documentations has been truncated, see
+      #   {BrandDev::Models::BrandAIProductResponse} for more details.
+      #
+      #   @param cache_metadata [BrandDev::Models::BrandAIProductResponse::CacheMetadata] Cache outcome for this response. Composite responses are hits only when every ca
+      #
       #   @param is_product_page [Boolean] Whether the given URL is a product detail page
+      #
+      #   @param key_metadata [BrandDev::Models::BrandAIProductResponse::KeyMetadata] Metadata about the API key used for the request. Included in every response when
       #
       #   @param platform [Symbol, BrandDev::Models::BrandAIProductResponse::Platform, nil] The detected ecommerce platform, or null if not a product page
       #
       #   @param product [BrandDev::Models::BrandAIProductResponse::Product, nil] The extracted product data, or null if not a product page
+
+      # @see BrandDev::Models::BrandAIProductResponse#cache_metadata
+      class CacheMetadata < BrandDev::Internal::Type::BaseModel
+        # @!attribute age_ms
+        #   Age of the cached data in milliseconds. Zero for miss and zdr responses.
+        #
+        #   @return [Integer]
+        required :age_ms, Integer
+
+        # @!attribute status
+        #   Whether the response was served from cache, required fresh work, or honored
+        #   zero-data-retention cache bypass.
+        #
+        #   @return [Symbol, BrandDev::Models::BrandAIProductResponse::CacheMetadata::Status]
+        required :status, enum: -> { BrandDev::Models::BrandAIProductResponse::CacheMetadata::Status }
+
+        # @!method initialize(age_ms:, status:)
+        #   Some parameter documentations has been truncated, see
+        #   {BrandDev::Models::BrandAIProductResponse::CacheMetadata} for more details.
+        #
+        #   Cache outcome for this response. Composite responses are hits only when every
+        #   cache-controlled fetch contributing to the output was a hit; age_ms is the
+        #   oldest contributing hit.
+        #
+        #   @param age_ms [Integer] Age of the cached data in milliseconds. Zero for miss and zdr responses.
+        #
+        #   @param status [Symbol, BrandDev::Models::BrandAIProductResponse::CacheMetadata::Status] Whether the response was served from cache, required fresh work, or honored zero
+
+        # Whether the response was served from cache, required fresh work, or honored
+        # zero-data-retention cache bypass.
+        #
+        # @see BrandDev::Models::BrandAIProductResponse::CacheMetadata#status
+        module Status
+          extend BrandDev::Internal::Type::Enum
+
+          HIT = :hit
+          MISS = :miss
+          ZDR = :zdr
+
+          # @!method self.values
+          #   @return [Array<Symbol>]
+        end
+      end
+
+      # @see BrandDev::Models::BrandAIProductResponse#key_metadata
+      class KeyMetadata < BrandDev::Internal::Type::BaseModel
+        # @!attribute credits_consumed
+        #   The number of credits consumed by this request.
+        #
+        #   @return [Integer]
+        required :credits_consumed, Integer
+
+        # @!attribute credits_remaining
+        #   The number of credits remaining for your organization after this request.
+        #
+        #   @return [Integer]
+        required :credits_remaining, Integer
+
+        # @!method initialize(credits_consumed:, credits_remaining:)
+        #   Metadata about the API key used for the request. Included in every response
+        #   whenever a valid API key is provided, even when the response status is not 200.
+        #
+        #   @param credits_consumed [Integer] The number of credits consumed by this request.
+        #
+        #   @param credits_remaining [Integer] The number of credits remaining for your organization after this request.
+      end
 
       # The detected ecommerce platform, or null if not a product page
       #
@@ -70,6 +158,12 @@ module BrandDev
         #   @return [String]
         required :name, String
 
+        # @!attribute sku
+        #   Stock Keeping Unit (product identifier). Null if no identifier is found.
+        #
+        #   @return [String, nil]
+        required :sku, String, nil?: true
+
         # @!attribute tags
         #   Tags associated with the product
         #
@@ -81,6 +175,14 @@ module BrandDev
         #
         #   @return [Array<String>]
         required :target_audience, BrandDev::Internal::Type::ArrayOf[String]
+
+        # @!attribute availability
+        #   Normalized stock or ordering availability
+        #
+        #   @return [Symbol, BrandDev::Models::BrandAIProductResponse::Product::Availability, nil]
+        optional :availability,
+                 enum: -> { BrandDev::Models::BrandAIProductResponse::Product::Availability },
+                 nil?: true
 
         # @!attribute billing_frequency
         #   Billing frequency for the product
@@ -102,6 +204,12 @@ module BrandDev
         #   @return [String, nil]
         optional :currency, String, nil?: true
 
+        # @!attribute dimensions
+        #   Dimension statements shown for the product, preserving labels, values, and units
+        #
+        #   @return [Array<String>, nil]
+        optional :dimensions, BrandDev::Internal::Type::ArrayOf[String]
+
         # @!attribute image_url
         #   URL to the product image
         #
@@ -122,13 +230,22 @@ module BrandDev
                  enum: -> { BrandDev::Models::BrandAIProductResponse::Product::PricingModel },
                  nil?: true
 
+        # @!attribute regular_price
+        #   Original or regular price before a displayed discount
+        #
+        #   @return [Float, nil]
+        optional :regular_price, Float, nil?: true
+
         # @!attribute url
         #   URL to the product page
         #
         #   @return [String, nil]
         optional :url, String, nil?: true
 
-        # @!method initialize(description:, features:, images:, name:, tags:, target_audience:, billing_frequency: nil, category: nil, currency: nil, image_url: nil, price: nil, pricing_model: nil, url: nil)
+        # @!method initialize(description:, features:, images:, name:, sku:, tags:, target_audience:, availability: nil, billing_frequency: nil, category: nil, currency: nil, dimensions: nil, image_url: nil, price: nil, pricing_model: nil, regular_price: nil, url: nil)
+        #   Some parameter documentations has been truncated, see
+        #   {BrandDev::Models::BrandAIProductResponse::Product} for more details.
+        #
         #   The extracted product data, or null if not a product page
         #
         #   @param description [String] Description of the product
@@ -139,9 +256,13 @@ module BrandDev
         #
         #   @param name [String] Name of the product
         #
+        #   @param sku [String, nil] Stock Keeping Unit (product identifier). Null if no identifier is found.
+        #
         #   @param tags [Array<String>] Tags associated with the product
         #
         #   @param target_audience [Array<String>] Target audience for the product (array of strings)
+        #
+        #   @param availability [Symbol, BrandDev::Models::BrandAIProductResponse::Product::Availability, nil] Normalized stock or ordering availability
         #
         #   @param billing_frequency [Symbol, BrandDev::Models::BrandAIProductResponse::Product::BillingFrequency, nil] Billing frequency for the product
         #
@@ -149,13 +270,35 @@ module BrandDev
         #
         #   @param currency [String, nil] Currency code for the price (e.g., USD, EUR)
         #
+        #   @param dimensions [Array<String>] Dimension statements shown for the product, preserving labels, values, and units
+        #
         #   @param image_url [String, nil] URL to the product image
         #
         #   @param price [Float, nil] Price of the product
         #
         #   @param pricing_model [Symbol, BrandDev::Models::BrandAIProductResponse::Product::PricingModel, nil] Pricing model for the product
         #
+        #   @param regular_price [Float, nil] Original or regular price before a displayed discount
+        #
         #   @param url [String, nil] URL to the product page
+
+        # Normalized stock or ordering availability
+        #
+        # @see BrandDev::Models::BrandAIProductResponse::Product#availability
+        module Availability
+          extend BrandDev::Internal::Type::Enum
+
+          IN_STOCK = :in_stock
+          OUT_OF_STOCK = :out_of_stock
+          LIMITED_AVAILABILITY = :limited_availability
+          PREORDER = :preorder
+          BACKORDER = :backorder
+          MADE_TO_ORDER = :made_to_order
+          DISCONTINUED = :discontinued
+
+          # @!method self.values
+          #   @return [Array<Symbol>]
+        end
 
         # Billing frequency for the product
         #

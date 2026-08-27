@@ -20,6 +20,13 @@ module BrandDev
       sig { returns(String) }
       attr_accessor :email
 
+      # Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+      sig { returns(T.nilable(T::Array[String])) }
+      attr_reader :tags
+
+      sig { params(tags: T::Array[String]).void }
+      attr_writer :tags
+
       # Optional timeout in milliseconds for the request. If the request takes longer
       # than this value, it will be aborted with a 408 status code. Maximum allowed
       # value is 300000ms (5 minutes).
@@ -32,6 +39,7 @@ module BrandDev
       sig do
         params(
           email: String,
+          tags: T::Array[String],
           timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(T.attached_class)
@@ -41,6 +49,8 @@ module BrandDev
         # email. Free email providers (gmail.com, yahoo.com, etc.) and disposable email
         # addresses are not allowed.
         email:,
+        # Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+        tags: nil,
         # Optional timeout in milliseconds for the request. If the request takes longer
         # than this value, it will be aborted with a 408 status code. Maximum allowed
         # value is 300000ms (5 minutes).
@@ -53,6 +63,7 @@ module BrandDev
         override.returns(
           {
             email: String,
+            tags: T::Array[String],
             timeout_ms: Integer,
             request_options: BrandDev::RequestOptions
           }

@@ -19,8 +19,8 @@ module BrandDev
       sig { returns(String) }
       attr_accessor :name
 
-      # Optional country code (GL parameter) to specify the country. This affects the
-      # geographic location used for search queries.
+      # Two-letter ISO 3166-1 alpha-2 country code (GL parameter) used to localize
+      # search.
       sig do
         returns(
           T.nilable(BrandDev::BrandRetrieveByNameParams::CountryGl::OrSymbol)
@@ -35,7 +35,7 @@ module BrandDev
       end
       attr_writer :country_gl
 
-      # Optional parameter to force the language of the retrieved brand data.
+      # Language to force for the retrieved brand data.
       sig do
         returns(
           T.nilable(
@@ -43,15 +43,14 @@ module BrandDev
           )
         )
       end
-      attr_reader :force_language
+      attr_accessor :force_language
 
-      sig do
-        params(
-          force_language:
-            BrandDev::BrandRetrieveByNameParams::ForceLanguage::OrSymbol
-        ).void
-      end
-      attr_writer :force_language
+      # Maximum age in milliseconds for cached brand data before the API performs a hard
+      # refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
+      # are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
+      # year.
+      sig { returns(T.nilable(Integer)) }
+      attr_accessor :max_age_ms
 
       # Optional parameter to optimize the API call for maximum speed. When set to true,
       # the API will skip time-consuming operations for faster response at the cost of
@@ -61,6 +60,15 @@ module BrandDev
 
       sig { params(max_speed: T::Boolean).void }
       attr_writer :max_speed
+
+      # Optional comma-separated caller-defined tags for tracking this request. Tags are
+      # recorded on the request's usage log and can be used to filter usage on the
+      # dashboard usage page. Up to 20 tags, each 1-50 characters.
+      sig { returns(T.nilable(T::Array[String])) }
+      attr_reader :tags
+
+      sig { params(tags: T::Array[String]).void }
+      attr_writer :tags
 
       # Optional timeout in milliseconds for the request. If the request takes longer
       # than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -76,8 +84,12 @@ module BrandDev
           name: String,
           country_gl: BrandDev::BrandRetrieveByNameParams::CountryGl::OrSymbol,
           force_language:
-            BrandDev::BrandRetrieveByNameParams::ForceLanguage::OrSymbol,
+            T.nilable(
+              BrandDev::BrandRetrieveByNameParams::ForceLanguage::OrSymbol
+            ),
+          max_age_ms: T.nilable(Integer),
           max_speed: T::Boolean,
+          tags: T::Array[String],
           timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(T.attached_class)
@@ -86,15 +98,24 @@ module BrandDev
         # Company name to retrieve brand data for (e.g., 'Apple Inc', 'Microsoft
         # Corporation'). Must be 3-30 characters.
         name:,
-        # Optional country code (GL parameter) to specify the country. This affects the
-        # geographic location used for search queries.
+        # Two-letter ISO 3166-1 alpha-2 country code (GL parameter) used to localize
+        # search.
         country_gl: nil,
-        # Optional parameter to force the language of the retrieved brand data.
+        # Language to force for the retrieved brand data.
         force_language: nil,
+        # Maximum age in milliseconds for cached brand data before the API performs a hard
+        # refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
+        # are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
+        # year.
+        max_age_ms: nil,
         # Optional parameter to optimize the API call for maximum speed. When set to true,
         # the API will skip time-consuming operations for faster response at the cost of
         # less comprehensive data.
         max_speed: nil,
+        # Optional comma-separated caller-defined tags for tracking this request. Tags are
+        # recorded on the request's usage log and can be used to filter usage on the
+        # dashboard usage page. Up to 20 tags, each 1-50 characters.
+        tags: nil,
         # Optional timeout in milliseconds for the request. If the request takes longer
         # than this value, it will be aborted with a 408 status code. Maximum allowed
         # value is 300000ms (5 minutes).
@@ -110,8 +131,12 @@ module BrandDev
             country_gl:
               BrandDev::BrandRetrieveByNameParams::CountryGl::OrSymbol,
             force_language:
-              BrandDev::BrandRetrieveByNameParams::ForceLanguage::OrSymbol,
+              T.nilable(
+                BrandDev::BrandRetrieveByNameParams::ForceLanguage::OrSymbol
+              ),
+            max_age_ms: T.nilable(Integer),
             max_speed: T::Boolean,
+            tags: T::Array[String],
             timeout_ms: Integer,
             request_options: BrandDev::RequestOptions
           }
@@ -120,8 +145,8 @@ module BrandDev
       def to_hash
       end
 
-      # Optional country code (GL parameter) to specify the country. This affects the
-      # geographic location used for search queries.
+      # Two-letter ISO 3166-1 alpha-2 country code (GL parameter) used to localize
+      # search.
       module CountryGl
         extend BrandDev::Internal::Type::Enum
 
@@ -131,29 +156,9 @@ module BrandDev
           end
         OrSymbol = T.type_alias { T.any(Symbol, String) }
 
-        AD =
-          T.let(
-            :ad,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        AE =
-          T.let(
-            :ae,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
         AF =
           T.let(
             :af,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        AG =
-          T.let(
-            :ag,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        AI =
-          T.let(
-            :ai,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
         AL =
@@ -161,29 +166,9 @@ module BrandDev
             :al,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
-        AM =
+        DZ =
           T.let(
-            :am,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        AN =
-          T.let(
-            :an,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        AO =
-          T.let(
-            :ao,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        AQ =
-          T.let(
-            :aq,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        AR =
-          T.let(
-            :ar,
+            :dz,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
         AS =
@@ -191,14 +176,39 @@ module BrandDev
             :as,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
-        AT =
+        AD =
           T.let(
-            :at,
+            :ad,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
-        AU =
+        AO =
           T.let(
-            :au,
+            :ao,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        AI =
+          T.let(
+            :ai,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        AQ =
+          T.let(
+            :aq,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        AG =
+          T.let(
+            :ag,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        AR =
+          T.let(
+            :ar,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        AM =
+          T.let(
+            :am,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
         AW =
@@ -206,39 +216,24 @@ module BrandDev
             :aw,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
+        AU =
+          T.let(
+            :au,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        AT =
+          T.let(
+            :at,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
         AZ =
           T.let(
             :az,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
-        BA =
+        BS =
           T.let(
-            :ba,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        BB =
-          T.let(
-            :bb,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        BD =
-          T.let(
-            :bd,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        BE =
-          T.let(
-            :be,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        BF =
-          T.let(
-            :bf,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        BG =
-          T.let(
-            :bg,
+            :bs,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
         BH =
@@ -246,9 +241,29 @@ module BrandDev
             :bh,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
-        BI =
+        BD =
           T.let(
-            :bi,
+            :bd,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        BB =
+          T.let(
+            :bb,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        BY =
+          T.let(
+            :by,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        BE =
+          T.let(
+            :be,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        BZ =
+          T.let(
+            :bz,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
         BJ =
@@ -261,9 +276,9 @@ module BrandDev
             :bm,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
-        BN =
+        BT =
           T.let(
-            :bn,
+            :bt,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
         BO =
@@ -271,24 +286,9 @@ module BrandDev
             :bo,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
-        BR =
+        BA =
           T.let(
-            :br,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        BS =
-          T.let(
-            :bs,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        BT =
-          T.let(
-            :bt,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        BV =
-          T.let(
-            :bv,
+            :ba,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
         BW =
@@ -296,59 +296,44 @@ module BrandDev
             :bw,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
-        BY =
+        BV =
           T.let(
-            :by,
+            :bv,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
-        BZ =
+        BR =
           T.let(
-            :bz,
+            :br,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
-        CA =
+        IO =
           T.let(
-            :ca,
+            :io,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
-        CC =
+        BN =
           T.let(
-            :cc,
+            :bn,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
-        CD =
+        BG =
           T.let(
-            :cd,
+            :bg,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
-        CF =
+        BF =
           T.let(
-            :cf,
+            :bf,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
-        CG =
+        BI =
           T.let(
-            :cg,
+            :bi,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
-        CH =
+        KH =
           T.let(
-            :ch,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        CI =
-          T.let(
-            :ci,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        CK =
-          T.let(
-            :ck,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        CL =
-          T.let(
-            :cl,
+            :kh,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
         CM =
@@ -356,24 +341,9 @@ module BrandDev
             :cm,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
-        CN =
+        CA =
           T.let(
-            :cn,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        CO =
-          T.let(
-            :co,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        CR =
-          T.let(
-            :cr,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        CU =
-          T.let(
-            :cu,
+            :ca,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
         CV =
@@ -381,9 +351,84 @@ module BrandDev
             :cv,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
+        KY =
+          T.let(
+            :ky,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        CF =
+          T.let(
+            :cf,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        TD =
+          T.let(
+            :td,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        CL =
+          T.let(
+            :cl,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        CN =
+          T.let(
+            :cn,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
         CX =
           T.let(
             :cx,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        CC =
+          T.let(
+            :cc,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        CO =
+          T.let(
+            :co,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        KM =
+          T.let(
+            :km,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        CG =
+          T.let(
+            :cg,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        CD =
+          T.let(
+            :cd,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        CK =
+          T.let(
+            :ck,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        CR =
+          T.let(
+            :cr,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        CI =
+          T.let(
+            :ci,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        HR =
+          T.let(
+            :hr,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        CU =
+          T.let(
+            :cu,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
         CY =
@@ -396,19 +441,14 @@ module BrandDev
             :cz,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
-        DE =
+        DK =
           T.let(
-            :de,
+            :dk,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
         DJ =
           T.let(
             :dj,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        DK =
-          T.let(
-            :dk,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
         DM =
@@ -421,19 +461,9 @@ module BrandDev
             :do,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
-        DZ =
-          T.let(
-            :dz,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
         EC =
           T.let(
             :ec,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        EE =
-          T.let(
-            :ee,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
         EG =
@@ -441,9 +471,14 @@ module BrandDev
             :eg,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
-        EH =
+        SV =
           T.let(
-            :eh,
+            :sv,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        GQ =
+          T.let(
+            :gq,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
         ER =
@@ -451,9 +486,9 @@ module BrandDev
             :er,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
-        ES =
+        EE =
           T.let(
-            :es,
+            :ee,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
         ET =
@@ -461,24 +496,9 @@ module BrandDev
             :et,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
-        FI =
-          T.let(
-            :fi,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        FJ =
-          T.let(
-            :fj,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
         FK =
           T.let(
             :fk,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        FM =
-          T.let(
-            :fm,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
         FO =
@@ -486,9 +506,34 @@ module BrandDev
             :fo,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
+        FJ =
+          T.let(
+            :fj,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        FI =
+          T.let(
+            :fi,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
         FR =
           T.let(
             :fr,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        GF =
+          T.let(
+            :gf,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        PF =
+          T.let(
+            :pf,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        TF =
+          T.let(
+            :tf,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
         GA =
@@ -496,14 +541,9 @@ module BrandDev
             :ga,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
-        GB =
+        GM =
           T.let(
-            :gb,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        GD =
-          T.let(
-            :gd,
+            :gm,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
         GE =
@@ -511,9 +551,9 @@ module BrandDev
             :ge,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
-        GF =
+        DE =
           T.let(
-            :gf,
+            :de,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
         GH =
@@ -526,19 +566,19 @@ module BrandDev
             :gi,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
+        GR =
+          T.let(
+            :gr,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
         GL =
           T.let(
             :gl,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
-        GM =
+        GD =
           T.let(
-            :gm,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        GN =
-          T.let(
-            :gn,
+            :gd,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
         GP =
@@ -546,19 +586,9 @@ module BrandDev
             :gp,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
-        GQ =
+        GU =
           T.let(
-            :gq,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        GR =
-          T.let(
-            :gr,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        GS =
-          T.let(
-            :gs,
+            :gu,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
         GT =
@@ -566,9 +596,9 @@ module BrandDev
             :gt,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
-        GU =
+        GN =
           T.let(
-            :gu,
+            :gn,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
         GW =
@@ -581,9 +611,9 @@ module BrandDev
             :gy,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
-        HK =
+        HT =
           T.let(
-            :hk,
+            :ht,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
         HM =
@@ -591,19 +621,19 @@ module BrandDev
             :hm,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
+        VA =
+          T.let(
+            :va,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
         HN =
           T.let(
             :hn,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
-        HR =
+        HK =
           T.let(
-            :hr,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        HT =
-          T.let(
-            :ht,
+            :hk,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
         HU =
@@ -611,9 +641,29 @@ module BrandDev
             :hu,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
+        IS =
+          T.let(
+            :is,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        IN =
+          T.let(
+            :in,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
         ID =
           T.let(
             :id,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        IR =
+          T.let(
+            :ir,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        IQ =
+          T.let(
+            :iq,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
         IE =
@@ -626,31 +676,6 @@ module BrandDev
             :il,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
-        IN =
-          T.let(
-            :in,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        IO =
-          T.let(
-            :io,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        IQ =
-          T.let(
-            :iq,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        IR =
-          T.let(
-            :ir,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        IS =
-          T.let(
-            :is,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
         IT =
           T.let(
             :it,
@@ -661,14 +686,19 @@ module BrandDev
             :jm,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
+        JP =
+          T.let(
+            :jp,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
         JO =
           T.let(
             :jo,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
-        JP =
+        KZ =
           T.let(
-            :jp,
+            :kz,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
         KE =
@@ -676,29 +706,9 @@ module BrandDev
             :ke,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
-        KG =
-          T.let(
-            :kg,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        KH =
-          T.let(
-            :kh,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
         KI =
           T.let(
             :ki,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        KM =
-          T.let(
-            :km,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        KN =
-          T.let(
-            :kn,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
         KP =
@@ -716,14 +726,9 @@ module BrandDev
             :kw,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
-        KY =
+        KG =
           T.let(
-            :ky,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        KZ =
-          T.let(
-            :kz,
+            :kg,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
         LA =
@@ -731,24 +736,19 @@ module BrandDev
             :la,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
+        LV =
+          T.let(
+            :lv,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
         LB =
           T.let(
             :lb,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
-        LC =
+        LS =
           T.let(
-            :lc,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        LI =
-          T.let(
-            :li,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        LK =
-          T.let(
-            :lk,
+            :ls,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
         LR =
@@ -756,9 +756,14 @@ module BrandDev
             :lr,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
-        LS =
+        LY =
           T.let(
-            :ls,
+            :ly,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        LI =
+          T.let(
+            :li,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
         LT =
@@ -771,39 +776,9 @@ module BrandDev
             :lu,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
-        LV =
+        MO =
           T.let(
-            :lv,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        LY =
-          T.let(
-            :ly,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        MA =
-          T.let(
-            :ma,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        MC =
-          T.let(
-            :mc,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        MD =
-          T.let(
-            :md,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        MG =
-          T.let(
-            :mg,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        MH =
-          T.let(
-            :mh,
+            :mo,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
         MK =
@@ -811,29 +786,39 @@ module BrandDev
             :mk,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
+        MG =
+          T.let(
+            :mg,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        MW =
+          T.let(
+            :mw,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        MY =
+          T.let(
+            :my,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        MV =
+          T.let(
+            :mv,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
         ML =
           T.let(
             :ml,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
-        MM =
+        MT =
           T.let(
-            :mm,
+            :mt,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
-        MN =
+        MH =
           T.let(
-            :mn,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        MO =
-          T.let(
-            :mo,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        MP =
-          T.let(
-            :mp,
+            :mh,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
         MQ =
@@ -846,29 +831,14 @@ module BrandDev
             :mr,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
-        MS =
-          T.let(
-            :ms,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        MT =
-          T.let(
-            :mt,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
         MU =
           T.let(
             :mu,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
-        MV =
+        YT =
           T.let(
-            :mv,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        MW =
-          T.let(
-            :mw,
+            :yt,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
         MX =
@@ -876,9 +846,34 @@ module BrandDev
             :mx,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
-        MY =
+        FM =
           T.let(
-            :my,
+            :fm,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        MD =
+          T.let(
+            :md,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        MC =
+          T.let(
+            :mc,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        MN =
+          T.let(
+            :mn,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        MS =
+          T.let(
+            :ms,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        MA =
+          T.let(
+            :ma,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
         MZ =
@@ -886,49 +881,14 @@ module BrandDev
             :mz,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
+        MM =
+          T.let(
+            :mm,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
         NA =
           T.let(
             :na,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        NC =
-          T.let(
-            :nc,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        NE =
-          T.let(
-            :ne,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        NF =
-          T.let(
-            :nf,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        NG =
-          T.let(
-            :ng,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        NI =
-          T.let(
-            :ni,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        NL =
-          T.let(
-            :nl,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        NO =
-          T.let(
-            :no,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        NP =
-          T.let(
-            :np,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
         NR =
@@ -936,9 +896,24 @@ module BrandDev
             :nr,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
-        NU =
+        NP =
           T.let(
-            :nu,
+            :np,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        NL =
+          T.let(
+            :nl,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        AN =
+          T.let(
+            :an,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        NC =
+          T.let(
+            :nc,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
         NZ =
@@ -946,34 +921,44 @@ module BrandDev
             :nz,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
+        NI =
+          T.let(
+            :ni,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        NE =
+          T.let(
+            :ne,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        NG =
+          T.let(
+            :ng,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        NU =
+          T.let(
+            :nu,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        NF =
+          T.let(
+            :nf,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        MP =
+          T.let(
+            :mp,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        NO =
+          T.let(
+            :no,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
         OM =
           T.let(
             :om,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        PA =
-          T.let(
-            :pa,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        PE =
-          T.let(
-            :pe,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        PF =
-          T.let(
-            :pf,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        PG =
-          T.let(
-            :pg,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        PH =
-          T.let(
-            :ph,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
         PK =
@@ -981,24 +966,9 @@ module BrandDev
             :pk,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
-        PL =
+        PW =
           T.let(
-            :pl,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        PM =
-          T.let(
-            :pm,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        PN =
-          T.let(
-            :pn,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        PR =
-          T.let(
-            :pr,
+            :pw,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
         PS =
@@ -1006,19 +976,49 @@ module BrandDev
             :ps,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
-        PT =
+        PA =
           T.let(
-            :pt,
+            :pa,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
-        PW =
+        PG =
           T.let(
-            :pw,
+            :pg,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
         PY =
           T.let(
             :py,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        PE =
+          T.let(
+            :pe,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        PH =
+          T.let(
+            :ph,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        PN =
+          T.let(
+            :pn,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        PL =
+          T.let(
+            :pl,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        PT =
+          T.let(
+            :pt,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        PR =
+          T.let(
+            :pr,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
         QA =
@@ -1036,11 +1036,6 @@ module BrandDev
             :ro,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
-        RS =
-          T.let(
-            :rs,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
         RU =
           T.let(
             :ru,
@@ -1051,59 +1046,34 @@ module BrandDev
             :rw,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
-        SA =
-          T.let(
-            :sa,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        SB =
-          T.let(
-            :sb,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        SC =
-          T.let(
-            :sc,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        SD =
-          T.let(
-            :sd,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        SE =
-          T.let(
-            :se,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        SG =
-          T.let(
-            :sg,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
         SH =
           T.let(
             :sh,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
-        SI =
+        KN =
           T.let(
-            :si,
+            :kn,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
-        SJ =
+        LC =
           T.let(
-            :sj,
+            :lc,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
-        SK =
+        PM =
           T.let(
-            :sk,
+            :pm,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
-        SL =
+        VC =
           T.let(
-            :sl,
+            :vc,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        WS =
+          T.let(
+            :ws,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
         SM =
@@ -1111,9 +1081,54 @@ module BrandDev
             :sm,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
+        ST =
+          T.let(
+            :st,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        SA =
+          T.let(
+            :sa,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
         SN =
           T.let(
             :sn,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        RS =
+          T.let(
+            :rs,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        SC =
+          T.let(
+            :sc,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        SL =
+          T.let(
+            :sl,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        SG =
+          T.let(
+            :sg,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        SK =
+          T.let(
+            :sk,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        SI =
+          T.let(
+            :si,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        SB =
+          T.let(
+            :sb,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
         SO =
@@ -1121,24 +1136,39 @@ module BrandDev
             :so,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
+        ZA =
+          T.let(
+            :za,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        GS =
+          T.let(
+            :gs,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        ES =
+          T.let(
+            :es,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        LK =
+          T.let(
+            :lk,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        SD =
+          T.let(
+            :sd,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
         SR =
           T.let(
             :sr,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
-        ST =
+        SJ =
           T.let(
-            :st,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        SV =
-          T.let(
-            :sv,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        SY =
-          T.let(
-            :sy,
+            :sj,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
         SZ =
@@ -1146,74 +1176,19 @@ module BrandDev
             :sz,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
-        TC =
+        SE =
           T.let(
-            :tc,
+            :se,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
-        TD =
+        CH =
           T.let(
-            :td,
+            :ch,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
-        TF =
+        SY =
           T.let(
-            :tf,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        TG =
-          T.let(
-            :tg,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        TH =
-          T.let(
-            :th,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        TJ =
-          T.let(
-            :tj,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        TK =
-          T.let(
-            :tk,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        TL =
-          T.let(
-            :tl,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        TM =
-          T.let(
-            :tm,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        TN =
-          T.let(
-            :tn,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        TO =
-          T.let(
-            :to,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        TR =
-          T.let(
-            :tr,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        TT =
-          T.let(
-            :tt,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        TV =
-          T.let(
-            :tv,
+            :sy,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
         TW =
@@ -1221,14 +1196,69 @@ module BrandDev
             :tw,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
+        TJ =
+          T.let(
+            :tj,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
         TZ =
           T.let(
             :tz,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
-        UA =
+        TH =
           T.let(
-            :ua,
+            :th,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        TL =
+          T.let(
+            :tl,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        TG =
+          T.let(
+            :tg,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        TK =
+          T.let(
+            :tk,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        TO =
+          T.let(
+            :to,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        TT =
+          T.let(
+            :tt,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        TN =
+          T.let(
+            :tn,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        TR =
+          T.let(
+            :tr,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        TM =
+          T.let(
+            :tm,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        TC =
+          T.let(
+            :tc,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        TV =
+          T.let(
+            :tv,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
         UG =
@@ -1236,14 +1266,29 @@ module BrandDev
             :ug,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
-        UM =
+        UA =
           T.let(
-            :um,
+            :ua,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        AE =
+          T.let(
+            :ae,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        GB =
+          T.let(
+            :gb,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
         US =
           T.let(
             :us,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        UM =
+          T.let(
+            :um,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
         UY =
@@ -1256,19 +1301,19 @@ module BrandDev
             :uz,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
-        VA =
+        VU =
           T.let(
-            :va,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        VC =
-          T.let(
-            :vc,
+            :vu,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
         VE =
           T.let(
             :ve,
+            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
+          )
+        VN =
+          T.let(
+            :vn,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
         VG =
@@ -1281,39 +1326,19 @@ module BrandDev
             :vi,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
-        VN =
-          T.let(
-            :vn,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        VU =
-          T.let(
-            :vu,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
         WF =
           T.let(
             :wf,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
-        WS =
+        EH =
           T.let(
-            :ws,
+            :eh,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
         YE =
           T.let(
             :ye,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        YT =
-          T.let(
-            :yt,
-            BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
-          )
-        ZA =
-          T.let(
-            :za,
             BrandDev::BrandRetrieveByNameParams::CountryGl::TaggedSymbol
           )
         ZM =
@@ -1338,7 +1363,7 @@ module BrandDev
         end
       end
 
-      # Optional parameter to force the language of the retrieved brand data.
+      # Language to force for the retrieved brand data.
       module ForceLanguage
         extend BrandDev::Internal::Type::Enum
 
@@ -1348,9 +1373,19 @@ module BrandDev
           end
         OrSymbol = T.type_alias { T.any(Symbol, String) }
 
+        AFRIKAANS =
+          T.let(
+            :afrikaans,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
         ALBANIAN =
           T.let(
             :albanian,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
+        AMHARIC =
+          T.let(
+            :amharic,
             BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
           )
         ARABIC =
@@ -1358,9 +1393,34 @@ module BrandDev
             :arabic,
             BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
           )
+        ARMENIAN =
+          T.let(
+            :armenian,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
+        ASSAMESE =
+          T.let(
+            :assamese,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
+        AYMARA =
+          T.let(
+            :aymara,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
         AZERI =
           T.let(
             :azeri,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
+        BASQUE =
+          T.let(
+            :basque,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
+        BELARUSIAN =
+          T.let(
+            :belarusian,
             BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
           )
         BENGALI =
@@ -1368,9 +1428,19 @@ module BrandDev
             :bengali,
             BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
           )
+        BOSNIAN =
+          T.let(
+            :bosnian,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
         BULGARIAN =
           T.let(
             :bulgarian,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
+        BURMESE =
+          T.let(
+            :burmese,
             BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
           )
         CANTONESE =
@@ -1378,9 +1448,24 @@ module BrandDev
             :cantonese,
             BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
           )
+        CATALAN =
+          T.let(
+            :catalan,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
         CEBUANO =
           T.let(
             :cebuano,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
+        CHINESE =
+          T.let(
+            :chinese,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
+        CORSICAN =
+          T.let(
+            :corsican,
             BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
           )
         CROATIAN =
@@ -1408,6 +1493,11 @@ module BrandDev
             :english,
             BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
           )
+        ESPERANTO =
+          T.let(
+            :esperanto,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
         ESTONIAN =
           T.let(
             :estonian,
@@ -1416,6 +1506,11 @@ module BrandDev
         FARSI =
           T.let(
             :farsi,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
+        FIJIAN =
+          T.let(
+            :fijian,
             BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
           )
         FINNISH =
@@ -1428,9 +1523,39 @@ module BrandDev
             :french,
             BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
           )
+        GALICIAN =
+          T.let(
+            :galician,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
+        GEORGIAN =
+          T.let(
+            :georgian,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
         GERMAN =
           T.let(
             :german,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
+        GREEK =
+          T.let(
+            :greek,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
+        GUARANI =
+          T.let(
+            :guarani,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
+        GUJARATI =
+          T.let(
+            :gujarati,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
+        HAITIAN_CREOLE =
+          T.let(
+            :"haitian-creole",
             BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
           )
         HAUSA =
@@ -1443,9 +1568,19 @@ module BrandDev
             :hawaiian,
             BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
           )
+        HEBREW =
+          T.let(
+            :hebrew,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
         HINDI =
           T.let(
             :hindi,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
+        HMONG =
+          T.let(
+            :hmong,
             BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
           )
         HUNGARIAN =
@@ -1458,9 +1593,19 @@ module BrandDev
             :icelandic,
             BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
           )
+        IGBO =
+          T.let(
+            :igbo,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
         INDONESIAN =
           T.let(
             :indonesian,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
+        IRISH =
+          T.let(
+            :irish,
             BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
           )
         ITALIAN =
@@ -1468,9 +1613,34 @@ module BrandDev
             :italian,
             BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
           )
+        JAPANESE =
+          T.let(
+            :japanese,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
+        JAVANESE =
+          T.let(
+            :javanese,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
+        KANNADA =
+          T.let(
+            :kannada,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
         KAZAKH =
           T.let(
             :kazakh,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
+        KHMER =
+          T.let(
+            :khmer,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
+        KINYARWANDA =
+          T.let(
+            :kinyarwanda,
             BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
           )
         KOREAN =
@@ -1478,9 +1648,19 @@ module BrandDev
             :korean,
             BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
           )
+        KURDISH =
+          T.let(
+            :kurdish,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
         KYRGYZ =
           T.let(
             :kyrgyz,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
+        LAO =
+          T.let(
+            :lao,
             BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
           )
         LATIN =
@@ -1493,14 +1673,54 @@ module BrandDev
             :latvian,
             BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
           )
+        LINGALA =
+          T.let(
+            :lingala,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
         LITHUANIAN =
           T.let(
             :lithuanian,
             BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
           )
+        LUXEMBOURGISH =
+          T.let(
+            :luxembourgish,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
         MACEDONIAN =
           T.let(
             :macedonian,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
+        MALAGASY =
+          T.let(
+            :malagasy,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
+        MALAY =
+          T.let(
+            :malay,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
+        MALAYALAM =
+          T.let(
+            :malayalam,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
+        MALTESE =
+          T.let(
+            :maltese,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
+        MAORI =
+          T.let(
+            :maori,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
+        MARATHI =
+          T.let(
+            :marathi,
             BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
           )
         MONGOLIAN =
@@ -1516,6 +1736,16 @@ module BrandDev
         NORWEGIAN =
           T.let(
             :norwegian,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
+        ODIA =
+          T.let(
+            :odia,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
+        OROMO =
+          T.let(
+            :oromo,
             BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
           )
         PASHTO =
@@ -1538,6 +1768,16 @@ module BrandDev
             :portuguese,
             BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
           )
+        PUNJABI =
+          T.let(
+            :punjabi,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
+        QUECHUA =
+          T.let(
+            :quechua,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
         ROMANIAN =
           T.let(
             :romanian,
@@ -1548,9 +1788,39 @@ module BrandDev
             :russian,
             BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
           )
+        SAMOAN =
+          T.let(
+            :samoan,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
+        SCOTTISH_GAELIC =
+          T.let(
+            :"scottish-gaelic",
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
         SERBIAN =
           T.let(
             :serbian,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
+        SESOTHO =
+          T.let(
+            :sesotho,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
+        SHONA =
+          T.let(
+            :shona,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
+        SINDHI =
+          T.let(
+            :sindhi,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
+        SINHALA =
+          T.let(
+            :sinhala,
             BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
           )
         SLOVAK =
@@ -1573,6 +1843,11 @@ module BrandDev
             :spanish,
             BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
           )
+        SUNDANESE =
+          T.let(
+            :sundanese,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
         SWAHILI =
           T.let(
             :swahili,
@@ -1588,14 +1863,59 @@ module BrandDev
             :tagalog,
             BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
           )
+        TAJIK =
+          T.let(
+            :tajik,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
+        TAMIL =
+          T.let(
+            :tamil,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
+        TATAR =
+          T.let(
+            :tatar,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
+        TELUGU =
+          T.let(
+            :telugu,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
         THAI =
           T.let(
             :thai,
             BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
           )
+        TIBETAN =
+          T.let(
+            :tibetan,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
+        TIGRINYA =
+          T.let(
+            :tigrinya,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
+        TONGAN =
+          T.let(
+            :tongan,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
+        TSWANA =
+          T.let(
+            :tswana,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
         TURKISH =
           T.let(
             :turkish,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
+        TURKMEN =
+          T.let(
+            :turkmen,
             BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
           )
         UKRAINIAN =
@@ -1606,6 +1926,11 @@ module BrandDev
         URDU =
           T.let(
             :urdu,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
+        UYGHUR =
+          T.let(
+            :uyghur,
             BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
           )
         UZBEK =
@@ -1621,6 +1946,31 @@ module BrandDev
         WELSH =
           T.let(
             :welsh,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
+        WOLOF =
+          T.let(
+            :wolof,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
+        XHOSA =
+          T.let(
+            :xhosa,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
+        YIDDISH =
+          T.let(
+            :yiddish,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
+        YORUBA =
+          T.let(
+            :yoruba,
+            BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
+          )
+        ZULU =
+          T.let(
+            :zulu,
             BrandDev::BrandRetrieveByNameParams::ForceLanguage::TaggedSymbol
           )
 

@@ -42,4 +42,14 @@ module BrandDev
   BrandWebScrapeMdParams = BrandDev::Models::BrandWebScrapeMdParams
 
   BrandWebScrapeSitemapParams = BrandDev::Models::BrandWebScrapeSitemapParams
+
+  CrawlControls = BrandDev::Models::CrawlControls
+
+  Failure = BrandDev::Models::Failure
+
+  Intake = BrandDev::Models::Intake
+
+  PageErrorCount = BrandDev::Models::PageErrorCount
+
+  WebhookDelivery = BrandDev::Models::WebhookDelivery
 end

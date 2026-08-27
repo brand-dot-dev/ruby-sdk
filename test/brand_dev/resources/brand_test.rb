@@ -3,10 +3,10 @@
 require_relative "../test_helper"
 
 class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
-  def test_retrieve_required_params
+  def test_retrieve
     skip("Mock server tests are disabled")
 
-    response = @brand_dev.brand.retrieve(domain: "domain")
+    response = @brand_dev.brand.retrieve
 
     assert_pattern do
       response => BrandDev::Models::BrandRetrieveResponse
@@ -14,8 +14,10 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
 
     assert_pattern do
       response => {
+        cache_metadata: BrandDev::Models::BrandRetrieveResponse::CacheMetadata,
         brand: BrandDev::Models::BrandRetrieveResponse::Brand | nil,
         code: Integer | nil,
+        key_metadata: BrandDev::Models::BrandRetrieveResponse::KeyMetadata | nil,
         status: String | nil
       }
     end
@@ -32,7 +34,9 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
 
     assert_pattern do
       response => {
+        cache_metadata: BrandDev::Models::BrandAIProductResponse::CacheMetadata,
         is_product_page: BrandDev::Internal::Type::Boolean | nil,
+        key_metadata: BrandDev::Models::BrandAIProductResponse::KeyMetadata | nil,
         platform: BrandDev::Models::BrandAIProductResponse::Platform | nil,
         product: BrandDev::Models::BrandAIProductResponse::Product | nil
       }
@@ -50,6 +54,8 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
 
     assert_pattern do
       response => {
+        cache_metadata: BrandDev::Models::BrandAIProductsResponse::CacheMetadata,
+        key_metadata: BrandDev::Models::BrandAIProductsResponse::KeyMetadata | nil,
         products: ^(BrandDev::Internal::Type::ArrayOf[BrandDev::Models::BrandAIProductsResponse::Product]) | nil
       }
     end
@@ -79,16 +85,17 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
       response => {
         data_extracted: ^(BrandDev::Internal::Type::ArrayOf[BrandDev::Models::BrandAIQueryResponse::DataExtracted]) | nil,
         domain: String | nil,
+        key_metadata: BrandDev::Models::BrandAIQueryResponse::KeyMetadata | nil,
         status: String | nil,
         urls_analyzed: ^(BrandDev::Internal::Type::ArrayOf[String]) | nil
       }
     end
   end
 
-  def test_fonts_required_params
+  def test_fonts
     skip("Mock server tests are disabled")
 
-    response = @brand_dev.brand.fonts(domain: "domain")
+    response = @brand_dev.brand.fonts
 
     assert_pattern do
       response => BrandDev::Models::BrandFontsResponse
@@ -96,10 +103,13 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
 
     assert_pattern do
       response => {
+        cache_metadata: BrandDev::Models::BrandFontsResponse::CacheMetadata,
         code: Integer,
         domain: String,
         fonts: ^(BrandDev::Internal::Type::ArrayOf[BrandDev::Models::BrandFontsResponse::Font]),
-        status: String
+        status: String,
+        font_links: ^(BrandDev::Internal::Type::HashOf[BrandDev::Models::BrandFontsResponse::FontLink]) | nil,
+        key_metadata: BrandDev::Models::BrandFontsResponse::KeyMetadata | nil
       }
     end
   end
@@ -107,7 +117,7 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
   def test_identify_from_transaction_required_params
     skip("Mock server tests are disabled")
 
-    response = @brand_dev.brand.identify_from_transaction(transaction_info: "transaction_info")
+    response = @brand_dev.brand.identify_from_transaction(transaction_info: "xxx")
 
     assert_pattern do
       response => BrandDev::Models::BrandIdentifyFromTransactionResponse
@@ -115,8 +125,10 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
 
     assert_pattern do
       response => {
+        cache_metadata: BrandDev::Models::BrandIdentifyFromTransactionResponse::CacheMetadata,
         brand: BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand | nil,
         code: Integer | nil,
+        key_metadata: BrandDev::Models::BrandIdentifyFromTransactionResponse::KeyMetadata | nil,
         status: String | nil
       }
     end
@@ -134,6 +146,7 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
     assert_pattern do
       response => {
         domain: String | nil,
+        key_metadata: BrandDev::Models::BrandPrefetchResponse::KeyMetadata | nil,
         message: String | nil,
         status: String | nil
       }
@@ -152,6 +165,7 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
     assert_pattern do
       response => {
         domain: String | nil,
+        key_metadata: BrandDev::Models::BrandPrefetchByEmailResponse::KeyMetadata | nil,
         message: String | nil,
         status: String | nil
       }
@@ -169,8 +183,10 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
 
     assert_pattern do
       response => {
+        cache_metadata: BrandDev::Models::BrandRetrieveByEmailResponse::CacheMetadata,
         brand: BrandDev::Models::BrandRetrieveByEmailResponse::Brand | nil,
         code: Integer | nil,
+        key_metadata: BrandDev::Models::BrandRetrieveByEmailResponse::KeyMetadata | nil,
         status: String | nil
       }
     end
@@ -187,8 +203,10 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
 
     assert_pattern do
       response => {
+        cache_metadata: BrandDev::Models::BrandRetrieveByIsinResponse::CacheMetadata,
         brand: BrandDev::Models::BrandRetrieveByIsinResponse::Brand | nil,
         code: Integer | nil,
+        key_metadata: BrandDev::Models::BrandRetrieveByIsinResponse::KeyMetadata | nil,
         status: String | nil
       }
     end
@@ -205,8 +223,10 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
 
     assert_pattern do
       response => {
+        cache_metadata: BrandDev::Models::BrandRetrieveByNameResponse::CacheMetadata,
         brand: BrandDev::Models::BrandRetrieveByNameResponse::Brand | nil,
         code: Integer | nil,
+        key_metadata: BrandDev::Models::BrandRetrieveByNameResponse::KeyMetadata | nil,
         status: String | nil
       }
     end
@@ -223,8 +243,10 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
 
     assert_pattern do
       response => {
+        cache_metadata: BrandDev::Models::BrandRetrieveByTickerResponse::CacheMetadata,
         brand: BrandDev::Models::BrandRetrieveByTickerResponse::Brand | nil,
         code: Integer | nil,
+        key_metadata: BrandDev::Models::BrandRetrieveByTickerResponse::KeyMetadata | nil,
         status: String | nil
       }
     end
@@ -233,7 +255,7 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
   def test_retrieve_naics_required_params
     skip("Mock server tests are disabled")
 
-    response = @brand_dev.brand.retrieve_naics(input: "input")
+    response = @brand_dev.brand.retrieve_naics(input: "xxxx")
 
     assert_pattern do
       response => BrandDev::Models::BrandRetrieveNaicsResponse
@@ -243,6 +265,7 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
       response => {
         codes: ^(BrandDev::Internal::Type::ArrayOf[BrandDev::Models::BrandRetrieveNaicsResponse::Code]) | nil,
         domain: String | nil,
+        key_metadata: BrandDev::Models::BrandRetrieveNaicsResponse::KeyMetadata | nil,
         status: String | nil,
         type: String | nil
       }
@@ -252,7 +275,7 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
   def test_retrieve_simplified_required_params
     skip("Mock server tests are disabled")
 
-    response = @brand_dev.brand.retrieve_simplified(domain: "domain")
+    response = @brand_dev.brand.retrieve_simplified(domain: "xxx")
 
     assert_pattern do
       response => BrandDev::Models::BrandRetrieveSimplifiedResponse
@@ -260,17 +283,19 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
 
     assert_pattern do
       response => {
+        cache_metadata: BrandDev::Models::BrandRetrieveSimplifiedResponse::CacheMetadata,
         brand: BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand | nil,
         code: Integer | nil,
+        key_metadata: BrandDev::Models::BrandRetrieveSimplifiedResponse::KeyMetadata | nil,
         status: String | nil
       }
     end
   end
 
-  def test_screenshot_required_params
+  def test_screenshot
     skip("Mock server tests are disabled")
 
-    response = @brand_dev.brand.screenshot(domain: "domain")
+    response = @brand_dev.brand.screenshot
 
     assert_pattern do
       response => BrandDev::Models::BrandScreenshotResponse
@@ -278,11 +303,15 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
 
     assert_pattern do
       response => {
+        cache_metadata: BrandDev::Models::BrandScreenshotResponse::CacheMetadata,
         code: Integer | nil,
         domain: String | nil,
+        height: Integer | nil,
+        key_metadata: BrandDev::Models::BrandScreenshotResponse::KeyMetadata | nil,
         screenshot: String | nil,
         screenshot_type: BrandDev::Models::BrandScreenshotResponse::ScreenshotType | nil,
-        status: String | nil
+        status: String | nil,
+        width: Integer | nil
       }
     end
   end
@@ -298,8 +327,10 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
 
     assert_pattern do
       response => {
+        cache_metadata: BrandDev::Models::BrandStyleguideResponse::CacheMetadata,
         code: Integer | nil,
         domain: String | nil,
+        key_metadata: BrandDev::Models::BrandStyleguideResponse::KeyMetadata | nil,
         status: String | nil,
         styleguide: BrandDev::Models::BrandStyleguideResponse::Styleguide | nil
       }
@@ -317,9 +348,15 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
 
     assert_pattern do
       response => {
+        cache_metadata: BrandDev::Models::BrandWebScrapeHTMLResponse::CacheMetadata,
         html: String,
+        metadata: BrandDev::Models::BrandWebScrapeHTMLResponse::Metadata,
         success: BrandDev::Models::BrandWebScrapeHTMLResponse::Success,
-        url: String
+        type: BrandDev::Models::BrandWebScrapeHTMLResponse::Type,
+        url: String,
+        actions_applied: ^(BrandDev::Internal::Type::ArrayOf[BrandDev::Models::BrandWebScrapeHTMLResponse::ActionsApplied]) | nil,
+        actions_html_stale: BrandDev::Internal::Type::Boolean | nil,
+        key_metadata: BrandDev::Models::BrandWebScrapeHTMLResponse::KeyMetadata | nil
       }
     end
   end
@@ -335,9 +372,12 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
 
     assert_pattern do
       response => {
+        cache_metadata: BrandDev::Models::BrandWebScrapeImagesResponse::CacheMetadata,
         images: ^(BrandDev::Internal::Type::ArrayOf[BrandDev::Models::BrandWebScrapeImagesResponse::Image]),
         success: BrandDev::Models::BrandWebScrapeImagesResponse::Success,
-        url: String
+        url: String,
+        actions_applied: ^(BrandDev::Internal::Type::ArrayOf[BrandDev::Models::BrandWebScrapeImagesResponse::ActionsApplied]) | nil,
+        key_metadata: BrandDev::Models::BrandWebScrapeImagesResponse::KeyMetadata | nil
       }
     end
   end
@@ -353,9 +393,16 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
 
     assert_pattern do
       response => {
+        cache_metadata: BrandDev::Models::BrandWebScrapeMdResponse::CacheMetadata,
+        content_length: Integer,
         markdown: String,
+        metadata: BrandDev::Models::BrandWebScrapeMdResponse::Metadata,
         success: BrandDev::Models::BrandWebScrapeMdResponse::Success,
-        url: String
+        url: String,
+        actions_applied: ^(BrandDev::Internal::Type::ArrayOf[BrandDev::Models::BrandWebScrapeMdResponse::ActionsApplied]) | nil,
+        actions_html_stale: BrandDev::Internal::Type::Boolean | nil,
+        html: String | nil,
+        key_metadata: BrandDev::Models::BrandWebScrapeMdResponse::KeyMetadata | nil
       }
     end
   end
@@ -363,7 +410,7 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
   def test_web_scrape_sitemap_required_params
     skip("Mock server tests are disabled")
 
-    response = @brand_dev.brand.web_scrape_sitemap(domain: "domain")
+    response = @brand_dev.brand.web_scrape_sitemap(domain: "xxx")
 
     assert_pattern do
       response => BrandDev::Models::BrandWebScrapeSitemapResponse
@@ -374,7 +421,8 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
         domain: String,
         meta: BrandDev::Models::BrandWebScrapeSitemapResponse::Meta,
         success: BrandDev::Models::BrandWebScrapeSitemapResponse::Success,
-        urls: ^(BrandDev::Internal::Type::ArrayOf[String])
+        urls: ^(BrandDev::Internal::Type::ArrayOf[String]),
+        key_metadata: BrandDev::Models::BrandWebScrapeSitemapResponse::KeyMetadata | nil
       }
     end
   end

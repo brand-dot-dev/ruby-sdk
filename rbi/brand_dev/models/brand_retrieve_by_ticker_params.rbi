@@ -19,7 +19,7 @@ module BrandDev
       sig { returns(String) }
       attr_accessor :ticker
 
-      # Optional parameter to force the language of the retrieved brand data.
+      # Language to force for the retrieved brand data.
       sig do
         returns(
           T.nilable(
@@ -27,15 +27,14 @@ module BrandDev
           )
         )
       end
-      attr_reader :force_language
+      attr_accessor :force_language
 
-      sig do
-        params(
-          force_language:
-            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::OrSymbol
-        ).void
-      end
-      attr_writer :force_language
+      # Maximum age in milliseconds for cached brand data before the API performs a hard
+      # refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
+      # are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
+      # year.
+      sig { returns(T.nilable(Integer)) }
+      attr_accessor :max_age_ms
 
       # Optional parameter to optimize the API call for maximum speed. When set to true,
       # the API will skip time-consuming operations for faster response at the cost of
@@ -46,7 +45,16 @@ module BrandDev
       sig { params(max_speed: T::Boolean).void }
       attr_writer :max_speed
 
-      # Optional stock exchange for the ticker. Defaults to NASDAQ if not specified.
+      # Optional comma-separated caller-defined tags for tracking this request. Tags are
+      # recorded on the request's usage log and can be used to filter usage on the
+      # dashboard usage page. Up to 20 tags, each 1-50 characters.
+      sig { returns(T.nilable(T::Array[String])) }
+      attr_reader :tags
+
+      sig { params(tags: T::Array[String]).void }
+      attr_writer :tags
+
+      # Stock exchange code.
       sig do
         returns(
           T.nilable(
@@ -77,8 +85,12 @@ module BrandDev
         params(
           ticker: String,
           force_language:
-            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::OrSymbol,
+            T.nilable(
+              BrandDev::BrandRetrieveByTickerParams::ForceLanguage::OrSymbol
+            ),
+          max_age_ms: T.nilable(Integer),
           max_speed: T::Boolean,
+          tags: T::Array[String],
           ticker_exchange:
             BrandDev::BrandRetrieveByTickerParams::TickerExchange::OrSymbol,
           timeout_ms: Integer,
@@ -89,13 +101,22 @@ module BrandDev
         # Stock ticker symbol to retrieve brand data for (e.g., 'AAPL', 'GOOGL', 'BRK.A').
         # Must be 1-15 characters, letters/numbers/dots only.
         ticker:,
-        # Optional parameter to force the language of the retrieved brand data.
+        # Language to force for the retrieved brand data.
         force_language: nil,
+        # Maximum age in milliseconds for cached brand data before the API performs a hard
+        # refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
+        # are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
+        # year.
+        max_age_ms: nil,
         # Optional parameter to optimize the API call for maximum speed. When set to true,
         # the API will skip time-consuming operations for faster response at the cost of
         # less comprehensive data.
         max_speed: nil,
-        # Optional stock exchange for the ticker. Defaults to NASDAQ if not specified.
+        # Optional comma-separated caller-defined tags for tracking this request. Tags are
+        # recorded on the request's usage log and can be used to filter usage on the
+        # dashboard usage page. Up to 20 tags, each 1-50 characters.
+        tags: nil,
+        # Stock exchange code.
         ticker_exchange: nil,
         # Optional timeout in milliseconds for the request. If the request takes longer
         # than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -110,8 +131,12 @@ module BrandDev
           {
             ticker: String,
             force_language:
-              BrandDev::BrandRetrieveByTickerParams::ForceLanguage::OrSymbol,
+              T.nilable(
+                BrandDev::BrandRetrieveByTickerParams::ForceLanguage::OrSymbol
+              ),
+            max_age_ms: T.nilable(Integer),
             max_speed: T::Boolean,
+            tags: T::Array[String],
             ticker_exchange:
               BrandDev::BrandRetrieveByTickerParams::TickerExchange::OrSymbol,
             timeout_ms: Integer,
@@ -122,7 +147,7 @@ module BrandDev
       def to_hash
       end
 
-      # Optional parameter to force the language of the retrieved brand data.
+      # Language to force for the retrieved brand data.
       module ForceLanguage
         extend BrandDev::Internal::Type::Enum
 
@@ -132,9 +157,19 @@ module BrandDev
           end
         OrSymbol = T.type_alias { T.any(Symbol, String) }
 
+        AFRIKAANS =
+          T.let(
+            :afrikaans,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
         ALBANIAN =
           T.let(
             :albanian,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
+        AMHARIC =
+          T.let(
+            :amharic,
             BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
           )
         ARABIC =
@@ -142,9 +177,34 @@ module BrandDev
             :arabic,
             BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
           )
+        ARMENIAN =
+          T.let(
+            :armenian,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
+        ASSAMESE =
+          T.let(
+            :assamese,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
+        AYMARA =
+          T.let(
+            :aymara,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
         AZERI =
           T.let(
             :azeri,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
+        BASQUE =
+          T.let(
+            :basque,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
+        BELARUSIAN =
+          T.let(
+            :belarusian,
             BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
           )
         BENGALI =
@@ -152,9 +212,19 @@ module BrandDev
             :bengali,
             BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
           )
+        BOSNIAN =
+          T.let(
+            :bosnian,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
         BULGARIAN =
           T.let(
             :bulgarian,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
+        BURMESE =
+          T.let(
+            :burmese,
             BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
           )
         CANTONESE =
@@ -162,9 +232,24 @@ module BrandDev
             :cantonese,
             BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
           )
+        CATALAN =
+          T.let(
+            :catalan,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
         CEBUANO =
           T.let(
             :cebuano,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
+        CHINESE =
+          T.let(
+            :chinese,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
+        CORSICAN =
+          T.let(
+            :corsican,
             BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
           )
         CROATIAN =
@@ -192,6 +277,11 @@ module BrandDev
             :english,
             BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
           )
+        ESPERANTO =
+          T.let(
+            :esperanto,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
         ESTONIAN =
           T.let(
             :estonian,
@@ -200,6 +290,11 @@ module BrandDev
         FARSI =
           T.let(
             :farsi,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
+        FIJIAN =
+          T.let(
+            :fijian,
             BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
           )
         FINNISH =
@@ -212,9 +307,39 @@ module BrandDev
             :french,
             BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
           )
+        GALICIAN =
+          T.let(
+            :galician,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
+        GEORGIAN =
+          T.let(
+            :georgian,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
         GERMAN =
           T.let(
             :german,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
+        GREEK =
+          T.let(
+            :greek,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
+        GUARANI =
+          T.let(
+            :guarani,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
+        GUJARATI =
+          T.let(
+            :gujarati,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
+        HAITIAN_CREOLE =
+          T.let(
+            :"haitian-creole",
             BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
           )
         HAUSA =
@@ -227,9 +352,19 @@ module BrandDev
             :hawaiian,
             BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
           )
+        HEBREW =
+          T.let(
+            :hebrew,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
         HINDI =
           T.let(
             :hindi,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
+        HMONG =
+          T.let(
+            :hmong,
             BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
           )
         HUNGARIAN =
@@ -242,9 +377,19 @@ module BrandDev
             :icelandic,
             BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
           )
+        IGBO =
+          T.let(
+            :igbo,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
         INDONESIAN =
           T.let(
             :indonesian,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
+        IRISH =
+          T.let(
+            :irish,
             BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
           )
         ITALIAN =
@@ -252,9 +397,34 @@ module BrandDev
             :italian,
             BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
           )
+        JAPANESE =
+          T.let(
+            :japanese,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
+        JAVANESE =
+          T.let(
+            :javanese,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
+        KANNADA =
+          T.let(
+            :kannada,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
         KAZAKH =
           T.let(
             :kazakh,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
+        KHMER =
+          T.let(
+            :khmer,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
+        KINYARWANDA =
+          T.let(
+            :kinyarwanda,
             BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
           )
         KOREAN =
@@ -262,9 +432,19 @@ module BrandDev
             :korean,
             BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
           )
+        KURDISH =
+          T.let(
+            :kurdish,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
         KYRGYZ =
           T.let(
             :kyrgyz,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
+        LAO =
+          T.let(
+            :lao,
             BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
           )
         LATIN =
@@ -277,14 +457,54 @@ module BrandDev
             :latvian,
             BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
           )
+        LINGALA =
+          T.let(
+            :lingala,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
         LITHUANIAN =
           T.let(
             :lithuanian,
             BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
           )
+        LUXEMBOURGISH =
+          T.let(
+            :luxembourgish,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
         MACEDONIAN =
           T.let(
             :macedonian,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
+        MALAGASY =
+          T.let(
+            :malagasy,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
+        MALAY =
+          T.let(
+            :malay,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
+        MALAYALAM =
+          T.let(
+            :malayalam,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
+        MALTESE =
+          T.let(
+            :maltese,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
+        MAORI =
+          T.let(
+            :maori,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
+        MARATHI =
+          T.let(
+            :marathi,
             BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
           )
         MONGOLIAN =
@@ -300,6 +520,16 @@ module BrandDev
         NORWEGIAN =
           T.let(
             :norwegian,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
+        ODIA =
+          T.let(
+            :odia,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
+        OROMO =
+          T.let(
+            :oromo,
             BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
           )
         PASHTO =
@@ -322,6 +552,16 @@ module BrandDev
             :portuguese,
             BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
           )
+        PUNJABI =
+          T.let(
+            :punjabi,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
+        QUECHUA =
+          T.let(
+            :quechua,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
         ROMANIAN =
           T.let(
             :romanian,
@@ -332,9 +572,39 @@ module BrandDev
             :russian,
             BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
           )
+        SAMOAN =
+          T.let(
+            :samoan,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
+        SCOTTISH_GAELIC =
+          T.let(
+            :"scottish-gaelic",
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
         SERBIAN =
           T.let(
             :serbian,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
+        SESOTHO =
+          T.let(
+            :sesotho,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
+        SHONA =
+          T.let(
+            :shona,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
+        SINDHI =
+          T.let(
+            :sindhi,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
+        SINHALA =
+          T.let(
+            :sinhala,
             BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
           )
         SLOVAK =
@@ -357,6 +627,11 @@ module BrandDev
             :spanish,
             BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
           )
+        SUNDANESE =
+          T.let(
+            :sundanese,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
         SWAHILI =
           T.let(
             :swahili,
@@ -372,14 +647,59 @@ module BrandDev
             :tagalog,
             BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
           )
+        TAJIK =
+          T.let(
+            :tajik,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
+        TAMIL =
+          T.let(
+            :tamil,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
+        TATAR =
+          T.let(
+            :tatar,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
+        TELUGU =
+          T.let(
+            :telugu,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
         THAI =
           T.let(
             :thai,
             BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
           )
+        TIBETAN =
+          T.let(
+            :tibetan,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
+        TIGRINYA =
+          T.let(
+            :tigrinya,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
+        TONGAN =
+          T.let(
+            :tongan,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
+        TSWANA =
+          T.let(
+            :tswana,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
         TURKISH =
           T.let(
             :turkish,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
+        TURKMEN =
+          T.let(
+            :turkmen,
             BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
           )
         UKRAINIAN =
@@ -390,6 +710,11 @@ module BrandDev
         URDU =
           T.let(
             :urdu,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
+        UYGHUR =
+          T.let(
+            :uyghur,
             BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
           )
         UZBEK =
@@ -407,6 +732,31 @@ module BrandDev
             :welsh,
             BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
           )
+        WOLOF =
+          T.let(
+            :wolof,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
+        XHOSA =
+          T.let(
+            :xhosa,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
+        YIDDISH =
+          T.let(
+            :yiddish,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
+        YORUBA =
+          T.let(
+            :yoruba,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
+        ZULU =
+          T.let(
+            :zulu,
+            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::TaggedSymbol
+          )
 
         sig do
           override.returns(
@@ -419,7 +769,7 @@ module BrandDev
         end
       end
 
-      # Optional stock exchange for the ticker. Defaults to NASDAQ if not specified.
+      # Stock exchange code.
       module TickerExchange
         extend BrandDev::Internal::Type::Enum
 

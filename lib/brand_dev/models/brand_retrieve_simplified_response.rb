@@ -4,6 +4,14 @@ module BrandDev
   module Models
     # @see BrandDev::Resources::Brand#retrieve_simplified
     class BrandRetrieveSimplifiedResponse < BrandDev::Internal::Type::BaseModel
+      # @!attribute cache_metadata
+      #   Cache outcome for this response. Composite responses are hits only when every
+      #   cache-controlled fetch contributing to the output was a hit; age_ms is the
+      #   oldest contributing hit.
+      #
+      #   @return [BrandDev::Models::BrandRetrieveSimplifiedResponse::CacheMetadata]
+      required :cache_metadata, -> { BrandDev::Models::BrandRetrieveSimplifiedResponse::CacheMetadata }
+
       # @!attribute brand
       #   Simplified brand information
       #
@@ -16,18 +24,76 @@ module BrandDev
       #   @return [Integer, nil]
       optional :code, Integer
 
+      # @!attribute key_metadata
+      #   Metadata about the API key used for the request. Included in every response
+      #   whenever a valid API key is provided, even when the response status is not 200.
+      #
+      #   @return [BrandDev::Models::BrandRetrieveSimplifiedResponse::KeyMetadata, nil]
+      optional :key_metadata, -> { BrandDev::Models::BrandRetrieveSimplifiedResponse::KeyMetadata }
+
       # @!attribute status
       #   Status of the response, e.g., 'ok'
       #
       #   @return [String, nil]
       optional :status, String
 
-      # @!method initialize(brand: nil, code: nil, status: nil)
+      # @!method initialize(cache_metadata:, brand: nil, code: nil, key_metadata: nil, status: nil)
+      #   Some parameter documentations has been truncated, see
+      #   {BrandDev::Models::BrandRetrieveSimplifiedResponse} for more details.
+      #
+      #   @param cache_metadata [BrandDev::Models::BrandRetrieveSimplifiedResponse::CacheMetadata] Cache outcome for this response. Composite responses are hits only when every ca
+      #
       #   @param brand [BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand] Simplified brand information
       #
       #   @param code [Integer] HTTP status code of the response
       #
+      #   @param key_metadata [BrandDev::Models::BrandRetrieveSimplifiedResponse::KeyMetadata] Metadata about the API key used for the request. Included in every response when
+      #
       #   @param status [String] Status of the response, e.g., 'ok'
+
+      # @see BrandDev::Models::BrandRetrieveSimplifiedResponse#cache_metadata
+      class CacheMetadata < BrandDev::Internal::Type::BaseModel
+        # @!attribute age_ms
+        #   Age of the cached data in milliseconds. Zero for miss and zdr responses.
+        #
+        #   @return [Integer]
+        required :age_ms, Integer
+
+        # @!attribute status
+        #   Whether the response was served from cache, required fresh work, or honored
+        #   zero-data-retention cache bypass.
+        #
+        #   @return [Symbol, BrandDev::Models::BrandRetrieveSimplifiedResponse::CacheMetadata::Status]
+        required :status, enum: -> { BrandDev::Models::BrandRetrieveSimplifiedResponse::CacheMetadata::Status }
+
+        # @!method initialize(age_ms:, status:)
+        #   Some parameter documentations has been truncated, see
+        #   {BrandDev::Models::BrandRetrieveSimplifiedResponse::CacheMetadata} for more
+        #   details.
+        #
+        #   Cache outcome for this response. Composite responses are hits only when every
+        #   cache-controlled fetch contributing to the output was a hit; age_ms is the
+        #   oldest contributing hit.
+        #
+        #   @param age_ms [Integer] Age of the cached data in milliseconds. Zero for miss and zdr responses.
+        #
+        #   @param status [Symbol, BrandDev::Models::BrandRetrieveSimplifiedResponse::CacheMetadata::Status] Whether the response was served from cache, required fresh work, or honored zero
+
+        # Whether the response was served from cache, required fresh work, or honored
+        # zero-data-retention cache bypass.
+        #
+        # @see BrandDev::Models::BrandRetrieveSimplifiedResponse::CacheMetadata#status
+        module Status
+          extend BrandDev::Internal::Type::Enum
+
+          HIT = :hit
+          MISS = :miss
+          ZDR = :zdr
+
+          # @!method self.values
+          #   @return [Array<Symbol>]
+        end
+      end
 
       # @see BrandDev::Models::BrandRetrieveSimplifiedResponse#brand
       class Brand < BrandDev::Internal::Type::BaseModel
@@ -168,10 +234,39 @@ module BrandDev
           #   @return [String, nil]
           optional :name, String
 
-          # @!method initialize(hex: nil, name: nil)
+          # @!attribute source
+          #   Where the color was observed: 'site' colors come from the website's own theme
+          #   signals (rendered page colors, manifest, theme-color meta), 'logo' colors from
+          #   logo image pixels.
+          #
+          #   @return [Symbol, BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Color::Source, nil]
+          optional :source, enum: -> { BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Color::Source }
+
+          # @!method initialize(hex: nil, name: nil, source: nil)
+          #   Some parameter documentations has been truncated, see
+          #   {BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Color} for more
+          #   details.
+          #
           #   @param hex [String] Color in hexadecimal format
           #
           #   @param name [String] Name of the color
+          #
+          #   @param source [Symbol, BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Color::Source] Where the color was observed: 'site' colors come from the website's own theme si
+
+          # Where the color was observed: 'site' colors come from the website's own theme
+          # signals (rendered page colors, manifest, theme-color meta), 'logo' colors from
+          # logo image pixels.
+          #
+          # @see BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Color#source
+          module Source
+            extend BrandDev::Internal::Type::Enum
+
+            SITE = :site
+            LOGO = :logo
+
+            # @!method self.values
+            #   @return [Array<Symbol>]
+          end
         end
 
         class Logo < BrandDev::Internal::Type::BaseModel
@@ -301,6 +396,29 @@ module BrandDev
             #   @return [Array<Symbol>]
           end
         end
+      end
+
+      # @see BrandDev::Models::BrandRetrieveSimplifiedResponse#key_metadata
+      class KeyMetadata < BrandDev::Internal::Type::BaseModel
+        # @!attribute credits_consumed
+        #   The number of credits consumed by this request.
+        #
+        #   @return [Integer]
+        required :credits_consumed, Integer
+
+        # @!attribute credits_remaining
+        #   The number of credits remaining for your organization after this request.
+        #
+        #   @return [Integer]
+        required :credits_remaining, Integer
+
+        # @!method initialize(credits_consumed:, credits_remaining:)
+        #   Metadata about the API key used for the request. Included in every response
+        #   whenever a valid API key is provided, even when the response status is not 200.
+        #
+        #   @param credits_consumed [Integer] The number of credits consumed by this request.
+        #
+        #   @param credits_remaining [Integer] The number of credits remaining for your organization after this request.
       end
     end
   end

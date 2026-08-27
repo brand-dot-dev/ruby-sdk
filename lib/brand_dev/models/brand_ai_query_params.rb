@@ -26,6 +26,12 @@ module BrandDev
       #   @return [BrandDev::Models::BrandAIQueryParams::SpecificPages, nil]
       optional :specific_pages, -> { BrandDev::BrandAIQueryParams::SpecificPages }
 
+      # @!attribute tags
+      #   Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+      #
+      #   @return [Array<String>, nil]
+      optional :tags, BrandDev::Internal::Type::ArrayOf[String]
+
       # @!attribute timeout_ms
       #   Optional timeout in milliseconds for the request. If the request takes longer
       #   than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -34,7 +40,7 @@ module BrandDev
       #   @return [Integer, nil]
       optional :timeout_ms, Integer, api_name: :timeoutMS
 
-      # @!method initialize(data_to_extract:, domain:, specific_pages: nil, timeout_ms: nil, request_options: {})
+      # @!method initialize(data_to_extract:, domain:, specific_pages: nil, tags: nil, timeout_ms: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
       #   {BrandDev::Models::BrandAIQueryParams} for more details.
       #
@@ -43,6 +49,8 @@ module BrandDev
       #   @param domain [String] The domain name to analyze
       #
       #   @param specific_pages [BrandDev::Models::BrandAIQueryParams::SpecificPages] Optional object specifying which pages to analyze
+      #
+      #   @param tags [Array<String>] Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
       #
       #   @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #

@@ -1,12 +1,25 @@
 module BrandDev
   module Models
     type brand_styleguide_params =
-      { direct_url: String, domain: String, timeout_ms: Integer }
+      {
+        color_scheme: BrandDev::Models::BrandStyleguideParams::color_scheme,
+        direct_url: String,
+        domain: String,
+        max_age_ms: Integer?,
+        tags: ::Array[String],
+        timeout_ms: Integer
+      }
       & BrandDev::Internal::Type::request_parameters
 
     class BrandStyleguideParams < BrandDev::Internal::Type::BaseModel
       extend BrandDev::Internal::Type::RequestParameters::Converter
       include BrandDev::Internal::Type::RequestParameters
+
+      attr_reader color_scheme: BrandDev::Models::BrandStyleguideParams::color_scheme?
+
+      def color_scheme=: (
+        BrandDev::Models::BrandStyleguideParams::color_scheme
+      ) -> BrandDev::Models::BrandStyleguideParams::color_scheme
 
       attr_reader direct_url: String?
 
@@ -16,23 +29,46 @@ module BrandDev
 
       def domain=: (String) -> String
 
+      attr_accessor max_age_ms: Integer?
+
+      attr_reader tags: ::Array[String]?
+
+      def tags=: (::Array[String]) -> ::Array[String]
+
       attr_reader timeout_ms: Integer?
 
       def timeout_ms=: (Integer) -> Integer
 
       def initialize: (
+        ?color_scheme: BrandDev::Models::BrandStyleguideParams::color_scheme,
         ?direct_url: String,
         ?domain: String,
+        ?max_age_ms: Integer?,
+        ?tags: ::Array[String],
         ?timeout_ms: Integer,
         ?request_options: BrandDev::request_opts
       ) -> void
 
       def to_hash: -> {
+        color_scheme: BrandDev::Models::BrandStyleguideParams::color_scheme,
         direct_url: String,
         domain: String,
+        max_age_ms: Integer?,
+        tags: ::Array[String],
         timeout_ms: Integer,
         request_options: BrandDev::RequestOptions
       }
+
+      type color_scheme = :light | :dark
+
+      module ColorScheme
+        extend BrandDev::Internal::Type::Enum
+
+        LIGHT: :light
+        DARK: :dark
+
+        def self?.values: -> ::Array[BrandDev::Models::BrandStyleguideParams::color_scheme]
+      end
     end
   end
 end

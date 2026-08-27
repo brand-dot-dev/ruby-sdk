@@ -4,6 +4,7 @@ module BrandDev
       {
         data_extracted: ::Array[BrandDev::Models::BrandAIQueryResponse::DataExtracted],
         domain: String,
+        key_metadata: BrandDev::Models::BrandAIQueryResponse::KeyMetadata,
         status: String,
         urls_analyzed: ::Array[String]
       }
@@ -19,6 +20,12 @@ module BrandDev
 
       def domain=: (String) -> String
 
+      attr_reader key_metadata: BrandDev::Models::BrandAIQueryResponse::KeyMetadata?
+
+      def key_metadata=: (
+        BrandDev::Models::BrandAIQueryResponse::KeyMetadata
+      ) -> BrandDev::Models::BrandAIQueryResponse::KeyMetadata
+
       attr_reader status: String?
 
       def status=: (String) -> String
@@ -30,6 +37,7 @@ module BrandDev
       def initialize: (
         ?data_extracted: ::Array[BrandDev::Models::BrandAIQueryResponse::DataExtracted],
         ?domain: String,
+        ?key_metadata: BrandDev::Models::BrandAIQueryResponse::KeyMetadata,
         ?status: String,
         ?urls_analyzed: ::Array[String]
       ) -> void
@@ -37,6 +45,7 @@ module BrandDev
       def to_hash: -> {
         data_extracted: ::Array[BrandDev::Models::BrandAIQueryResponse::DataExtracted],
         domain: String,
+        key_metadata: BrandDev::Models::BrandAIQueryResponse::KeyMetadata,
         status: String,
         urls_analyzed: ::Array[String]
       }
@@ -87,6 +96,25 @@ module BrandDev
 
           UnionMember5Array: BrandDev::Internal::Type::Converter
         end
+      end
+
+      type key_metadata =
+        { credits_consumed: Integer, credits_remaining: Integer }
+
+      class KeyMetadata < BrandDev::Internal::Type::BaseModel
+        attr_accessor credits_consumed: Integer
+
+        attr_accessor credits_remaining: Integer
+
+        def initialize: (
+          credits_consumed: Integer,
+          credits_remaining: Integer
+        ) -> void
+
+        def to_hash: -> {
+          credits_consumed: Integer,
+          credits_remaining: Integer
+        }
       end
     end
   end

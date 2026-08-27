@@ -11,6 +11,22 @@ module BrandDev
           )
         end
 
+      # Cache outcome for this response. Composite responses are hits only when every
+      # cache-controlled fetch contributing to the output was a hit; age_ms is the
+      # oldest contributing hit.
+      sig do
+        returns(BrandDev::Models::BrandRetrieveByIsinResponse::CacheMetadata)
+      end
+      attr_reader :cache_metadata
+
+      sig do
+        params(
+          cache_metadata:
+            BrandDev::Models::BrandRetrieveByIsinResponse::CacheMetadata::OrHash
+        ).void
+      end
+      attr_writer :cache_metadata
+
       # Detailed brand information
       sig do
         returns(T.nilable(BrandDev::Models::BrandRetrieveByIsinResponse::Brand))
@@ -31,6 +47,23 @@ module BrandDev
       sig { params(code: Integer).void }
       attr_writer :code
 
+      # Metadata about the API key used for the request. Included in every response
+      # whenever a valid API key is provided, even when the response status is not 200.
+      sig do
+        returns(
+          T.nilable(BrandDev::Models::BrandRetrieveByIsinResponse::KeyMetadata)
+        )
+      end
+      attr_reader :key_metadata
+
+      sig do
+        params(
+          key_metadata:
+            BrandDev::Models::BrandRetrieveByIsinResponse::KeyMetadata::OrHash
+        ).void
+      end
+      attr_writer :key_metadata
+
       # Status of the response, e.g., 'ok'
       sig { returns(T.nilable(String)) }
       attr_reader :status
@@ -40,16 +73,27 @@ module BrandDev
 
       sig do
         params(
+          cache_metadata:
+            BrandDev::Models::BrandRetrieveByIsinResponse::CacheMetadata::OrHash,
           brand: BrandDev::Models::BrandRetrieveByIsinResponse::Brand::OrHash,
           code: Integer,
+          key_metadata:
+            BrandDev::Models::BrandRetrieveByIsinResponse::KeyMetadata::OrHash,
           status: String
         ).returns(T.attached_class)
       end
       def self.new(
+        # Cache outcome for this response. Composite responses are hits only when every
+        # cache-controlled fetch contributing to the output was a hit; age_ms is the
+        # oldest contributing hit.
+        cache_metadata:,
         # Detailed brand information
         brand: nil,
         # HTTP status code
         code: nil,
+        # Metadata about the API key used for the request. Included in every response
+        # whenever a valid API key is provided, even when the response status is not 200.
+        key_metadata: nil,
         # Status of the response, e.g., 'ok'
         status: nil
       )
@@ -58,13 +102,112 @@ module BrandDev
       sig do
         override.returns(
           {
+            cache_metadata:
+              BrandDev::Models::BrandRetrieveByIsinResponse::CacheMetadata,
             brand: BrandDev::Models::BrandRetrieveByIsinResponse::Brand,
             code: Integer,
+            key_metadata:
+              BrandDev::Models::BrandRetrieveByIsinResponse::KeyMetadata,
             status: String
           }
         )
       end
       def to_hash
+      end
+
+      class CacheMetadata < BrandDev::Internal::Type::BaseModel
+        OrHash =
+          T.type_alias do
+            T.any(
+              BrandDev::Models::BrandRetrieveByIsinResponse::CacheMetadata,
+              BrandDev::Internal::AnyHash
+            )
+          end
+
+        # Age of the cached data in milliseconds. Zero for miss and zdr responses.
+        sig { returns(Integer) }
+        attr_accessor :age_ms
+
+        # Whether the response was served from cache, required fresh work, or honored
+        # zero-data-retention cache bypass.
+        sig do
+          returns(
+            BrandDev::Models::BrandRetrieveByIsinResponse::CacheMetadata::Status::TaggedSymbol
+          )
+        end
+        attr_accessor :status
+
+        # Cache outcome for this response. Composite responses are hits only when every
+        # cache-controlled fetch contributing to the output was a hit; age_ms is the
+        # oldest contributing hit.
+        sig do
+          params(
+            age_ms: Integer,
+            status:
+              BrandDev::Models::BrandRetrieveByIsinResponse::CacheMetadata::Status::OrSymbol
+          ).returns(T.attached_class)
+        end
+        def self.new(
+          # Age of the cached data in milliseconds. Zero for miss and zdr responses.
+          age_ms:,
+          # Whether the response was served from cache, required fresh work, or honored
+          # zero-data-retention cache bypass.
+          status:
+        )
+        end
+
+        sig do
+          override.returns(
+            {
+              age_ms: Integer,
+              status:
+                BrandDev::Models::BrandRetrieveByIsinResponse::CacheMetadata::Status::TaggedSymbol
+            }
+          )
+        end
+        def to_hash
+        end
+
+        # Whether the response was served from cache, required fresh work, or honored
+        # zero-data-retention cache bypass.
+        module Status
+          extend BrandDev::Internal::Type::Enum
+
+          TaggedSymbol =
+            T.type_alias do
+              T.all(
+                Symbol,
+                BrandDev::Models::BrandRetrieveByIsinResponse::CacheMetadata::Status
+              )
+            end
+          OrSymbol = T.type_alias { T.any(Symbol, String) }
+
+          HIT =
+            T.let(
+              :hit,
+              BrandDev::Models::BrandRetrieveByIsinResponse::CacheMetadata::Status::TaggedSymbol
+            )
+          MISS =
+            T.let(
+              :miss,
+              BrandDev::Models::BrandRetrieveByIsinResponse::CacheMetadata::Status::TaggedSymbol
+            )
+          ZDR =
+            T.let(
+              :zdr,
+              BrandDev::Models::BrandRetrieveByIsinResponse::CacheMetadata::Status::TaggedSymbol
+            )
+
+          sig do
+            override.returns(
+              T::Array[
+                BrandDev::Models::BrandRetrieveByIsinResponse::CacheMetadata::Status::TaggedSymbol
+              ]
+            )
+          end
+          def self.values
+          end
+        end
       end
 
       class Brand < BrandDev::Internal::Type::BaseModel
@@ -159,6 +302,24 @@ module BrandDev
         sig { params(email: String).void }
         attr_writer :email
 
+        # Employee headcount information for the brand (will be null if unknown)
+        sig do
+          returns(
+            T.nilable(
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Employees
+            )
+          )
+        end
+        attr_reader :employees
+
+        sig do
+          params(
+            employees:
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Employees::OrHash
+          ).void
+        end
+        attr_writer :employees
+
         # Industry classification information for the brand
         sig do
           returns(
@@ -202,7 +363,9 @@ module BrandDev
         end
         attr_writer :links
 
-        # An array of logos associated with the brand
+        # An array of logos associated with the brand. When a similarly shaped SVG variant
+        # exists, it is returned ahead of its raster equivalent; otherwise relevance order
+        # is preserved
         sig do
           returns(
             T.nilable(
@@ -230,6 +393,16 @@ module BrandDev
 
         sig { params(phone: String).void }
         attr_writer :phone
+
+        # Language to force for the retrieved brand data.
+        sig do
+          returns(
+            T.nilable(
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          )
+        end
+        attr_accessor :primary_language
 
         # The brand's slogan
         sig { returns(T.nilable(String)) }
@@ -302,6 +475,8 @@ module BrandDev
             description: String,
             domain: String,
             email: String,
+            employees:
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Employees::OrHash,
             industries:
               BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Industries::OrHash,
             is_nsfw: T::Boolean,
@@ -312,6 +487,10 @@ module BrandDev
                 BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Logo::OrHash
               ],
             phone: String,
+            primary_language:
+              T.nilable(
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::OrSymbol
+              ),
             slogan: String,
             socials:
               T::Array[
@@ -335,16 +514,22 @@ module BrandDev
           domain: nil,
           # Company email address
           email: nil,
+          # Employee headcount information for the brand (will be null if unknown)
+          employees: nil,
           # Industry classification information for the brand
           industries: nil,
           # Indicates whether the brand content is not safe for work (NSFW)
           is_nsfw: nil,
           # Important website links for the brand
           links: nil,
-          # An array of logos associated with the brand
+          # An array of logos associated with the brand. When a similarly shaped SVG variant
+          # exists, it is returned ahead of its raster equivalent; otherwise relevance order
+          # is preserved
           logos: nil,
           # Company phone number
           phone: nil,
+          # Language to force for the retrieved brand data.
+          primary_language: nil,
           # The brand's slogan
           slogan: nil,
           # An array of social media links for the brand
@@ -373,6 +558,8 @@ module BrandDev
               description: String,
               domain: String,
               email: String,
+              employees:
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Employees,
               industries:
                 BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Industries,
               is_nsfw: T::Boolean,
@@ -383,6 +570,10 @@ module BrandDev
                   BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Logo
                 ],
               phone: String,
+              primary_language:
+                T.nilable(
+                  BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+                ),
               slogan: String,
               socials:
                 T::Array[
@@ -713,17 +904,222 @@ module BrandDev
           sig { params(name: String).void }
           attr_writer :name
 
-          sig { params(hex: String, name: String).returns(T.attached_class) }
+          # Where the color was observed: 'site' colors come from the website's own theme
+          # signals (rendered page colors, manifest, theme-color meta), 'logo' colors from
+          # logo image pixels.
+          sig do
+            returns(
+              T.nilable(
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Color::Source::TaggedSymbol
+              )
+            )
+          end
+          attr_reader :source
+
+          sig do
+            params(
+              source:
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Color::Source::OrSymbol
+            ).void
+          end
+          attr_writer :source
+
+          sig do
+            params(
+              hex: String,
+              name: String,
+              source:
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Color::Source::OrSymbol
+            ).returns(T.attached_class)
+          end
           def self.new(
             # Color in hexadecimal format
             hex: nil,
             # Name of the color
-            name: nil
+            name: nil,
+            # Where the color was observed: 'site' colors come from the website's own theme
+            # signals (rendered page colors, manifest, theme-color meta), 'logo' colors from
+            # logo image pixels.
+            source: nil
           )
           end
 
-          sig { override.returns({ hex: String, name: String }) }
+          sig do
+            override.returns(
+              {
+                hex: String,
+                name: String,
+                source:
+                  BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Color::Source::TaggedSymbol
+              }
+            )
+          end
           def to_hash
+          end
+
+          # Where the color was observed: 'site' colors come from the website's own theme
+          # signals (rendered page colors, manifest, theme-color meta), 'logo' colors from
+          # logo image pixels.
+          module Source
+            extend BrandDev::Internal::Type::Enum
+
+            TaggedSymbol =
+              T.type_alias do
+                T.all(
+                  Symbol,
+                  BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Color::Source
+                )
+              end
+            OrSymbol = T.type_alias { T.any(Symbol, String) }
+
+            SITE =
+              T.let(
+                :site,
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Color::Source::TaggedSymbol
+              )
+            LOGO =
+              T.let(
+                :logo,
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Color::Source::TaggedSymbol
+              )
+
+            sig do
+              override.returns(
+                T::Array[
+                  BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Color::Source::TaggedSymbol
+                ]
+              )
+            end
+            def self.values
+            end
+          end
+        end
+
+        class Employees < BrandDev::Internal::Type::BaseModel
+          OrHash =
+            T.type_alias do
+              T.any(
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Employees,
+                BrandDev::Internal::AnyHash
+              )
+            end
+
+          # Exact employee count when a precise headcount is known
+          sig { returns(T.nilable(Integer)) }
+          attr_reader :exact
+
+          sig { params(exact: Integer).void }
+          attr_writer :exact
+
+          # Employee count range for the brand (e.g. '11 to 50')
+          sig do
+            returns(
+              T.nilable(
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Employees::Range::TaggedSymbol
+              )
+            )
+          end
+          attr_reader :range
+
+          sig do
+            params(
+              range:
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Employees::Range::OrSymbol
+            ).void
+          end
+          attr_writer :range
+
+          # Employee headcount information for the brand (will be null if unknown)
+          sig do
+            params(
+              exact: Integer,
+              range:
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Employees::Range::OrSymbol
+            ).returns(T.attached_class)
+          end
+          def self.new(
+            # Exact employee count when a precise headcount is known
+            exact: nil,
+            # Employee count range for the brand (e.g. '11 to 50')
+            range: nil
+          )
+          end
+
+          sig do
+            override.returns(
+              {
+                exact: Integer,
+                range:
+                  BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Employees::Range::TaggedSymbol
+              }
+            )
+          end
+          def to_hash
+          end
+
+          # Employee count range for the brand (e.g. '11 to 50')
+          module Range
+            extend BrandDev::Internal::Type::Enum
+
+            TaggedSymbol =
+              T.type_alias do
+                T.all(
+                  Symbol,
+                  BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Employees::Range
+                )
+              end
+            OrSymbol = T.type_alias { T.any(Symbol, String) }
+
+            RANGE_1_TO_10 =
+              T.let(
+                :"1 to 10",
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Employees::Range::TaggedSymbol
+              )
+            RANGE_11_TO_50 =
+              T.let(
+                :"11 to 50",
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Employees::Range::TaggedSymbol
+              )
+            RANGE_51_TO_200 =
+              T.let(
+                :"51 to 200",
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Employees::Range::TaggedSymbol
+              )
+            RANGE_201_TO_500 =
+              T.let(
+                :"201 to 500",
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Employees::Range::TaggedSymbol
+              )
+            RANGE_501_TO_1000 =
+              T.let(
+                :"501 to 1000",
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Employees::Range::TaggedSymbol
+              )
+            RANGE_1001_TO_5000 =
+              T.let(
+                :"1001 to 5000",
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Employees::Range::TaggedSymbol
+              )
+            RANGE_5001_TO_10000 =
+              T.let(
+                :"5001 to 10000",
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Employees::Range::TaggedSymbol
+              )
+            RANGE_10001 =
+              T.let(
+                :"10001+",
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Employees::Range::TaggedSymbol
+              )
+
+            sig do
+              override.returns(
+                T::Array[
+                  BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Employees::Range::TaggedSymbol
+                ]
+              )
+            end
+            def self.values
+            end
           end
         end
 
@@ -1248,11 +1644,6 @@ module BrandDev
                   :"Creator Economy & Influencer Platforms",
                   BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Industries::Eic::Subindustry::TaggedSymbol
                 )
-              ADVERTISING_ADTECH_MEDIA_BUYING =
-                T.let(
-                  :"Advertising, Adtech & Media Buying",
-                  BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Industries::Eic::Subindustry::TaggedSymbol
-                )
               FILM_TV_PRODUCTION_STUDIOS =
                 T.let(
                   :"Film, TV & Production Studios",
@@ -1551,6 +1942,11 @@ module BrandDev
               NEWS_PUBLISHING_JOURNALISM =
                 T.let(
                   :"News Publishing & Journalism",
+                  BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Industries::Eic::Subindustry::TaggedSymbol
+                )
+              ADVERTISING_ADTECH_MEDIA_BUYING =
+                T.let(
+                  :"Advertising, Adtech & Media Buying",
                   BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Industries::Eic::Subindustry::TaggedSymbol
                 )
               DIGITAL_MEDIA_CONTENT_PLATFORMS =
@@ -2505,6 +2901,631 @@ module BrandDev
           end
         end
 
+        # Language to force for the retrieved brand data.
+        module PrimaryLanguage
+          extend BrandDev::Internal::Type::Enum
+
+          TaggedSymbol =
+            T.type_alias do
+              T.all(
+                Symbol,
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage
+              )
+            end
+          OrSymbol = T.type_alias { T.any(Symbol, String) }
+
+          AFRIKAANS =
+            T.let(
+              :afrikaans,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          ALBANIAN =
+            T.let(
+              :albanian,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          AMHARIC =
+            T.let(
+              :amharic,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          ARABIC =
+            T.let(
+              :arabic,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          ARMENIAN =
+            T.let(
+              :armenian,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          ASSAMESE =
+            T.let(
+              :assamese,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          AYMARA =
+            T.let(
+              :aymara,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          AZERI =
+            T.let(
+              :azeri,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          BASQUE =
+            T.let(
+              :basque,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          BELARUSIAN =
+            T.let(
+              :belarusian,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          BENGALI =
+            T.let(
+              :bengali,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          BOSNIAN =
+            T.let(
+              :bosnian,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          BULGARIAN =
+            T.let(
+              :bulgarian,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          BURMESE =
+            T.let(
+              :burmese,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          CANTONESE =
+            T.let(
+              :cantonese,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          CATALAN =
+            T.let(
+              :catalan,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          CEBUANO =
+            T.let(
+              :cebuano,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          CHINESE =
+            T.let(
+              :chinese,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          CORSICAN =
+            T.let(
+              :corsican,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          CROATIAN =
+            T.let(
+              :croatian,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          CZECH =
+            T.let(
+              :czech,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          DANISH =
+            T.let(
+              :danish,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          DUTCH =
+            T.let(
+              :dutch,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          ENGLISH =
+            T.let(
+              :english,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          ESPERANTO =
+            T.let(
+              :esperanto,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          ESTONIAN =
+            T.let(
+              :estonian,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          FARSI =
+            T.let(
+              :farsi,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          FIJIAN =
+            T.let(
+              :fijian,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          FINNISH =
+            T.let(
+              :finnish,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          FRENCH =
+            T.let(
+              :french,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          GALICIAN =
+            T.let(
+              :galician,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          GEORGIAN =
+            T.let(
+              :georgian,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          GERMAN =
+            T.let(
+              :german,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          GREEK =
+            T.let(
+              :greek,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          GUARANI =
+            T.let(
+              :guarani,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          GUJARATI =
+            T.let(
+              :gujarati,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          HAITIAN_CREOLE =
+            T.let(
+              :"haitian-creole",
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          HAUSA =
+            T.let(
+              :hausa,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          HAWAIIAN =
+            T.let(
+              :hawaiian,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          HEBREW =
+            T.let(
+              :hebrew,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          HINDI =
+            T.let(
+              :hindi,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          HMONG =
+            T.let(
+              :hmong,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          HUNGARIAN =
+            T.let(
+              :hungarian,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          ICELANDIC =
+            T.let(
+              :icelandic,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          IGBO =
+            T.let(
+              :igbo,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          INDONESIAN =
+            T.let(
+              :indonesian,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          IRISH =
+            T.let(
+              :irish,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          ITALIAN =
+            T.let(
+              :italian,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          JAPANESE =
+            T.let(
+              :japanese,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          JAVANESE =
+            T.let(
+              :javanese,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          KANNADA =
+            T.let(
+              :kannada,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          KAZAKH =
+            T.let(
+              :kazakh,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          KHMER =
+            T.let(
+              :khmer,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          KINYARWANDA =
+            T.let(
+              :kinyarwanda,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          KOREAN =
+            T.let(
+              :korean,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          KURDISH =
+            T.let(
+              :kurdish,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          KYRGYZ =
+            T.let(
+              :kyrgyz,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          LAO =
+            T.let(
+              :lao,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          LATIN =
+            T.let(
+              :latin,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          LATVIAN =
+            T.let(
+              :latvian,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          LINGALA =
+            T.let(
+              :lingala,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          LITHUANIAN =
+            T.let(
+              :lithuanian,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          LUXEMBOURGISH =
+            T.let(
+              :luxembourgish,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          MACEDONIAN =
+            T.let(
+              :macedonian,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          MALAGASY =
+            T.let(
+              :malagasy,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          MALAY =
+            T.let(
+              :malay,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          MALAYALAM =
+            T.let(
+              :malayalam,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          MALTESE =
+            T.let(
+              :maltese,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          MAORI =
+            T.let(
+              :maori,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          MARATHI =
+            T.let(
+              :marathi,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          MONGOLIAN =
+            T.let(
+              :mongolian,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          NEPALI =
+            T.let(
+              :nepali,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          NORWEGIAN =
+            T.let(
+              :norwegian,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          ODIA =
+            T.let(
+              :odia,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          OROMO =
+            T.let(
+              :oromo,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          PASHTO =
+            T.let(
+              :pashto,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          PIDGIN =
+            T.let(
+              :pidgin,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          POLISH =
+            T.let(
+              :polish,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          PORTUGUESE =
+            T.let(
+              :portuguese,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          PUNJABI =
+            T.let(
+              :punjabi,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          QUECHUA =
+            T.let(
+              :quechua,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          ROMANIAN =
+            T.let(
+              :romanian,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          RUSSIAN =
+            T.let(
+              :russian,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          SAMOAN =
+            T.let(
+              :samoan,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          SCOTTISH_GAELIC =
+            T.let(
+              :"scottish-gaelic",
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          SERBIAN =
+            T.let(
+              :serbian,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          SESOTHO =
+            T.let(
+              :sesotho,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          SHONA =
+            T.let(
+              :shona,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          SINDHI =
+            T.let(
+              :sindhi,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          SINHALA =
+            T.let(
+              :sinhala,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          SLOVAK =
+            T.let(
+              :slovak,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          SLOVENE =
+            T.let(
+              :slovene,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          SOMALI =
+            T.let(
+              :somali,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          SPANISH =
+            T.let(
+              :spanish,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          SUNDANESE =
+            T.let(
+              :sundanese,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          SWAHILI =
+            T.let(
+              :swahili,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          SWEDISH =
+            T.let(
+              :swedish,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          TAGALOG =
+            T.let(
+              :tagalog,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          TAJIK =
+            T.let(
+              :tajik,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          TAMIL =
+            T.let(
+              :tamil,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          TATAR =
+            T.let(
+              :tatar,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          TELUGU =
+            T.let(
+              :telugu,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          THAI =
+            T.let(
+              :thai,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          TIBETAN =
+            T.let(
+              :tibetan,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          TIGRINYA =
+            T.let(
+              :tigrinya,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          TONGAN =
+            T.let(
+              :tongan,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          TSWANA =
+            T.let(
+              :tswana,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          TURKISH =
+            T.let(
+              :turkish,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          TURKMEN =
+            T.let(
+              :turkmen,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          UKRAINIAN =
+            T.let(
+              :ukrainian,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          URDU =
+            T.let(
+              :urdu,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          UYGHUR =
+            T.let(
+              :uyghur,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          UZBEK =
+            T.let(
+              :uzbek,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          VIETNAMESE =
+            T.let(
+              :vietnamese,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          WELSH =
+            T.let(
+              :welsh,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          WOLOF =
+            T.let(
+              :wolof,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          XHOSA =
+            T.let(
+              :xhosa,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          YIDDISH =
+            T.let(
+              :yiddish,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          YORUBA =
+            T.let(
+              :yoruba,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+          ZULU =
+            T.let(
+              :zulu,
+              BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+            )
+
+          sig do
+            override.returns(
+              T::Array[
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::PrimaryLanguage::TaggedSymbol
+              ]
+            )
+          end
+          def self.values
+          end
+        end
+
         class Social < BrandDev::Internal::Type::BaseModel
           OrHash =
             T.type_alias do
@@ -2514,11 +3535,22 @@ module BrandDev
               )
             end
 
-          # Type of social media, e.g., 'facebook', 'twitter'
-          sig { returns(T.nilable(String)) }
+          # Type of social media platform
+          sig do
+            returns(
+              T.nilable(
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Social::Type::TaggedSymbol
+              )
+            )
+          end
           attr_reader :type
 
-          sig { params(type: String).void }
+          sig do
+            params(
+              type:
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Social::Type::OrSymbol
+            ).void
+          end
           attr_writer :type
 
           # URL of the social media page
@@ -2528,17 +3560,211 @@ module BrandDev
           sig { params(url: String).void }
           attr_writer :url
 
-          sig { params(type: String, url: String).returns(T.attached_class) }
+          sig do
+            params(
+              type:
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Social::Type::OrSymbol,
+              url: String
+            ).returns(T.attached_class)
+          end
           def self.new(
-            # Type of social media, e.g., 'facebook', 'twitter'
+            # Type of social media platform
             type: nil,
             # URL of the social media page
             url: nil
           )
           end
 
-          sig { override.returns({ type: String, url: String }) }
+          sig do
+            override.returns(
+              {
+                type:
+                  BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Social::Type::TaggedSymbol,
+                url: String
+              }
+            )
+          end
           def to_hash
+          end
+
+          # Type of social media platform
+          module Type
+            extend BrandDev::Internal::Type::Enum
+
+            TaggedSymbol =
+              T.type_alias do
+                T.all(
+                  Symbol,
+                  BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Social::Type
+                )
+              end
+            OrSymbol = T.type_alias { T.any(Symbol, String) }
+
+            X =
+              T.let(
+                :x,
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Social::Type::TaggedSymbol
+              )
+            FACEBOOK =
+              T.let(
+                :facebook,
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Social::Type::TaggedSymbol
+              )
+            INSTAGRAM =
+              T.let(
+                :instagram,
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Social::Type::TaggedSymbol
+              )
+            LINKEDIN =
+              T.let(
+                :linkedin,
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Social::Type::TaggedSymbol
+              )
+            YOUTUBE =
+              T.let(
+                :youtube,
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Social::Type::TaggedSymbol
+              )
+            PINTEREST =
+              T.let(
+                :pinterest,
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Social::Type::TaggedSymbol
+              )
+            TIKTOK =
+              T.let(
+                :tiktok,
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Social::Type::TaggedSymbol
+              )
+            DRIBBBLE =
+              T.let(
+                :dribbble,
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Social::Type::TaggedSymbol
+              )
+            GITHUB =
+              T.let(
+                :github,
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Social::Type::TaggedSymbol
+              )
+            BEHANCE =
+              T.let(
+                :behance,
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Social::Type::TaggedSymbol
+              )
+            SNAPCHAT =
+              T.let(
+                :snapchat,
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Social::Type::TaggedSymbol
+              )
+            WHATSAPP =
+              T.let(
+                :whatsapp,
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Social::Type::TaggedSymbol
+              )
+            TELEGRAM =
+              T.let(
+                :telegram,
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Social::Type::TaggedSymbol
+              )
+            LINE =
+              T.let(
+                :line,
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Social::Type::TaggedSymbol
+              )
+            DISCORD =
+              T.let(
+                :discord,
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Social::Type::TaggedSymbol
+              )
+            TWITCH =
+              T.let(
+                :twitch,
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Social::Type::TaggedSymbol
+              )
+            VIMEO =
+              T.let(
+                :vimeo,
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Social::Type::TaggedSymbol
+              )
+            IMDB =
+              T.let(
+                :imdb,
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Social::Type::TaggedSymbol
+              )
+            TUMBLR =
+              T.let(
+                :tumblr,
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Social::Type::TaggedSymbol
+              )
+            FLICKR =
+              T.let(
+                :flickr,
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Social::Type::TaggedSymbol
+              )
+            GIPHY =
+              T.let(
+                :giphy,
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Social::Type::TaggedSymbol
+              )
+            MEDIUM =
+              T.let(
+                :medium,
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Social::Type::TaggedSymbol
+              )
+            SPOTIFY =
+              T.let(
+                :spotify,
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Social::Type::TaggedSymbol
+              )
+            SOUNDCLOUD =
+              T.let(
+                :soundcloud,
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Social::Type::TaggedSymbol
+              )
+            TRIPADVISOR =
+              T.let(
+                :tripadvisor,
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Social::Type::TaggedSymbol
+              )
+            YELP =
+              T.let(
+                :yelp,
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Social::Type::TaggedSymbol
+              )
+            PRODUCTHUNT =
+              T.let(
+                :producthunt,
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Social::Type::TaggedSymbol
+              )
+            REDDIT =
+              T.let(
+                :reddit,
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Social::Type::TaggedSymbol
+              )
+            CRUNCHBASE =
+              T.let(
+                :crunchbase,
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Social::Type::TaggedSymbol
+              )
+            APPSTORE =
+              T.let(
+                :appstore,
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Social::Type::TaggedSymbol
+              )
+            PLAYSTORE =
+              T.let(
+                :playstore,
+                BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Social::Type::TaggedSymbol
+              )
+
+            sig do
+              override.returns(
+                T::Array[
+                  BrandDev::Models::BrandRetrieveByIsinResponse::Brand::Social::Type::TaggedSymbol
+                ]
+              )
+            end
+            def self.values
+            end
           end
         end
 
@@ -2581,6 +3807,47 @@ module BrandDev
           sig { override.returns({ exchange: String, ticker: String }) }
           def to_hash
           end
+        end
+      end
+
+      class KeyMetadata < BrandDev::Internal::Type::BaseModel
+        OrHash =
+          T.type_alias do
+            T.any(
+              BrandDev::Models::BrandRetrieveByIsinResponse::KeyMetadata,
+              BrandDev::Internal::AnyHash
+            )
+          end
+
+        # The number of credits consumed by this request.
+        sig { returns(Integer) }
+        attr_accessor :credits_consumed
+
+        # The number of credits remaining for your organization after this request.
+        sig { returns(Integer) }
+        attr_accessor :credits_remaining
+
+        # Metadata about the API key used for the request. Included in every response
+        # whenever a valid API key is provided, even when the response status is not 200.
+        sig do
+          params(credits_consumed: Integer, credits_remaining: Integer).returns(
+            T.attached_class
+          )
+        end
+        def self.new(
+          # The number of credits consumed by this request.
+          credits_consumed:,
+          # The number of credits remaining for your organization after this request.
+          credits_remaining:
+        )
+        end
+
+        sig do
+          override.returns(
+            { credits_consumed: Integer, credits_remaining: Integer }
+          )
+        end
+        def to_hash
         end
       end
     end

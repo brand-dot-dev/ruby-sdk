@@ -9,8 +9,14 @@ module BrandDev
         params(
           domain: String,
           force_language:
-            BrandDev::BrandRetrieveParams::ForceLanguage::OrSymbol,
+            T.nilable(BrandDev::BrandRetrieveParams::ForceLanguage::OrSymbol),
+          max_age_ms: T.nilable(Integer),
           max_speed: T::Boolean,
+          name: String,
+          tags: T::Array[String],
+          ticker: String,
+          ticker_exchange:
+            BrandDev::BrandRetrieveParams::TickerExchange::OrSymbol,
           timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(BrandDev::Models::BrandRetrieveResponse)
@@ -18,14 +24,30 @@ module BrandDev
       def retrieve(
         # Domain name to retrieve brand data for (e.g., 'example.com', 'google.com').
         # Cannot be used with name or ticker parameters.
-        domain:,
-        # Optional parameter to force the language of the retrieved brand data. Works with
-        # all three lookup methods.
+        domain: nil,
+        # Language to force for the retrieved brand data.
         force_language: nil,
+        # Maximum age in milliseconds for cached brand data before the API performs a hard
+        # refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
+        # are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
+        # year.
+        max_age_ms: nil,
         # Optional parameter to optimize the API call for maximum speed. When set to true,
         # the API will skip time-consuming operations for faster response at the cost of
         # less comprehensive data. Works with all three lookup methods.
         max_speed: nil,
+        # Company name to retrieve brand data for (e.g., 'Apple Inc'). Cannot be used with
+        # domain or ticker parameters.
+        name: nil,
+        # Optional comma-separated caller-defined tags for tracking this request. Tags are
+        # recorded on the request's usage log and can be used to filter usage on the
+        # dashboard usage page. Up to 20 tags, each 1-50 characters.
+        tags: nil,
+        # Stock ticker symbol to retrieve brand data for (e.g., 'AAPL'). Cannot be used
+        # with domain or name parameters.
+        ticker: nil,
+        # Stock exchange code.
+        ticker_exchange: nil,
         # Optional timeout in milliseconds for the request. If the request takes longer
         # than this value, it will be aborted with a 408 status code. Maximum allowed
         # value is 300000ms (5 minutes).
@@ -34,12 +56,13 @@ module BrandDev
       )
       end
 
-      # Beta feature: Given a single URL, determines if it is a product detail page,
-      # classifies the platform/product type, and extracts the product information.
-      # Supports Amazon, TikTok Shop, Etsy, and generic ecommerce sites.
+      # Given a single URL, determines if it is a product page and extracts the product
+      # information.
       sig do
         params(
           url: String,
+          max_age_ms: Integer,
+          tags: T::Array[String],
           timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(BrandDev::Models::BrandAIProductResponse)
@@ -47,16 +70,23 @@ module BrandDev
       def ai_product(
         # The product page URL to extract product data from.
         url:,
-        # Optional timeout in milliseconds for the request. Maximum allowed value is
-        # 300000ms (5 minutes).
+        # Return a cached result if a prior scrape for the same parameters exists and is
+        # younger than this many milliseconds. Defaults to 7 days (604800000 ms) when
+        # omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
+        max_age_ms: nil,
+        # Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+        tags: nil,
+        # Optional timeout in milliseconds for the request. If the request takes longer
+        # than this value, it will be aborted with a 408 status code. Maximum allowed
+        # value is 300000ms (5 minutes).
         timeout_ms: nil,
         request_options: {}
       )
       end
 
-      # Beta feature: Extract product information from a brand's website. We will
-      # analyze the website and return a list of products with details such as name,
-      # description, image, pricing, features, and more.
+      # Extract product information from a brand's website. We will analyze the website
+      # and return a list of products with details such as name, description, image,
+      # pricing, features, and more.
       sig do
         params(
           body:
@@ -79,6 +109,7 @@ module BrandDev
             T::Array[BrandDev::BrandAIQueryParams::DataToExtract::OrHash],
           domain: String,
           specific_pages: BrandDev::BrandAIQueryParams::SpecificPages::OrHash,
+          tags: T::Array[String],
           timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(BrandDev::Models::BrandAIQueryResponse)
@@ -90,6 +121,8 @@ module BrandDev
         domain:,
         # Optional object specifying which pages to analyze
         specific_pages: nil,
+        # Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+        tags: nil,
         # Optional timeout in milliseconds for the request. If the request takes longer
         # than this value, it will be aborted with a 408 status code. Maximum allowed
         # value is 300000ms (5 minutes).
@@ -98,19 +131,36 @@ module BrandDev
       )
       end
 
-      # Extract font information from a brand's website including font families, usage
+      # Scrape font information from a website including font families, usage
       # statistics, fallbacks, and element/word counts.
       sig do
         params(
+          direct_url: String,
           domain: String,
+          max_age_ms: T.nilable(Integer),
+          tags: T::Array[String],
           timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(BrandDev::Models::BrandFontsResponse)
       end
       def fonts(
+        # A specific URL to fetch fonts from directly, bypassing domain resolution (e.g.,
+        # 'https://example.com/design-system'). When provided, fonts are extracted from
+        # this exact URL. You must provide either 'domain' or 'directUrl', but not both.
+        direct_url: nil,
         # Domain name to extract fonts from (e.g., 'example.com', 'google.com'). The
-        # domain will be automatically normalized and validated.
-        domain:,
+        # domain will be automatically normalized and validated. You must provide either
+        # 'domain' or 'directUrl', but not both.
+        domain: nil,
+        # Maximum age in milliseconds for cached brand data before the API performs a hard
+        # refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
+        # are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
+        # year.
+        max_age_ms: nil,
+        # Optional comma-separated caller-defined tags for tracking this request. Tags are
+        # recorded on the request's usage log and can be used to filter usage on the
+        # dashboard usage page. Up to 20 tags, each 1-50 characters.
+        tags: nil,
         # Optional timeout in milliseconds for the request. If the request takes longer
         # than this value, it will be aborted with a 408 status code. Maximum allowed
         # value is 300000ms (5 minutes).
@@ -128,11 +178,14 @@ module BrandDev
           country_gl:
             BrandDev::BrandIdentifyFromTransactionParams::CountryGl::OrSymbol,
           force_language:
-            BrandDev::BrandIdentifyFromTransactionParams::ForceLanguage::OrSymbol,
+            T.nilable(
+              BrandDev::BrandIdentifyFromTransactionParams::ForceLanguage::OrSymbol
+            ),
           high_confidence_only: T::Boolean,
           max_speed: T::Boolean,
-          mcc: String,
-          phone: Float,
+          mcc: BrandDev::BrandIdentifyFromTransactionParams::Mcc::Variants,
+          phone: BrandDev::BrandIdentifyFromTransactionParams::Phone::Variants,
+          tags: T::Array[String],
           timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(BrandDev::Models::BrandIdentifyFromTransactionResponse)
@@ -142,14 +195,13 @@ module BrandDev
         transaction_info:,
         # Optional city name to prioritize when searching for the brand.
         city: nil,
-        # Optional country code (GL parameter) to specify the country. This affects the
-        # geographic location used for search queries.
+        # Two-letter ISO 3166-1 alpha-2 country code (GL parameter) used to localize
+        # search.
         country_gl: nil,
-        # Optional parameter to force the language of the retrieved brand data.
+        # Language to force for the retrieved brand data.
         force_language: nil,
         # When set to true, the API will perform an additional verification steps to
         # ensure the identified brand matches the transaction with high confidence.
-        # Defaults to false.
         high_confidence_only: nil,
         # Optional parameter to optimize the API call for maximum speed. When set to true,
         # the API will skip time-consuming operations for faster response at the cost of
@@ -160,6 +212,10 @@ module BrandDev
         mcc: nil,
         # Optional phone number from the transaction to help verify brand match.
         phone: nil,
+        # Optional comma-separated caller-defined tags for tracking this request. Tags are
+        # recorded on the request's usage log and can be used to filter usage on the
+        # dashboard usage page. Up to 20 tags, each 1-50 characters.
+        tags: nil,
         # Optional timeout in milliseconds for the request. If the request takes longer
         # than this value, it will be aborted with a 408 status code. Maximum allowed
         # value is 300000ms (5 minutes).
@@ -169,12 +225,11 @@ module BrandDev
       end
 
       # Signal that you may fetch brand data for a particular domain soon to improve
-      # latency. This endpoint does not charge credits and is available for paid
-      # customers to optimize future requests. [You must be on a paid plan to use this
-      # endpoint]
+      # latency.
       sig do
         params(
           domain: String,
+          tags: T::Array[String],
           timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(BrandDev::Models::BrandPrefetchResponse)
@@ -182,6 +237,8 @@ module BrandDev
       def prefetch(
         # Domain name to prefetch brand data for
         domain:,
+        # Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+        tags: nil,
         # Optional timeout in milliseconds for the request. If the request takes longer
         # than this value, it will be aborted with a 408 status code. Maximum allowed
         # value is 300000ms (5 minutes).
@@ -193,12 +250,11 @@ module BrandDev
       # Signal that you may fetch brand data for a particular domain soon to improve
       # latency. This endpoint accepts an email address, extracts the domain from it,
       # validates that it's not a disposable or free email provider, and queues the
-      # domain for prefetching. This endpoint does not charge credits and is available
-      # for paid customers to optimize future requests. [You must be on a paid plan to
-      # use this endpoint]
+      # domain for prefetching.
       sig do
         params(
           email: String,
+          tags: T::Array[String],
           timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(BrandDev::Models::BrandPrefetchByEmailResponse)
@@ -208,6 +264,8 @@ module BrandDev
         # email. Free email providers (gmail.com, yahoo.com, etc.) and disposable email
         # addresses are not allowed.
         email:,
+        # Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+        tags: nil,
         # Optional timeout in milliseconds for the request. If the request takes longer
         # than this value, it will be aborted with a 408 status code. Maximum allowed
         # value is 300000ms (5 minutes).
@@ -217,15 +275,18 @@ module BrandDev
       end
 
       # Retrieve brand information using an email address while detecting disposable and
-      # free email addresses. This endpoint extracts the domain from the email address
-      # and returns brand data for that domain. Disposable and free email addresses
-      # (like gmail.com, yahoo.com) will throw a 422 error.
+      # free email addresses. Disposable and free email addresses (like gmail.com,
+      # yahoo.com) will throw a 422 error.
       sig do
         params(
           email: String,
           force_language:
-            BrandDev::BrandRetrieveByEmailParams::ForceLanguage::OrSymbol,
+            T.nilable(
+              BrandDev::BrandRetrieveByEmailParams::ForceLanguage::OrSymbol
+            ),
+          max_age_ms: T.nilable(Integer),
           max_speed: T::Boolean,
+          tags: T::Array[String],
           timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(BrandDev::Models::BrandRetrieveByEmailResponse)
@@ -235,12 +296,21 @@ module BrandDev
         # domain will be extracted from the email. Free email providers (gmail.com,
         # yahoo.com, etc.) and disposable email addresses are not allowed.
         email:,
-        # Optional parameter to force the language of the retrieved brand data.
+        # Language to force for the retrieved brand data.
         force_language: nil,
+        # Maximum age in milliseconds for cached brand data before the API performs a hard
+        # refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
+        # are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
+        # year.
+        max_age_ms: nil,
         # Optional parameter to optimize the API call for maximum speed. When set to true,
         # the API will skip time-consuming operations for faster response at the cost of
         # less comprehensive data.
         max_speed: nil,
+        # Optional comma-separated caller-defined tags for tracking this request. Tags are
+        # recorded on the request's usage log and can be used to filter usage on the
+        # dashboard usage page. Up to 20 tags, each 1-50 characters.
+        tags: nil,
         # Optional timeout in milliseconds for the request. If the request takes longer
         # than this value, it will be aborted with a 408 status code. Maximum allowed
         # value is 300000ms (5 minutes).
@@ -250,14 +320,17 @@ module BrandDev
       end
 
       # Retrieve brand information using an ISIN (International Securities
-      # Identification Number). This endpoint looks up the company associated with the
-      # ISIN and returns its brand data.
+      # Identification Number).
       sig do
         params(
           isin: String,
           force_language:
-            BrandDev::BrandRetrieveByIsinParams::ForceLanguage::OrSymbol,
+            T.nilable(
+              BrandDev::BrandRetrieveByIsinParams::ForceLanguage::OrSymbol
+            ),
+          max_age_ms: T.nilable(Integer),
           max_speed: T::Boolean,
+          tags: T::Array[String],
           timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(BrandDev::Models::BrandRetrieveByIsinResponse)
@@ -267,12 +340,21 @@ module BrandDev
         # (e.g., 'AU000000IMD5', 'US0378331005'). Must be exactly 12 characters: 2 letters
         # followed by 9 alphanumeric characters and ending with a digit.
         isin:,
-        # Optional parameter to force the language of the retrieved brand data.
+        # Language to force for the retrieved brand data.
         force_language: nil,
+        # Maximum age in milliseconds for cached brand data before the API performs a hard
+        # refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
+        # are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
+        # year.
+        max_age_ms: nil,
         # Optional parameter to optimize the API call for maximum speed. When set to true,
         # the API will skip time-consuming operations for faster response at the cost of
         # less comprehensive data.
         max_speed: nil,
+        # Optional comma-separated caller-defined tags for tracking this request. Tags are
+        # recorded on the request's usage log and can be used to filter usage on the
+        # dashboard usage page. Up to 20 tags, each 1-50 characters.
+        tags: nil,
         # Optional timeout in milliseconds for the request. If the request takes longer
         # than this value, it will be aborted with a 408 status code. Maximum allowed
         # value is 300000ms (5 minutes).
@@ -281,15 +363,18 @@ module BrandDev
       )
       end
 
-      # Retrieve brand information using a company name. This endpoint searches for the
-      # company by name and returns its brand data.
+      # Retrieve brand information using a company name.
       sig do
         params(
           name: String,
           country_gl: BrandDev::BrandRetrieveByNameParams::CountryGl::OrSymbol,
           force_language:
-            BrandDev::BrandRetrieveByNameParams::ForceLanguage::OrSymbol,
+            T.nilable(
+              BrandDev::BrandRetrieveByNameParams::ForceLanguage::OrSymbol
+            ),
+          max_age_ms: T.nilable(Integer),
           max_speed: T::Boolean,
+          tags: T::Array[String],
           timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(BrandDev::Models::BrandRetrieveByNameResponse)
@@ -298,15 +383,24 @@ module BrandDev
         # Company name to retrieve brand data for (e.g., 'Apple Inc', 'Microsoft
         # Corporation'). Must be 3-30 characters.
         name:,
-        # Optional country code (GL parameter) to specify the country. This affects the
-        # geographic location used for search queries.
+        # Two-letter ISO 3166-1 alpha-2 country code (GL parameter) used to localize
+        # search.
         country_gl: nil,
-        # Optional parameter to force the language of the retrieved brand data.
+        # Language to force for the retrieved brand data.
         force_language: nil,
+        # Maximum age in milliseconds for cached brand data before the API performs a hard
+        # refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
+        # are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
+        # year.
+        max_age_ms: nil,
         # Optional parameter to optimize the API call for maximum speed. When set to true,
         # the API will skip time-consuming operations for faster response at the cost of
         # less comprehensive data.
         max_speed: nil,
+        # Optional comma-separated caller-defined tags for tracking this request. Tags are
+        # recorded on the request's usage log and can be used to filter usage on the
+        # dashboard usage page. Up to 20 tags, each 1-50 characters.
+        tags: nil,
         # Optional timeout in milliseconds for the request. If the request takes longer
         # than this value, it will be aborted with a 408 status code. Maximum allowed
         # value is 300000ms (5 minutes).
@@ -315,14 +409,17 @@ module BrandDev
       )
       end
 
-      # Retrieve brand information using a stock ticker symbol. This endpoint looks up
-      # the company associated with the ticker and returns its brand data.
+      # Retrieve brand information using a stock ticker symbol.
       sig do
         params(
           ticker: String,
           force_language:
-            BrandDev::BrandRetrieveByTickerParams::ForceLanguage::OrSymbol,
+            T.nilable(
+              BrandDev::BrandRetrieveByTickerParams::ForceLanguage::OrSymbol
+            ),
+          max_age_ms: T.nilable(Integer),
           max_speed: T::Boolean,
+          tags: T::Array[String],
           ticker_exchange:
             BrandDev::BrandRetrieveByTickerParams::TickerExchange::OrSymbol,
           timeout_ms: Integer,
@@ -333,13 +430,22 @@ module BrandDev
         # Stock ticker symbol to retrieve brand data for (e.g., 'AAPL', 'GOOGL', 'BRK.A').
         # Must be 1-15 characters, letters/numbers/dots only.
         ticker:,
-        # Optional parameter to force the language of the retrieved brand data.
+        # Language to force for the retrieved brand data.
         force_language: nil,
+        # Maximum age in milliseconds for cached brand data before the API performs a hard
+        # refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
+        # are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
+        # year.
+        max_age_ms: nil,
         # Optional parameter to optimize the API call for maximum speed. When set to true,
         # the API will skip time-consuming operations for faster response at the cost of
         # less comprehensive data.
         max_speed: nil,
-        # Optional stock exchange for the ticker. Defaults to NASDAQ if not specified.
+        # Optional comma-separated caller-defined tags for tracking this request. Tags are
+        # recorded on the request's usage log and can be used to filter usage on the
+        # dashboard usage page. Up to 20 tags, each 1-50 characters.
+        tags: nil,
+        # Stock exchange code.
         ticker_exchange: nil,
         # Optional timeout in milliseconds for the request. If the request takes longer
         # than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -349,26 +455,31 @@ module BrandDev
       )
       end
 
-      # Endpoint to classify any brand into a 2022 NAICS code.
+      # Classify any brand into 2022 NAICS industry codes from its domain or name.
       sig do
         params(
           input: String,
           max_results: Integer,
           min_results: Integer,
+          tags: T::Array[String],
           timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(BrandDev::Models::BrandRetrieveNaicsResponse)
       end
       def retrieve_naics(
-        # Brand domain or title to retrieve NAICS code for. If a valid domain is provided
-        # in `input`, it will be used for classification, otherwise, we will search for
-        # the brand using the provided title.
+        # Brand domain or title to retrieve NAICS code for. If a valid domain is provided,
+        # it will be used for classification, otherwise, we will search for the brand
+        # using the provided title.
         input:,
         # Maximum number of NAICS codes to return. Must be between 1 and 10. Defaults
         # to 5.
         max_results: nil,
         # Minimum number of NAICS codes to return. Must be at least 1. Defaults to 1.
         min_results: nil,
+        # Optional comma-separated caller-defined tags for tracking this request. Tags are
+        # recorded on the request's usage log and can be used to filter usage on the
+        # dashboard usage page. Up to 20 tags, each 1-50 characters.
+        tags: nil,
         # Optional timeout in milliseconds for the request. If the request takes longer
         # than this value, it will be aborted with a 408 status code. Maximum allowed
         # value is 300000ms (5 minutes).
@@ -378,11 +489,14 @@ module BrandDev
       end
 
       # Returns a simplified version of brand data containing only essential
-      # information: domain, title, colors, logos, and backdrops. This endpoint is
-      # optimized for faster responses and reduced data transfer.
+      # information: domain, title, colors, logos, and backdrops. Optimized for faster
+      # responses and reduced data transfer.
       sig do
         params(
           domain: String,
+          max_age_ms: T.nilable(Integer),
+          tags: T::Array[String],
+          theme: BrandDev::BrandRetrieveSimplifiedParams::Theme::OrSymbol,
           timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(BrandDev::Models::BrandRetrieveSimplifiedResponse)
@@ -390,6 +504,17 @@ module BrandDev
       def retrieve_simplified(
         # Domain name to retrieve simplified brand data for
         domain:,
+        # Maximum age in milliseconds for cached brand data before the API performs a hard
+        # refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
+        # are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
+        # year.
+        max_age_ms: nil,
+        # Optional comma-separated caller-defined tags for tracking this request. Tags are
+        # recorded on the request's usage log and can be used to filter usage on the
+        # dashboard usage page. Up to 20 tags, each 1-50 characters.
+        tags: nil,
+        # Optional theme preference used when selecting brand assets.
+        theme: nil,
         # Optional timeout in milliseconds for the request. If the request takes longer
         # than this value, it will be aborted with a 408 status code. Maximum allowed
         # value is 300000ms (5 minutes).
@@ -398,60 +523,132 @@ module BrandDev
       )
       end
 
-      # Capture a screenshot of a website. Supports both viewport (standard browser
-      # view) and full-page screenshots. Can also screenshot specific page types (login,
-      # pricing, etc.) by using heuristics to find the appropriate URL. Returns a URL to
-      # the uploaded screenshot image hosted on our CDN.
+      # Capture a screenshot of a website.
       sig do
         params(
+          clear_popups: T::Boolean,
+          color_scheme: BrandDev::BrandScreenshotParams::ColorScheme::OrSymbol,
+          country: BrandDev::BrandScreenshotParams::Country::OrSymbol,
+          direct_url: String,
           domain: String,
           full_screenshot:
             BrandDev::BrandScreenshotParams::FullScreenshot::OrSymbol,
+          handle_cookie_popup: T::Boolean,
+          max_age_ms: T.nilable(Integer),
           page: BrandDev::BrandScreenshotParams::Page::OrSymbol,
-          prioritize: BrandDev::BrandScreenshotParams::Prioritize::OrSymbol,
+          scroll_offset: T.nilable(Integer),
+          tags: T::Array[String],
+          timeout_ms: Integer,
+          viewport: BrandDev::BrandScreenshotParams::Viewport::OrHash,
+          wait_for_ms: T.nilable(Integer),
+          zdr: BrandDev::BrandScreenshotParams::Zdr::OrSymbol,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(BrandDev::Models::BrandScreenshotResponse)
       end
       def screenshot(
+        # Optional parameter for comprehensive popup cleanup. If 'true', the browser
+        # dismisses detected cookie/consent UI and clears other detected obstructive
+        # popups and overlays before capture. If 'false' or not provided, this parameter
+        # requests no cleanup; handleCookiePopup can still request cookie/consent handling
+        # independently.
+        clear_popups: nil,
+        # Optional parameter to choose the site's visual theme in the screenshot. Use
+        # 'light' or 'dark' when the site offers both appearances.
+        color_scheme: nil,
+        # Fetch the target page through a residential proxy in this country (ISO 3166-1
+        # alpha-2).
+        country: nil,
+        # A specific URL to screenshot directly, bypassing domain resolution (e.g.,
+        # 'https://example.com/pricing'). When provided, the screenshot is taken of this
+        # exact URL. You must provide either 'domain' or 'directUrl', but not both.
+        direct_url: nil,
         # Domain name to take screenshot of (e.g., 'example.com', 'google.com'). The
-        # domain will be automatically normalized and validated.
-        domain:,
+        # domain will be automatically normalized and validated. You must provide either
+        # 'domain' or 'directUrl', but not both.
+        domain: nil,
         # Optional parameter to determine screenshot type. If 'true', takes a full page
         # screenshot capturing all content. If 'false' or not provided, takes a viewport
         # screenshot (standard browser view).
         full_screenshot: nil,
+        # Optional parameter to control cookie/consent popup handling. If 'true', we
+        # dismiss cookie banner before capture. If 'false' or not provided, captures the
+        # page without that step.
+        handle_cookie_popup: nil,
+        # Return a cached screenshot if a prior screenshot for the same parameters exists
+        # and is younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
+        # omitted. Max is 30 days (2592000000 ms). Set to 0 to always capture fresh.
+        max_age_ms: nil,
         # Optional parameter to specify which page type to screenshot. If provided, the
         # system will scrape the domain's links and use heuristics to find the most
         # appropriate URL for the specified page type (30 supported languages). If not
-        # provided, screenshots the main domain landing page.
+        # provided, screenshots the main domain landing page. Only applicable when using
+        # 'domain', not 'directUrl'.
         page: nil,
-        # Optional parameter to prioritize screenshot capture. If 'speed', optimizes for
-        # faster capture with basic quality. If 'quality', optimizes for higher quality
-        # with longer wait times. Defaults to 'quality' if not provided.
-        prioritize: nil,
+        # Optional vertical scroll offset in pixels for capturing a long page in
+        # viewport-sized chunks. When provided, the full page is captured once and the
+        # returned image is the viewport-sized slice that begins at this Y offset (e.g.
+        # request scrollOffset=0, then 1080, then 2160 to walk a 1920x1080 landing page
+        # top to bottom). The final slice may be shorter than the viewport height. Takes
+        # precedence over fullScreenshot. Max: 100000.
+        scroll_offset: nil,
+        # Optional comma-separated caller-defined tags for tracking this request. Tags are
+        # recorded on the request's usage log and can be used to filter usage on the
+        # dashboard usage page. Up to 20 tags, each 1-50 characters.
+        tags: nil,
+        # Optional timeout in milliseconds for the request. If the request takes longer
+        # than this value, it will be aborted with a 408 status code. Maximum allowed
+        # value is 300000ms (5 minutes).
+        timeout_ms: nil,
+        # Optional browser viewport dimensions for the screenshot. Defaults to 1920x1080.
+        viewport: nil,
+        # Optional browser wait time in milliseconds after initial page load before taking
+        # the screenshot. Min: 0. Max: 30000 (30 seconds). Defaults to 3000 ms when
+        # omitted.
+        wait_for_ms: nil,
+        # Set to enabled to bypass shared caches and omit request and response content
+        # from retained usage logs. Requires zero data retention to be enabled for your
+        # organization (contact support@context.dev), otherwise the request fails with
+        # ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
+        zdr: nil,
         request_options: {}
       )
       end
 
-      # Automatically extract comprehensive design system information from a brand's
-      # website including colors, typography, spacing, shadows, and UI components.
-      # Either 'domain' or 'directUrl' must be provided as a query parameter, but not
-      # both.
+      # Extract a comprehensive design system from a website including colors,
+      # typography, spacing, shadows, and UI components.
       sig do
         params(
+          color_scheme: BrandDev::BrandStyleguideParams::ColorScheme::OrSymbol,
           direct_url: String,
           domain: String,
+          max_age_ms: T.nilable(Integer),
+          tags: T::Array[String],
           timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(BrandDev::Models::BrandStyleguideResponse)
       end
       def styleguide(
+        # Optional browser color scheme to emulate for websites that respond to
+        # prefers-color-scheme. This value is part of the styleguide cache key.
+        color_scheme: nil,
         # A specific URL to fetch the styleguide from directly, bypassing domain
-        # resolution (e.g., 'https://example.com/design-system').
+        # resolution (e.g., 'https://example.com/design-system'). When provided, the
+        # styleguide is extracted from this exact URL. You must provide either 'domain' or
+        # 'directUrl', but not both.
         direct_url: nil,
         # Domain name to extract styleguide from (e.g., 'example.com', 'google.com'). The
-        # domain will be automatically normalized and validated.
+        # domain will be automatically normalized and validated. You must provide either
+        # 'domain' or 'directUrl', but not both.
         domain: nil,
+        # Maximum age in milliseconds for cached brand data before the API performs a hard
+        # refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
+        # are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
+        # year.
+        max_age_ms: nil,
+        # Optional comma-separated caller-defined tags for tracking this request. Tags are
+        # recorded on the request's usage log and can be used to filter usage on the
+        # dashboard usage page. Up to 20 tags, each 1-50 characters.
+        tags: nil,
         # Optional timeout in milliseconds for the request. If the request takes longer
         # than this value, it will be aborted with a 408 status code. Maximum allowed
         # value is 300000ms (5 minutes).
@@ -460,82 +657,344 @@ module BrandDev
       )
       end
 
-      # Scrapes the given URL and returns the raw HTML content of the page.
+      # Scrapes the given URL and returns the raw HTML content of the page. The base
+      # request costs 1 credit; requests with browser actions cost 2 credits.
       sig do
         params(
           url: String,
+          actions:
+            T.nilable(
+              T::Array[
+                T.any(
+                  BrandDev::BrandWebScrapeHTMLParams::Action::Wait::OrHash,
+                  BrandDev::BrandWebScrapeHTMLParams::Action::Perform::OrHash,
+                  BrandDev::BrandWebScrapeHTMLParams::Action::Scroll::OrHash
+                )
+              ]
+            ),
+          country: BrandDev::BrandWebScrapeHTMLParams::Country::OrSymbol,
+          exclude_selectors: T.nilable(T::Array[String]),
+          headers: T::Hash[Symbol, String],
+          include_frames: T::Boolean,
+          include_selectors: T.nilable(T::Array[String]),
+          max_age_ms: T.nilable(Integer),
+          pdf: BrandDev::BrandWebScrapeHTMLParams::Pdf::OrHash,
+          settle_animations: T::Boolean,
+          tags: T::Array[String],
+          timeout_ms: Integer,
+          use_main_content_only: T::Boolean,
+          wait_for_ms: T.nilable(Integer),
+          zdr: BrandDev::BrandWebScrapeHTMLParams::Zdr::OrSymbol,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(BrandDev::Models::BrandWebScrapeHTMLResponse)
       end
       def web_scrape_html(
         # Full URL to scrape (must include http:// or https:// protocol)
         url:,
+        # Optional browser actions executed in array order after the page loads and before
+        # content is captured. Requires a paid plan. Send a JSON array in the query
+        # parameter. Maximum: 5 actions.
+        actions: nil,
+        # Fetch the target page through a residential proxy in this country (ISO 3166-1
+        # alpha-2).
+        country: nil,
+        # CSS selectors to remove from the result. Applied after includeSelectors.
+        # Exclusion takes precedence: an element matching both is removed. Examples:
+        # "nav", "footer", ".ad-banner", "[aria-hidden=true]".
+        exclude_selectors: nil,
+        # Optional outbound HTTP headers forwarded only to the target URL, sent as
+        # deep-object query params such as headers[X-Custom]=value. When provided, caching
+        # is bypassed: the result is neither read from nor written to cache.
+        headers: nil,
+        # When true, iframes are rendered inline into the returned HTML.
+        include_frames: nil,
+        # CSS selectors. When provided, only matching subtrees (and their descendants) are
+        # kept and everything else is dropped. When omitted, the entire document is kept.
+        # Examples: "article.main", "#content", "[role=main]".
+        include_selectors: nil,
+        # Return a cached result if a prior scrape for the same parameters exists and is
+        # younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
+        # omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
+        max_age_ms: nil,
+        # PDF parsing controls. Use start/end to limit text extraction and embedded-image
+        # detection/OCR to an inclusive 1-based page range.
+        pdf: nil,
+        # When true, waits briefly for CSS and transition animations to settle before
+        # extracting HTML. Defaults to false. This adds a bit of latency in exchange for
+        # more stable output on animated pages.
+        settle_animations: nil,
+        # Optional comma-separated caller-defined tags for tracking this request. Tags are
+        # recorded on the request's usage log and can be used to filter usage on the
+        # dashboard usage page. Up to 20 tags, each 1-50 characters.
+        tags: nil,
+        # Optional timeout in milliseconds for the request. If the request takes longer
+        # than this value, it will be aborted with a 408 status code. Maximum allowed
+        # value is 300000ms (5 minutes).
+        timeout_ms: nil,
+        # When true, return only the page's main content in the HTML response, excluding
+        # headers, footers, sidebars, and navigation when detectable.
+        use_main_content_only: nil,
+        # Optional browser wait time in milliseconds after initial page load. Min: 0. Max:
+        # 30000 (30 seconds).
+        wait_for_ms: nil,
+        # Set to enabled to bypass shared caches and omit request and response content
+        # from retained usage logs. Requires zero data retention to be enabled for your
+        # organization (contact support@context.dev), otherwise the request fails with
+        # ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
+        zdr: nil,
         request_options: {}
       )
       end
 
-      # Scrapes all images from the given URL. Extracts images from img, svg,
-      # picture/source, link, and video elements including inline SVGs, base64 data
-      # URIs, and standard URLs.
+      # Extract image assets from a web page, including standard URLs, inline SVGs, data
+      # URIs, responsive image sources, metadata, CSS backgrounds, video posters, and
+      # embeds. The base request costs 1 credit, or 2 credits with browser actions. When
+      # enrichment is enabled, the entire call costs 5 credits, including requests that
+      # also use actions.
       sig do
         params(
           url: String,
+          actions:
+            T.nilable(
+              T::Array[
+                T.any(
+                  BrandDev::BrandWebScrapeImagesParams::Action::Wait::OrHash,
+                  BrandDev::BrandWebScrapeImagesParams::Action::Perform::OrHash,
+                  BrandDev::BrandWebScrapeImagesParams::Action::Scroll::OrHash
+                )
+              ]
+            ),
+          dedupe: T::Boolean,
+          enrichment:
+            T.nilable(BrandDev::BrandWebScrapeImagesParams::Enrichment::OrHash),
+          headers: T::Hash[Symbol, String],
+          max_age_ms: T.nilable(Integer),
+          tags: T::Array[String],
+          timeout_ms: Integer,
+          wait_for_ms: T.nilable(Integer),
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(BrandDev::Models::BrandWebScrapeImagesResponse)
       end
       def web_scrape_images(
-        # Full URL to scrape images from (must include http:// or https:// protocol)
+        # Page URL to inspect. Must include http:// or https://.
         url:,
+        # Optional browser actions executed in array order after the page loads and before
+        # content is captured. Requires a paid plan. Send a JSON array in the query
+        # parameter. Maximum: 5 actions.
+        actions: nil,
+        # When true, visually duplicate images are removed: every image is loaded and
+        # perceptually hashed, and only the highest-resolution copy of each duplicate
+        # group is kept. Images that cannot be downloaded or hashed are kept. Default:
+        # false.
+        dedupe: nil,
+        # Optional per-image processing, sent as deep-object query params such as
+        # enrichment[resolution]=true.
+        enrichment: nil,
+        # Optional outbound HTTP headers forwarded only to the target URL, sent as
+        # deep-object query params such as headers[X-Custom]=value. When provided, caching
+        # is bypassed: the result is neither read from nor written to cache.
+        headers: nil,
+        # Reuse a cached result this many milliseconds old or newer. Default: 86400000 (1
+        # day). Set to 0 to bypass cache. Maximum: 2592000000 (30 days).
+        max_age_ms: nil,
+        # Optional comma-separated caller-defined tags for tracking this request. Tags are
+        # recorded on the request's usage log and can be used to filter usage on the
+        # dashboard usage page. Up to 20 tags, each 1-50 characters.
+        tags: nil,
+        # Optional timeout in milliseconds for the request. If the request takes longer
+        # than this value, it will be aborted with a 408 status code. Maximum allowed
+        # value is 300000ms (5 minutes).
+        timeout_ms: nil,
+        # Optional browser wait time in milliseconds after initial page load before
+        # collecting images. Min: 0. Max: 30000 (30 seconds).
+        wait_for_ms: nil,
         request_options: {}
       )
       end
 
-      # Scrapes the given URL, converts the HTML content to Markdown, and returns the
-      # result.
+      # Scrapes the given URL into LLM usable Markdown. Inspect key_metadata on JSON
+      # responses from a recognized API key; use error_code to distinguish stable
+      # failure categories.
+      #
+      # ### YouTube
+      #
+      # YouTube URLs return the video or channel itself rather than the surrounding
+      # player and navigation chrome. A URL addressing a single video (`/watch`,
+      # `youtu.be`, `/shorts`, `/embed`, `/live`) returns its title, channel, duration,
+      # view count, keywords, full description, and the transcript when the video has
+      # captions that can be retrieved; videos without captions return everything except
+      # the transcript. A channel URL (`/channel/UC…`, `/@handle`, `/c/…`, `/user/…`)
+      # returns its name, handle, subscriber count, video count, and full description.
+      # When `includeImages=true`, video responses also include the thumbnail and
+      # channel responses include the avatar. Costs the same as any other scrape.
+      #
+      # ### Billing & errors
+      #
+      # | HTTP status | Billed?                                   | Meaning                                                                                                                                                                                                                                                                                                       |
+      # | ----------- | ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+      # | 200         | Yes — 1 credit, or 2 credits with actions | Successful scrape, including a zero-length result when includeSelectors matched nothing                                                                                                                                                                                                                       |
+      # | 400         | No                                        | Invalid input, skipped PDF, or the page could not be scraped. error_code WEBSITE_BLOCKED specifically means the site answered with an anti-bot challenge, CAPTCHA wall, or login shell instead of the page (even when the site returned HTTP 200) — retrying later or from another country sometimes succeeds |
+      # | 401 / 403   | No                                        | Invalid/disabled key, insufficient permissions, or credits exhausted; inspect error_code                                                                                                                                                                                                                      |
+      # | 404         | No                                        | Target page returned or fingerprinted as not found                                                                                                                                                                                                                                                            |
+      # | 408         | No                                        | Request timed out                                                                                                                                                                                                                                                                                             |
+      # | 413         | No                                        | Target content exceeds the maximum supported size (20 MB)                                                                                                                                                                                                                                                     |
+      # | 415         | No                                        | Unsupported content type                                                                                                                                                                                                                                                                                      |
+      # | 429         | No                                        | Per-minute rate limit exceeded; honor Retry-After                                                                                                                                                                                                                                                             |
+      # | 500         | No                                        | Internal error                                                                                                                                                                                                                                                                                                |
       sig do
         params(
           url: String,
+          actions:
+            T.nilable(
+              T::Array[
+                T.any(
+                  BrandDev::BrandWebScrapeMdParams::Action::Wait::OrHash,
+                  BrandDev::BrandWebScrapeMdParams::Action::Perform::OrHash,
+                  BrandDev::BrandWebScrapeMdParams::Action::Scroll::OrHash
+                )
+              ]
+            ),
+          country: BrandDev::BrandWebScrapeMdParams::Country::OrSymbol,
+          exclude_selectors: T.nilable(T::Array[String]),
+          headers: T::Hash[Symbol, String],
+          include_frames: T::Boolean,
+          include_html: T::Boolean,
           include_images: T::Boolean,
           include_links: T::Boolean,
+          include_selectors: T.nilable(T::Array[String]),
+          max_age_ms: T.nilable(Integer),
+          pdf: BrandDev::BrandWebScrapeMdParams::Pdf::OrHash,
+          settle_animations: T::Boolean,
           shorten_base64_images: T::Boolean,
+          tags: T::Array[String],
+          timeout_ms: Integer,
           use_main_content_only: T::Boolean,
+          wait_for_ms: T.nilable(Integer),
+          zdr: BrandDev::BrandWebScrapeMdParams::Zdr::OrSymbol,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(BrandDev::Models::BrandWebScrapeMdResponse)
       end
       def web_scrape_md(
-        # Full URL to scrape and convert to markdown (must include http:// or https://
+        # Full URL to scrape into LLM usable Markdown (must include http:// or https://
         # protocol)
         url:,
+        # Optional browser actions executed in array order after the page loads and before
+        # content is captured. Requires a paid plan. Send a JSON array in the query
+        # parameter. Maximum: 5 actions.
+        actions: nil,
+        # Fetch the target page through a residential proxy in this country (ISO 3166-1
+        # alpha-2).
+        country: nil,
+        # CSS selectors to remove before conversion to Markdown. Applied after
+        # includeSelectors. Exclusion takes precedence: an element matching both is
+        # removed. Examples: "nav", "footer", ".ad-banner", "[aria-hidden=true]".
+        exclude_selectors: nil,
+        # Optional outbound HTTP headers forwarded only to the target URL, sent as
+        # deep-object query params such as headers[X-Custom]=value. When provided, caching
+        # is bypassed: the result is neither read from nor written to cache.
+        headers: nil,
+        # When true, the contents of iframes are rendered to Markdown.
+        include_frames: nil,
+        # When true, the response also includes an `html` field with the page HTML the
+        # Markdown was converted from — the same body the Scrape HTML endpoint returns for
+        # the equivalent request.
+        include_html: nil,
         # Include image references in Markdown output
         include_images: nil,
         # Preserve hyperlinks in Markdown output
         include_links: nil,
+        # CSS selectors. When provided, only matching HTML subtrees (and their
+        # descendants) are kept before conversion to Markdown. When omitted, the entire
+        # document is kept. Examples: "article.main", "#content", "[role=main]".
+        include_selectors: nil,
+        # Return a cached result if a prior scrape for the same parameters exists and is
+        # younger than this many milliseconds. Defaults to 1 day (86400000 ms) when
+        # omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
+        max_age_ms: nil,
+        # PDF parsing controls. Use start/end to limit text extraction and embedded-image
+        # detection/OCR to an inclusive 1-based page range.
+        pdf: nil,
+        # When true, waits briefly for CSS and transition animations to settle before
+        # converting to Markdown. Defaults to false. This adds a bit of latency in
+        # exchange for more stable output on animated pages.
+        settle_animations: nil,
         # Shorten base64-encoded image data in the Markdown output
         shorten_base64_images: nil,
+        # Optional comma-separated caller-defined tags for tracking this request. Tags are
+        # recorded on the request's usage log and can be used to filter usage on the
+        # dashboard usage page. Up to 20 tags, each 1-50 characters.
+        tags: nil,
+        # Optional timeout in milliseconds for the request. If the request takes longer
+        # than this value, it will be aborted with a 408 status code. Maximum allowed
+        # value is 300000ms (5 minutes).
+        timeout_ms: nil,
         # Extract only the main content of the page, excluding headers, footers, sidebars,
         # and navigation
         use_main_content_only: nil,
+        # Optional browser wait time in milliseconds after initial page load before
+        # converting the page to Markdown. Min: 0. Max: 30000 (30 seconds).
+        wait_for_ms: nil,
+        # Set to enabled to bypass shared caches and omit request and response content
+        # from retained usage logs. Requires zero data retention to be enabled for your
+        # organization (contact support@context.dev), otherwise the request fails with
+        # ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
+        zdr: nil,
         request_options: {}
       )
       end
 
-      # Crawls the sitemap of the given domain and returns all discovered page URLs.
-      # Supports sitemap index files (recursive), parallel fetching with concurrency
-      # control, deduplication, and filters out non-page resources (images, PDFs, etc.).
+      # Crawl an entire website's sitemap and return all discovered page URLs. Pass
+      # `search` to have the crawled sitemap filtered down to the pages about a phrase
+      # (for example `pricing and plans` or `api authentication docs`), most relevant
+      # first — a searched crawl scans the whole sitemap and costs 2 credits instead
+      # of 1.
       sig do
         params(
           domain: String,
+          headers: T::Hash[Symbol, String],
           max_links: Integer,
+          search: String,
+          sitemap_url: String,
+          tags: T::Array[String],
+          timeout_ms: Integer,
+          url_regex: String,
+          zdr: BrandDev::BrandWebScrapeSitemapParams::Zdr::OrSymbol,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(BrandDev::Models::BrandWebScrapeSitemapResponse)
       end
       def web_scrape_sitemap(
-        # Domain name to crawl sitemaps for (e.g., 'example.com'). The domain will be
-        # automatically normalized and validated.
+        # Domain to build a sitemap for
         domain:,
+        # Optional outbound HTTP headers forwarded only to the target URL, sent as
+        # deep-object query params such as headers[X-Custom]=value. When provided, caching
+        # is bypassed: the result is neither read from nor written to cache.
+        headers: nil,
         # Maximum number of links to return from the sitemap crawl. Defaults to 10,000.
         # Minimum is 1, maximum is 100,000.
         max_links: nil,
+        # Optional search phrase. When provided, the crawled sitemap is filtered to the
+        # pages whose URLs are about that phrase, most relevant first, and the request
+        # costs 2 credits instead of 1.
+        search: nil,
+        # Optional explicit sitemap URL. When provided, exactly this sitemap is crawled
+        # instead of discovering the domain's sitemaps.
+        sitemap_url: nil,
+        # Optional comma-separated caller-defined tags for tracking this request. Tags are
+        # recorded on the request's usage log and can be used to filter usage on the
+        # dashboard usage page. Up to 20 tags, each 1-50 characters.
+        tags: nil,
+        # Optional timeout in milliseconds for the request. If the request takes longer
+        # than this value, it will be aborted with a 408 status code. Maximum allowed
+        # value is 300000ms (5 minutes).
+        timeout_ms: nil,
+        # Optional RE2-compatible regex pattern. Only URLs matching this pattern are
+        # returned and counted against maxLinks.
+        url_regex: nil,
+        # Set to enabled to bypass shared caches and omit request and response content
+        # from retained usage logs. Requires zero data retention to be enabled for your
+        # organization (contact support@context.dev), otherwise the request fails with
+        # ZDR_NOT_ENABLED. Successful ZDR responses include X-Context-ZDR: true.
+        zdr: nil,
         request_options: {}
       )
       end

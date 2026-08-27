@@ -1,0 +1,40 @@
+module BrandDev
+  module Models
+    type intake =
+      {
+        duplicates: Integer,
+        invalid: Integer?,
+        reserved: Integer,
+        reserved_is_ceiling: bool,
+        submitted: Integer?
+      }
+
+    class Intake < BrandDev::Internal::Type::BaseModel
+      attr_accessor duplicates: Integer
+
+      attr_accessor invalid: Integer?
+
+      attr_accessor reserved: Integer
+
+      attr_accessor reserved_is_ceiling: bool
+
+      attr_accessor submitted: Integer?
+
+      def initialize: (
+        duplicates: Integer,
+        invalid: Integer?,
+        reserved: Integer,
+        reserved_is_ceiling: bool,
+        submitted: Integer?
+      ) -> void
+
+      def to_hash: -> {
+        duplicates: Integer,
+        invalid: Integer?,
+        reserved: Integer,
+        reserved_is_ceiling: bool,
+        submitted: Integer?
+      }
+    end
+  end
+end

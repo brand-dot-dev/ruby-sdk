@@ -13,6 +13,12 @@ module BrandDev
       #   @return [String]
       required :domain, String
 
+      # @!attribute tags
+      #   Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+      #
+      #   @return [Array<String>, nil]
+      optional :tags, BrandDev::Internal::Type::ArrayOf[String]
+
       # @!attribute timeout_ms
       #   Optional timeout in milliseconds for the request. If the request takes longer
       #   than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -21,11 +27,13 @@ module BrandDev
       #   @return [Integer, nil]
       optional :timeout_ms, Integer, api_name: :timeoutMS
 
-      # @!method initialize(domain:, timeout_ms: nil, request_options: {})
+      # @!method initialize(domain:, tags: nil, timeout_ms: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
       #   {BrandDev::Models::BrandPrefetchParams} for more details.
       #
       #   @param domain [String] Domain name to prefetch brand data for
+      #
+      #   @param tags [Array<String>] Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
       #
       #   @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #

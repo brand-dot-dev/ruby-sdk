@@ -11,6 +11,20 @@ module BrandDev
           )
         end
 
+      # Cache outcome for this response. Composite responses are hits only when every
+      # cache-controlled fetch contributing to the output was a hit; age_ms is the
+      # oldest contributing hit.
+      sig { returns(BrandDev::Models::BrandStyleguideResponse::CacheMetadata) }
+      attr_reader :cache_metadata
+
+      sig do
+        params(
+          cache_metadata:
+            BrandDev::Models::BrandStyleguideResponse::CacheMetadata::OrHash
+        ).void
+      end
+      attr_writer :cache_metadata
+
       # HTTP status code
       sig { returns(T.nilable(Integer)) }
       attr_reader :code
@@ -24,6 +38,23 @@ module BrandDev
 
       sig { params(domain: String).void }
       attr_writer :domain
+
+      # Metadata about the API key used for the request. Included in every response
+      # whenever a valid API key is provided, even when the response status is not 200.
+      sig do
+        returns(
+          T.nilable(BrandDev::Models::BrandStyleguideResponse::KeyMetadata)
+        )
+      end
+      attr_reader :key_metadata
+
+      sig do
+        params(
+          key_metadata:
+            BrandDev::Models::BrandStyleguideResponse::KeyMetadata::OrHash
+        ).void
+      end
+      attr_writer :key_metadata
 
       # Status of the response, e.g., 'ok'
       sig { returns(T.nilable(String)) }
@@ -50,18 +81,29 @@ module BrandDev
 
       sig do
         params(
+          cache_metadata:
+            BrandDev::Models::BrandStyleguideResponse::CacheMetadata::OrHash,
           code: Integer,
           domain: String,
+          key_metadata:
+            BrandDev::Models::BrandStyleguideResponse::KeyMetadata::OrHash,
           status: String,
           styleguide:
             BrandDev::Models::BrandStyleguideResponse::Styleguide::OrHash
         ).returns(T.attached_class)
       end
       def self.new(
+        # Cache outcome for this response. Composite responses are hits only when every
+        # cache-controlled fetch contributing to the output was a hit; age_ms is the
+        # oldest contributing hit.
+        cache_metadata:,
         # HTTP status code
         code: nil,
         # The normalized domain that was processed
         domain: nil,
+        # Metadata about the API key used for the request. Included in every response
+        # whenever a valid API key is provided, even when the response status is not 200.
+        key_metadata: nil,
         # Status of the response, e.g., 'ok'
         status: nil,
         # Comprehensive styleguide data extracted from the website
@@ -72,14 +114,154 @@ module BrandDev
       sig do
         override.returns(
           {
+            cache_metadata:
+              BrandDev::Models::BrandStyleguideResponse::CacheMetadata,
             code: Integer,
             domain: String,
+            key_metadata:
+              BrandDev::Models::BrandStyleguideResponse::KeyMetadata,
             status: String,
             styleguide: BrandDev::Models::BrandStyleguideResponse::Styleguide
           }
         )
       end
       def to_hash
+      end
+
+      class CacheMetadata < BrandDev::Internal::Type::BaseModel
+        OrHash =
+          T.type_alias do
+            T.any(
+              BrandDev::Models::BrandStyleguideResponse::CacheMetadata,
+              BrandDev::Internal::AnyHash
+            )
+          end
+
+        # Age of the cached data in milliseconds. Zero for miss and zdr responses.
+        sig { returns(Integer) }
+        attr_accessor :age_ms
+
+        # Whether the response was served from cache, required fresh work, or honored
+        # zero-data-retention cache bypass.
+        sig do
+          returns(
+            BrandDev::Models::BrandStyleguideResponse::CacheMetadata::Status::TaggedSymbol
+          )
+        end
+        attr_accessor :status
+
+        # Cache outcome for this response. Composite responses are hits only when every
+        # cache-controlled fetch contributing to the output was a hit; age_ms is the
+        # oldest contributing hit.
+        sig do
+          params(
+            age_ms: Integer,
+            status:
+              BrandDev::Models::BrandStyleguideResponse::CacheMetadata::Status::OrSymbol
+          ).returns(T.attached_class)
+        end
+        def self.new(
+          # Age of the cached data in milliseconds. Zero for miss and zdr responses.
+          age_ms:,
+          # Whether the response was served from cache, required fresh work, or honored
+          # zero-data-retention cache bypass.
+          status:
+        )
+        end
+
+        sig do
+          override.returns(
+            {
+              age_ms: Integer,
+              status:
+                BrandDev::Models::BrandStyleguideResponse::CacheMetadata::Status::TaggedSymbol
+            }
+          )
+        end
+        def to_hash
+        end
+
+        # Whether the response was served from cache, required fresh work, or honored
+        # zero-data-retention cache bypass.
+        module Status
+          extend BrandDev::Internal::Type::Enum
+
+          TaggedSymbol =
+            T.type_alias do
+              T.all(
+                Symbol,
+                BrandDev::Models::BrandStyleguideResponse::CacheMetadata::Status
+              )
+            end
+          OrSymbol = T.type_alias { T.any(Symbol, String) }
+
+          HIT =
+            T.let(
+              :hit,
+              BrandDev::Models::BrandStyleguideResponse::CacheMetadata::Status::TaggedSymbol
+            )
+          MISS =
+            T.let(
+              :miss,
+              BrandDev::Models::BrandStyleguideResponse::CacheMetadata::Status::TaggedSymbol
+            )
+          ZDR =
+            T.let(
+              :zdr,
+              BrandDev::Models::BrandStyleguideResponse::CacheMetadata::Status::TaggedSymbol
+            )
+
+          sig do
+            override.returns(
+              T::Array[
+                BrandDev::Models::BrandStyleguideResponse::CacheMetadata::Status::TaggedSymbol
+              ]
+            )
+          end
+          def self.values
+          end
+        end
+      end
+
+      class KeyMetadata < BrandDev::Internal::Type::BaseModel
+        OrHash =
+          T.type_alias do
+            T.any(
+              BrandDev::Models::BrandStyleguideResponse::KeyMetadata,
+              BrandDev::Internal::AnyHash
+            )
+          end
+
+        # The number of credits consumed by this request.
+        sig { returns(Integer) }
+        attr_accessor :credits_consumed
+
+        # The number of credits remaining for your organization after this request.
+        sig { returns(Integer) }
+        attr_accessor :credits_remaining
+
+        # Metadata about the API key used for the request. Included in every response
+        # whenever a valid API key is provided, even when the response status is not 200.
+        sig do
+          params(credits_consumed: Integer, credits_remaining: Integer).returns(
+            T.attached_class
+          )
+        end
+        def self.new(
+          # The number of credits consumed by this request.
+          credits_consumed:,
+          # The number of credits remaining for your organization after this request.
+          credits_remaining:
+        )
+        end
+
+        sig do
+          override.returns(
+            { credits_consumed: Integer, credits_remaining: Integer }
+          )
+        end
+        def to_hash
+        end
       end
 
       class Styleguide < BrandDev::Internal::Type::BaseModel
@@ -137,6 +319,19 @@ module BrandDev
         end
         attr_writer :element_spacing
 
+        # Font assets keyed by family name as it appears in fontFamily/fontFallbacks
+        # (non-generic names only). Clients match typography.fontFamily / fontWeight or
+        # button styles to pick a file URL from files.
+        sig do
+          returns(
+            T::Hash[
+              Symbol,
+              BrandDev::Models::BrandStyleguideResponse::Styleguide::FontLink
+            ]
+          )
+        end
+        attr_accessor :font_links
+
         # The primary color mode of the website design
         sig do
           returns(
@@ -186,6 +381,11 @@ module BrandDev
               BrandDev::Models::BrandStyleguideResponse::Styleguide::Components::OrHash,
             element_spacing:
               BrandDev::Models::BrandStyleguideResponse::Styleguide::ElementSpacing::OrHash,
+            font_links:
+              T::Hash[
+                Symbol,
+                BrandDev::Models::BrandStyleguideResponse::Styleguide::FontLink::OrHash
+              ],
             mode:
               BrandDev::Models::BrandStyleguideResponse::Styleguide::Mode::OrSymbol,
             shadows:
@@ -201,6 +401,10 @@ module BrandDev
           components:,
           # Spacing system used on the website
           element_spacing:,
+          # Font assets keyed by family name as it appears in fontFamily/fontFallbacks
+          # (non-generic names only). Clients match typography.fontFamily / fontWeight or
+          # button styles to pick a file URL from files.
+          font_links:,
           # The primary color mode of the website design
           mode:,
           # Shadow styles used on the website
@@ -219,6 +423,11 @@ module BrandDev
                 BrandDev::Models::BrandStyleguideResponse::Styleguide::Components,
               element_spacing:
                 BrandDev::Models::BrandStyleguideResponse::Styleguide::ElementSpacing,
+              font_links:
+                T::Hash[
+                  Symbol,
+                  BrandDev::Models::BrandStyleguideResponse::Styleguide::FontLink
+                ],
               mode:
                 BrandDev::Models::BrandStyleguideResponse::Styleguide::Mode::TaggedSymbol,
               shadows:
@@ -1040,6 +1249,117 @@ module BrandDev
             )
           end
           def to_hash
+          end
+        end
+
+        class FontLink < BrandDev::Internal::Type::BaseModel
+          OrHash =
+            T.type_alias do
+              T.any(
+                BrandDev::Models::BrandStyleguideResponse::Styleguide::FontLink,
+                BrandDev::Internal::AnyHash
+              )
+            end
+
+          # Upright font files keyed by weight string (e.g. "400" for regular, "500",
+          # "700"). Values are absolute URLs.
+          sig { returns(T::Hash[Symbol, String]) }
+          attr_accessor :files
+
+          sig do
+            returns(
+              BrandDev::Models::BrandStyleguideResponse::Styleguide::FontLink::Type::TaggedSymbol
+            )
+          end
+          attr_accessor :type
+
+          # Google Fonts category when type is google (e.g. sans-serif, serif, monospace,
+          # display, handwriting). Omitted for custom fonts when unknown.
+          sig { returns(T.nilable(String)) }
+          attr_reader :category
+
+          sig { params(category: String).void }
+          attr_writer :category
+
+          # Present when type is custom: human-readable name derived from the fontLinks key
+          # (strip build/hash suffixes, split camelCase / PascalCase, normalize separators).
+          # Google entries omit this.
+          sig { returns(T.nilable(String)) }
+          attr_reader :display_name
+
+          sig { params(display_name: String).void }
+          attr_writer :display_name
+
+          sig do
+            params(
+              files: T::Hash[Symbol, String],
+              type:
+                BrandDev::Models::BrandStyleguideResponse::Styleguide::FontLink::Type::OrSymbol,
+              category: String,
+              display_name: String
+            ).returns(T.attached_class)
+          end
+          def self.new(
+            # Upright font files keyed by weight string (e.g. "400" for regular, "500",
+            # "700"). Values are absolute URLs.
+            files:,
+            type:,
+            # Google Fonts category when type is google (e.g. sans-serif, serif, monospace,
+            # display, handwriting). Omitted for custom fonts when unknown.
+            category: nil,
+            # Present when type is custom: human-readable name derived from the fontLinks key
+            # (strip build/hash suffixes, split camelCase / PascalCase, normalize separators).
+            # Google entries omit this.
+            display_name: nil
+          )
+          end
+
+          sig do
+            override.returns(
+              {
+                files: T::Hash[Symbol, String],
+                type:
+                  BrandDev::Models::BrandStyleguideResponse::Styleguide::FontLink::Type::TaggedSymbol,
+                category: String,
+                display_name: String
+              }
+            )
+          end
+          def to_hash
+          end
+
+          module Type
+            extend BrandDev::Internal::Type::Enum
+
+            TaggedSymbol =
+              T.type_alias do
+                T.all(
+                  Symbol,
+                  BrandDev::Models::BrandStyleguideResponse::Styleguide::FontLink::Type
+                )
+              end
+            OrSymbol = T.type_alias { T.any(Symbol, String) }
+
+            GOOGLE =
+              T.let(
+                :google,
+                BrandDev::Models::BrandStyleguideResponse::Styleguide::FontLink::Type::TaggedSymbol
+              )
+            CUSTOM =
+              T.let(
+                :custom,
+                BrandDev::Models::BrandStyleguideResponse::Styleguide::FontLink::Type::TaggedSymbol
+              )
+
+            sig do
+              override.returns(
+                T::Array[
+                  BrandDev::Models::BrandStyleguideResponse::Styleguide::FontLink::Type::TaggedSymbol
+                ]
+              )
+            end
+            def self.values
+            end
           end
         end
 

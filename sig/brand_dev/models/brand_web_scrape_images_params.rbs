@@ -1,7 +1,18 @@
 module BrandDev
   module Models
     type brand_web_scrape_images_params =
-      { url: String } & BrandDev::Internal::Type::request_parameters
+      {
+        url: String,
+        actions: ::Array[BrandDev::Models::BrandWebScrapeImagesParams::action]?,
+        dedupe: bool,
+        enrichment: BrandDev::BrandWebScrapeImagesParams::Enrichment?,
+        headers: ::Hash[Symbol, String],
+        max_age_ms: Integer?,
+        tags: ::Array[String],
+        timeout_ms: Integer,
+        wait_for_ms: Integer?
+      }
+      & BrandDev::Internal::Type::request_parameters
 
     class BrandWebScrapeImagesParams < BrandDev::Internal::Type::BaseModel
       extend BrandDev::Internal::Type::RequestParameters::Converter
@@ -9,12 +20,203 @@ module BrandDev
 
       attr_accessor url: String
 
+      attr_accessor actions: ::Array[BrandDev::Models::BrandWebScrapeImagesParams::action]?
+
+      attr_reader dedupe: bool?
+
+      def dedupe=: (bool) -> bool
+
+      attr_accessor enrichment: BrandDev::BrandWebScrapeImagesParams::Enrichment?
+
+      attr_reader headers: ::Hash[Symbol, String]?
+
+      def headers=: (::Hash[Symbol, String]) -> ::Hash[Symbol, String]
+
+      attr_accessor max_age_ms: Integer?
+
+      attr_reader tags: ::Array[String]?
+
+      def tags=: (::Array[String]) -> ::Array[String]
+
+      attr_reader timeout_ms: Integer?
+
+      def timeout_ms=: (Integer) -> Integer
+
+      attr_accessor wait_for_ms: Integer?
+
       def initialize: (
         url: String,
+        ?actions: ::Array[BrandDev::Models::BrandWebScrapeImagesParams::action]?,
+        ?dedupe: bool,
+        ?enrichment: BrandDev::BrandWebScrapeImagesParams::Enrichment?,
+        ?headers: ::Hash[Symbol, String],
+        ?max_age_ms: Integer?,
+        ?tags: ::Array[String],
+        ?timeout_ms: Integer,
+        ?wait_for_ms: Integer?,
         ?request_options: BrandDev::request_opts
       ) -> void
 
-      def to_hash: -> { url: String, request_options: BrandDev::RequestOptions }
+      def to_hash: -> {
+        url: String,
+        actions: ::Array[BrandDev::Models::BrandWebScrapeImagesParams::action]?,
+        dedupe: bool,
+        enrichment: BrandDev::BrandWebScrapeImagesParams::Enrichment?,
+        headers: ::Hash[Symbol, String],
+        max_age_ms: Integer?,
+        tags: ::Array[String],
+        timeout_ms: Integer,
+        wait_for_ms: Integer?,
+        request_options: BrandDev::RequestOptions
+      }
+
+      type action =
+        BrandDev::BrandWebScrapeImagesParams::Action::Wait
+        | BrandDev::BrandWebScrapeImagesParams::Action::Perform
+        | BrandDev::BrandWebScrapeImagesParams::Action::Scroll
+
+      module Action
+        extend BrandDev::Internal::Type::Union
+
+        type wait = { do_: :wait, time_ms: Integer }
+
+        class Wait < BrandDev::Internal::Type::BaseModel
+          attr_accessor do_: :wait
+
+          attr_accessor time_ms: Integer
+
+          def initialize: (time_ms: Integer, ?do_: :wait) -> void
+
+          def to_hash: -> { do_: :wait, time_ms: Integer }
+        end
+
+        type perform = { action: String, do_: :perform }
+
+        class Perform < BrandDev::Internal::Type::BaseModel
+          attr_accessor action: String
+
+          attr_accessor do_: :perform
+
+          def initialize: (action: String, ?do_: :perform) -> void
+
+          def to_hash: -> { action: String, do_: :perform }
+        end
+
+        type scroll =
+          {
+            do_: :scroll,
+            amount: BrandDev::Models::BrandWebScrapeImagesParams::Action::Scroll::amount,
+            container: String,
+            direction: BrandDev::Models::BrandWebScrapeImagesParams::Action::Scroll::direction,
+            max_scrolls: Integer
+          }
+
+        class Scroll < BrandDev::Internal::Type::BaseModel
+          attr_accessor do_: :scroll
+
+          attr_reader amount: BrandDev::Models::BrandWebScrapeImagesParams::Action::Scroll::amount?
+
+          def amount=: (
+            BrandDev::Models::BrandWebScrapeImagesParams::Action::Scroll::amount
+          ) -> BrandDev::Models::BrandWebScrapeImagesParams::Action::Scroll::amount
+
+          attr_reader container: String?
+
+          def container=: (String) -> String
+
+          attr_reader direction: BrandDev::Models::BrandWebScrapeImagesParams::Action::Scroll::direction?
+
+          def direction=: (
+            BrandDev::Models::BrandWebScrapeImagesParams::Action::Scroll::direction
+          ) -> BrandDev::Models::BrandWebScrapeImagesParams::Action::Scroll::direction
+
+          attr_reader max_scrolls: Integer?
+
+          def max_scrolls=: (Integer) -> Integer
+
+          def initialize: (
+            ?amount: BrandDev::Models::BrandWebScrapeImagesParams::Action::Scroll::amount,
+            ?container: String,
+            ?direction: BrandDev::Models::BrandWebScrapeImagesParams::Action::Scroll::direction,
+            ?max_scrolls: Integer,
+            ?do_: :scroll
+          ) -> void
+
+          def to_hash: -> {
+            do_: :scroll,
+            amount: BrandDev::Models::BrandWebScrapeImagesParams::Action::Scroll::amount,
+            container: String,
+            direction: BrandDev::Models::BrandWebScrapeImagesParams::Action::Scroll::direction,
+            max_scrolls: Integer
+          }
+
+          type amount = Integer | :viewport | :max
+
+          module Amount
+            extend BrandDev::Internal::Type::Union
+
+            def self?.variants: -> ::Array[BrandDev::Models::BrandWebScrapeImagesParams::Action::Scroll::amount]
+
+            VIEWPORT: :viewport
+            MAX: :max
+          end
+
+          type direction = :up | :down | :left | :right
+
+          module Direction
+            extend BrandDev::Internal::Type::Enum
+
+            UP: :up
+            DOWN: :down
+            LEFT: :left
+            RIGHT: :right
+
+            def self?.values: -> ::Array[BrandDev::Models::BrandWebScrapeImagesParams::Action::Scroll::direction]
+          end
+        end
+
+        def self?.variants: -> ::Array[BrandDev::Models::BrandWebScrapeImagesParams::action]
+      end
+
+      type enrichment =
+        {
+          classification: bool,
+          hosted_url: bool,
+          max_time_per_ms: Integer,
+          resolution: bool
+        }
+
+      class Enrichment < BrandDev::Internal::Type::BaseModel
+        attr_reader classification: bool?
+
+        def classification=: (bool) -> bool
+
+        attr_reader hosted_url: bool?
+
+        def hosted_url=: (bool) -> bool
+
+        attr_reader max_time_per_ms: Integer?
+
+        def max_time_per_ms=: (Integer) -> Integer
+
+        attr_reader resolution: bool?
+
+        def resolution=: (bool) -> bool
+
+        def initialize: (
+          ?classification: bool,
+          ?hosted_url: bool,
+          ?max_time_per_ms: Integer,
+          ?resolution: bool
+        ) -> void
+
+        def to_hash: -> {
+          classification: bool,
+          hosted_url: bool,
+          max_time_per_ms: Integer,
+          resolution: bool
+        }
+      end
     end
   end
 end

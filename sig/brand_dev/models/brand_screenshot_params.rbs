@@ -2,10 +2,21 @@ module BrandDev
   module Models
     type brand_screenshot_params =
       {
+        clear_popups: bool,
+        color_scheme: BrandDev::Models::BrandScreenshotParams::color_scheme,
+        country: BrandDev::Models::BrandScreenshotParams::country,
+        direct_url: String,
         domain: String,
         full_screenshot: BrandDev::Models::BrandScreenshotParams::full_screenshot,
+        handle_cookie_popup: bool,
+        max_age_ms: Integer?,
         page: BrandDev::Models::BrandScreenshotParams::page,
-        prioritize: BrandDev::Models::BrandScreenshotParams::prioritize
+        scroll_offset: Integer?,
+        tags: ::Array[String],
+        timeout_ms: Integer,
+        viewport: BrandDev::BrandScreenshotParams::Viewport,
+        wait_for_ms: Integer?,
+        zdr: BrandDev::Models::BrandScreenshotParams::zdr
       }
       & BrandDev::Internal::Type::request_parameters
 
@@ -13,7 +24,29 @@ module BrandDev
       extend BrandDev::Internal::Type::RequestParameters::Converter
       include BrandDev::Internal::Type::RequestParameters
 
-      attr_accessor domain: String
+      attr_reader clear_popups: bool?
+
+      def clear_popups=: (bool) -> bool
+
+      attr_reader color_scheme: BrandDev::Models::BrandScreenshotParams::color_scheme?
+
+      def color_scheme=: (
+        BrandDev::Models::BrandScreenshotParams::color_scheme
+      ) -> BrandDev::Models::BrandScreenshotParams::color_scheme
+
+      attr_reader country: BrandDev::Models::BrandScreenshotParams::country?
+
+      def country=: (
+        BrandDev::Models::BrandScreenshotParams::country
+      ) -> BrandDev::Models::BrandScreenshotParams::country
+
+      attr_reader direct_url: String?
+
+      def direct_url=: (String) -> String
+
+      attr_reader domain: String?
+
+      def domain=: (String) -> String
 
       attr_reader full_screenshot: BrandDev::Models::BrandScreenshotParams::full_screenshot?
 
@@ -21,33 +54,507 @@ module BrandDev
         BrandDev::Models::BrandScreenshotParams::full_screenshot
       ) -> BrandDev::Models::BrandScreenshotParams::full_screenshot
 
+      attr_reader handle_cookie_popup: bool?
+
+      def handle_cookie_popup=: (bool) -> bool
+
+      attr_accessor max_age_ms: Integer?
+
       attr_reader page: BrandDev::Models::BrandScreenshotParams::page?
 
       def page=: (
         BrandDev::Models::BrandScreenshotParams::page
       ) -> BrandDev::Models::BrandScreenshotParams::page
 
-      attr_reader prioritize: BrandDev::Models::BrandScreenshotParams::prioritize?
+      attr_accessor scroll_offset: Integer?
 
-      def prioritize=: (
-        BrandDev::Models::BrandScreenshotParams::prioritize
-      ) -> BrandDev::Models::BrandScreenshotParams::prioritize
+      attr_reader tags: ::Array[String]?
+
+      def tags=: (::Array[String]) -> ::Array[String]
+
+      attr_reader timeout_ms: Integer?
+
+      def timeout_ms=: (Integer) -> Integer
+
+      attr_reader viewport: BrandDev::BrandScreenshotParams::Viewport?
+
+      def viewport=: (
+        BrandDev::BrandScreenshotParams::Viewport
+      ) -> BrandDev::BrandScreenshotParams::Viewport
+
+      attr_accessor wait_for_ms: Integer?
+
+      attr_reader zdr: BrandDev::Models::BrandScreenshotParams::zdr?
+
+      def zdr=: (
+        BrandDev::Models::BrandScreenshotParams::zdr
+      ) -> BrandDev::Models::BrandScreenshotParams::zdr
 
       def initialize: (
-        domain: String,
+        ?clear_popups: bool,
+        ?color_scheme: BrandDev::Models::BrandScreenshotParams::color_scheme,
+        ?country: BrandDev::Models::BrandScreenshotParams::country,
+        ?direct_url: String,
+        ?domain: String,
         ?full_screenshot: BrandDev::Models::BrandScreenshotParams::full_screenshot,
+        ?handle_cookie_popup: bool,
+        ?max_age_ms: Integer?,
         ?page: BrandDev::Models::BrandScreenshotParams::page,
-        ?prioritize: BrandDev::Models::BrandScreenshotParams::prioritize,
+        ?scroll_offset: Integer?,
+        ?tags: ::Array[String],
+        ?timeout_ms: Integer,
+        ?viewport: BrandDev::BrandScreenshotParams::Viewport,
+        ?wait_for_ms: Integer?,
+        ?zdr: BrandDev::Models::BrandScreenshotParams::zdr,
         ?request_options: BrandDev::request_opts
       ) -> void
 
       def to_hash: -> {
+        clear_popups: bool,
+        color_scheme: BrandDev::Models::BrandScreenshotParams::color_scheme,
+        country: BrandDev::Models::BrandScreenshotParams::country,
+        direct_url: String,
         domain: String,
         full_screenshot: BrandDev::Models::BrandScreenshotParams::full_screenshot,
+        handle_cookie_popup: bool,
+        max_age_ms: Integer?,
         page: BrandDev::Models::BrandScreenshotParams::page,
-        prioritize: BrandDev::Models::BrandScreenshotParams::prioritize,
+        scroll_offset: Integer?,
+        tags: ::Array[String],
+        timeout_ms: Integer,
+        viewport: BrandDev::BrandScreenshotParams::Viewport,
+        wait_for_ms: Integer?,
+        zdr: BrandDev::Models::BrandScreenshotParams::zdr,
         request_options: BrandDev::RequestOptions
       }
+
+      type color_scheme = :light | :dark
+
+      module ColorScheme
+        extend BrandDev::Internal::Type::Enum
+
+        LIGHT: :light
+        DARK: :dark
+
+        def self?.values: -> ::Array[BrandDev::Models::BrandScreenshotParams::color_scheme]
+      end
+
+      type country =
+        :ad
+        | :ae
+        | :af
+        | :ag
+        | :ai
+        | :al
+        | :am
+        | :ao
+        | :ar
+        | :at
+        | :au
+        | :aw
+        | :az
+        | :ba
+        | :bb
+        | :bd
+        | :be
+        | :bf
+        | :bg
+        | :bh
+        | :bi
+        | :bj
+        | :bm
+        | :bn
+        | :bo
+        | :bq
+        | :br
+        | :bs
+        | :bw
+        | :by
+        | :bz
+        | :ca
+        | :cd
+        | :cf
+        | :cg
+        | :ch
+        | :ci
+        | :cl
+        | :cm
+        | :cn
+        | :co
+        | :cr
+        | :cv
+        | :cw
+        | :cy
+        | :cz
+        | :de
+        | :dj
+        | :dk
+        | :dm
+        | :do
+        | :dz
+        | :ec
+        | :ee
+        | :eg
+        | :es
+        | :et
+        | :fi
+        | :fj
+        | :fr
+        | :ga
+        | :gb
+        | :gd
+        | :ge
+        | :gf
+        | :gg
+        | :gh
+        | :gm
+        | :gn
+        | :gp
+        | :gq
+        | :gr
+        | :gt
+        | :gu
+        | :gw
+        | :gy
+        | :hk
+        | :hn
+        | :hr
+        | :ht
+        | :hu
+        | :id
+        | :ie
+        | :il
+        | :im
+        | :in
+        | :iq
+        | :ir
+        | :is
+        | :it
+        | :je
+        | :jm
+        | :jo
+        | :jp
+        | :ke
+        | :kg
+        | :kh
+        | :kn
+        | :kr
+        | :kw
+        | :ky
+        | :kz
+        | :la
+        | :lb
+        | :lc
+        | :lk
+        | :lr
+        | :ls
+        | :lt
+        | :lu
+        | :lv
+        | :ly
+        | :ma
+        | :mc
+        | :md
+        | :me
+        | :mf
+        | :mg
+        | :mk
+        | :ml
+        | :mm
+        | :mn
+        | :mo
+        | :mq
+        | :mr
+        | :mt
+        | :mu
+        | :mv
+        | :mw
+        | :mx
+        | :my
+        | :mz
+        | :na
+        | :nc
+        | :ne
+        | :ng
+        | :ni
+        | :nl
+        | :no
+        | :np
+        | :nz
+        | :om
+        | :pa
+        | :pe
+        | :pf
+        | :pg
+        | :ph
+        | :pk
+        | :pl
+        | :pr
+        | :ps
+        | :pt
+        | :py
+        | :qa
+        | :re
+        | :ro
+        | :rs
+        | :ru
+        | :rw
+        | :sa
+        | :sc
+        | :sd
+        | :se
+        | :sg
+        | :si
+        | :sk
+        | :sl
+        | :sm
+        | :sn
+        | :so
+        | :sr
+        | :ss
+        | :st
+        | :sv
+        | :sx
+        | :sy
+        | :sz
+        | :tc
+        | :td
+        | :tg
+        | :th
+        | :tj
+        | :tl
+        | :tm
+        | :tn
+        | :tr
+        | :tt
+        | :tw
+        | :tz
+        | :ua
+        | :ug
+        | :us
+        | :uy
+        | :uz
+        | :vc
+        | :ve
+        | :vg
+        | :vi
+        | :vn
+        | :ye
+        | :yt
+        | :za
+        | :zm
+        | :zw
+
+      module Country
+        extend BrandDev::Internal::Type::Enum
+
+        AD: :ad
+        AE: :ae
+        AF: :af
+        AG: :ag
+        AI: :ai
+        AL: :al
+        AM: :am
+        AO: :ao
+        AR: :ar
+        AT: :at
+        AU: :au
+        AW: :aw
+        AZ: :az
+        BA: :ba
+        BB: :bb
+        BD: :bd
+        BE: :be
+        BF: :bf
+        BG: :bg
+        BH: :bh
+        BI: :bi
+        BJ: :bj
+        BM: :bm
+        BN: :bn
+        BO: :bo
+        BQ: :bq
+        BR: :br
+        BS: :bs
+        BW: :bw
+        BY: :by
+        BZ: :bz
+        CA: :ca
+        CD: :cd
+        CF: :cf
+        CG: :cg
+        CH: :ch
+        CI: :ci
+        CL: :cl
+        CM: :cm
+        CN: :cn
+        CO: :co
+        CR: :cr
+        CV: :cv
+        CW: :cw
+        CY: :cy
+        CZ: :cz
+        DE: :de
+        DJ: :dj
+        DK: :dk
+        DM: :dm
+        DO: :do
+        DZ: :dz
+        EC: :ec
+        EE: :ee
+        EG: :eg
+        ES: :es
+        ET: :et
+        FI: :fi
+        FJ: :fj
+        FR: :fr
+        GA: :ga
+        GB: :gb
+        GD: :gd
+        GE: :ge
+        GF: :gf
+        GG: :gg
+        GH: :gh
+        GM: :gm
+        GN: :gn
+        GP: :gp
+        GQ: :gq
+        GR: :gr
+        GT: :gt
+        GU: :gu
+        GW: :gw
+        GY: :gy
+        HK: :hk
+        HN: :hn
+        HR: :hr
+        HT: :ht
+        HU: :hu
+        ID: :id
+        IE: :ie
+        IL: :il
+        IM: :im
+        IN: :in
+        IQ: :iq
+        IR: :ir
+        IS: :is
+        IT: :it
+        JE: :je
+        JM: :jm
+        JO: :jo
+        JP: :jp
+        KE: :ke
+        KG: :kg
+        KH: :kh
+        KN: :kn
+        KR: :kr
+        KW: :kw
+        KY: :ky
+        KZ: :kz
+        LA: :la
+        LB: :lb
+        LC: :lc
+        LK: :lk
+        LR: :lr
+        LS: :ls
+        LT: :lt
+        LU: :lu
+        LV: :lv
+        LY: :ly
+        MA: :ma
+        MC: :mc
+        MD: :md
+        ME: :me
+        MF: :mf
+        MG: :mg
+        MK: :mk
+        ML: :ml
+        MM: :mm
+        MN: :mn
+        MO: :mo
+        MQ: :mq
+        MR: :mr
+        MT: :mt
+        MU: :mu
+        MV: :mv
+        MW: :mw
+        MX: :mx
+        MY: :my
+        MZ: :mz
+        NA: :na
+        NC: :nc
+        NE: :ne
+        NG: :ng
+        NI: :ni
+        NL: :nl
+        NO: :no
+        NP: :np
+        NZ: :nz
+        OM: :om
+        PA: :pa
+        PE: :pe
+        PF: :pf
+        PG: :pg
+        PH: :ph
+        PK: :pk
+        PL: :pl
+        PR: :pr
+        PS: :ps
+        PT: :pt
+        PY: :py
+        QA: :qa
+        RE: :re
+        RO: :ro
+        RS: :rs
+        RU: :ru
+        RW: :rw
+        SA: :sa
+        SC: :sc
+        SD: :sd
+        SE: :se
+        SG: :sg
+        SI: :si
+        SK: :sk
+        SL: :sl
+        SM: :sm
+        SN: :sn
+        SO: :so
+        SR: :sr
+        SS: :ss
+        ST: :st
+        SV: :sv
+        SX: :sx
+        SY: :sy
+        SZ: :sz
+        TC: :tc
+        TD: :td
+        TG: :tg
+        TH: :th
+        TJ: :tj
+        TL: :tl
+        TM: :tm
+        TN: :tn
+        TR: :tr
+        TT: :tt
+        TW: :tw
+        TZ: :tz
+        UA: :ua
+        UG: :ug
+        US: :us
+        UY: :uy
+        UZ: :uz
+        VC: :vc
+        VE: :ve
+        VG: :vg
+        VI: :vi
+        VN: :vn
+        YE: :ye
+        YT: :yt
+        ZA: :za
+        ZM: :zm
+        ZW: :zw
+
+        def self?.values: -> ::Array[BrandDev::Models::BrandScreenshotParams::country]
+      end
 
       type full_screenshot = :true | :false
 
@@ -85,15 +592,31 @@ module BrandDev
         def self?.values: -> ::Array[BrandDev::Models::BrandScreenshotParams::page]
       end
 
-      type prioritize = :speed | :quality
+      type viewport = { height: Integer, width: Integer }
 
-      module Prioritize
+      class Viewport < BrandDev::Internal::Type::BaseModel
+        attr_reader height: Integer?
+
+        def height=: (Integer) -> Integer
+
+        attr_reader width: Integer?
+
+        def width=: (Integer) -> Integer
+
+        def initialize: (?height: Integer, ?width: Integer) -> void
+
+        def to_hash: -> { height: Integer, width: Integer }
+      end
+
+      type zdr = :enabled | :disabled
+
+      module Zdr
         extend BrandDev::Internal::Type::Enum
 
-        SPEED: :speed
-        QUALITY: :quality
+        ENABLED: :enabled
+        DISABLED: :disabled
 
-        def self?.values: -> ::Array[BrandDev::Models::BrandScreenshotParams::prioritize]
+        def self?.values: -> ::Array[BrandDev::Models::BrandScreenshotParams::zdr]
       end
     end
   end

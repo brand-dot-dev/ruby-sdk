@@ -30,6 +30,13 @@ module BrandDev
       end
       attr_writer :specific_pages
 
+      # Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+      sig { returns(T.nilable(T::Array[String])) }
+      attr_reader :tags
+
+      sig { params(tags: T::Array[String]).void }
+      attr_writer :tags
+
       # Optional timeout in milliseconds for the request. If the request takes longer
       # than this value, it will be aborted with a 408 status code. Maximum allowed
       # value is 300000ms (5 minutes).
@@ -45,6 +52,7 @@ module BrandDev
             T::Array[BrandDev::BrandAIQueryParams::DataToExtract::OrHash],
           domain: String,
           specific_pages: BrandDev::BrandAIQueryParams::SpecificPages::OrHash,
+          tags: T::Array[String],
           timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(T.attached_class)
@@ -56,6 +64,8 @@ module BrandDev
         domain:,
         # Optional object specifying which pages to analyze
         specific_pages: nil,
+        # Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+        tags: nil,
         # Optional timeout in milliseconds for the request. If the request takes longer
         # than this value, it will be aborted with a 408 status code. Maximum allowed
         # value is 300000ms (5 minutes).
@@ -71,6 +81,7 @@ module BrandDev
               T::Array[BrandDev::BrandAIQueryParams::DataToExtract],
             domain: String,
             specific_pages: BrandDev::BrandAIQueryParams::SpecificPages,
+            tags: T::Array[String],
             timeout_ms: Integer,
             request_options: BrandDev::RequestOptions
           }

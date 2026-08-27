@@ -4,6 +4,14 @@ module BrandDev
   module Models
     # @see BrandDev::Resources::Brand#fonts
     class BrandFontsResponse < BrandDev::Internal::Type::BaseModel
+      # @!attribute cache_metadata
+      #   Cache outcome for this response. Composite responses are hits only when every
+      #   cache-controlled fetch contributing to the output was a hit; age_ms is the
+      #   oldest contributing hit.
+      #
+      #   @return [BrandDev::Models::BrandFontsResponse::CacheMetadata]
+      required :cache_metadata, -> { BrandDev::Models::BrandFontsResponse::CacheMetadata }
+
       # @!attribute code
       #   HTTP status code, e.g., 200
       #
@@ -28,7 +36,29 @@ module BrandDev
       #   @return [String]
       required :status, String
 
-      # @!method initialize(code:, domain:, fonts:, status:)
+      # @!attribute font_links
+      #   Font assets keyed by family name as it appears in the fonts array (non-generic
+      #   names only). Clients match entries in fonts to pick a file URL from files.
+      #   Omitted when no families resolve to Google or custom @font-face URLs.
+      #
+      #   @return [Hash{Symbol=>BrandDev::Models::BrandFontsResponse::FontLink}, nil]
+      optional :font_links,
+               -> { BrandDev::Internal::Type::HashOf[BrandDev::Models::BrandFontsResponse::FontLink] },
+               api_name: :fontLinks
+
+      # @!attribute key_metadata
+      #   Metadata about the API key used for the request. Included in every response
+      #   whenever a valid API key is provided, even when the response status is not 200.
+      #
+      #   @return [BrandDev::Models::BrandFontsResponse::KeyMetadata, nil]
+      optional :key_metadata, -> { BrandDev::Models::BrandFontsResponse::KeyMetadata }
+
+      # @!method initialize(cache_metadata:, code:, domain:, fonts:, status:, font_links: nil, key_metadata: nil)
+      #   Some parameter documentations has been truncated, see
+      #   {BrandDev::Models::BrandFontsResponse} for more details.
+      #
+      #   @param cache_metadata [BrandDev::Models::BrandFontsResponse::CacheMetadata] Cache outcome for this response. Composite responses are hits only when every ca
+      #
       #   @param code [Integer] HTTP status code, e.g., 200
       #
       #   @param domain [String] The normalized domain that was processed
@@ -36,6 +66,53 @@ module BrandDev
       #   @param fonts [Array<BrandDev::Models::BrandFontsResponse::Font>] Array of font usage information
       #
       #   @param status [String] Status of the response, e.g., 'ok'
+      #
+      #   @param font_links [Hash{Symbol=>BrandDev::Models::BrandFontsResponse::FontLink}] Font assets keyed by family name as it appears in the fonts array (non-generic n
+      #
+      #   @param key_metadata [BrandDev::Models::BrandFontsResponse::KeyMetadata] Metadata about the API key used for the request. Included in every response when
+
+      # @see BrandDev::Models::BrandFontsResponse#cache_metadata
+      class CacheMetadata < BrandDev::Internal::Type::BaseModel
+        # @!attribute age_ms
+        #   Age of the cached data in milliseconds. Zero for miss and zdr responses.
+        #
+        #   @return [Integer]
+        required :age_ms, Integer
+
+        # @!attribute status
+        #   Whether the response was served from cache, required fresh work, or honored
+        #   zero-data-retention cache bypass.
+        #
+        #   @return [Symbol, BrandDev::Models::BrandFontsResponse::CacheMetadata::Status]
+        required :status, enum: -> { BrandDev::Models::BrandFontsResponse::CacheMetadata::Status }
+
+        # @!method initialize(age_ms:, status:)
+        #   Some parameter documentations has been truncated, see
+        #   {BrandDev::Models::BrandFontsResponse::CacheMetadata} for more details.
+        #
+        #   Cache outcome for this response. Composite responses are hits only when every
+        #   cache-controlled fetch contributing to the output was a hit; age_ms is the
+        #   oldest contributing hit.
+        #
+        #   @param age_ms [Integer] Age of the cached data in milliseconds. Zero for miss and zdr responses.
+        #
+        #   @param status [Symbol, BrandDev::Models::BrandFontsResponse::CacheMetadata::Status] Whether the response was served from cache, required fresh work, or honored zero
+
+        # Whether the response was served from cache, required fresh work, or honored
+        # zero-data-retention cache bypass.
+        #
+        # @see BrandDev::Models::BrandFontsResponse::CacheMetadata#status
+        module Status
+          extend BrandDev::Internal::Type::Enum
+
+          HIT = :hit
+          MISS = :miss
+          ZDR = :zdr
+
+          # @!method self.values
+          #   @return [Array<Symbol>]
+        end
+      end
 
       class Font < BrandDev::Internal::Type::BaseModel
         # @!attribute fallbacks
@@ -94,6 +171,81 @@ module BrandDev
         #   @param percent_words [Float] Percentage of words using this font
         #
         #   @param uses [Array<String>] Array of CSS selectors or element types where this font is used
+      end
+
+      class FontLink < BrandDev::Internal::Type::BaseModel
+        # @!attribute files
+        #   Upright font files keyed by weight string (e.g. "400" for regular, "500",
+        #   "700"). Values are absolute URLs.
+        #
+        #   @return [Hash{Symbol=>String}]
+        required :files, BrandDev::Internal::Type::HashOf[String]
+
+        # @!attribute type
+        #
+        #   @return [Symbol, BrandDev::Models::BrandFontsResponse::FontLink::Type]
+        required :type, enum: -> { BrandDev::Models::BrandFontsResponse::FontLink::Type }
+
+        # @!attribute category
+        #   Google Fonts category when type is google (e.g. sans-serif, serif, monospace,
+        #   display, handwriting). Omitted for custom fonts when unknown.
+        #
+        #   @return [String, nil]
+        optional :category, String
+
+        # @!attribute display_name
+        #   Present when type is custom: human-readable name derived from the fontLinks key
+        #   (strip build/hash suffixes, split camelCase / PascalCase, normalize separators).
+        #   Google entries omit this.
+        #
+        #   @return [String, nil]
+        optional :display_name, String, api_name: :displayName
+
+        # @!method initialize(files:, type:, category: nil, display_name: nil)
+        #   Some parameter documentations has been truncated, see
+        #   {BrandDev::Models::BrandFontsResponse::FontLink} for more details.
+        #
+        #   @param files [Hash{Symbol=>String}] Upright font files keyed by weight string (e.g. "400" for regular, "500", "700")
+        #
+        #   @param type [Symbol, BrandDev::Models::BrandFontsResponse::FontLink::Type]
+        #
+        #   @param category [String] Google Fonts category when type is google (e.g. sans-serif, serif, monospace, di
+        #
+        #   @param display_name [String] Present when type is custom: human-readable name derived from the fontLinks key
+
+        # @see BrandDev::Models::BrandFontsResponse::FontLink#type
+        module Type
+          extend BrandDev::Internal::Type::Enum
+
+          GOOGLE = :google
+          CUSTOM = :custom
+
+          # @!method self.values
+          #   @return [Array<Symbol>]
+        end
+      end
+
+      # @see BrandDev::Models::BrandFontsResponse#key_metadata
+      class KeyMetadata < BrandDev::Internal::Type::BaseModel
+        # @!attribute credits_consumed
+        #   The number of credits consumed by this request.
+        #
+        #   @return [Integer]
+        required :credits_consumed, Integer
+
+        # @!attribute credits_remaining
+        #   The number of credits remaining for your organization after this request.
+        #
+        #   @return [Integer]
+        required :credits_remaining, Integer
+
+        # @!method initialize(credits_consumed:, credits_remaining:)
+        #   Metadata about the API key used for the request. Included in every response
+        #   whenever a valid API key is provided, even when the response status is not 200.
+        #
+        #   @param credits_consumed [Integer] The number of credits consumed by this request.
+        #
+        #   @param credits_remaining [Integer] The number of credits remaining for your organization after this request.
       end
     end
   end

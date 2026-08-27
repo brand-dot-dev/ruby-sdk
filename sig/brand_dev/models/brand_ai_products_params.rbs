@@ -28,14 +28,28 @@ module BrandDev
         extend BrandDev::Internal::Type::Union
 
         type by_domain =
-          { domain: String, max_products: Integer, timeout_ms: Integer }
+          {
+            domain: String,
+            max_age_ms: Integer,
+            max_products: Integer,
+            tags: ::Array[String],
+            timeout_ms: Integer
+          }
 
         class ByDomain < BrandDev::Internal::Type::BaseModel
           attr_accessor domain: String
 
+          attr_reader max_age_ms: Integer?
+
+          def max_age_ms=: (Integer) -> Integer
+
           attr_reader max_products: Integer?
 
           def max_products=: (Integer) -> Integer
+
+          attr_reader tags: ::Array[String]?
+
+          def tags=: (::Array[String]) -> ::Array[String]
 
           attr_reader timeout_ms: Integer?
 
@@ -43,26 +57,44 @@ module BrandDev
 
           def initialize: (
             domain: String,
+            ?max_age_ms: Integer,
             ?max_products: Integer,
+            ?tags: ::Array[String],
             ?timeout_ms: Integer
           ) -> void
 
           def to_hash: -> {
             domain: String,
+            max_age_ms: Integer,
             max_products: Integer,
+            tags: ::Array[String],
             timeout_ms: Integer
           }
         end
 
         type by_direct_url =
-          { direct_url: String, max_products: Integer, timeout_ms: Integer }
+          {
+            direct_url: String,
+            max_age_ms: Integer,
+            max_products: Integer,
+            tags: ::Array[String],
+            timeout_ms: Integer
+          }
 
         class ByDirectURL < BrandDev::Internal::Type::BaseModel
           attr_accessor direct_url: String
 
+          attr_reader max_age_ms: Integer?
+
+          def max_age_ms=: (Integer) -> Integer
+
           attr_reader max_products: Integer?
 
           def max_products=: (Integer) -> Integer
+
+          attr_reader tags: ::Array[String]?
+
+          def tags=: (::Array[String]) -> ::Array[String]
 
           attr_reader timeout_ms: Integer?
 
@@ -70,13 +102,17 @@ module BrandDev
 
           def initialize: (
             direct_url: String,
+            ?max_age_ms: Integer,
             ?max_products: Integer,
+            ?tags: ::Array[String],
             ?timeout_ms: Integer
           ) -> void
 
           def to_hash: -> {
             direct_url: String,
+            max_age_ms: Integer,
             max_products: Integer,
+            tags: ::Array[String],
             timeout_ms: Integer
           }
         end

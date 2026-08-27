@@ -7,19 +7,46 @@ module BrandDev
       extend BrandDev::Internal::Type::RequestParameters::Converter
       include BrandDev::Internal::Type::RequestParameters
 
+      # @!attribute color_scheme
+      #   Optional browser color scheme to emulate for websites that respond to
+      #   prefers-color-scheme. This value is part of the styleguide cache key.
+      #
+      #   @return [Symbol, BrandDev::Models::BrandStyleguideParams::ColorScheme, nil]
+      optional :color_scheme, enum: -> { BrandDev::BrandStyleguideParams::ColorScheme }
+
       # @!attribute direct_url
       #   A specific URL to fetch the styleguide from directly, bypassing domain
-      #   resolution (e.g., 'https://example.com/design-system').
+      #   resolution (e.g., 'https://example.com/design-system'). When provided, the
+      #   styleguide is extracted from this exact URL. You must provide either 'domain' or
+      #   'directUrl', but not both.
       #
       #   @return [String, nil]
       optional :direct_url, String
 
       # @!attribute domain
       #   Domain name to extract styleguide from (e.g., 'example.com', 'google.com'). The
-      #   domain will be automatically normalized and validated.
+      #   domain will be automatically normalized and validated. You must provide either
+      #   'domain' or 'directUrl', but not both.
       #
       #   @return [String, nil]
       optional :domain, String
+
+      # @!attribute max_age_ms
+      #   Maximum age in milliseconds for cached brand data before the API performs a hard
+      #   refresh. Defaults to 3 months (7776000000 ms). Values below 1 day (86400000 ms)
+      #   are clamped to 1 day; values above 1 year (31536000000 ms) are clamped to 1
+      #   year.
+      #
+      #   @return [Integer, nil]
+      optional :max_age_ms, Integer, nil?: true
+
+      # @!attribute tags
+      #   Optional comma-separated caller-defined tags for tracking this request. Tags are
+      #   recorded on the request's usage log and can be used to filter usage on the
+      #   dashboard usage page. Up to 20 tags, each 1-50 characters.
+      #
+      #   @return [Array<String>, nil]
+      optional :tags, BrandDev::Internal::Type::ArrayOf[String]
 
       # @!attribute timeout_ms
       #   Optional timeout in milliseconds for the request. If the request takes longer
@@ -29,17 +56,35 @@ module BrandDev
       #   @return [Integer, nil]
       optional :timeout_ms, Integer
 
-      # @!method initialize(direct_url: nil, domain: nil, timeout_ms: nil, request_options: {})
+      # @!method initialize(color_scheme: nil, direct_url: nil, domain: nil, max_age_ms: nil, tags: nil, timeout_ms: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
       #   {BrandDev::Models::BrandStyleguideParams} for more details.
+      #
+      #   @param color_scheme [Symbol, BrandDev::Models::BrandStyleguideParams::ColorScheme] Optional browser color scheme to emulate for websites that respond to prefers-co
       #
       #   @param direct_url [String] A specific URL to fetch the styleguide from directly, bypassing domain resolutio
       #
       #   @param domain [String] Domain name to extract styleguide from (e.g., 'example.com', 'google.com'). The
       #
+      #   @param max_age_ms [Integer, nil] Maximum age in milliseconds for cached brand data before the API performs a hard
+      #
+      #   @param tags [Array<String>] Optional comma-separated caller-defined tags for tracking this request. Tags are
+      #
       #   @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #
       #   @param request_options [BrandDev::RequestOptions, Hash{Symbol=>Object}]
+
+      # Optional browser color scheme to emulate for websites that respond to
+      # prefers-color-scheme. This value is part of the styleguide cache key.
+      module ColorScheme
+        extend BrandDev::Internal::Type::Enum
+
+        LIGHT = :light
+        DARK = :dark
+
+        # @!method self.values
+        #   @return [Array<Symbol>]
+      end
     end
   end
 end

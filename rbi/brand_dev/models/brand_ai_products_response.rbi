@@ -11,6 +11,37 @@ module BrandDev
           )
         end
 
+      # Cache outcome for this response. Composite responses are hits only when every
+      # cache-controlled fetch contributing to the output was a hit; age_ms is the
+      # oldest contributing hit.
+      sig { returns(BrandDev::Models::BrandAIProductsResponse::CacheMetadata) }
+      attr_reader :cache_metadata
+
+      sig do
+        params(
+          cache_metadata:
+            BrandDev::Models::BrandAIProductsResponse::CacheMetadata::OrHash
+        ).void
+      end
+      attr_writer :cache_metadata
+
+      # Metadata about the API key used for the request. Included in every response
+      # whenever a valid API key is provided, even when the response status is not 200.
+      sig do
+        returns(
+          T.nilable(BrandDev::Models::BrandAIProductsResponse::KeyMetadata)
+        )
+      end
+      attr_reader :key_metadata
+
+      sig do
+        params(
+          key_metadata:
+            BrandDev::Models::BrandAIProductsResponse::KeyMetadata::OrHash
+        ).void
+      end
+      attr_writer :key_metadata
+
       # Array of products extracted from the website
       sig do
         returns(
@@ -31,11 +62,22 @@ module BrandDev
 
       sig do
         params(
+          cache_metadata:
+            BrandDev::Models::BrandAIProductsResponse::CacheMetadata::OrHash,
+          key_metadata:
+            BrandDev::Models::BrandAIProductsResponse::KeyMetadata::OrHash,
           products:
             T::Array[BrandDev::Models::BrandAIProductsResponse::Product::OrHash]
         ).returns(T.attached_class)
       end
       def self.new(
+        # Cache outcome for this response. Composite responses are hits only when every
+        # cache-controlled fetch contributing to the output was a hit; age_ms is the
+        # oldest contributing hit.
+        cache_metadata:,
+        # Metadata about the API key used for the request. Included in every response
+        # whenever a valid API key is provided, even when the response status is not 200.
+        key_metadata: nil,
         # Array of products extracted from the website
         products: nil
       )
@@ -44,12 +86,152 @@ module BrandDev
       sig do
         override.returns(
           {
+            cache_metadata:
+              BrandDev::Models::BrandAIProductsResponse::CacheMetadata,
+            key_metadata:
+              BrandDev::Models::BrandAIProductsResponse::KeyMetadata,
             products:
               T::Array[BrandDev::Models::BrandAIProductsResponse::Product]
           }
         )
       end
       def to_hash
+      end
+
+      class CacheMetadata < BrandDev::Internal::Type::BaseModel
+        OrHash =
+          T.type_alias do
+            T.any(
+              BrandDev::Models::BrandAIProductsResponse::CacheMetadata,
+              BrandDev::Internal::AnyHash
+            )
+          end
+
+        # Age of the cached data in milliseconds. Zero for miss and zdr responses.
+        sig { returns(Integer) }
+        attr_accessor :age_ms
+
+        # Whether the response was served from cache, required fresh work, or honored
+        # zero-data-retention cache bypass.
+        sig do
+          returns(
+            BrandDev::Models::BrandAIProductsResponse::CacheMetadata::Status::TaggedSymbol
+          )
+        end
+        attr_accessor :status
+
+        # Cache outcome for this response. Composite responses are hits only when every
+        # cache-controlled fetch contributing to the output was a hit; age_ms is the
+        # oldest contributing hit.
+        sig do
+          params(
+            age_ms: Integer,
+            status:
+              BrandDev::Models::BrandAIProductsResponse::CacheMetadata::Status::OrSymbol
+          ).returns(T.attached_class)
+        end
+        def self.new(
+          # Age of the cached data in milliseconds. Zero for miss and zdr responses.
+          age_ms:,
+          # Whether the response was served from cache, required fresh work, or honored
+          # zero-data-retention cache bypass.
+          status:
+        )
+        end
+
+        sig do
+          override.returns(
+            {
+              age_ms: Integer,
+              status:
+                BrandDev::Models::BrandAIProductsResponse::CacheMetadata::Status::TaggedSymbol
+            }
+          )
+        end
+        def to_hash
+        end
+
+        # Whether the response was served from cache, required fresh work, or honored
+        # zero-data-retention cache bypass.
+        module Status
+          extend BrandDev::Internal::Type::Enum
+
+          TaggedSymbol =
+            T.type_alias do
+              T.all(
+                Symbol,
+                BrandDev::Models::BrandAIProductsResponse::CacheMetadata::Status
+              )
+            end
+          OrSymbol = T.type_alias { T.any(Symbol, String) }
+
+          HIT =
+            T.let(
+              :hit,
+              BrandDev::Models::BrandAIProductsResponse::CacheMetadata::Status::TaggedSymbol
+            )
+          MISS =
+            T.let(
+              :miss,
+              BrandDev::Models::BrandAIProductsResponse::CacheMetadata::Status::TaggedSymbol
+            )
+          ZDR =
+            T.let(
+              :zdr,
+              BrandDev::Models::BrandAIProductsResponse::CacheMetadata::Status::TaggedSymbol
+            )
+
+          sig do
+            override.returns(
+              T::Array[
+                BrandDev::Models::BrandAIProductsResponse::CacheMetadata::Status::TaggedSymbol
+              ]
+            )
+          end
+          def self.values
+          end
+        end
+      end
+
+      class KeyMetadata < BrandDev::Internal::Type::BaseModel
+        OrHash =
+          T.type_alias do
+            T.any(
+              BrandDev::Models::BrandAIProductsResponse::KeyMetadata,
+              BrandDev::Internal::AnyHash
+            )
+          end
+
+        # The number of credits consumed by this request.
+        sig { returns(Integer) }
+        attr_accessor :credits_consumed
+
+        # The number of credits remaining for your organization after this request.
+        sig { returns(Integer) }
+        attr_accessor :credits_remaining
+
+        # Metadata about the API key used for the request. Included in every response
+        # whenever a valid API key is provided, even when the response status is not 200.
+        sig do
+          params(credits_consumed: Integer, credits_remaining: Integer).returns(
+            T.attached_class
+          )
+        end
+        def self.new(
+          # The number of credits consumed by this request.
+          credits_consumed:,
+          # The number of credits remaining for your organization after this request.
+          credits_remaining:
+        )
+        end
+
+        sig do
+          override.returns(
+            { credits_consumed: Integer, credits_remaining: Integer }
+          )
+        end
+        def to_hash
+        end
       end
 
       class Product < BrandDev::Internal::Type::BaseModel
@@ -77,6 +259,10 @@ module BrandDev
         sig { returns(String) }
         attr_accessor :name
 
+        # Stock Keeping Unit (product identifier). Null if no identifier is found.
+        sig { returns(T.nilable(String)) }
+        attr_accessor :sku
+
         # Tags associated with the product
         sig { returns(T::Array[String]) }
         attr_accessor :tags
@@ -84,6 +270,16 @@ module BrandDev
         # Target audience for the product (array of strings)
         sig { returns(T::Array[String]) }
         attr_accessor :target_audience
+
+        # Normalized stock or ordering availability
+        sig do
+          returns(
+            T.nilable(
+              BrandDev::Models::BrandAIProductsResponse::Product::Availability::TaggedSymbol
+            )
+          )
+        end
+        attr_accessor :availability
 
         # Billing frequency for the product
         sig do
@@ -103,6 +299,13 @@ module BrandDev
         sig { returns(T.nilable(String)) }
         attr_accessor :currency
 
+        # Dimension statements shown for the product, preserving labels, values, and units
+        sig { returns(T.nilable(T::Array[String])) }
+        attr_reader :dimensions
+
+        sig { params(dimensions: T::Array[String]).void }
+        attr_writer :dimensions
+
         # URL to the product image
         sig { returns(T.nilable(String)) }
         attr_accessor :image_url
@@ -121,6 +324,10 @@ module BrandDev
         end
         attr_accessor :pricing_model
 
+        # Original or regular price before a displayed discount
+        sig { returns(T.nilable(Float)) }
+        attr_accessor :regular_price
+
         # URL to the product page
         sig { returns(T.nilable(String)) }
         attr_accessor :url
@@ -131,20 +338,27 @@ module BrandDev
             features: T::Array[String],
             images: T::Array[String],
             name: String,
+            sku: T.nilable(String),
             tags: T::Array[String],
             target_audience: T::Array[String],
+            availability:
+              T.nilable(
+                BrandDev::Models::BrandAIProductsResponse::Product::Availability::OrSymbol
+              ),
             billing_frequency:
               T.nilable(
                 BrandDev::Models::BrandAIProductsResponse::Product::BillingFrequency::OrSymbol
               ),
             category: T.nilable(String),
             currency: T.nilable(String),
+            dimensions: T::Array[String],
             image_url: T.nilable(String),
             price: T.nilable(Float),
             pricing_model:
               T.nilable(
                 BrandDev::Models::BrandAIProductsResponse::Product::PricingModel::OrSymbol
               ),
+            regular_price: T.nilable(Float),
             url: T.nilable(String)
           ).returns(T.attached_class)
         end
@@ -157,22 +371,30 @@ module BrandDev
           images:,
           # Name of the product
           name:,
+          # Stock Keeping Unit (product identifier). Null if no identifier is found.
+          sku:,
           # Tags associated with the product
           tags:,
           # Target audience for the product (array of strings)
           target_audience:,
+          # Normalized stock or ordering availability
+          availability: nil,
           # Billing frequency for the product
           billing_frequency: nil,
           # Category of the product
           category: nil,
           # Currency code for the price (e.g., USD, EUR)
           currency: nil,
+          # Dimension statements shown for the product, preserving labels, values, and units
+          dimensions: nil,
           # URL to the product image
           image_url: nil,
           # Price of the product
           price: nil,
           # Pricing model for the product
           pricing_model: nil,
+          # Original or regular price before a displayed discount
+          regular_price: nil,
           # URL to the product page
           url: nil
         )
@@ -185,25 +407,92 @@ module BrandDev
               features: T::Array[String],
               images: T::Array[String],
               name: String,
+              sku: T.nilable(String),
               tags: T::Array[String],
               target_audience: T::Array[String],
+              availability:
+                T.nilable(
+                  BrandDev::Models::BrandAIProductsResponse::Product::Availability::TaggedSymbol
+                ),
               billing_frequency:
                 T.nilable(
                   BrandDev::Models::BrandAIProductsResponse::Product::BillingFrequency::TaggedSymbol
                 ),
               category: T.nilable(String),
               currency: T.nilable(String),
+              dimensions: T::Array[String],
               image_url: T.nilable(String),
               price: T.nilable(Float),
               pricing_model:
                 T.nilable(
                   BrandDev::Models::BrandAIProductsResponse::Product::PricingModel::TaggedSymbol
                 ),
+              regular_price: T.nilable(Float),
               url: T.nilable(String)
             }
           )
         end
         def to_hash
+        end
+
+        # Normalized stock or ordering availability
+        module Availability
+          extend BrandDev::Internal::Type::Enum
+
+          TaggedSymbol =
+            T.type_alias do
+              T.all(
+                Symbol,
+                BrandDev::Models::BrandAIProductsResponse::Product::Availability
+              )
+            end
+          OrSymbol = T.type_alias { T.any(Symbol, String) }
+
+          IN_STOCK =
+            T.let(
+              :in_stock,
+              BrandDev::Models::BrandAIProductsResponse::Product::Availability::TaggedSymbol
+            )
+          OUT_OF_STOCK =
+            T.let(
+              :out_of_stock,
+              BrandDev::Models::BrandAIProductsResponse::Product::Availability::TaggedSymbol
+            )
+          LIMITED_AVAILABILITY =
+            T.let(
+              :limited_availability,
+              BrandDev::Models::BrandAIProductsResponse::Product::Availability::TaggedSymbol
+            )
+          PREORDER =
+            T.let(
+              :preorder,
+              BrandDev::Models::BrandAIProductsResponse::Product::Availability::TaggedSymbol
+            )
+          BACKORDER =
+            T.let(
+              :backorder,
+              BrandDev::Models::BrandAIProductsResponse::Product::Availability::TaggedSymbol
+            )
+          MADE_TO_ORDER =
+            T.let(
+              :made_to_order,
+              BrandDev::Models::BrandAIProductsResponse::Product::Availability::TaggedSymbol
+            )
+          DISCONTINUED =
+            T.let(
+              :discontinued,
+              BrandDev::Models::BrandAIProductsResponse::Product::Availability::TaggedSymbol
+            )
+
+          sig do
+            override.returns(
+              T::Array[
+                BrandDev::Models::BrandAIProductsResponse::Product::Availability::TaggedSymbol
+              ]
+            )
+          end
+          def self.values
+          end
         end
 
         # Billing frequency for the product

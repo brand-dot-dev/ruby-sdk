@@ -11,6 +11,24 @@ module BrandDev
           )
         end
 
+      # Cache outcome for this response. Composite responses are hits only when every
+      # cache-controlled fetch contributing to the output was a hit; age_ms is the
+      # oldest contributing hit.
+      sig do
+        returns(
+          BrandDev::Models::BrandRetrieveSimplifiedResponse::CacheMetadata
+        )
+      end
+      attr_reader :cache_metadata
+
+      sig do
+        params(
+          cache_metadata:
+            BrandDev::Models::BrandRetrieveSimplifiedResponse::CacheMetadata::OrHash
+        ).void
+      end
+      attr_writer :cache_metadata
+
       # Simplified brand information
       sig do
         returns(
@@ -34,6 +52,25 @@ module BrandDev
       sig { params(code: Integer).void }
       attr_writer :code
 
+      # Metadata about the API key used for the request. Included in every response
+      # whenever a valid API key is provided, even when the response status is not 200.
+      sig do
+        returns(
+          T.nilable(
+            BrandDev::Models::BrandRetrieveSimplifiedResponse::KeyMetadata
+          )
+        )
+      end
+      attr_reader :key_metadata
+
+      sig do
+        params(
+          key_metadata:
+            BrandDev::Models::BrandRetrieveSimplifiedResponse::KeyMetadata::OrHash
+        ).void
+      end
+      attr_writer :key_metadata
+
       # Status of the response, e.g., 'ok'
       sig { returns(T.nilable(String)) }
       attr_reader :status
@@ -43,17 +80,28 @@ module BrandDev
 
       sig do
         params(
+          cache_metadata:
+            BrandDev::Models::BrandRetrieveSimplifiedResponse::CacheMetadata::OrHash,
           brand:
             BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::OrHash,
           code: Integer,
+          key_metadata:
+            BrandDev::Models::BrandRetrieveSimplifiedResponse::KeyMetadata::OrHash,
           status: String
         ).returns(T.attached_class)
       end
       def self.new(
+        # Cache outcome for this response. Composite responses are hits only when every
+        # cache-controlled fetch contributing to the output was a hit; age_ms is the
+        # oldest contributing hit.
+        cache_metadata:,
         # Simplified brand information
         brand: nil,
         # HTTP status code of the response
         code: nil,
+        # Metadata about the API key used for the request. Included in every response
+        # whenever a valid API key is provided, even when the response status is not 200.
+        key_metadata: nil,
         # Status of the response, e.g., 'ok'
         status: nil
       )
@@ -62,13 +110,112 @@ module BrandDev
       sig do
         override.returns(
           {
+            cache_metadata:
+              BrandDev::Models::BrandRetrieveSimplifiedResponse::CacheMetadata,
             brand: BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand,
             code: Integer,
+            key_metadata:
+              BrandDev::Models::BrandRetrieveSimplifiedResponse::KeyMetadata,
             status: String
           }
         )
       end
       def to_hash
+      end
+
+      class CacheMetadata < BrandDev::Internal::Type::BaseModel
+        OrHash =
+          T.type_alias do
+            T.any(
+              BrandDev::Models::BrandRetrieveSimplifiedResponse::CacheMetadata,
+              BrandDev::Internal::AnyHash
+            )
+          end
+
+        # Age of the cached data in milliseconds. Zero for miss and zdr responses.
+        sig { returns(Integer) }
+        attr_accessor :age_ms
+
+        # Whether the response was served from cache, required fresh work, or honored
+        # zero-data-retention cache bypass.
+        sig do
+          returns(
+            BrandDev::Models::BrandRetrieveSimplifiedResponse::CacheMetadata::Status::TaggedSymbol
+          )
+        end
+        attr_accessor :status
+
+        # Cache outcome for this response. Composite responses are hits only when every
+        # cache-controlled fetch contributing to the output was a hit; age_ms is the
+        # oldest contributing hit.
+        sig do
+          params(
+            age_ms: Integer,
+            status:
+              BrandDev::Models::BrandRetrieveSimplifiedResponse::CacheMetadata::Status::OrSymbol
+          ).returns(T.attached_class)
+        end
+        def self.new(
+          # Age of the cached data in milliseconds. Zero for miss and zdr responses.
+          age_ms:,
+          # Whether the response was served from cache, required fresh work, or honored
+          # zero-data-retention cache bypass.
+          status:
+        )
+        end
+
+        sig do
+          override.returns(
+            {
+              age_ms: Integer,
+              status:
+                BrandDev::Models::BrandRetrieveSimplifiedResponse::CacheMetadata::Status::TaggedSymbol
+            }
+          )
+        end
+        def to_hash
+        end
+
+        # Whether the response was served from cache, required fresh work, or honored
+        # zero-data-retention cache bypass.
+        module Status
+          extend BrandDev::Internal::Type::Enum
+
+          TaggedSymbol =
+            T.type_alias do
+              T.all(
+                Symbol,
+                BrandDev::Models::BrandRetrieveSimplifiedResponse::CacheMetadata::Status
+              )
+            end
+          OrSymbol = T.type_alias { T.any(Symbol, String) }
+
+          HIT =
+            T.let(
+              :hit,
+              BrandDev::Models::BrandRetrieveSimplifiedResponse::CacheMetadata::Status::TaggedSymbol
+            )
+          MISS =
+            T.let(
+              :miss,
+              BrandDev::Models::BrandRetrieveSimplifiedResponse::CacheMetadata::Status::TaggedSymbol
+            )
+          ZDR =
+            T.let(
+              :zdr,
+              BrandDev::Models::BrandRetrieveSimplifiedResponse::CacheMetadata::Status::TaggedSymbol
+            )
+
+          sig do
+            override.returns(
+              T::Array[
+                BrandDev::Models::BrandRetrieveSimplifiedResponse::CacheMetadata::Status::TaggedSymbol
+              ]
+            )
+          end
+          def self.values
+          end
+        end
       end
 
       class Brand < BrandDev::Internal::Type::BaseModel
@@ -427,17 +574,94 @@ module BrandDev
           sig { params(name: String).void }
           attr_writer :name
 
-          sig { params(hex: String, name: String).returns(T.attached_class) }
+          # Where the color was observed: 'site' colors come from the website's own theme
+          # signals (rendered page colors, manifest, theme-color meta), 'logo' colors from
+          # logo image pixels.
+          sig do
+            returns(
+              T.nilable(
+                BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Color::Source::TaggedSymbol
+              )
+            )
+          end
+          attr_reader :source
+
+          sig do
+            params(
+              source:
+                BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Color::Source::OrSymbol
+            ).void
+          end
+          attr_writer :source
+
+          sig do
+            params(
+              hex: String,
+              name: String,
+              source:
+                BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Color::Source::OrSymbol
+            ).returns(T.attached_class)
+          end
           def self.new(
             # Color in hexadecimal format
             hex: nil,
             # Name of the color
-            name: nil
+            name: nil,
+            # Where the color was observed: 'site' colors come from the website's own theme
+            # signals (rendered page colors, manifest, theme-color meta), 'logo' colors from
+            # logo image pixels.
+            source: nil
           )
           end
 
-          sig { override.returns({ hex: String, name: String }) }
+          sig do
+            override.returns(
+              {
+                hex: String,
+                name: String,
+                source:
+                  BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Color::Source::TaggedSymbol
+              }
+            )
+          end
           def to_hash
+          end
+
+          # Where the color was observed: 'site' colors come from the website's own theme
+          # signals (rendered page colors, manifest, theme-color meta), 'logo' colors from
+          # logo image pixels.
+          module Source
+            extend BrandDev::Internal::Type::Enum
+
+            TaggedSymbol =
+              T.type_alias do
+                T.all(
+                  Symbol,
+                  BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Color::Source
+                )
+              end
+            OrSymbol = T.type_alias { T.any(Symbol, String) }
+
+            SITE =
+              T.let(
+                :site,
+                BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Color::Source::TaggedSymbol
+              )
+            LOGO =
+              T.let(
+                :logo,
+                BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Color::Source::TaggedSymbol
+              )
+
+            sig do
+              override.returns(
+                T::Array[
+                  BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Color::Source::TaggedSymbol
+                ]
+              )
+            end
+            def self.values
+            end
           end
         end
 
@@ -756,6 +980,47 @@ module BrandDev
             def self.values
             end
           end
+        end
+      end
+
+      class KeyMetadata < BrandDev::Internal::Type::BaseModel
+        OrHash =
+          T.type_alias do
+            T.any(
+              BrandDev::Models::BrandRetrieveSimplifiedResponse::KeyMetadata,
+              BrandDev::Internal::AnyHash
+            )
+          end
+
+        # The number of credits consumed by this request.
+        sig { returns(Integer) }
+        attr_accessor :credits_consumed
+
+        # The number of credits remaining for your organization after this request.
+        sig { returns(Integer) }
+        attr_accessor :credits_remaining
+
+        # Metadata about the API key used for the request. Included in every response
+        # whenever a valid API key is provided, even when the response status is not 200.
+        sig do
+          params(credits_consumed: Integer, credits_remaining: Integer).returns(
+            T.attached_class
+          )
+        end
+        def self.new(
+          # The number of credits consumed by this request.
+          credits_consumed:,
+          # The number of credits remaining for your organization after this request.
+          credits_remaining:
+        )
+        end
+
+        sig do
+          override.returns(
+            { credits_consumed: Integer, credits_remaining: Integer }
+          )
+        end
+        def to_hash
         end
       end
     end

@@ -23,19 +23,32 @@ module BrandDev
       required :success, enum: -> { BrandDev::Models::BrandWebScrapeSitemapResponse::Success }
 
       # @!attribute urls
-      #   Array of discovered page URLs from the sitemap (max 500)
+      #   Discovered page URLs from the sitemap, up to `maxLinks`. When `search` is set
+      #   these are only the matching pages, most relevant first.
       #
       #   @return [Array<String>]
       required :urls, BrandDev::Internal::Type::ArrayOf[String]
 
-      # @!method initialize(domain:, meta:, success:, urls:)
+      # @!attribute key_metadata
+      #   Metadata about the API key used for the request. Included in every response
+      #   whenever a valid API key is provided, even when the response status is not 200.
+      #
+      #   @return [BrandDev::Models::BrandWebScrapeSitemapResponse::KeyMetadata, nil]
+      optional :key_metadata, -> { BrandDev::Models::BrandWebScrapeSitemapResponse::KeyMetadata }
+
+      # @!method initialize(domain:, meta:, success:, urls:, key_metadata: nil)
+      #   Some parameter documentations has been truncated, see
+      #   {BrandDev::Models::BrandWebScrapeSitemapResponse} for more details.
+      #
       #   @param domain [String] The normalized domain that was crawled
       #
       #   @param meta [BrandDev::Models::BrandWebScrapeSitemapResponse::Meta] Metadata about the sitemap crawl operation
       #
       #   @param success [Boolean, BrandDev::Models::BrandWebScrapeSitemapResponse::Success] Indicates success
       #
-      #   @param urls [Array<String>] Array of discovered page URLs from the sitemap (max 500)
+      #   @param urls [Array<String>] Discovered page URLs from the sitemap, up to `maxLinks`. When `search` is set th
+      #
+      #   @param key_metadata [BrandDev::Models::BrandWebScrapeSitemapResponse::KeyMetadata] Metadata about the API key used for the request. Included in every response when
 
       # @see BrandDev::Models::BrandWebScrapeSitemapResponse#meta
       class Meta < BrandDev::Internal::Type::BaseModel
@@ -85,6 +98,29 @@ module BrandDev
 
         # @!method self.values
         #   @return [Array<Boolean>]
+      end
+
+      # @see BrandDev::Models::BrandWebScrapeSitemapResponse#key_metadata
+      class KeyMetadata < BrandDev::Internal::Type::BaseModel
+        # @!attribute credits_consumed
+        #   The number of credits consumed by this request.
+        #
+        #   @return [Integer]
+        required :credits_consumed, Integer
+
+        # @!attribute credits_remaining
+        #   The number of credits remaining for your organization after this request.
+        #
+        #   @return [Integer]
+        required :credits_remaining, Integer
+
+        # @!method initialize(credits_consumed:, credits_remaining:)
+        #   Metadata about the API key used for the request. Included in every response
+        #   whenever a valid API key is provided, even when the response status is not 200.
+        #
+        #   @param credits_consumed [Integer] The number of credits consumed by this request.
+        #
+        #   @param credits_remaining [Integer] The number of credits remaining for your organization after this request.
       end
     end
   end

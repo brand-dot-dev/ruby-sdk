@@ -2,36 +2,94 @@ module BrandDev
   module Models
     type brand_web_scrape_images_response =
       {
+        cache_metadata: BrandDev::Models::BrandWebScrapeImagesResponse::CacheMetadata,
         images: ::Array[BrandDev::Models::BrandWebScrapeImagesResponse::Image],
         success: BrandDev::Models::BrandWebScrapeImagesResponse::success,
-        url: String
+        url: String,
+        actions_applied: ::Array[BrandDev::Models::BrandWebScrapeImagesResponse::ActionsApplied],
+        key_metadata: BrandDev::Models::BrandWebScrapeImagesResponse::KeyMetadata
       }
 
     class BrandWebScrapeImagesResponse < BrandDev::Internal::Type::BaseModel
+      attr_accessor cache_metadata: BrandDev::Models::BrandWebScrapeImagesResponse::CacheMetadata
+
       attr_accessor images: ::Array[BrandDev::Models::BrandWebScrapeImagesResponse::Image]
 
       attr_accessor success: BrandDev::Models::BrandWebScrapeImagesResponse::success
 
       attr_accessor url: String
 
+      attr_reader actions_applied: ::Array[BrandDev::Models::BrandWebScrapeImagesResponse::ActionsApplied]?
+
+      def actions_applied=: (
+        ::Array[BrandDev::Models::BrandWebScrapeImagesResponse::ActionsApplied]
+      ) -> ::Array[BrandDev::Models::BrandWebScrapeImagesResponse::ActionsApplied]
+
+      attr_reader key_metadata: BrandDev::Models::BrandWebScrapeImagesResponse::KeyMetadata?
+
+      def key_metadata=: (
+        BrandDev::Models::BrandWebScrapeImagesResponse::KeyMetadata
+      ) -> BrandDev::Models::BrandWebScrapeImagesResponse::KeyMetadata
+
       def initialize: (
+        cache_metadata: BrandDev::Models::BrandWebScrapeImagesResponse::CacheMetadata,
         images: ::Array[BrandDev::Models::BrandWebScrapeImagesResponse::Image],
         success: BrandDev::Models::BrandWebScrapeImagesResponse::success,
-        url: String
+        url: String,
+        ?actions_applied: ::Array[BrandDev::Models::BrandWebScrapeImagesResponse::ActionsApplied],
+        ?key_metadata: BrandDev::Models::BrandWebScrapeImagesResponse::KeyMetadata
       ) -> void
 
       def to_hash: -> {
+        cache_metadata: BrandDev::Models::BrandWebScrapeImagesResponse::CacheMetadata,
         images: ::Array[BrandDev::Models::BrandWebScrapeImagesResponse::Image],
         success: BrandDev::Models::BrandWebScrapeImagesResponse::success,
-        url: String
+        url: String,
+        actions_applied: ::Array[BrandDev::Models::BrandWebScrapeImagesResponse::ActionsApplied],
+        key_metadata: BrandDev::Models::BrandWebScrapeImagesResponse::KeyMetadata
       }
+
+      type cache_metadata =
+        {
+          age_ms: Integer,
+          status: BrandDev::Models::BrandWebScrapeImagesResponse::CacheMetadata::status
+        }
+
+      class CacheMetadata < BrandDev::Internal::Type::BaseModel
+        attr_accessor age_ms: Integer
+
+        attr_accessor status: BrandDev::Models::BrandWebScrapeImagesResponse::CacheMetadata::status
+
+        def initialize: (
+          age_ms: Integer,
+          status: BrandDev::Models::BrandWebScrapeImagesResponse::CacheMetadata::status
+        ) -> void
+
+        def to_hash: -> {
+          age_ms: Integer,
+          status: BrandDev::Models::BrandWebScrapeImagesResponse::CacheMetadata::status
+        }
+
+        type status = :hit | :miss | :zdr
+
+        module Status
+          extend BrandDev::Internal::Type::Enum
+
+          HIT: :hit
+          MISS: :miss
+          ZDR: :zdr
+
+          def self?.values: -> ::Array[BrandDev::Models::BrandWebScrapeImagesResponse::CacheMetadata::status]
+        end
+      end
 
       type image =
         {
           alt: String?,
           element: BrandDev::Models::BrandWebScrapeImagesResponse::Image::element,
           src: String,
-          type: BrandDev::Models::BrandWebScrapeImagesResponse::Image::type_
+          type: BrandDev::Models::BrandWebScrapeImagesResponse::Image::type_,
+          enrichment: BrandDev::Models::BrandWebScrapeImagesResponse::Image::Enrichment
         }
 
       class Image < BrandDev::Internal::Type::BaseModel
@@ -43,18 +101,26 @@ module BrandDev
 
         attr_accessor type: BrandDev::Models::BrandWebScrapeImagesResponse::Image::type_
 
+        attr_reader enrichment: BrandDev::Models::BrandWebScrapeImagesResponse::Image::Enrichment?
+
+        def enrichment=: (
+          BrandDev::Models::BrandWebScrapeImagesResponse::Image::Enrichment
+        ) -> BrandDev::Models::BrandWebScrapeImagesResponse::Image::Enrichment
+
         def initialize: (
           alt: String?,
           element: BrandDev::Models::BrandWebScrapeImagesResponse::Image::element,
           src: String,
-          type: BrandDev::Models::BrandWebScrapeImagesResponse::Image::type_
+          type: BrandDev::Models::BrandWebScrapeImagesResponse::Image::type_,
+          ?enrichment: BrandDev::Models::BrandWebScrapeImagesResponse::Image::Enrichment
         ) -> void
 
         def to_hash: -> {
           alt: String?,
           element: BrandDev::Models::BrandWebScrapeImagesResponse::Image::element,
           src: String,
-          type: BrandDev::Models::BrandWebScrapeImagesResponse::Image::type_
+          type: BrandDev::Models::BrandWebScrapeImagesResponse::Image::type_,
+          enrichment: BrandDev::Models::BrandWebScrapeImagesResponse::Image::Enrichment
         }
 
         type element =
@@ -95,6 +161,80 @@ module BrandDev
 
           def self?.values: -> ::Array[BrandDev::Models::BrandWebScrapeImagesResponse::Image::type_]
         end
+
+        type enrichment =
+          {
+            height: Integer,
+            mimetype: String,
+            type: BrandDev::Models::BrandWebScrapeImagesResponse::Image::Enrichment::type_,
+            url: String,
+            width: Integer
+          }
+
+        class Enrichment < BrandDev::Internal::Type::BaseModel
+          attr_reader height: Integer?
+
+          def height=: (Integer) -> Integer
+
+          attr_reader mimetype: String?
+
+          def mimetype=: (String) -> String
+
+          attr_reader type: BrandDev::Models::BrandWebScrapeImagesResponse::Image::Enrichment::type_?
+
+          def type=: (
+            BrandDev::Models::BrandWebScrapeImagesResponse::Image::Enrichment::type_
+          ) -> BrandDev::Models::BrandWebScrapeImagesResponse::Image::Enrichment::type_
+
+          attr_reader url: String?
+
+          def url=: (String) -> String
+
+          attr_reader width: Integer?
+
+          def width=: (Integer) -> Integer
+
+          def initialize: (
+            ?height: Integer,
+            ?mimetype: String,
+            ?type: BrandDev::Models::BrandWebScrapeImagesResponse::Image::Enrichment::type_,
+            ?url: String,
+            ?width: Integer
+          ) -> void
+
+          def to_hash: -> {
+            height: Integer,
+            mimetype: String,
+            type: BrandDev::Models::BrandWebScrapeImagesResponse::Image::Enrichment::type_,
+            url: String,
+            width: Integer
+          }
+
+          type type_ =
+            :photography
+            | :illustration
+            | :logo
+            | :wordmark
+            | :icon
+            | :pattern
+            | :graphic
+            | :other
+
+          module Type
+            extend BrandDev::Internal::Type::Enum
+
+            PHOTOGRAPHY: :photography
+            ILLUSTRATION: :illustration
+            LOGO: :logo
+            WORDMARK: :wordmark
+            ICON: :icon
+            PATTERN: :pattern
+            GRAPHIC: :graphic
+            OTHER: :other
+
+            def self?.values: -> ::Array[BrandDev::Models::BrandWebScrapeImagesResponse::Image::Enrichment::type_]
+          end
+        end
       end
 
       type success = true
@@ -105,6 +245,94 @@ module BrandDev
         TRUE: true
 
         def self?.values: -> ::Array[BrandDev::Models::BrandWebScrapeImagesResponse::success]
+      end
+
+      type actions_applied =
+        {
+          instruction: String,
+          status: BrandDev::Models::BrandWebScrapeImagesResponse::ActionsApplied::status,
+          completion_evidence: String,
+          duration_ms: Float,
+          error: String,
+          method_: String,
+          target_description: String
+        }
+
+      class ActionsApplied < BrandDev::Internal::Type::BaseModel
+        attr_accessor instruction: String
+
+        attr_accessor status: BrandDev::Models::BrandWebScrapeImagesResponse::ActionsApplied::status
+
+        attr_reader completion_evidence: String?
+
+        def completion_evidence=: (String) -> String
+
+        attr_reader duration_ms: Float?
+
+        def duration_ms=: (Float) -> Float
+
+        attr_reader error: String?
+
+        def error=: (String) -> String
+
+        attr_reader method_: String?
+
+        def method_=: (String) -> String
+
+        attr_reader target_description: String?
+
+        def target_description=: (String) -> String
+
+        def initialize: (
+          instruction: String,
+          status: BrandDev::Models::BrandWebScrapeImagesResponse::ActionsApplied::status,
+          ?completion_evidence: String,
+          ?duration_ms: Float,
+          ?error: String,
+          ?method_: String,
+          ?target_description: String
+        ) -> void
+
+        def to_hash: -> {
+          instruction: String,
+          status: BrandDev::Models::BrandWebScrapeImagesResponse::ActionsApplied::status,
+          completion_evidence: String,
+          duration_ms: Float,
+          error: String,
+          method_: String,
+          target_description: String
+        }
+
+        type status = :applied | :failed | :skipped
+
+        module Status
+          extend BrandDev::Internal::Type::Enum
+
+          APPLIED: :applied
+          FAILED: :failed
+          SKIPPED: :skipped
+
+          def self?.values: -> ::Array[BrandDev::Models::BrandWebScrapeImagesResponse::ActionsApplied::status]
+        end
+      end
+
+      type key_metadata =
+        { credits_consumed: Integer, credits_remaining: Integer }
+
+      class KeyMetadata < BrandDev::Internal::Type::BaseModel
+        attr_accessor credits_consumed: Integer
+
+        attr_accessor credits_remaining: Integer
+
+        def initialize: (
+          credits_consumed: Integer,
+          credits_remaining: Integer
+        ) -> void
+
+        def to_hash: -> {
+          credits_consumed: Integer,
+          credits_remaining: Integer
+        }
       end
     end
   end

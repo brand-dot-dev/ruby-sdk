@@ -8,9 +8,9 @@ module BrandDev
       include BrandDev::Internal::Type::RequestParameters
 
       # @!attribute input
-      #   Brand domain or title to retrieve NAICS code for. If a valid domain is provided
-      #   in `input`, it will be used for classification, otherwise, we will search for
-      #   the brand using the provided title.
+      #   Brand domain or title to retrieve NAICS code for. If a valid domain is provided,
+      #   it will be used for classification, otherwise, we will search for the brand
+      #   using the provided title.
       #
       #   @return [String]
       required :input, String
@@ -28,6 +28,14 @@ module BrandDev
       #   @return [Integer, nil]
       optional :min_results, Integer
 
+      # @!attribute tags
+      #   Optional comma-separated caller-defined tags for tracking this request. Tags are
+      #   recorded on the request's usage log and can be used to filter usage on the
+      #   dashboard usage page. Up to 20 tags, each 1-50 characters.
+      #
+      #   @return [Array<String>, nil]
+      optional :tags, BrandDev::Internal::Type::ArrayOf[String]
+
       # @!attribute timeout_ms
       #   Optional timeout in milliseconds for the request. If the request takes longer
       #   than this value, it will be aborted with a 408 status code. Maximum allowed
@@ -36,15 +44,17 @@ module BrandDev
       #   @return [Integer, nil]
       optional :timeout_ms, Integer
 
-      # @!method initialize(input:, max_results: nil, min_results: nil, timeout_ms: nil, request_options: {})
+      # @!method initialize(input:, max_results: nil, min_results: nil, tags: nil, timeout_ms: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
       #   {BrandDev::Models::BrandRetrieveNaicsParams} for more details.
       #
-      #   @param input [String] Brand domain or title to retrieve NAICS code for. If a valid domain is provided
+      #   @param input [String] Brand domain or title to retrieve NAICS code for. If a valid domain is provided,
       #
       #   @param max_results [Integer] Maximum number of NAICS codes to return. Must be between 1 and 10. Defaults to 5
       #
       #   @param min_results [Integer] Minimum number of NAICS codes to return. Must be at least 1. Defaults to 1.
+      #
+      #   @param tags [Array<String>] Optional comma-separated caller-defined tags for tracking this request. Tags are
       #
       #   @param timeout_ms [Integer] Optional timeout in milliseconds for the request. If the request takes longer th
       #

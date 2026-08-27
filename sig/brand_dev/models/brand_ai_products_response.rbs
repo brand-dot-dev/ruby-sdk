@@ -1,9 +1,21 @@
 module BrandDev
   module Models
     type brand_ai_products_response =
-      { products: ::Array[BrandDev::Models::BrandAIProductsResponse::Product] }
+      {
+        cache_metadata: BrandDev::Models::BrandAIProductsResponse::CacheMetadata,
+        key_metadata: BrandDev::Models::BrandAIProductsResponse::KeyMetadata,
+        products: ::Array[BrandDev::Models::BrandAIProductsResponse::Product]
+      }
 
     class BrandAIProductsResponse < BrandDev::Internal::Type::BaseModel
+      attr_accessor cache_metadata: BrandDev::Models::BrandAIProductsResponse::CacheMetadata
+
+      attr_reader key_metadata: BrandDev::Models::BrandAIProductsResponse::KeyMetadata?
+
+      def key_metadata=: (
+        BrandDev::Models::BrandAIProductsResponse::KeyMetadata
+      ) -> BrandDev::Models::BrandAIProductsResponse::KeyMetadata
+
       attr_reader products: ::Array[BrandDev::Models::BrandAIProductsResponse::Product]?
 
       def products=: (
@@ -11,12 +23,69 @@ module BrandDev
       ) -> ::Array[BrandDev::Models::BrandAIProductsResponse::Product]
 
       def initialize: (
+        cache_metadata: BrandDev::Models::BrandAIProductsResponse::CacheMetadata,
+        ?key_metadata: BrandDev::Models::BrandAIProductsResponse::KeyMetadata,
         ?products: ::Array[BrandDev::Models::BrandAIProductsResponse::Product]
       ) -> void
 
       def to_hash: -> {
+        cache_metadata: BrandDev::Models::BrandAIProductsResponse::CacheMetadata,
+        key_metadata: BrandDev::Models::BrandAIProductsResponse::KeyMetadata,
         products: ::Array[BrandDev::Models::BrandAIProductsResponse::Product]
       }
+
+      type cache_metadata =
+        {
+          age_ms: Integer,
+          status: BrandDev::Models::BrandAIProductsResponse::CacheMetadata::status
+        }
+
+      class CacheMetadata < BrandDev::Internal::Type::BaseModel
+        attr_accessor age_ms: Integer
+
+        attr_accessor status: BrandDev::Models::BrandAIProductsResponse::CacheMetadata::status
+
+        def initialize: (
+          age_ms: Integer,
+          status: BrandDev::Models::BrandAIProductsResponse::CacheMetadata::status
+        ) -> void
+
+        def to_hash: -> {
+          age_ms: Integer,
+          status: BrandDev::Models::BrandAIProductsResponse::CacheMetadata::status
+        }
+
+        type status = :hit | :miss | :zdr
+
+        module Status
+          extend BrandDev::Internal::Type::Enum
+
+          HIT: :hit
+          MISS: :miss
+          ZDR: :zdr
+
+          def self?.values: -> ::Array[BrandDev::Models::BrandAIProductsResponse::CacheMetadata::status]
+        end
+      end
+
+      type key_metadata =
+        { credits_consumed: Integer, credits_remaining: Integer }
+
+      class KeyMetadata < BrandDev::Internal::Type::BaseModel
+        attr_accessor credits_consumed: Integer
+
+        attr_accessor credits_remaining: Integer
+
+        def initialize: (
+          credits_consumed: Integer,
+          credits_remaining: Integer
+        ) -> void
+
+        def to_hash: -> {
+          credits_consumed: Integer,
+          credits_remaining: Integer
+        }
+      end
 
       type product =
         {
@@ -24,14 +93,18 @@ module BrandDev
           features: ::Array[String],
           images: ::Array[String],
           name: String,
+          sku: String?,
           tags: ::Array[String],
           target_audience: ::Array[String],
+          availability: BrandDev::Models::BrandAIProductsResponse::Product::availability?,
           billing_frequency: BrandDev::Models::BrandAIProductsResponse::Product::billing_frequency?,
           category: String?,
           currency: String?,
+          dimensions: ::Array[String],
           image_url: String?,
           price: Float?,
           pricing_model: BrandDev::Models::BrandAIProductsResponse::Product::pricing_model?,
+          regular_price: Float?,
           url: String?
         }
 
@@ -44,9 +117,13 @@ module BrandDev
 
         attr_accessor name: String
 
+        attr_accessor sku: String?
+
         attr_accessor tags: ::Array[String]
 
         attr_accessor target_audience: ::Array[String]
+
+        attr_accessor availability: BrandDev::Models::BrandAIProductsResponse::Product::availability?
 
         attr_accessor billing_frequency: BrandDev::Models::BrandAIProductsResponse::Product::billing_frequency?
 
@@ -54,11 +131,17 @@ module BrandDev
 
         attr_accessor currency: String?
 
+        attr_reader dimensions: ::Array[String]?
+
+        def dimensions=: (::Array[String]) -> ::Array[String]
+
         attr_accessor image_url: String?
 
         attr_accessor price: Float?
 
         attr_accessor pricing_model: BrandDev::Models::BrandAIProductsResponse::Product::pricing_model?
+
+        attr_accessor regular_price: Float?
 
         attr_accessor url: String?
 
@@ -67,14 +150,18 @@ module BrandDev
           features: ::Array[String],
           images: ::Array[String],
           name: String,
+          sku: String?,
           tags: ::Array[String],
           target_audience: ::Array[String],
+          ?availability: BrandDev::Models::BrandAIProductsResponse::Product::availability?,
           ?billing_frequency: BrandDev::Models::BrandAIProductsResponse::Product::billing_frequency?,
           ?category: String?,
           ?currency: String?,
+          ?dimensions: ::Array[String],
           ?image_url: String?,
           ?price: Float?,
           ?pricing_model: BrandDev::Models::BrandAIProductsResponse::Product::pricing_model?,
+          ?regular_price: Float?,
           ?url: String?
         ) -> void
 
@@ -83,16 +170,43 @@ module BrandDev
           features: ::Array[String],
           images: ::Array[String],
           name: String,
+          sku: String?,
           tags: ::Array[String],
           target_audience: ::Array[String],
+          availability: BrandDev::Models::BrandAIProductsResponse::Product::availability?,
           billing_frequency: BrandDev::Models::BrandAIProductsResponse::Product::billing_frequency?,
           category: String?,
           currency: String?,
+          dimensions: ::Array[String],
           image_url: String?,
           price: Float?,
           pricing_model: BrandDev::Models::BrandAIProductsResponse::Product::pricing_model?,
+          regular_price: Float?,
           url: String?
         }
+
+        type availability =
+          :in_stock
+          | :out_of_stock
+          | :limited_availability
+          | :preorder
+          | :backorder
+          | :made_to_order
+          | :discontinued
+
+        module Availability
+          extend BrandDev::Internal::Type::Enum
+
+          IN_STOCK: :in_stock
+          OUT_OF_STOCK: :out_of_stock
+          LIMITED_AVAILABILITY: :limited_availability
+          PREORDER: :preorder
+          BACKORDER: :backorder
+          MADE_TO_ORDER: :made_to_order
+          DISCONTINUED: :discontinued
+
+          def self?.values: -> ::Array[BrandDev::Models::BrandAIProductsResponse::Product::availability]
+        end
 
         type billing_frequency = :monthly | :yearly | :one_time | :usage_based
 

@@ -1,7 +1,17 @@
 module BrandDev
   module Models
     type brand_web_scrape_sitemap_params =
-      { domain: String, max_links: Integer }
+      {
+        domain: String,
+        headers: ::Hash[Symbol, String],
+        max_links: Integer,
+        search: String,
+        sitemap_url: String,
+        tags: ::Array[String],
+        timeout_ms: Integer,
+        url_regex: String,
+        zdr: BrandDev::Models::BrandWebScrapeSitemapParams::zdr
+      }
       & BrandDev::Internal::Type::request_parameters
 
     class BrandWebScrapeSitemapParams < BrandDev::Internal::Type::BaseModel
@@ -10,21 +20,76 @@ module BrandDev
 
       attr_accessor domain: String
 
+      attr_reader headers: ::Hash[Symbol, String]?
+
+      def headers=: (::Hash[Symbol, String]) -> ::Hash[Symbol, String]
+
       attr_reader max_links: Integer?
 
       def max_links=: (Integer) -> Integer
 
+      attr_reader search: String?
+
+      def search=: (String) -> String
+
+      attr_reader sitemap_url: String?
+
+      def sitemap_url=: (String) -> String
+
+      attr_reader tags: ::Array[String]?
+
+      def tags=: (::Array[String]) -> ::Array[String]
+
+      attr_reader timeout_ms: Integer?
+
+      def timeout_ms=: (Integer) -> Integer
+
+      attr_reader url_regex: String?
+
+      def url_regex=: (String) -> String
+
+      attr_reader zdr: BrandDev::Models::BrandWebScrapeSitemapParams::zdr?
+
+      def zdr=: (
+        BrandDev::Models::BrandWebScrapeSitemapParams::zdr
+      ) -> BrandDev::Models::BrandWebScrapeSitemapParams::zdr
+
       def initialize: (
         domain: String,
+        ?headers: ::Hash[Symbol, String],
         ?max_links: Integer,
+        ?search: String,
+        ?sitemap_url: String,
+        ?tags: ::Array[String],
+        ?timeout_ms: Integer,
+        ?url_regex: String,
+        ?zdr: BrandDev::Models::BrandWebScrapeSitemapParams::zdr,
         ?request_options: BrandDev::request_opts
       ) -> void
 
       def to_hash: -> {
         domain: String,
+        headers: ::Hash[Symbol, String],
         max_links: Integer,
+        search: String,
+        sitemap_url: String,
+        tags: ::Array[String],
+        timeout_ms: Integer,
+        url_regex: String,
+        zdr: BrandDev::Models::BrandWebScrapeSitemapParams::zdr,
         request_options: BrandDev::RequestOptions
       }
+
+      type zdr = :enabled | :disabled
+
+      module Zdr
+        extend BrandDev::Internal::Type::Enum
+
+        ENABLED: :enabled
+        DISABLED: :disabled
+
+        def self?.values: -> ::Array[BrandDev::Models::BrandWebScrapeSitemapParams::zdr]
+      end
     end
   end
 end

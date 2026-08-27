@@ -2,12 +2,16 @@ module BrandDev
   module Models
     type brand_retrieve_simplified_response =
       {
+        cache_metadata: BrandDev::Models::BrandRetrieveSimplifiedResponse::CacheMetadata,
         brand: BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand,
         code: Integer,
+        key_metadata: BrandDev::Models::BrandRetrieveSimplifiedResponse::KeyMetadata,
         status: String
       }
 
     class BrandRetrieveSimplifiedResponse < BrandDev::Internal::Type::BaseModel
+      attr_accessor cache_metadata: BrandDev::Models::BrandRetrieveSimplifiedResponse::CacheMetadata
+
       attr_reader brand: BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand?
 
       def brand=: (
@@ -18,21 +22,65 @@ module BrandDev
 
       def code=: (Integer) -> Integer
 
+      attr_reader key_metadata: BrandDev::Models::BrandRetrieveSimplifiedResponse::KeyMetadata?
+
+      def key_metadata=: (
+        BrandDev::Models::BrandRetrieveSimplifiedResponse::KeyMetadata
+      ) -> BrandDev::Models::BrandRetrieveSimplifiedResponse::KeyMetadata
+
       attr_reader status: String?
 
       def status=: (String) -> String
 
       def initialize: (
+        cache_metadata: BrandDev::Models::BrandRetrieveSimplifiedResponse::CacheMetadata,
         ?brand: BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand,
         ?code: Integer,
+        ?key_metadata: BrandDev::Models::BrandRetrieveSimplifiedResponse::KeyMetadata,
         ?status: String
       ) -> void
 
       def to_hash: -> {
+        cache_metadata: BrandDev::Models::BrandRetrieveSimplifiedResponse::CacheMetadata,
         brand: BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand,
         code: Integer,
+        key_metadata: BrandDev::Models::BrandRetrieveSimplifiedResponse::KeyMetadata,
         status: String
       }
+
+      type cache_metadata =
+        {
+          age_ms: Integer,
+          status: BrandDev::Models::BrandRetrieveSimplifiedResponse::CacheMetadata::status
+        }
+
+      class CacheMetadata < BrandDev::Internal::Type::BaseModel
+        attr_accessor age_ms: Integer
+
+        attr_accessor status: BrandDev::Models::BrandRetrieveSimplifiedResponse::CacheMetadata::status
+
+        def initialize: (
+          age_ms: Integer,
+          status: BrandDev::Models::BrandRetrieveSimplifiedResponse::CacheMetadata::status
+        ) -> void
+
+        def to_hash: -> {
+          age_ms: Integer,
+          status: BrandDev::Models::BrandRetrieveSimplifiedResponse::CacheMetadata::status
+        }
+
+        type status = :hit | :miss | :zdr
+
+        module Status
+          extend BrandDev::Internal::Type::Enum
+
+          HIT: :hit
+          MISS: :miss
+          ZDR: :zdr
+
+          def self?.values: -> ::Array[BrandDev::Models::BrandRetrieveSimplifiedResponse::CacheMetadata::status]
+        end
+      end
 
       type brand =
         {
@@ -168,7 +216,12 @@ module BrandDev
           end
         end
 
-        type color = { hex: String, name: String }
+        type color =
+          {
+            hex: String,
+            name: String,
+            source: BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Color::source
+          }
 
         class Color < BrandDev::Internal::Type::BaseModel
           attr_reader hex: String?
@@ -179,9 +232,34 @@ module BrandDev
 
           def name=: (String) -> String
 
-          def initialize: (?hex: String, ?name: String) -> void
+          attr_reader source: BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Color::source?
 
-          def to_hash: -> { hex: String, name: String }
+          def source=: (
+            BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Color::source
+          ) -> BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Color::source
+
+          def initialize: (
+            ?hex: String,
+            ?name: String,
+            ?source: BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Color::source
+          ) -> void
+
+          def to_hash: -> {
+            hex: String,
+            name: String,
+            source: BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Color::source
+          }
+
+          type source = :site | :logo
+
+          module Source
+            extend BrandDev::Internal::Type::Enum
+
+            SITE: :site
+            LOGO: :logo
+
+            def self?.values: -> ::Array[BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Color::source]
+          end
         end
 
         type logo =
@@ -306,6 +384,25 @@ module BrandDev
             def self?.values: -> ::Array[BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand::Logo::type_]
           end
         end
+      end
+
+      type key_metadata =
+        { credits_consumed: Integer, credits_remaining: Integer }
+
+      class KeyMetadata < BrandDev::Internal::Type::BaseModel
+        attr_accessor credits_consumed: Integer
+
+        attr_accessor credits_remaining: Integer
+
+        def initialize: (
+          credits_consumed: Integer,
+          credits_remaining: Integer
+        ) -> void
+
+        def to_hash: -> {
+          credits_consumed: Integer,
+          credits_remaining: Integer
+        }
       end
     end
   end

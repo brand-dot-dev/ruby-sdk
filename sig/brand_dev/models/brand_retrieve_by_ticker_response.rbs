@@ -2,12 +2,16 @@ module BrandDev
   module Models
     type brand_retrieve_by_ticker_response =
       {
+        cache_metadata: BrandDev::Models::BrandRetrieveByTickerResponse::CacheMetadata,
         brand: BrandDev::Models::BrandRetrieveByTickerResponse::Brand,
         code: Integer,
+        key_metadata: BrandDev::Models::BrandRetrieveByTickerResponse::KeyMetadata,
         status: String
       }
 
     class BrandRetrieveByTickerResponse < BrandDev::Internal::Type::BaseModel
+      attr_accessor cache_metadata: BrandDev::Models::BrandRetrieveByTickerResponse::CacheMetadata
+
       attr_reader brand: BrandDev::Models::BrandRetrieveByTickerResponse::Brand?
 
       def brand=: (
@@ -18,21 +22,65 @@ module BrandDev
 
       def code=: (Integer) -> Integer
 
+      attr_reader key_metadata: BrandDev::Models::BrandRetrieveByTickerResponse::KeyMetadata?
+
+      def key_metadata=: (
+        BrandDev::Models::BrandRetrieveByTickerResponse::KeyMetadata
+      ) -> BrandDev::Models::BrandRetrieveByTickerResponse::KeyMetadata
+
       attr_reader status: String?
 
       def status=: (String) -> String
 
       def initialize: (
+        cache_metadata: BrandDev::Models::BrandRetrieveByTickerResponse::CacheMetadata,
         ?brand: BrandDev::Models::BrandRetrieveByTickerResponse::Brand,
         ?code: Integer,
+        ?key_metadata: BrandDev::Models::BrandRetrieveByTickerResponse::KeyMetadata,
         ?status: String
       ) -> void
 
       def to_hash: -> {
+        cache_metadata: BrandDev::Models::BrandRetrieveByTickerResponse::CacheMetadata,
         brand: BrandDev::Models::BrandRetrieveByTickerResponse::Brand,
         code: Integer,
+        key_metadata: BrandDev::Models::BrandRetrieveByTickerResponse::KeyMetadata,
         status: String
       }
+
+      type cache_metadata =
+        {
+          age_ms: Integer,
+          status: BrandDev::Models::BrandRetrieveByTickerResponse::CacheMetadata::status
+        }
+
+      class CacheMetadata < BrandDev::Internal::Type::BaseModel
+        attr_accessor age_ms: Integer
+
+        attr_accessor status: BrandDev::Models::BrandRetrieveByTickerResponse::CacheMetadata::status
+
+        def initialize: (
+          age_ms: Integer,
+          status: BrandDev::Models::BrandRetrieveByTickerResponse::CacheMetadata::status
+        ) -> void
+
+        def to_hash: -> {
+          age_ms: Integer,
+          status: BrandDev::Models::BrandRetrieveByTickerResponse::CacheMetadata::status
+        }
+
+        type status = :hit | :miss | :zdr
+
+        module Status
+          extend BrandDev::Internal::Type::Enum
+
+          HIT: :hit
+          MISS: :miss
+          ZDR: :zdr
+
+          def self?.values: -> ::Array[BrandDev::Models::BrandRetrieveByTickerResponse::CacheMetadata::status]
+        end
+      end
 
       type brand =
         {
@@ -42,11 +90,13 @@ module BrandDev
           description: String,
           domain: String,
           email: String,
+          employees: BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Employees,
           industries: BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Industries,
           is_nsfw: bool,
           links: BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Links,
           logos: ::Array[BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Logo],
           phone: String,
+          primary_language: BrandDev::Models::BrandRetrieveByTickerResponse::Brand::primary_language?,
           slogan: String,
           socials: ::Array[BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Social],
           stock: BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Stock,
@@ -84,6 +134,12 @@ module BrandDev
 
         def email=: (String) -> String
 
+        attr_reader employees: BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Employees?
+
+        def employees=: (
+          BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Employees
+        ) -> BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Employees
+
         attr_reader industries: BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Industries?
 
         def industries=: (
@@ -109,6 +165,8 @@ module BrandDev
         attr_reader phone: String?
 
         def phone=: (String) -> String
+
+        attr_accessor primary_language: BrandDev::Models::BrandRetrieveByTickerResponse::Brand::primary_language?
 
         attr_reader slogan: String?
 
@@ -137,11 +195,13 @@ module BrandDev
           ?description: String,
           ?domain: String,
           ?email: String,
+          ?employees: BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Employees,
           ?industries: BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Industries,
           ?is_nsfw: bool,
           ?links: BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Links,
           ?logos: ::Array[BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Logo],
           ?phone: String,
+          ?primary_language: BrandDev::Models::BrandRetrieveByTickerResponse::Brand::primary_language?,
           ?slogan: String,
           ?socials: ::Array[BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Social],
           ?stock: BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Stock,
@@ -155,11 +215,13 @@ module BrandDev
           description: String,
           domain: String,
           email: String,
+          employees: BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Employees,
           industries: BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Industries,
           is_nsfw: bool,
           links: BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Links,
           logos: ::Array[BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Logo],
           phone: String,
+          primary_language: BrandDev::Models::BrandRetrieveByTickerResponse::Brand::primary_language?,
           slogan: String,
           socials: ::Array[BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Social],
           stock: BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Stock,
@@ -309,7 +371,12 @@ module BrandDev
           end
         end
 
-        type color = { hex: String, name: String }
+        type color =
+          {
+            hex: String,
+            name: String,
+            source: BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Color::source
+          }
 
         class Color < BrandDev::Internal::Type::BaseModel
           attr_reader hex: String?
@@ -320,9 +387,87 @@ module BrandDev
 
           def name=: (String) -> String
 
-          def initialize: (?hex: String, ?name: String) -> void
+          attr_reader source: BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Color::source?
 
-          def to_hash: -> { hex: String, name: String }
+          def source=: (
+            BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Color::source
+          ) -> BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Color::source
+
+          def initialize: (
+            ?hex: String,
+            ?name: String,
+            ?source: BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Color::source
+          ) -> void
+
+          def to_hash: -> {
+            hex: String,
+            name: String,
+            source: BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Color::source
+          }
+
+          type source = :site | :logo
+
+          module Source
+            extend BrandDev::Internal::Type::Enum
+
+            SITE: :site
+            LOGO: :logo
+
+            def self?.values: -> ::Array[BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Color::source]
+          end
+        end
+
+        type employees =
+          {
+            exact: Integer,
+            range: BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Employees::range
+          }
+
+        class Employees < BrandDev::Internal::Type::BaseModel
+          attr_reader exact: Integer?
+
+          def exact=: (Integer) -> Integer
+
+          attr_reader range: BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Employees::range?
+
+          def range=: (
+            BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Employees::range
+          ) -> BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Employees::range
+
+          def initialize: (
+            ?exact: Integer,
+            ?range: BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Employees::range
+          ) -> void
+
+          def to_hash: -> {
+            exact: Integer,
+            range: BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Employees::range
+          }
+
+          type range =
+            :"1 to 10"
+            | :"11 to 50"
+            | :"51 to 200"
+            | :"201 to 500"
+            | :"501 to 1000"
+            | :"1001 to 5000"
+            | :"5001 to 10000"
+            | :"10001+"
+
+          module Range
+            extend BrandDev::Internal::Type::Enum
+
+            RANGE_1_TO_10: :"1 to 10"
+            RANGE_11_TO_50: :"11 to 50"
+            RANGE_51_TO_200: :"51 to 200"
+            RANGE_201_TO_500: :"201 to 500"
+            RANGE_501_TO_1000: :"501 to 1000"
+            RANGE_1001_TO_5000: :"1001 to 5000"
+            RANGE_5001_TO_10000: :"5001 to 10000"
+            RANGE_10001: :"10001+"
+
+            def self?.values: -> ::Array[BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Employees::range]
+          end
         end
 
         type industries =
@@ -474,7 +619,6 @@ module BrandDev
               | :"Streaming Platforms (Video, Music, Audio)"
               | :"Gaming & Interactive Entertainment"
               | :"Creator Economy & Influencer Platforms"
-              | :"Advertising, Adtech & Media Buying"
               | :"Film, TV & Production Studios"
               | :"Events, Venues & Live Entertainment"
               | :"Virtual Worlds & Metaverse Experiences"
@@ -535,6 +679,7 @@ module BrandDev
               | :"Streetwear & Emerging Luxury"
               | :"Couture & Made-to-Measure"
               | :"News Publishing & Journalism"
+              | :"Advertising, Adtech & Media Buying"
               | :"Digital Media & Content Platforms"
               | :"Broadcasting (TV & Radio)"
               | :"Podcasting & Audio Media"
@@ -698,7 +843,6 @@ module BrandDev
               STREAMING_PLATFORMS_VIDEO_MUSIC_AUDIO: :"Streaming Platforms (Video, Music, Audio)"
               GAMING_INTERACTIVE_ENTERTAINMENT: :"Gaming & Interactive Entertainment"
               CREATOR_ECONOMY_INFLUENCER_PLATFORMS: :"Creator Economy & Influencer Platforms"
-              ADVERTISING_ADTECH_MEDIA_BUYING: :"Advertising, Adtech & Media Buying"
               FILM_TV_PRODUCTION_STUDIOS: :"Film, TV & Production Studios"
               EVENTS_VENUES_LIVE_ENTERTAINMENT: :"Events, Venues & Live Entertainment"
               VIRTUAL_WORLDS_METAVERSE_EXPERIENCES: :"Virtual Worlds & Metaverse Experiences"
@@ -759,6 +903,7 @@ module BrandDev
               STREETWEAR_EMERGING_LUXURY: :"Streetwear & Emerging Luxury"
               COUTURE_MADE_TO_MEASURE: :"Couture & Made-to-Measure"
               NEWS_PUBLISHING_JOURNALISM: :"News Publishing & Journalism"
+              ADVERTISING_ADTECH_MEDIA_BUYING: :"Advertising, Adtech & Media Buying"
               DIGITAL_MEDIA_CONTENT_PLATFORMS: :"Digital Media & Content Platforms"
               BROADCASTING_TV_RADIO: :"Broadcasting (TV & Radio)"
               PODCASTING_AUDIO_MEDIA: :"Podcasting & Audio Media"
@@ -1039,20 +1184,352 @@ module BrandDev
           end
         end
 
-        type social = { type: String, url: String }
+        type primary_language =
+          :afrikaans
+          | :albanian
+          | :amharic
+          | :arabic
+          | :armenian
+          | :assamese
+          | :aymara
+          | :azeri
+          | :basque
+          | :belarusian
+          | :bengali
+          | :bosnian
+          | :bulgarian
+          | :burmese
+          | :cantonese
+          | :catalan
+          | :cebuano
+          | :chinese
+          | :corsican
+          | :croatian
+          | :czech
+          | :danish
+          | :dutch
+          | :english
+          | :esperanto
+          | :estonian
+          | :farsi
+          | :fijian
+          | :finnish
+          | :french
+          | :galician
+          | :georgian
+          | :german
+          | :greek
+          | :guarani
+          | :gujarati
+          | :"haitian-creole"
+          | :hausa
+          | :hawaiian
+          | :hebrew
+          | :hindi
+          | :hmong
+          | :hungarian
+          | :icelandic
+          | :igbo
+          | :indonesian
+          | :irish
+          | :italian
+          | :japanese
+          | :javanese
+          | :kannada
+          | :kazakh
+          | :khmer
+          | :kinyarwanda
+          | :korean
+          | :kurdish
+          | :kyrgyz
+          | :lao
+          | :latin
+          | :latvian
+          | :lingala
+          | :lithuanian
+          | :luxembourgish
+          | :macedonian
+          | :malagasy
+          | :malay
+          | :malayalam
+          | :maltese
+          | :maori
+          | :marathi
+          | :mongolian
+          | :nepali
+          | :norwegian
+          | :odia
+          | :oromo
+          | :pashto
+          | :pidgin
+          | :polish
+          | :portuguese
+          | :punjabi
+          | :quechua
+          | :romanian
+          | :russian
+          | :samoan
+          | :"scottish-gaelic"
+          | :serbian
+          | :sesotho
+          | :shona
+          | :sindhi
+          | :sinhala
+          | :slovak
+          | :slovene
+          | :somali
+          | :spanish
+          | :sundanese
+          | :swahili
+          | :swedish
+          | :tagalog
+          | :tajik
+          | :tamil
+          | :tatar
+          | :telugu
+          | :thai
+          | :tibetan
+          | :tigrinya
+          | :tongan
+          | :tswana
+          | :turkish
+          | :turkmen
+          | :ukrainian
+          | :urdu
+          | :uyghur
+          | :uzbek
+          | :vietnamese
+          | :welsh
+          | :wolof
+          | :xhosa
+          | :yiddish
+          | :yoruba
+          | :zulu
+
+        module PrimaryLanguage
+          extend BrandDev::Internal::Type::Enum
+
+          AFRIKAANS: :afrikaans
+          ALBANIAN: :albanian
+          AMHARIC: :amharic
+          ARABIC: :arabic
+          ARMENIAN: :armenian
+          ASSAMESE: :assamese
+          AYMARA: :aymara
+          AZERI: :azeri
+          BASQUE: :basque
+          BELARUSIAN: :belarusian
+          BENGALI: :bengali
+          BOSNIAN: :bosnian
+          BULGARIAN: :bulgarian
+          BURMESE: :burmese
+          CANTONESE: :cantonese
+          CATALAN: :catalan
+          CEBUANO: :cebuano
+          CHINESE: :chinese
+          CORSICAN: :corsican
+          CROATIAN: :croatian
+          CZECH: :czech
+          DANISH: :danish
+          DUTCH: :dutch
+          ENGLISH: :english
+          ESPERANTO: :esperanto
+          ESTONIAN: :estonian
+          FARSI: :farsi
+          FIJIAN: :fijian
+          FINNISH: :finnish
+          FRENCH: :french
+          GALICIAN: :galician
+          GEORGIAN: :georgian
+          GERMAN: :german
+          GREEK: :greek
+          GUARANI: :guarani
+          GUJARATI: :gujarati
+          HAITIAN_CREOLE: :"haitian-creole"
+          HAUSA: :hausa
+          HAWAIIAN: :hawaiian
+          HEBREW: :hebrew
+          HINDI: :hindi
+          HMONG: :hmong
+          HUNGARIAN: :hungarian
+          ICELANDIC: :icelandic
+          IGBO: :igbo
+          INDONESIAN: :indonesian
+          IRISH: :irish
+          ITALIAN: :italian
+          JAPANESE: :japanese
+          JAVANESE: :javanese
+          KANNADA: :kannada
+          KAZAKH: :kazakh
+          KHMER: :khmer
+          KINYARWANDA: :kinyarwanda
+          KOREAN: :korean
+          KURDISH: :kurdish
+          KYRGYZ: :kyrgyz
+          LAO: :lao
+          LATIN: :latin
+          LATVIAN: :latvian
+          LINGALA: :lingala
+          LITHUANIAN: :lithuanian
+          LUXEMBOURGISH: :luxembourgish
+          MACEDONIAN: :macedonian
+          MALAGASY: :malagasy
+          MALAY: :malay
+          MALAYALAM: :malayalam
+          MALTESE: :maltese
+          MAORI: :maori
+          MARATHI: :marathi
+          MONGOLIAN: :mongolian
+          NEPALI: :nepali
+          NORWEGIAN: :norwegian
+          ODIA: :odia
+          OROMO: :oromo
+          PASHTO: :pashto
+          PIDGIN: :pidgin
+          POLISH: :polish
+          PORTUGUESE: :portuguese
+          PUNJABI: :punjabi
+          QUECHUA: :quechua
+          ROMANIAN: :romanian
+          RUSSIAN: :russian
+          SAMOAN: :samoan
+          SCOTTISH_GAELIC: :"scottish-gaelic"
+          SERBIAN: :serbian
+          SESOTHO: :sesotho
+          SHONA: :shona
+          SINDHI: :sindhi
+          SINHALA: :sinhala
+          SLOVAK: :slovak
+          SLOVENE: :slovene
+          SOMALI: :somali
+          SPANISH: :spanish
+          SUNDANESE: :sundanese
+          SWAHILI: :swahili
+          SWEDISH: :swedish
+          TAGALOG: :tagalog
+          TAJIK: :tajik
+          TAMIL: :tamil
+          TATAR: :tatar
+          TELUGU: :telugu
+          THAI: :thai
+          TIBETAN: :tibetan
+          TIGRINYA: :tigrinya
+          TONGAN: :tongan
+          TSWANA: :tswana
+          TURKISH: :turkish
+          TURKMEN: :turkmen
+          UKRAINIAN: :ukrainian
+          URDU: :urdu
+          UYGHUR: :uyghur
+          UZBEK: :uzbek
+          VIETNAMESE: :vietnamese
+          WELSH: :welsh
+          WOLOF: :wolof
+          XHOSA: :xhosa
+          YIDDISH: :yiddish
+          YORUBA: :yoruba
+          ZULU: :zulu
+
+          def self?.values: -> ::Array[BrandDev::Models::BrandRetrieveByTickerResponse::Brand::primary_language]
+        end
+
+        type social =
+          {
+            type: BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Social::type_,
+            url: String
+          }
 
         class Social < BrandDev::Internal::Type::BaseModel
-          attr_reader type: String?
+          attr_reader type: BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Social::type_?
 
-          def type=: (String) -> String
+          def type=: (
+            BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Social::type_
+          ) -> BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Social::type_
 
           attr_reader url: String?
 
           def url=: (String) -> String
 
-          def initialize: (?type: String, ?url: String) -> void
+          def initialize: (
+            ?type: BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Social::type_,
+            ?url: String
+          ) -> void
 
-          def to_hash: -> { type: String, url: String }
+          def to_hash: -> {
+            type: BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Social::type_,
+            url: String
+          }
+
+          type type_ =
+            :x
+            | :facebook
+            | :instagram
+            | :linkedin
+            | :youtube
+            | :pinterest
+            | :tiktok
+            | :dribbble
+            | :github
+            | :behance
+            | :snapchat
+            | :whatsapp
+            | :telegram
+            | :line
+            | :discord
+            | :twitch
+            | :vimeo
+            | :imdb
+            | :tumblr
+            | :flickr
+            | :giphy
+            | :medium
+            | :spotify
+            | :soundcloud
+            | :tripadvisor
+            | :yelp
+            | :producthunt
+            | :reddit
+            | :crunchbase
+            | :appstore
+            | :playstore
+
+          module Type
+            extend BrandDev::Internal::Type::Enum
+
+            X: :x
+            FACEBOOK: :facebook
+            INSTAGRAM: :instagram
+            LINKEDIN: :linkedin
+            YOUTUBE: :youtube
+            PINTEREST: :pinterest
+            TIKTOK: :tiktok
+            DRIBBBLE: :dribbble
+            GITHUB: :github
+            BEHANCE: :behance
+            SNAPCHAT: :snapchat
+            WHATSAPP: :whatsapp
+            TELEGRAM: :telegram
+            LINE: :line
+            DISCORD: :discord
+            TWITCH: :twitch
+            VIMEO: :vimeo
+            IMDB: :imdb
+            TUMBLR: :tumblr
+            FLICKR: :flickr
+            GIPHY: :giphy
+            MEDIUM: :medium
+            SPOTIFY: :spotify
+            SOUNDCLOUD: :soundcloud
+            TRIPADVISOR: :tripadvisor
+            YELP: :yelp
+            PRODUCTHUNT: :producthunt
+            REDDIT: :reddit
+            CRUNCHBASE: :crunchbase
+            APPSTORE: :appstore
+            PLAYSTORE: :playstore
+
+            def self?.values: -> ::Array[BrandDev::Models::BrandRetrieveByTickerResponse::Brand::Social::type_]
+          end
         end
 
         type stock = { exchange: String, ticker: String }
@@ -1070,6 +1547,25 @@ module BrandDev
 
           def to_hash: -> { exchange: String, ticker: String }
         end
+      end
+
+      type key_metadata =
+        { credits_consumed: Integer, credits_remaining: Integer }
+
+      class KeyMetadata < BrandDev::Internal::Type::BaseModel
+        attr_accessor credits_consumed: Integer
+
+        attr_accessor credits_remaining: Integer
+
+        def initialize: (
+          credits_consumed: Integer,
+          credits_remaining: Integer
+        ) -> void
+
+        def to_hash: -> {
+          credits_consumed: Integer,
+          credits_remaining: Integer
+        }
       end
     end
   end

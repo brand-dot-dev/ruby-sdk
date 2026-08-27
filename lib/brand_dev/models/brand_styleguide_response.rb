@@ -4,6 +4,14 @@ module BrandDev
   module Models
     # @see BrandDev::Resources::Brand#styleguide
     class BrandStyleguideResponse < BrandDev::Internal::Type::BaseModel
+      # @!attribute cache_metadata
+      #   Cache outcome for this response. Composite responses are hits only when every
+      #   cache-controlled fetch contributing to the output was a hit; age_ms is the
+      #   oldest contributing hit.
+      #
+      #   @return [BrandDev::Models::BrandStyleguideResponse::CacheMetadata]
+      required :cache_metadata, -> { BrandDev::Models::BrandStyleguideResponse::CacheMetadata }
+
       # @!attribute code
       #   HTTP status code
       #
@@ -15,6 +23,13 @@ module BrandDev
       #
       #   @return [String, nil]
       optional :domain, String
+
+      # @!attribute key_metadata
+      #   Metadata about the API key used for the request. Included in every response
+      #   whenever a valid API key is provided, even when the response status is not 200.
+      #
+      #   @return [BrandDev::Models::BrandStyleguideResponse::KeyMetadata, nil]
+      optional :key_metadata, -> { BrandDev::Models::BrandStyleguideResponse::KeyMetadata }
 
       # @!attribute status
       #   Status of the response, e.g., 'ok'
@@ -28,14 +43,87 @@ module BrandDev
       #   @return [BrandDev::Models::BrandStyleguideResponse::Styleguide, nil]
       optional :styleguide, -> { BrandDev::Models::BrandStyleguideResponse::Styleguide }
 
-      # @!method initialize(code: nil, domain: nil, status: nil, styleguide: nil)
+      # @!method initialize(cache_metadata:, code: nil, domain: nil, key_metadata: nil, status: nil, styleguide: nil)
+      #   Some parameter documentations has been truncated, see
+      #   {BrandDev::Models::BrandStyleguideResponse} for more details.
+      #
+      #   @param cache_metadata [BrandDev::Models::BrandStyleguideResponse::CacheMetadata] Cache outcome for this response. Composite responses are hits only when every ca
+      #
       #   @param code [Integer] HTTP status code
       #
       #   @param domain [String] The normalized domain that was processed
       #
+      #   @param key_metadata [BrandDev::Models::BrandStyleguideResponse::KeyMetadata] Metadata about the API key used for the request. Included in every response when
+      #
       #   @param status [String] Status of the response, e.g., 'ok'
       #
       #   @param styleguide [BrandDev::Models::BrandStyleguideResponse::Styleguide] Comprehensive styleguide data extracted from the website
+
+      # @see BrandDev::Models::BrandStyleguideResponse#cache_metadata
+      class CacheMetadata < BrandDev::Internal::Type::BaseModel
+        # @!attribute age_ms
+        #   Age of the cached data in milliseconds. Zero for miss and zdr responses.
+        #
+        #   @return [Integer]
+        required :age_ms, Integer
+
+        # @!attribute status
+        #   Whether the response was served from cache, required fresh work, or honored
+        #   zero-data-retention cache bypass.
+        #
+        #   @return [Symbol, BrandDev::Models::BrandStyleguideResponse::CacheMetadata::Status]
+        required :status, enum: -> { BrandDev::Models::BrandStyleguideResponse::CacheMetadata::Status }
+
+        # @!method initialize(age_ms:, status:)
+        #   Some parameter documentations has been truncated, see
+        #   {BrandDev::Models::BrandStyleguideResponse::CacheMetadata} for more details.
+        #
+        #   Cache outcome for this response. Composite responses are hits only when every
+        #   cache-controlled fetch contributing to the output was a hit; age_ms is the
+        #   oldest contributing hit.
+        #
+        #   @param age_ms [Integer] Age of the cached data in milliseconds. Zero for miss and zdr responses.
+        #
+        #   @param status [Symbol, BrandDev::Models::BrandStyleguideResponse::CacheMetadata::Status] Whether the response was served from cache, required fresh work, or honored zero
+
+        # Whether the response was served from cache, required fresh work, or honored
+        # zero-data-retention cache bypass.
+        #
+        # @see BrandDev::Models::BrandStyleguideResponse::CacheMetadata#status
+        module Status
+          extend BrandDev::Internal::Type::Enum
+
+          HIT = :hit
+          MISS = :miss
+          ZDR = :zdr
+
+          # @!method self.values
+          #   @return [Array<Symbol>]
+        end
+      end
+
+      # @see BrandDev::Models::BrandStyleguideResponse#key_metadata
+      class KeyMetadata < BrandDev::Internal::Type::BaseModel
+        # @!attribute credits_consumed
+        #   The number of credits consumed by this request.
+        #
+        #   @return [Integer]
+        required :credits_consumed, Integer
+
+        # @!attribute credits_remaining
+        #   The number of credits remaining for your organization after this request.
+        #
+        #   @return [Integer]
+        required :credits_remaining, Integer
+
+        # @!method initialize(credits_consumed:, credits_remaining:)
+        #   Metadata about the API key used for the request. Included in every response
+        #   whenever a valid API key is provided, even when the response status is not 200.
+        #
+        #   @param credits_consumed [Integer] The number of credits consumed by this request.
+        #
+        #   @param credits_remaining [Integer] The number of credits remaining for your organization after this request.
+      end
 
       # @see BrandDev::Models::BrandStyleguideResponse#styleguide
       class Styleguide < BrandDev::Internal::Type::BaseModel
@@ -59,6 +147,16 @@ module BrandDev
                  -> { BrandDev::Models::BrandStyleguideResponse::Styleguide::ElementSpacing },
                  api_name: :elementSpacing
 
+        # @!attribute font_links
+        #   Font assets keyed by family name as it appears in fontFamily/fontFallbacks
+        #   (non-generic names only). Clients match typography.fontFamily / fontWeight or
+        #   button styles to pick a file URL from files.
+        #
+        #   @return [Hash{Symbol=>BrandDev::Models::BrandStyleguideResponse::Styleguide::FontLink}]
+        required :font_links,
+                 -> { BrandDev::Internal::Type::HashOf[BrandDev::Models::BrandStyleguideResponse::Styleguide::FontLink] },
+                 api_name: :fontLinks
+
         # @!attribute mode
         #   The primary color mode of the website design
         #
@@ -77,7 +175,10 @@ module BrandDev
         #   @return [BrandDev::Models::BrandStyleguideResponse::Styleguide::Typography]
         required :typography, -> { BrandDev::Models::BrandStyleguideResponse::Styleguide::Typography }
 
-        # @!method initialize(colors:, components:, element_spacing:, mode:, shadows:, typography:)
+        # @!method initialize(colors:, components:, element_spacing:, font_links:, mode:, shadows:, typography:)
+        #   Some parameter documentations has been truncated, see
+        #   {BrandDev::Models::BrandStyleguideResponse::Styleguide} for more details.
+        #
         #   Comprehensive styleguide data extracted from the website
         #
         #   @param colors [BrandDev::Models::BrandStyleguideResponse::Styleguide::Colors] Primary colors used on the website
@@ -85,6 +186,8 @@ module BrandDev
         #   @param components [BrandDev::Models::BrandStyleguideResponse::Styleguide::Components] UI component styles
         #
         #   @param element_spacing [BrandDev::Models::BrandStyleguideResponse::Styleguide::ElementSpacing] Spacing system used on the website
+        #
+        #   @param font_links [Hash{Symbol=>BrandDev::Models::BrandStyleguideResponse::Styleguide::FontLink}] Font assets keyed by family name as it appears in fontFamily/fontFallbacks (non-
         #
         #   @param mode [Symbol, BrandDev::Models::BrandStyleguideResponse::Styleguide::Mode] The primary color mode of the website design
         #
@@ -690,6 +793,59 @@ module BrandDev
           #   @param sm [String]
           #   @param xl [String]
           #   @param xs [String]
+        end
+
+        class FontLink < BrandDev::Internal::Type::BaseModel
+          # @!attribute files
+          #   Upright font files keyed by weight string (e.g. "400" for regular, "500",
+          #   "700"). Values are absolute URLs.
+          #
+          #   @return [Hash{Symbol=>String}]
+          required :files, BrandDev::Internal::Type::HashOf[String]
+
+          # @!attribute type
+          #
+          #   @return [Symbol, BrandDev::Models::BrandStyleguideResponse::Styleguide::FontLink::Type]
+          required :type, enum: -> { BrandDev::Models::BrandStyleguideResponse::Styleguide::FontLink::Type }
+
+          # @!attribute category
+          #   Google Fonts category when type is google (e.g. sans-serif, serif, monospace,
+          #   display, handwriting). Omitted for custom fonts when unknown.
+          #
+          #   @return [String, nil]
+          optional :category, String
+
+          # @!attribute display_name
+          #   Present when type is custom: human-readable name derived from the fontLinks key
+          #   (strip build/hash suffixes, split camelCase / PascalCase, normalize separators).
+          #   Google entries omit this.
+          #
+          #   @return [String, nil]
+          optional :display_name, String, api_name: :displayName
+
+          # @!method initialize(files:, type:, category: nil, display_name: nil)
+          #   Some parameter documentations has been truncated, see
+          #   {BrandDev::Models::BrandStyleguideResponse::Styleguide::FontLink} for more
+          #   details.
+          #
+          #   @param files [Hash{Symbol=>String}] Upright font files keyed by weight string (e.g. "400" for regular, "500", "700")
+          #
+          #   @param type [Symbol, BrandDev::Models::BrandStyleguideResponse::Styleguide::FontLink::Type]
+          #
+          #   @param category [String] Google Fonts category when type is google (e.g. sans-serif, serif, monospace, di
+          #
+          #   @param display_name [String] Present when type is custom: human-readable name derived from the fontLinks key
+
+          # @see BrandDev::Models::BrandStyleguideResponse::Styleguide::FontLink#type
+          module Type
+            extend BrandDev::Internal::Type::Enum
+
+            GOOGLE = :google
+            CUSTOM = :custom
+
+            # @!method self.values
+            #   @return [Array<Symbol>]
+          end
         end
 
         # The primary color mode of the website design

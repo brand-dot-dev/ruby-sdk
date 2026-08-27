@@ -73,6 +73,15 @@ module BrandDev
           sig { returns(String) }
           attr_accessor :domain
 
+          # Return a cached result if a prior scrape for the same parameters exists and is
+          # younger than this many milliseconds. Defaults to 7 days (604800000 ms) when
+          # omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
+          sig { returns(T.nilable(Integer)) }
+          attr_reader :max_age_ms
+
+          sig { params(max_age_ms: Integer).void }
+          attr_writer :max_age_ms
+
           # Maximum number of products to extract.
           sig { returns(T.nilable(Integer)) }
           attr_reader :max_products
@@ -80,8 +89,16 @@ module BrandDev
           sig { params(max_products: Integer).void }
           attr_writer :max_products
 
-          # Optional timeout in milliseconds for the request. Maximum allowed value is
-          # 300000ms (5 minutes).
+          # Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+          sig { returns(T.nilable(T::Array[String])) }
+          attr_reader :tags
+
+          sig { params(tags: T::Array[String]).void }
+          attr_writer :tags
+
+          # Optional timeout in milliseconds for the request. If the request takes longer
+          # than this value, it will be aborted with a 408 status code. Maximum allowed
+          # value is 300000ms (5 minutes).
           sig { returns(T.nilable(Integer)) }
           attr_reader :timeout_ms
 
@@ -91,24 +108,39 @@ module BrandDev
           sig do
             params(
               domain: String,
+              max_age_ms: Integer,
               max_products: Integer,
+              tags: T::Array[String],
               timeout_ms: Integer
             ).returns(T.attached_class)
           end
           def self.new(
             # The domain name to analyze.
             domain:,
+            # Return a cached result if a prior scrape for the same parameters exists and is
+            # younger than this many milliseconds. Defaults to 7 days (604800000 ms) when
+            # omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
+            max_age_ms: nil,
             # Maximum number of products to extract.
             max_products: nil,
-            # Optional timeout in milliseconds for the request. Maximum allowed value is
-            # 300000ms (5 minutes).
+            # Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+            tags: nil,
+            # Optional timeout in milliseconds for the request. If the request takes longer
+            # than this value, it will be aborted with a 408 status code. Maximum allowed
+            # value is 300000ms (5 minutes).
             timeout_ms: nil
           )
           end
 
           sig do
             override.returns(
-              { domain: String, max_products: Integer, timeout_ms: Integer }
+              {
+                domain: String,
+                max_age_ms: Integer,
+                max_products: Integer,
+                tags: T::Array[String],
+                timeout_ms: Integer
+              }
             )
           end
           def to_hash
@@ -129,6 +161,15 @@ module BrandDev
           sig { returns(String) }
           attr_accessor :direct_url
 
+          # Return a cached result if a prior scrape for the same parameters exists and is
+          # younger than this many milliseconds. Defaults to 7 days (604800000 ms) when
+          # omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
+          sig { returns(T.nilable(Integer)) }
+          attr_reader :max_age_ms
+
+          sig { params(max_age_ms: Integer).void }
+          attr_writer :max_age_ms
+
           # Maximum number of products to extract.
           sig { returns(T.nilable(Integer)) }
           attr_reader :max_products
@@ -136,8 +177,16 @@ module BrandDev
           sig { params(max_products: Integer).void }
           attr_writer :max_products
 
-          # Optional timeout in milliseconds for the request. Maximum allowed value is
-          # 300000ms (5 minutes).
+          # Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+          sig { returns(T.nilable(T::Array[String])) }
+          attr_reader :tags
+
+          sig { params(tags: T::Array[String]).void }
+          attr_writer :tags
+
+          # Optional timeout in milliseconds for the request. If the request takes longer
+          # than this value, it will be aborted with a 408 status code. Maximum allowed
+          # value is 300000ms (5 minutes).
           sig { returns(T.nilable(Integer)) }
           attr_reader :timeout_ms
 
@@ -147,7 +196,9 @@ module BrandDev
           sig do
             params(
               direct_url: String,
+              max_age_ms: Integer,
               max_products: Integer,
+              tags: T::Array[String],
               timeout_ms: Integer
             ).returns(T.attached_class)
           end
@@ -155,17 +206,30 @@ module BrandDev
             # A specific URL to use directly as the starting point for extraction without
             # domain resolution.
             direct_url:,
+            # Return a cached result if a prior scrape for the same parameters exists and is
+            # younger than this many milliseconds. Defaults to 7 days (604800000 ms) when
+            # omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
+            max_age_ms: nil,
             # Maximum number of products to extract.
             max_products: nil,
-            # Optional timeout in milliseconds for the request. Maximum allowed value is
-            # 300000ms (5 minutes).
+            # Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+            tags: nil,
+            # Optional timeout in milliseconds for the request. If the request takes longer
+            # than this value, it will be aborted with a 408 status code. Maximum allowed
+            # value is 300000ms (5 minutes).
             timeout_ms: nil
           )
           end
 
           sig do
             override.returns(
-              { direct_url: String, max_products: Integer, timeout_ms: Integer }
+              {
+                direct_url: String,
+                max_age_ms: Integer,
+                max_products: Integer,
+                tags: T::Array[String],
+                timeout_ms: Integer
+              }
             )
           end
           def to_hash

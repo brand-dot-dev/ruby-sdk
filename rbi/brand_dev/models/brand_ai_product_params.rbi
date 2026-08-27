@@ -15,8 +15,25 @@ module BrandDev
       sig { returns(String) }
       attr_accessor :url
 
-      # Optional timeout in milliseconds for the request. Maximum allowed value is
-      # 300000ms (5 minutes).
+      # Return a cached result if a prior scrape for the same parameters exists and is
+      # younger than this many milliseconds. Defaults to 7 days (604800000 ms) when
+      # omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
+      sig { returns(T.nilable(Integer)) }
+      attr_reader :max_age_ms
+
+      sig { params(max_age_ms: Integer).void }
+      attr_writer :max_age_ms
+
+      # Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+      sig { returns(T.nilable(T::Array[String])) }
+      attr_reader :tags
+
+      sig { params(tags: T::Array[String]).void }
+      attr_writer :tags
+
+      # Optional timeout in milliseconds for the request. If the request takes longer
+      # than this value, it will be aborted with a 408 status code. Maximum allowed
+      # value is 300000ms (5 minutes).
       sig { returns(T.nilable(Integer)) }
       attr_reader :timeout_ms
 
@@ -26,6 +43,8 @@ module BrandDev
       sig do
         params(
           url: String,
+          max_age_ms: Integer,
+          tags: T::Array[String],
           timeout_ms: Integer,
           request_options: BrandDev::RequestOptions::OrHash
         ).returns(T.attached_class)
@@ -33,8 +52,15 @@ module BrandDev
       def self.new(
         # The product page URL to extract product data from.
         url:,
-        # Optional timeout in milliseconds for the request. Maximum allowed value is
-        # 300000ms (5 minutes).
+        # Return a cached result if a prior scrape for the same parameters exists and is
+        # younger than this many milliseconds. Defaults to 7 days (604800000 ms) when
+        # omitted. Max is 30 days (2592000000 ms). Set to 0 to always scrape fresh.
+        max_age_ms: nil,
+        # Optional tags for tracking usage. Up to 20 tags, each 1 to 50 characters.
+        tags: nil,
+        # Optional timeout in milliseconds for the request. If the request takes longer
+        # than this value, it will be aborted with a 408 status code. Maximum allowed
+        # value is 300000ms (5 minutes).
         timeout_ms: nil,
         request_options: {}
       )
@@ -44,6 +70,8 @@ module BrandDev
         override.returns(
           {
             url: String,
+            max_age_ms: Integer,
+            tags: T::Array[String],
             timeout_ms: Integer,
             request_options: BrandDev::RequestOptions
           }

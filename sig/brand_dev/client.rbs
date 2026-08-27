@@ -12,6 +12,10 @@ module BrandDev
 
     attr_reader brand: BrandDev::Resources::Brand
 
+    attr_reader monitors: BrandDev::Resources::Monitors
+
+    attr_reader batch: BrandDev::Resources::Batch
+
     private def auth_headers: -> ::Hash[String, String]
 
     def initialize: (
