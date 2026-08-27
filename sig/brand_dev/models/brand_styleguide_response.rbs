@@ -2,6 +2,7 @@ module BrandDev
   module Models
     type brand_styleguide_response =
       {
+        cache_metadata: BrandDev::Models::BrandStyleguideResponse::CacheMetadata,
         code: Integer,
         domain: String,
         key_metadata: BrandDev::Models::BrandStyleguideResponse::KeyMetadata,
@@ -10,6 +11,8 @@ module BrandDev
       }
 
     class BrandStyleguideResponse < BrandDev::Internal::Type::BaseModel
+      attr_accessor cache_metadata: BrandDev::Models::BrandStyleguideResponse::CacheMetadata
+
       attr_reader code: Integer?
 
       def code=: (Integer) -> Integer
@@ -35,6 +38,7 @@ module BrandDev
       ) -> BrandDev::Models::BrandStyleguideResponse::Styleguide
 
       def initialize: (
+        cache_metadata: BrandDev::Models::BrandStyleguideResponse::CacheMetadata,
         ?code: Integer,
         ?domain: String,
         ?key_metadata: BrandDev::Models::BrandStyleguideResponse::KeyMetadata,
@@ -43,12 +47,47 @@ module BrandDev
       ) -> void
 
       def to_hash: -> {
+        cache_metadata: BrandDev::Models::BrandStyleguideResponse::CacheMetadata,
         code: Integer,
         domain: String,
         key_metadata: BrandDev::Models::BrandStyleguideResponse::KeyMetadata,
         status: String,
         styleguide: BrandDev::Models::BrandStyleguideResponse::Styleguide
       }
+
+      type cache_metadata =
+        {
+          age_ms: Integer,
+          status: BrandDev::Models::BrandStyleguideResponse::CacheMetadata::status
+        }
+
+      class CacheMetadata < BrandDev::Internal::Type::BaseModel
+        attr_accessor age_ms: Integer
+
+        attr_accessor status: BrandDev::Models::BrandStyleguideResponse::CacheMetadata::status
+
+        def initialize: (
+          age_ms: Integer,
+          status: BrandDev::Models::BrandStyleguideResponse::CacheMetadata::status
+        ) -> void
+
+        def to_hash: -> {
+          age_ms: Integer,
+          status: BrandDev::Models::BrandStyleguideResponse::CacheMetadata::status
+        }
+
+        type status = :hit | :miss | :zdr
+
+        module Status
+          extend BrandDev::Internal::Type::Enum
+
+          HIT: :hit
+          MISS: :miss
+          ZDR: :zdr
+
+          def self?.values: -> ::Array[BrandDev::Models::BrandStyleguideResponse::CacheMetadata::status]
+        end
+      end
 
       type key_metadata =
         { credits_consumed: Integer, credits_remaining: Integer }

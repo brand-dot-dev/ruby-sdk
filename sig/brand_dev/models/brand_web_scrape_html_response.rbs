@@ -2,6 +2,7 @@ module BrandDev
   module Models
     type brand_web_scrape_html_response =
       {
+        cache_metadata: BrandDev::Models::BrandWebScrapeHTMLResponse::CacheMetadata,
         html: String,
         metadata: BrandDev::Models::BrandWebScrapeHTMLResponse::Metadata,
         success: BrandDev::Models::BrandWebScrapeHTMLResponse::success,
@@ -13,6 +14,8 @@ module BrandDev
       }
 
     class BrandWebScrapeHTMLResponse < BrandDev::Internal::Type::BaseModel
+      attr_accessor cache_metadata: BrandDev::Models::BrandWebScrapeHTMLResponse::CacheMetadata
+
       attr_accessor html: String
 
       attr_accessor metadata: BrandDev::Models::BrandWebScrapeHTMLResponse::Metadata
@@ -40,6 +43,7 @@ module BrandDev
       ) -> BrandDev::Models::BrandWebScrapeHTMLResponse::KeyMetadata
 
       def initialize: (
+        cache_metadata: BrandDev::Models::BrandWebScrapeHTMLResponse::CacheMetadata,
         html: String,
         metadata: BrandDev::Models::BrandWebScrapeHTMLResponse::Metadata,
         success: BrandDev::Models::BrandWebScrapeHTMLResponse::success,
@@ -51,6 +55,7 @@ module BrandDev
       ) -> void
 
       def to_hash: -> {
+        cache_metadata: BrandDev::Models::BrandWebScrapeHTMLResponse::CacheMetadata,
         html: String,
         metadata: BrandDev::Models::BrandWebScrapeHTMLResponse::Metadata,
         success: BrandDev::Models::BrandWebScrapeHTMLResponse::success,
@@ -60,6 +65,40 @@ module BrandDev
         actions_html_stale: bool,
         key_metadata: BrandDev::Models::BrandWebScrapeHTMLResponse::KeyMetadata
       }
+
+      type cache_metadata =
+        {
+          age_ms: Integer,
+          status: BrandDev::Models::BrandWebScrapeHTMLResponse::CacheMetadata::status
+        }
+
+      class CacheMetadata < BrandDev::Internal::Type::BaseModel
+        attr_accessor age_ms: Integer
+
+        attr_accessor status: BrandDev::Models::BrandWebScrapeHTMLResponse::CacheMetadata::status
+
+        def initialize: (
+          age_ms: Integer,
+          status: BrandDev::Models::BrandWebScrapeHTMLResponse::CacheMetadata::status
+        ) -> void
+
+        def to_hash: -> {
+          age_ms: Integer,
+          status: BrandDev::Models::BrandWebScrapeHTMLResponse::CacheMetadata::status
+        }
+
+        type status = :hit | :miss | :zdr
+
+        module Status
+          extend BrandDev::Internal::Type::Enum
+
+          HIT: :hit
+          MISS: :miss
+          ZDR: :zdr
+
+          def self?.values: -> ::Array[BrandDev::Models::BrandWebScrapeHTMLResponse::CacheMetadata::status]
+        end
+      end
 
       type metadata =
         {

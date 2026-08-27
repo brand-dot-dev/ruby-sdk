@@ -2,6 +2,7 @@ module BrandDev
   module Models
     type brand_screenshot_response =
       {
+        cache_metadata: BrandDev::Models::BrandScreenshotResponse::CacheMetadata,
         code: Integer,
         domain: String,
         height: Integer,
@@ -13,6 +14,8 @@ module BrandDev
       }
 
     class BrandScreenshotResponse < BrandDev::Internal::Type::BaseModel
+      attr_accessor cache_metadata: BrandDev::Models::BrandScreenshotResponse::CacheMetadata
+
       attr_reader code: Integer?
 
       def code=: (Integer) -> Integer
@@ -50,6 +53,7 @@ module BrandDev
       def width=: (Integer) -> Integer
 
       def initialize: (
+        cache_metadata: BrandDev::Models::BrandScreenshotResponse::CacheMetadata,
         ?code: Integer,
         ?domain: String,
         ?height: Integer,
@@ -61,6 +65,7 @@ module BrandDev
       ) -> void
 
       def to_hash: -> {
+        cache_metadata: BrandDev::Models::BrandScreenshotResponse::CacheMetadata,
         code: Integer,
         domain: String,
         height: Integer,
@@ -70,6 +75,40 @@ module BrandDev
         status: String,
         width: Integer
       }
+
+      type cache_metadata =
+        {
+          age_ms: Integer,
+          status: BrandDev::Models::BrandScreenshotResponse::CacheMetadata::status
+        }
+
+      class CacheMetadata < BrandDev::Internal::Type::BaseModel
+        attr_accessor age_ms: Integer
+
+        attr_accessor status: BrandDev::Models::BrandScreenshotResponse::CacheMetadata::status
+
+        def initialize: (
+          age_ms: Integer,
+          status: BrandDev::Models::BrandScreenshotResponse::CacheMetadata::status
+        ) -> void
+
+        def to_hash: -> {
+          age_ms: Integer,
+          status: BrandDev::Models::BrandScreenshotResponse::CacheMetadata::status
+        }
+
+        type status = :hit | :miss | :zdr
+
+        module Status
+          extend BrandDev::Internal::Type::Enum
+
+          HIT: :hit
+          MISS: :miss
+          ZDR: :zdr
+
+          def self?.values: -> ::Array[BrandDev::Models::BrandScreenshotResponse::CacheMetadata::status]
+        end
+      end
 
       type key_metadata =
         { credits_consumed: Integer, credits_remaining: Integer }

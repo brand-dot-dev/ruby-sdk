@@ -4,6 +4,14 @@ module BrandDev
   module Models
     # @see BrandDev::Resources::Brand#retrieve_by_ticker
     class BrandRetrieveByTickerResponse < BrandDev::Internal::Type::BaseModel
+      # @!attribute cache_metadata
+      #   Cache outcome for this response. Composite responses are hits only when every
+      #   cache-controlled fetch contributing to the output was a hit; age_ms is the
+      #   oldest contributing hit.
+      #
+      #   @return [BrandDev::Models::BrandRetrieveByTickerResponse::CacheMetadata]
+      required :cache_metadata, -> { BrandDev::Models::BrandRetrieveByTickerResponse::CacheMetadata }
+
       # @!attribute brand
       #   Detailed brand information
       #
@@ -29,9 +37,11 @@ module BrandDev
       #   @return [String, nil]
       optional :status, String
 
-      # @!method initialize(brand: nil, code: nil, key_metadata: nil, status: nil)
+      # @!method initialize(cache_metadata:, brand: nil, code: nil, key_metadata: nil, status: nil)
       #   Some parameter documentations has been truncated, see
       #   {BrandDev::Models::BrandRetrieveByTickerResponse} for more details.
+      #
+      #   @param cache_metadata [BrandDev::Models::BrandRetrieveByTickerResponse::CacheMetadata] Cache outcome for this response. Composite responses are hits only when every ca
       #
       #   @param brand [BrandDev::Models::BrandRetrieveByTickerResponse::Brand] Detailed brand information
       #
@@ -40,6 +50,50 @@ module BrandDev
       #   @param key_metadata [BrandDev::Models::BrandRetrieveByTickerResponse::KeyMetadata] Metadata about the API key used for the request. Included in every response when
       #
       #   @param status [String] Status of the response, e.g., 'ok'
+
+      # @see BrandDev::Models::BrandRetrieveByTickerResponse#cache_metadata
+      class CacheMetadata < BrandDev::Internal::Type::BaseModel
+        # @!attribute age_ms
+        #   Age of the cached data in milliseconds. Zero for miss and zdr responses.
+        #
+        #   @return [Integer]
+        required :age_ms, Integer
+
+        # @!attribute status
+        #   Whether the response was served from cache, required fresh work, or honored
+        #   zero-data-retention cache bypass.
+        #
+        #   @return [Symbol, BrandDev::Models::BrandRetrieveByTickerResponse::CacheMetadata::Status]
+        required :status, enum: -> { BrandDev::Models::BrandRetrieveByTickerResponse::CacheMetadata::Status }
+
+        # @!method initialize(age_ms:, status:)
+        #   Some parameter documentations has been truncated, see
+        #   {BrandDev::Models::BrandRetrieveByTickerResponse::CacheMetadata} for more
+        #   details.
+        #
+        #   Cache outcome for this response. Composite responses are hits only when every
+        #   cache-controlled fetch contributing to the output was a hit; age_ms is the
+        #   oldest contributing hit.
+        #
+        #   @param age_ms [Integer] Age of the cached data in milliseconds. Zero for miss and zdr responses.
+        #
+        #   @param status [Symbol, BrandDev::Models::BrandRetrieveByTickerResponse::CacheMetadata::Status] Whether the response was served from cache, required fresh work, or honored zero
+
+        # Whether the response was served from cache, required fresh work, or honored
+        # zero-data-retention cache bypass.
+        #
+        # @see BrandDev::Models::BrandRetrieveByTickerResponse::CacheMetadata#status
+        module Status
+          extend BrandDev::Internal::Type::Enum
+
+          HIT = :hit
+          MISS = :miss
+          ZDR = :zdr
+
+          # @!method self.values
+          #   @return [Array<Symbol>]
+        end
+      end
 
       # @see BrandDev::Models::BrandRetrieveByTickerResponse#brand
       class Brand < BrandDev::Internal::Type::BaseModel

@@ -14,6 +14,7 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
 
     assert_pattern do
       response => {
+        cache_metadata: BrandDev::Models::BrandRetrieveResponse::CacheMetadata,
         brand: BrandDev::Models::BrandRetrieveResponse::Brand | nil,
         code: Integer | nil,
         key_metadata: BrandDev::Models::BrandRetrieveResponse::KeyMetadata | nil,
@@ -33,6 +34,7 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
 
     assert_pattern do
       response => {
+        cache_metadata: BrandDev::Models::BrandAIProductResponse::CacheMetadata,
         is_product_page: BrandDev::Internal::Type::Boolean | nil,
         key_metadata: BrandDev::Models::BrandAIProductResponse::KeyMetadata | nil,
         platform: BrandDev::Models::BrandAIProductResponse::Platform | nil,
@@ -52,6 +54,7 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
 
     assert_pattern do
       response => {
+        cache_metadata: BrandDev::Models::BrandAIProductsResponse::CacheMetadata,
         key_metadata: BrandDev::Models::BrandAIProductsResponse::KeyMetadata | nil,
         products: ^(BrandDev::Internal::Type::ArrayOf[BrandDev::Models::BrandAIProductsResponse::Product]) | nil
       }
@@ -100,6 +103,7 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
 
     assert_pattern do
       response => {
+        cache_metadata: BrandDev::Models::BrandFontsResponse::CacheMetadata,
         code: Integer,
         domain: String,
         fonts: ^(BrandDev::Internal::Type::ArrayOf[BrandDev::Models::BrandFontsResponse::Font]),
@@ -121,6 +125,7 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
 
     assert_pattern do
       response => {
+        cache_metadata: BrandDev::Models::BrandIdentifyFromTransactionResponse::CacheMetadata,
         brand: BrandDev::Models::BrandIdentifyFromTransactionResponse::Brand | nil,
         code: Integer | nil,
         key_metadata: BrandDev::Models::BrandIdentifyFromTransactionResponse::KeyMetadata | nil,
@@ -178,6 +183,7 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
 
     assert_pattern do
       response => {
+        cache_metadata: BrandDev::Models::BrandRetrieveByEmailResponse::CacheMetadata,
         brand: BrandDev::Models::BrandRetrieveByEmailResponse::Brand | nil,
         code: Integer | nil,
         key_metadata: BrandDev::Models::BrandRetrieveByEmailResponse::KeyMetadata | nil,
@@ -197,6 +203,7 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
 
     assert_pattern do
       response => {
+        cache_metadata: BrandDev::Models::BrandRetrieveByIsinResponse::CacheMetadata,
         brand: BrandDev::Models::BrandRetrieveByIsinResponse::Brand | nil,
         code: Integer | nil,
         key_metadata: BrandDev::Models::BrandRetrieveByIsinResponse::KeyMetadata | nil,
@@ -216,6 +223,7 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
 
     assert_pattern do
       response => {
+        cache_metadata: BrandDev::Models::BrandRetrieveByNameResponse::CacheMetadata,
         brand: BrandDev::Models::BrandRetrieveByNameResponse::Brand | nil,
         code: Integer | nil,
         key_metadata: BrandDev::Models::BrandRetrieveByNameResponse::KeyMetadata | nil,
@@ -235,6 +243,7 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
 
     assert_pattern do
       response => {
+        cache_metadata: BrandDev::Models::BrandRetrieveByTickerResponse::CacheMetadata,
         brand: BrandDev::Models::BrandRetrieveByTickerResponse::Brand | nil,
         code: Integer | nil,
         key_metadata: BrandDev::Models::BrandRetrieveByTickerResponse::KeyMetadata | nil,
@@ -274,6 +283,7 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
 
     assert_pattern do
       response => {
+        cache_metadata: BrandDev::Models::BrandRetrieveSimplifiedResponse::CacheMetadata,
         brand: BrandDev::Models::BrandRetrieveSimplifiedResponse::Brand | nil,
         code: Integer | nil,
         key_metadata: BrandDev::Models::BrandRetrieveSimplifiedResponse::KeyMetadata | nil,
@@ -293,6 +303,7 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
 
     assert_pattern do
       response => {
+        cache_metadata: BrandDev::Models::BrandScreenshotResponse::CacheMetadata,
         code: Integer | nil,
         domain: String | nil,
         height: Integer | nil,
@@ -316,6 +327,7 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
 
     assert_pattern do
       response => {
+        cache_metadata: BrandDev::Models::BrandStyleguideResponse::CacheMetadata,
         code: Integer | nil,
         domain: String | nil,
         key_metadata: BrandDev::Models::BrandStyleguideResponse::KeyMetadata | nil,
@@ -336,6 +348,7 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
 
     assert_pattern do
       response => {
+        cache_metadata: BrandDev::Models::BrandWebScrapeHTMLResponse::CacheMetadata,
         html: String,
         metadata: BrandDev::Models::BrandWebScrapeHTMLResponse::Metadata,
         success: BrandDev::Models::BrandWebScrapeHTMLResponse::Success,
@@ -359,6 +372,7 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
 
     assert_pattern do
       response => {
+        cache_metadata: BrandDev::Models::BrandWebScrapeImagesResponse::CacheMetadata,
         images: ^(BrandDev::Internal::Type::ArrayOf[BrandDev::Models::BrandWebScrapeImagesResponse::Image]),
         success: BrandDev::Models::BrandWebScrapeImagesResponse::Success,
         url: String,
@@ -379,6 +393,7 @@ class BrandDev::Test::Resources::BrandTest < BrandDev::Test::ResourceTest
 
     assert_pattern do
       response => {
+        cache_metadata: BrandDev::Models::BrandWebScrapeMdResponse::CacheMetadata,
         content_length: Integer,
         markdown: String,
         metadata: BrandDev::Models::BrandWebScrapeMdResponse::Metadata,

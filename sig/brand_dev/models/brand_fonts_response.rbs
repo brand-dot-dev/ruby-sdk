@@ -2,6 +2,7 @@ module BrandDev
   module Models
     type brand_fonts_response =
       {
+        cache_metadata: BrandDev::Models::BrandFontsResponse::CacheMetadata,
         code: Integer,
         domain: String,
         fonts: ::Array[BrandDev::Models::BrandFontsResponse::Font],
@@ -11,6 +12,8 @@ module BrandDev
       }
 
     class BrandFontsResponse < BrandDev::Internal::Type::BaseModel
+      attr_accessor cache_metadata: BrandDev::Models::BrandFontsResponse::CacheMetadata
+
       attr_accessor code: Integer
 
       attr_accessor domain: String
@@ -32,6 +35,7 @@ module BrandDev
       ) -> BrandDev::Models::BrandFontsResponse::KeyMetadata
 
       def initialize: (
+        cache_metadata: BrandDev::Models::BrandFontsResponse::CacheMetadata,
         code: Integer,
         domain: String,
         fonts: ::Array[BrandDev::Models::BrandFontsResponse::Font],
@@ -41,6 +45,7 @@ module BrandDev
       ) -> void
 
       def to_hash: -> {
+        cache_metadata: BrandDev::Models::BrandFontsResponse::CacheMetadata,
         code: Integer,
         domain: String,
         fonts: ::Array[BrandDev::Models::BrandFontsResponse::Font],
@@ -48,6 +53,40 @@ module BrandDev
         font_links: ::Hash[Symbol, BrandDev::Models::BrandFontsResponse::FontLink],
         key_metadata: BrandDev::Models::BrandFontsResponse::KeyMetadata
       }
+
+      type cache_metadata =
+        {
+          age_ms: Integer,
+          status: BrandDev::Models::BrandFontsResponse::CacheMetadata::status
+        }
+
+      class CacheMetadata < BrandDev::Internal::Type::BaseModel
+        attr_accessor age_ms: Integer
+
+        attr_accessor status: BrandDev::Models::BrandFontsResponse::CacheMetadata::status
+
+        def initialize: (
+          age_ms: Integer,
+          status: BrandDev::Models::BrandFontsResponse::CacheMetadata::status
+        ) -> void
+
+        def to_hash: -> {
+          age_ms: Integer,
+          status: BrandDev::Models::BrandFontsResponse::CacheMetadata::status
+        }
+
+        type status = :hit | :miss | :zdr
+
+        module Status
+          extend BrandDev::Internal::Type::Enum
+
+          HIT: :hit
+          MISS: :miss
+          ZDR: :zdr
+
+          def self?.values: -> ::Array[BrandDev::Models::BrandFontsResponse::CacheMetadata::status]
+        end
+      end
 
       type font =
         {

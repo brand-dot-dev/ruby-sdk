@@ -43,7 +43,7 @@ brand_dev = BrandDev::Client.new(
 
 brand = brand_dev.brand.retrieve(domain: "REPLACE_ME")
 
-puts(brand.brand)
+puts(brand.cache_metadata)
 ```
 
 ### Handling errors

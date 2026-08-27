@@ -4,6 +4,14 @@ module BrandDev
   module Models
     # @see BrandDev::Resources::Brand#styleguide
     class BrandStyleguideResponse < BrandDev::Internal::Type::BaseModel
+      # @!attribute cache_metadata
+      #   Cache outcome for this response. Composite responses are hits only when every
+      #   cache-controlled fetch contributing to the output was a hit; age_ms is the
+      #   oldest contributing hit.
+      #
+      #   @return [BrandDev::Models::BrandStyleguideResponse::CacheMetadata]
+      required :cache_metadata, -> { BrandDev::Models::BrandStyleguideResponse::CacheMetadata }
+
       # @!attribute code
       #   HTTP status code
       #
@@ -35,9 +43,11 @@ module BrandDev
       #   @return [BrandDev::Models::BrandStyleguideResponse::Styleguide, nil]
       optional :styleguide, -> { BrandDev::Models::BrandStyleguideResponse::Styleguide }
 
-      # @!method initialize(code: nil, domain: nil, key_metadata: nil, status: nil, styleguide: nil)
+      # @!method initialize(cache_metadata:, code: nil, domain: nil, key_metadata: nil, status: nil, styleguide: nil)
       #   Some parameter documentations has been truncated, see
       #   {BrandDev::Models::BrandStyleguideResponse} for more details.
+      #
+      #   @param cache_metadata [BrandDev::Models::BrandStyleguideResponse::CacheMetadata] Cache outcome for this response. Composite responses are hits only when every ca
       #
       #   @param code [Integer] HTTP status code
       #
@@ -48,6 +58,49 @@ module BrandDev
       #   @param status [String] Status of the response, e.g., 'ok'
       #
       #   @param styleguide [BrandDev::Models::BrandStyleguideResponse::Styleguide] Comprehensive styleguide data extracted from the website
+
+      # @see BrandDev::Models::BrandStyleguideResponse#cache_metadata
+      class CacheMetadata < BrandDev::Internal::Type::BaseModel
+        # @!attribute age_ms
+        #   Age of the cached data in milliseconds. Zero for miss and zdr responses.
+        #
+        #   @return [Integer]
+        required :age_ms, Integer
+
+        # @!attribute status
+        #   Whether the response was served from cache, required fresh work, or honored
+        #   zero-data-retention cache bypass.
+        #
+        #   @return [Symbol, BrandDev::Models::BrandStyleguideResponse::CacheMetadata::Status]
+        required :status, enum: -> { BrandDev::Models::BrandStyleguideResponse::CacheMetadata::Status }
+
+        # @!method initialize(age_ms:, status:)
+        #   Some parameter documentations has been truncated, see
+        #   {BrandDev::Models::BrandStyleguideResponse::CacheMetadata} for more details.
+        #
+        #   Cache outcome for this response. Composite responses are hits only when every
+        #   cache-controlled fetch contributing to the output was a hit; age_ms is the
+        #   oldest contributing hit.
+        #
+        #   @param age_ms [Integer] Age of the cached data in milliseconds. Zero for miss and zdr responses.
+        #
+        #   @param status [Symbol, BrandDev::Models::BrandStyleguideResponse::CacheMetadata::Status] Whether the response was served from cache, required fresh work, or honored zero
+
+        # Whether the response was served from cache, required fresh work, or honored
+        # zero-data-retention cache bypass.
+        #
+        # @see BrandDev::Models::BrandStyleguideResponse::CacheMetadata#status
+        module Status
+          extend BrandDev::Internal::Type::Enum
+
+          HIT = :hit
+          MISS = :miss
+          ZDR = :zdr
+
+          # @!method self.values
+          #   @return [Array<Symbol>]
+        end
+      end
 
       # @see BrandDev::Models::BrandStyleguideResponse#key_metadata
       class KeyMetadata < BrandDev::Internal::Type::BaseModel

@@ -2,6 +2,7 @@ module BrandDev
   module Models
     type brand_ai_product_response =
       {
+        cache_metadata: BrandDev::Models::BrandAIProductResponse::CacheMetadata,
         is_product_page: bool,
         key_metadata: BrandDev::Models::BrandAIProductResponse::KeyMetadata,
         platform: BrandDev::Models::BrandAIProductResponse::platform?,
@@ -9,6 +10,8 @@ module BrandDev
       }
 
     class BrandAIProductResponse < BrandDev::Internal::Type::BaseModel
+      attr_accessor cache_metadata: BrandDev::Models::BrandAIProductResponse::CacheMetadata
+
       attr_reader is_product_page: bool?
 
       def is_product_page=: (bool) -> bool
@@ -24,6 +27,7 @@ module BrandDev
       attr_accessor product: BrandDev::Models::BrandAIProductResponse::Product?
 
       def initialize: (
+        cache_metadata: BrandDev::Models::BrandAIProductResponse::CacheMetadata,
         ?is_product_page: bool,
         ?key_metadata: BrandDev::Models::BrandAIProductResponse::KeyMetadata,
         ?platform: BrandDev::Models::BrandAIProductResponse::platform?,
@@ -31,11 +35,46 @@ module BrandDev
       ) -> void
 
       def to_hash: -> {
+        cache_metadata: BrandDev::Models::BrandAIProductResponse::CacheMetadata,
         is_product_page: bool,
         key_metadata: BrandDev::Models::BrandAIProductResponse::KeyMetadata,
         platform: BrandDev::Models::BrandAIProductResponse::platform?,
         product: BrandDev::Models::BrandAIProductResponse::Product?
       }
+
+      type cache_metadata =
+        {
+          age_ms: Integer,
+          status: BrandDev::Models::BrandAIProductResponse::CacheMetadata::status
+        }
+
+      class CacheMetadata < BrandDev::Internal::Type::BaseModel
+        attr_accessor age_ms: Integer
+
+        attr_accessor status: BrandDev::Models::BrandAIProductResponse::CacheMetadata::status
+
+        def initialize: (
+          age_ms: Integer,
+          status: BrandDev::Models::BrandAIProductResponse::CacheMetadata::status
+        ) -> void
+
+        def to_hash: -> {
+          age_ms: Integer,
+          status: BrandDev::Models::BrandAIProductResponse::CacheMetadata::status
+        }
+
+        type status = :hit | :miss | :zdr
+
+        module Status
+          extend BrandDev::Internal::Type::Enum
+
+          HIT: :hit
+          MISS: :miss
+          ZDR: :zdr
+
+          def self?.values: -> ::Array[BrandDev::Models::BrandAIProductResponse::CacheMetadata::status]
+        end
+      end
 
       type key_metadata =
         { credits_consumed: Integer, credits_remaining: Integer }

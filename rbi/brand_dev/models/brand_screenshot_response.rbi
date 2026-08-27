@@ -11,6 +11,20 @@ module BrandDev
           )
         end
 
+      # Cache outcome for this response. Composite responses are hits only when every
+      # cache-controlled fetch contributing to the output was a hit; age_ms is the
+      # oldest contributing hit.
+      sig { returns(BrandDev::Models::BrandScreenshotResponse::CacheMetadata) }
+      attr_reader :cache_metadata
+
+      sig do
+        params(
+          cache_metadata:
+            BrandDev::Models::BrandScreenshotResponse::CacheMetadata::OrHash
+        ).void
+      end
+      attr_writer :cache_metadata
+
       # HTTP status code
       sig { returns(T.nilable(Integer)) }
       attr_reader :code
@@ -91,6 +105,8 @@ module BrandDev
 
       sig do
         params(
+          cache_metadata:
+            BrandDev::Models::BrandScreenshotResponse::CacheMetadata::OrHash,
           code: Integer,
           domain: String,
           height: Integer,
@@ -104,6 +120,10 @@ module BrandDev
         ).returns(T.attached_class)
       end
       def self.new(
+        # Cache outcome for this response. Composite responses are hits only when every
+        # cache-controlled fetch contributing to the output was a hit; age_ms is the
+        # oldest contributing hit.
+        cache_metadata:,
         # HTTP status code
         code: nil,
         # The normalized domain that was processed
@@ -128,6 +148,8 @@ module BrandDev
       sig do
         override.returns(
           {
+            cache_metadata:
+              BrandDev::Models::BrandScreenshotResponse::CacheMetadata,
             code: Integer,
             domain: String,
             height: Integer,
@@ -142,6 +164,101 @@ module BrandDev
         )
       end
       def to_hash
+      end
+
+      class CacheMetadata < BrandDev::Internal::Type::BaseModel
+        OrHash =
+          T.type_alias do
+            T.any(
+              BrandDev::Models::BrandScreenshotResponse::CacheMetadata,
+              BrandDev::Internal::AnyHash
+            )
+          end
+
+        # Age of the cached data in milliseconds. Zero for miss and zdr responses.
+        sig { returns(Integer) }
+        attr_accessor :age_ms
+
+        # Whether the response was served from cache, required fresh work, or honored
+        # zero-data-retention cache bypass.
+        sig do
+          returns(
+            BrandDev::Models::BrandScreenshotResponse::CacheMetadata::Status::TaggedSymbol
+          )
+        end
+        attr_accessor :status
+
+        # Cache outcome for this response. Composite responses are hits only when every
+        # cache-controlled fetch contributing to the output was a hit; age_ms is the
+        # oldest contributing hit.
+        sig do
+          params(
+            age_ms: Integer,
+            status:
+              BrandDev::Models::BrandScreenshotResponse::CacheMetadata::Status::OrSymbol
+          ).returns(T.attached_class)
+        end
+        def self.new(
+          # Age of the cached data in milliseconds. Zero for miss and zdr responses.
+          age_ms:,
+          # Whether the response was served from cache, required fresh work, or honored
+          # zero-data-retention cache bypass.
+          status:
+        )
+        end
+
+        sig do
+          override.returns(
+            {
+              age_ms: Integer,
+              status:
+                BrandDev::Models::BrandScreenshotResponse::CacheMetadata::Status::TaggedSymbol
+            }
+          )
+        end
+        def to_hash
+        end
+
+        # Whether the response was served from cache, required fresh work, or honored
+        # zero-data-retention cache bypass.
+        module Status
+          extend BrandDev::Internal::Type::Enum
+
+          TaggedSymbol =
+            T.type_alias do
+              T.all(
+                Symbol,
+                BrandDev::Models::BrandScreenshotResponse::CacheMetadata::Status
+              )
+            end
+          OrSymbol = T.type_alias { T.any(Symbol, String) }
+
+          HIT =
+            T.let(
+              :hit,
+              BrandDev::Models::BrandScreenshotResponse::CacheMetadata::Status::TaggedSymbol
+            )
+          MISS =
+            T.let(
+              :miss,
+              BrandDev::Models::BrandScreenshotResponse::CacheMetadata::Status::TaggedSymbol
+            )
+          ZDR =
+            T.let(
+              :zdr,
+              BrandDev::Models::BrandScreenshotResponse::CacheMetadata::Status::TaggedSymbol
+            )
+
+          sig do
+            override.returns(
+              T::Array[
+                BrandDev::Models::BrandScreenshotResponse::CacheMetadata::Status::TaggedSymbol
+              ]
+            )
+          end
+          def self.values
+          end
+        end
       end
 
       class KeyMetadata < BrandDev::Internal::Type::BaseModel
