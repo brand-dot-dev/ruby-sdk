@@ -4,6 +4,14 @@ module BrandDev
   module Models
     # @see BrandDev::Resources::Brand#ai_products
     class BrandAIProductsResponse < BrandDev::Internal::Type::BaseModel
+      # @!attribute cache_metadata
+      #   Cache outcome for this response. Composite responses are hits only when every
+      #   cache-controlled fetch contributing to the output was a hit; age_ms is the
+      #   oldest contributing hit.
+      #
+      #   @return [BrandDev::Models::BrandAIProductsResponse::CacheMetadata]
+      required :cache_metadata, -> { BrandDev::Models::BrandAIProductsResponse::CacheMetadata }
+
       # @!attribute key_metadata
       #   Metadata about the API key used for the request. Included in every response
       #   whenever a valid API key is provided, even when the response status is not 200.
@@ -18,13 +26,58 @@ module BrandDev
       optional :products,
                -> { BrandDev::Internal::Type::ArrayOf[BrandDev::Models::BrandAIProductsResponse::Product] }
 
-      # @!method initialize(key_metadata: nil, products: nil)
+      # @!method initialize(cache_metadata:, key_metadata: nil, products: nil)
       #   Some parameter documentations has been truncated, see
       #   {BrandDev::Models::BrandAIProductsResponse} for more details.
+      #
+      #   @param cache_metadata [BrandDev::Models::BrandAIProductsResponse::CacheMetadata] Cache outcome for this response. Composite responses are hits only when every ca
       #
       #   @param key_metadata [BrandDev::Models::BrandAIProductsResponse::KeyMetadata] Metadata about the API key used for the request. Included in every response when
       #
       #   @param products [Array<BrandDev::Models::BrandAIProductsResponse::Product>] Array of products extracted from the website
+
+      # @see BrandDev::Models::BrandAIProductsResponse#cache_metadata
+      class CacheMetadata < BrandDev::Internal::Type::BaseModel
+        # @!attribute age_ms
+        #   Age of the cached data in milliseconds. Zero for miss and zdr responses.
+        #
+        #   @return [Integer]
+        required :age_ms, Integer
+
+        # @!attribute status
+        #   Whether the response was served from cache, required fresh work, or honored
+        #   zero-data-retention cache bypass.
+        #
+        #   @return [Symbol, BrandDev::Models::BrandAIProductsResponse::CacheMetadata::Status]
+        required :status, enum: -> { BrandDev::Models::BrandAIProductsResponse::CacheMetadata::Status }
+
+        # @!method initialize(age_ms:, status:)
+        #   Some parameter documentations has been truncated, see
+        #   {BrandDev::Models::BrandAIProductsResponse::CacheMetadata} for more details.
+        #
+        #   Cache outcome for this response. Composite responses are hits only when every
+        #   cache-controlled fetch contributing to the output was a hit; age_ms is the
+        #   oldest contributing hit.
+        #
+        #   @param age_ms [Integer] Age of the cached data in milliseconds. Zero for miss and zdr responses.
+        #
+        #   @param status [Symbol, BrandDev::Models::BrandAIProductsResponse::CacheMetadata::Status] Whether the response was served from cache, required fresh work, or honored zero
+
+        # Whether the response was served from cache, required fresh work, or honored
+        # zero-data-retention cache bypass.
+        #
+        # @see BrandDev::Models::BrandAIProductsResponse::CacheMetadata#status
+        module Status
+          extend BrandDev::Internal::Type::Enum
+
+          HIT = :hit
+          MISS = :miss
+          ZDR = :zdr
+
+          # @!method self.values
+          #   @return [Array<Symbol>]
+        end
+      end
 
       # @see BrandDev::Models::BrandAIProductsResponse#key_metadata
       class KeyMetadata < BrandDev::Internal::Type::BaseModel

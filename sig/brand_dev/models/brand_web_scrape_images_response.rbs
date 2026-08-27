@@ -2,6 +2,7 @@ module BrandDev
   module Models
     type brand_web_scrape_images_response =
       {
+        cache_metadata: BrandDev::Models::BrandWebScrapeImagesResponse::CacheMetadata,
         images: ::Array[BrandDev::Models::BrandWebScrapeImagesResponse::Image],
         success: BrandDev::Models::BrandWebScrapeImagesResponse::success,
         url: String,
@@ -10,6 +11,8 @@ module BrandDev
       }
 
     class BrandWebScrapeImagesResponse < BrandDev::Internal::Type::BaseModel
+      attr_accessor cache_metadata: BrandDev::Models::BrandWebScrapeImagesResponse::CacheMetadata
+
       attr_accessor images: ::Array[BrandDev::Models::BrandWebScrapeImagesResponse::Image]
 
       attr_accessor success: BrandDev::Models::BrandWebScrapeImagesResponse::success
@@ -29,6 +32,7 @@ module BrandDev
       ) -> BrandDev::Models::BrandWebScrapeImagesResponse::KeyMetadata
 
       def initialize: (
+        cache_metadata: BrandDev::Models::BrandWebScrapeImagesResponse::CacheMetadata,
         images: ::Array[BrandDev::Models::BrandWebScrapeImagesResponse::Image],
         success: BrandDev::Models::BrandWebScrapeImagesResponse::success,
         url: String,
@@ -37,12 +41,47 @@ module BrandDev
       ) -> void
 
       def to_hash: -> {
+        cache_metadata: BrandDev::Models::BrandWebScrapeImagesResponse::CacheMetadata,
         images: ::Array[BrandDev::Models::BrandWebScrapeImagesResponse::Image],
         success: BrandDev::Models::BrandWebScrapeImagesResponse::success,
         url: String,
         actions_applied: ::Array[BrandDev::Models::BrandWebScrapeImagesResponse::ActionsApplied],
         key_metadata: BrandDev::Models::BrandWebScrapeImagesResponse::KeyMetadata
       }
+
+      type cache_metadata =
+        {
+          age_ms: Integer,
+          status: BrandDev::Models::BrandWebScrapeImagesResponse::CacheMetadata::status
+        }
+
+      class CacheMetadata < BrandDev::Internal::Type::BaseModel
+        attr_accessor age_ms: Integer
+
+        attr_accessor status: BrandDev::Models::BrandWebScrapeImagesResponse::CacheMetadata::status
+
+        def initialize: (
+          age_ms: Integer,
+          status: BrandDev::Models::BrandWebScrapeImagesResponse::CacheMetadata::status
+        ) -> void
+
+        def to_hash: -> {
+          age_ms: Integer,
+          status: BrandDev::Models::BrandWebScrapeImagesResponse::CacheMetadata::status
+        }
+
+        type status = :hit | :miss | :zdr
+
+        module Status
+          extend BrandDev::Internal::Type::Enum
+
+          HIT: :hit
+          MISS: :miss
+          ZDR: :zdr
+
+          def self?.values: -> ::Array[BrandDev::Models::BrandWebScrapeImagesResponse::CacheMetadata::status]
+        end
+      end
 
       type image =
         {

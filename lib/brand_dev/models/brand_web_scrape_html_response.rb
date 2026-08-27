@@ -4,6 +4,14 @@ module BrandDev
   module Models
     # @see BrandDev::Resources::Brand#web_scrape_html
     class BrandWebScrapeHTMLResponse < BrandDev::Internal::Type::BaseModel
+      # @!attribute cache_metadata
+      #   Cache outcome for this response. Composite responses are hits only when every
+      #   cache-controlled fetch contributing to the output was a hit; age_ms is the
+      #   oldest contributing hit.
+      #
+      #   @return [BrandDev::Models::BrandWebScrapeHTMLResponse::CacheMetadata]
+      required :cache_metadata, -> { BrandDev::Models::BrandWebScrapeHTMLResponse::CacheMetadata }
+
       # @!attribute html
       #   The scraped content of the page. For normal pages this is the raw HTML. When the
       #   page is a sitemap or feed served behind an XSL stylesheet (which browsers render
@@ -61,9 +69,11 @@ module BrandDev
       #   @return [BrandDev::Models::BrandWebScrapeHTMLResponse::KeyMetadata, nil]
       optional :key_metadata, -> { BrandDev::Models::BrandWebScrapeHTMLResponse::KeyMetadata }
 
-      # @!method initialize(html:, metadata:, success:, type:, url:, actions_applied: nil, actions_html_stale: nil, key_metadata: nil)
+      # @!method initialize(cache_metadata:, html:, metadata:, success:, type:, url:, actions_applied: nil, actions_html_stale: nil, key_metadata: nil)
       #   Some parameter documentations has been truncated, see
       #   {BrandDev::Models::BrandWebScrapeHTMLResponse} for more details.
+      #
+      #   @param cache_metadata [BrandDev::Models::BrandWebScrapeHTMLResponse::CacheMetadata] Cache outcome for this response. Composite responses are hits only when every ca
       #
       #   @param html [String] The scraped content of the page. For normal pages this is the raw HTML. When the
       #
@@ -80,6 +90,49 @@ module BrandDev
       #   @param actions_html_stale [Boolean] True when an action was applied but the returned content could not be refreshed
       #
       #   @param key_metadata [BrandDev::Models::BrandWebScrapeHTMLResponse::KeyMetadata] Metadata about the API key used for the request. Included in every response when
+
+      # @see BrandDev::Models::BrandWebScrapeHTMLResponse#cache_metadata
+      class CacheMetadata < BrandDev::Internal::Type::BaseModel
+        # @!attribute age_ms
+        #   Age of the cached data in milliseconds. Zero for miss and zdr responses.
+        #
+        #   @return [Integer]
+        required :age_ms, Integer
+
+        # @!attribute status
+        #   Whether the response was served from cache, required fresh work, or honored
+        #   zero-data-retention cache bypass.
+        #
+        #   @return [Symbol, BrandDev::Models::BrandWebScrapeHTMLResponse::CacheMetadata::Status]
+        required :status, enum: -> { BrandDev::Models::BrandWebScrapeHTMLResponse::CacheMetadata::Status }
+
+        # @!method initialize(age_ms:, status:)
+        #   Some parameter documentations has been truncated, see
+        #   {BrandDev::Models::BrandWebScrapeHTMLResponse::CacheMetadata} for more details.
+        #
+        #   Cache outcome for this response. Composite responses are hits only when every
+        #   cache-controlled fetch contributing to the output was a hit; age_ms is the
+        #   oldest contributing hit.
+        #
+        #   @param age_ms [Integer] Age of the cached data in milliseconds. Zero for miss and zdr responses.
+        #
+        #   @param status [Symbol, BrandDev::Models::BrandWebScrapeHTMLResponse::CacheMetadata::Status] Whether the response was served from cache, required fresh work, or honored zero
+
+        # Whether the response was served from cache, required fresh work, or honored
+        # zero-data-retention cache bypass.
+        #
+        # @see BrandDev::Models::BrandWebScrapeHTMLResponse::CacheMetadata#status
+        module Status
+          extend BrandDev::Internal::Type::Enum
+
+          HIT = :hit
+          MISS = :miss
+          ZDR = :zdr
+
+          # @!method self.values
+          #   @return [Array<Symbol>]
+        end
+      end
 
       # @see BrandDev::Models::BrandWebScrapeHTMLResponse#metadata
       class Metadata < BrandDev::Internal::Type::BaseModel
